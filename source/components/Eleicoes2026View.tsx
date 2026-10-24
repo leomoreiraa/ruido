@@ -28,7 +28,13 @@ function votosComparados(rec:Resultado|null|undefined):"lula"|"flavio"|"empate"|
 }
 function cor(rec:Resultado|null|undefined){
  const resultado=votosComparados(rec);
- return resultado==="lula"?VERMELHO:resultado==="flavio"?VERDE:resultado==="empate"?EMPATE:SEM_DADOS;
+ if(resultado==="empate")return EMPATE;
+ if(resultado==="indisponivel")return SEM_DADOS;
+ const lula=rec?.candidatos.find(c=>c.numero==="13")?.votos ?? 0;
+ const flavio=rec?.candidatos.find(c=>c.numero==="22")?.votos ?? 0;
+ const margem=rec?.votosValidos ? 100*Math.abs(lula-flavio)/rec.votosValidos : 0;
+ if(resultado==="lula")return margem<5?"#f6c8c8":margem<15?"#f18b90":margem<30?"#eb555e":VERMELHO;
+ return margem<5?"#c0e3cd":margem<15?"#90d1a6":margem<30?"#5cbe86":VERDE;
 }
 function titulos(rec:Resultado|null|undefined):string{
  const v=votosComparados(rec);
@@ -129,7 +135,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      {t}º TURNO <span className="block font-mono text-xs mt-1">{t===1?"04 OUT 2026":"25 OUT 2026"}</span>
     </button>)}
    </div>
-   <p className="font-mono text-xs mt-4 text-ink/70">As porcentagens são calculadas sobre votos válidos. A cor do mapa compara somente Lula (13) e Flávio (22); no 1º turno, outros candidatos também disputaram a eleição.</p>
+   <p className="font-mono text-xs mt-4 text-ink/70">As porcentagens são calculadas sobre votos válidos. A cor compara somente Lula (13) e Flávio (22), e a intensidade indica a margem entre eles; no 1º turno, outros candidatos também disputaram a eleição.</p>
   </section>
 
   <section className="ruido-paper-card bg-paper-card border-4 border-ink p-4 sm:p-6 shadow-[6px_6px_0_#101010]">

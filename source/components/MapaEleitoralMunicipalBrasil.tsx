@@ -32,7 +32,13 @@ function classificar(resultado?: Resultado): "lula" | "flavio" | "empate" | "aus
 
 function corDoMunicipio(resultado?: Resultado): string {
   const tipo = classificar(resultado);
-  return tipo === "lula" ? VERMELHO : tipo === "flavio" ? VERDE : tipo === "empate" ? EMPATE : AUSENTE;
+  if(tipo === "empate")return EMPATE;
+  if(tipo === "ausente")return AUSENTE;
+  const lula=resultado?.candidatos.find(c=>c.numero==="13")?.votos ?? 0;
+  const flavio=resultado?.candidatos.find(c=>c.numero==="22")?.votos ?? 0;
+  const margem=resultado?.votosValidos ? 100*Math.abs(lula-flavio)/resultado.votosValidos : 0;
+  if(tipo==="lula")return margem<5?"#f6c8c8":margem<15?"#f18b90":margem<30?"#eb555e":VERMELHO;
+  return margem<5?"#c0e3cd":margem<15?"#90d1a6":margem<30?"#5cbe86":VERDE;
 }
 
 const GrupoMunicipal = memo(function GrupoMunicipal({ grupo, resultados }: { grupo: Grupo; resultados?: Record<string, Resultado> }) {
@@ -148,7 +154,7 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
       </div>
     </div>
     <p className="font-mono text-[11px] text-ink/70">
-      {numberFormat.format(malha.totalMunicipios)} contornos municipais. A cor é calculada individualmente para cada cidade, nunca pelo total do estado. A superfície colorida representa área geográfica, não quantidade de eleitores.
+      {numberFormat.format(malha.totalMunicipios)} contornos municipais. A cor é calculada individualmente para cada cidade, nunca pelo total do estado. Tons mais fortes representam maior diferença percentual entre Lula e Flávio. A superfície colorida representa área geográfica, não quantidade de eleitores.
     </p>
   </div>;
 }
