@@ -15,7 +15,7 @@ test("BR Code Pix estático oficial da chave aprovada, CRC16 correto", () => {
   );
   assert.equal(pixCrc16(RUIDO_PIX_COPIA_E_COLA.slice(0, -4)), "B182");
   assert.equal(createPixBrCode(RUIDO_PIX_KEY, RUIDO_PIX_NOME, RUIDO_PIX_CIDADE), RUIDO_PIX_COPIA_E_COLA);
-  assert.doesNotMatch(RUIDO_PIX_COPIA_E_COLA, /540\d/); // sem valor fixado
+  assert.doesNotMatch(RUIDO_PIX_COPIA_E_COLA, /540\d/); 
 });
 
 test("BR Code valida entrada e mantém a chave que identifica o destino", () => {

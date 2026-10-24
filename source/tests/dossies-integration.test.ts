@@ -75,7 +75,7 @@ test("dossiês têm agendamento central e solicitam deploy único após dados va
   assert.match(job, /ruido-dossies-verificados/);
   assert.match(job, /gh workflow run deploy-visual-fast\.yml/);
   const datajud = read(".github/workflows/enriquecer-datajud.yml");
-  // Evitar corridas: só um workflow escreve cada arquivo JSON público.
+  
   assert.match(datajud, /python scripts\/refresh-dossiers-datajud\.py/);
   assert.match(datajud, /python -I scripts\/publish-dossiers-safe\.py public\/data\/dossies\/datajud\.json/);
   assert.doesNotMatch(datajud, /git pull --rebase origin main/);

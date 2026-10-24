@@ -282,7 +282,7 @@ test("imagem enviada pelo usuário aparece apenas no manifesto", () => {
   assert.match(manifestoCss,/url\('\/assets\/collage\/manifesto-bg\.jpg'\)/);
   assert.match(manifestoCss,/background-size: cover, cover !important/);
   assert.match(manifestoCss,/background: #171512/);
-  // A foto do manifesto não pode ser usada nas regras de fundo da home.
+  
   const homeBackgrounds=[...css.matchAll(/body\.collage-body:has\(\.ruido-home-stage\)(?:::before)?\s*\{([^}]*)\}/g)]
     .map((match)=>match[1]).join("\n");
   assert.ok(homeBackgrounds.length>0,"Regra de fundo da home ausente");
