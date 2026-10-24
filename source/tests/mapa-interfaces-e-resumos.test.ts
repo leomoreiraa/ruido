@@ -27,6 +27,11 @@ test("os mapas preservam leitura territorial em molduras punk consistentes",()=>
   assert.match(css,/\.ruido-site-content \.ruido-map-zine__guide\s*\{/);
   assert.match(css,/\.ruido-site-content \.ruido-map-zine__guide-range\s*\{/);
   assert.match(css,/max-width: 1420px/);
+  assert.match(national,/ruido-map-readable-panel/);
+  assert.match(national,/ruido-map-readable-note/);
+  assert.match(css,/\.ruido-site-content \.ruido-map-readable-panel__text p\s*\{/);
+  assert.match(css,/\.ruido-site-content \.ruido-map-readable-panel__stats > span\s*\{/);
+  assert.match(css,/color: #171512 !important/);
   assert.match(css,/\.ruido-map-zine__canvas--national \.ruido-map-zine__viewport > svg/);
   assert.match(atlas,/if\(s\.uf===uf\)return "#e42232"/);
   assert.match(election,/aria-label=.*Mapa municipal/);

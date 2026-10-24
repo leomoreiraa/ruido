@@ -4416,3 +4416,188 @@ body.collage-body {
     width: 100%;
   }
 }
+
+
+.ruido-site-content .ruido-eleicoes-page,
+.ruido-site-content .mapa-brasil {
+  overflow-x: clip;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__serial,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__headline,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__tagline {
+  color: #faf2de !important;
+  opacity: 1;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__eyebrow {
+  color: #151512 !important;
+  background-color: #d3ff20 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__micro,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__tagline span:first-child {
+  color: #ede6d0 !important;
+  opacity: 1;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__headline em,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__tagline span:last-child {
+  color: #d3ff20 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide {
+  color: #161513 !important;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 1;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide :is(h3,p,strong,span) {
+  opacity: 1 !important;
+  text-shadow: none;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide :is(h3,strong),
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide-party-name,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide-special,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide-items {
+  color: #151411 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide :is(p, .ruido-map-zine__guide-atlas-labels, .ruido-map-zine__guide-range > span) {
+  color: #26221c !important;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide .ruido-map-zine__guide-kicker,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__guide-scale > strong {
+  color: #8f211b !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__window-bar,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__window-bar span {
+  color: #fff0d4 !important;
+  font-size: 11px;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__window-bar span:last-child {
+  color: #d3ff20 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__controls {
+  color: #171512 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__controls :is(p,label,strong,span) {
+  color: #171512 !important;
+  opacity: 1 !important;
+  text-shadow: none;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__controls label {
+  font-size: 13px !important;
+  line-height: 1.5;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__controls :is(input,select) {
+  color: #171512 !important;
+  font-size: 14px;
+  background-color: #fffaf0 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__back {
+  color: #171512 !important;
+  background-color: #d3ff20 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__stamp {
+  color: #ffaaa1 !important;
+}
+.ruido-site-content .ruido-map-zine__canvas--state > div > p {
+  color: #171512 !important;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.ruido-site-content .ruido-map-readable-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 330px);
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  max-width: 100%;
+  background-color: #f5eddc !important;
+  color: #151411 !important;
+  border: 2px solid #151411;
+  border-left: 6px solid #d22f2c;
+  box-shadow: 3px 3px 0 #d3ff20;
+}
+.ruido-site-content .ruido-map-readable-panel__text {
+  padding: 14px 16px;
+  min-width: 0;
+  color: #171512 !important;
+}
+.ruido-site-content .ruido-map-readable-panel__text > strong {
+  display: block;
+  color: #181612 !important;
+  font-family: var(--heavy), Impact, sans-serif;
+  font-size: clamp(18px, 1.6vw, 24px);
+  line-height: 1.12;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+.ruido-site-content .ruido-map-readable-panel__text p {
+  color: #26231c !important;
+  opacity: 1 !important;
+  font: 600 13px/1.65 var(--mono), monospace;
+  margin: 3px 0;
+}
+.ruido-site-content .ruido-map-readable-panel__stats {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  align-items: center;
+  gap: 9px 14px;
+  border-left: 2px dashed #3f3b31;
+  padding: 12px 15px;
+  min-width: 0;
+  color: #171512 !important;
+  background-color: #efe3c8 !important;
+}
+.ruido-site-content .ruido-map-readable-panel__stats > span {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  color: #161411 !important;
+  font: 700 12px/1.45 var(--mono), monospace;
+  overflow-wrap: anywhere;
+}
+.ruido-site-content .ruido-map-readable-panel__stats > span > strong {
+  color: #161411 !important;
+  font-size: 14px;
+}
+.ruido-site-content .ruido-map-readable-panel__stats i {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 1px solid #161411;
+  flex: 0 0 13px;
+  margin-right: 3px;
+}
+.ruido-site-content .ruido-map-readable-note {
+  color: #171512 !important;
+  opacity: 1 !important;
+  background-color: rgba(245,237,220,.96);
+  border-left: 3px solid #171512;
+  padding: 10px 12px;
+  margin: 0;
+  font: 600 12px/1.65 var(--mono), monospace;
+}
+.ruido-site-content .ruido-eleicoes-page > section.bg-white {
+  color: #171512 !important;
+}
+.ruido-site-content .ruido-eleicoes-page > section.bg-white :is(h2,p,strong) {
+  opacity: 1 !important;
+}
+.ruido-site-content .ruido-eleicoes-page > section.bg-white p {
+  color: #26231d !important;
+}
+@media (max-width: 760px) {
+  .ruido-site-content .ruido-map-readable-panel {
+    grid-template-columns: minmax(0,1fr);
+  }
+  .ruido-site-content .ruido-map-readable-panel__stats {
+    border-left: 0;
+    border-top: 2px dashed #3f3b31;
+  }
+  .ruido-site-content .ruido-map-zine .ruido-map-zine__guide :is(p,.ruido-map-zine__guide-atlas-labels,.ruido-map-zine__guide-range > span) {
+    font-size: 12px;
+  }
+}
