@@ -1,4 +1,3 @@
-// components/EmendasTrackerView.tsx
 "use client";
 
 import React, { useState, useMemo, useDeferredValue, useCallback, useRef } from "react";
