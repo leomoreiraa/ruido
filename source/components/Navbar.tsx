@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/pautas", label: "VOTAÇÕES" },
   { href: "/emendas", label: "EMENDAS" },
   { href: "/mapa", label: "MAPA" },
+  { href: "/eleicoes", label: "APURAÇÃO" },
   { href: "/sobre", label: "MANIFESTO" },
 ];
 

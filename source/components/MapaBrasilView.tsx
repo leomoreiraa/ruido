@@ -4,10 +4,12 @@ import React, { useMemo, useState } from "react";
 import type { DadosMapa, EstadoMapa, Medida } from "@/lib/mapaBrasil";
 import { valorIndicador } from "@/lib/mapaBrasil";
 
-type VisibleMedida = Exclude<Medida,"pib"|"pibPerCapita">;
+type VisibleMedida = Medida;
 const LABELS: Record<VisibleMedida,{titulo:string;resumo:string;unidade:string}> = {
   idhm:{titulo:"IDHM • DESENVOLVIMENTO HUMANO",resumo:"Índice de Desenvolvimento Humano Municipal agregado por UF (PNUD/FJP/IBGE). Considera educação, renda e longevidade; índice de 0 a 1. Série oficial 2012–2024.",unidade:"índice (0–1)"},
   idhmVariacao:{titulo:"EVOLUÇÃO ANUAL DO IDHM",resumo:"Diferença em pontos do índice desde o ano anterior, não porcentagem nem crescimento causado por emendas. Só anos com dois registros oficiais são comparados.",unidade:"pontos do índice"},
+  pib:{titulo:"PIB ESTADUAL",resumo:"Produto Interno Bruto publicado pelo IBGE. Compare apenas anos com observações disponíveis.",unidade:"R$"},
+  pibPerCapita:{titulo:"PIB POR HABITANTE",resumo:"PIB anual dividido pela população do mesmo ano. É uma média econômica, não a renda individual dos moradores.",unidade:"R$ / hab."},
   populacao:{titulo:"POPULAÇÃO ESTIMADA",resumo:"Estimativa de habitantes na UF, conforme ano de referência do IBGE.",unidade:"pessoas"},
   emendasPagas:{titulo:"EMENDAS PAGAS",resumo:"Montante pago com regionalização identificável na CGU; não são todos os investimentos.",unidade:"R$"},
   emendasPerCapita:{titulo:"EMENDAS POR HABITANTE",resumo:"Emendas pagas regionalizadas divididas pela população do mesmo ano.",unidade:"R$ / hab."},
@@ -36,13 +38,15 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
   const [year,setYear]=useState(()=>data?getLatestYear(data):2022);
   const [uf,setUf]=useState("SP");
   const [hover,setHover]=useState<string|null>(null);
+  const [compararCom,setCompararCom]=useState<string>("RJ");
   const states=data?.estados??[];
   const active=states.find(e=>e.uf===uf)??states[0];
   const hovered=states.find(e=>e.uf===hover);
   const chosen=hovered??active;
   const values=useMemo(()=>states.map(e=>({state:e,value:valorIndicador(e,year,metric)})),[states,year,metric]);
-  const visible=values.filter((x):x is {state:EstadoMapa;value:number}=>x.value!==null&&x.value>=0);
+  const visible=values.filter((x):x is {state:EstadoMapa;value:number}=>x.value!==null&&Number.isFinite(x.value));
   const max=Math.max(0,...visible.map(v=>v.value));
+  const maxAbsoluto=Math.max(0,...visible.map(v=>Math.abs(v.value)));
   const ordered=[...visible].sort((a,b)=>b.value-a.value).slice(0,9);
   const yearsAvailable=(data?.anos??[]).filter(y=>
     states.some(s=>valorIndicador(s,y,metric)!==null));
@@ -184,8 +188,8 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
               </div>
               <div className="border-2 border-ink/30 p-2 col-span-2">
                 <span className="text-ink/60 block">CRÉDITO MEI • BCB</span>
-                <b>{chosen?.creditoMei?brl(chosen.creditoMei.milhoesReais*1e6,true):"N/D"}</b>
-                <span className="block text-ink/60">{chosen?.creditoMei?"Última referência: "+chosen.creditoMei.data:"Sem observação estadual disponível"}</span>
+                <b>{chosen&&valorIndicador(chosen,year,"creditoMei")!==null?brl(valorIndicador(chosen,year,"creditoMei")!,true):"N/D"}</b>
+                <span className="block text-ink/60">{chosen?.creditoMeiPorAno?.[String(year)]?"Referência: "+chosen.creditoMeiPorAno[String(year)].data:"Sem observação estadual neste ano"}</span>
               </div>
             </div>
           </div>
@@ -203,6 +207,17 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
         </div>
       </section>
 
+      <section className="bg-ink text-paper border-4 border-punk-red p-4 sm:p-6 space-y-3">
+        <h2 className="font-heavy text-2xl text-punk-acid">COMPARAR TERRITÓRIOS //</h2>
+        <p className="font-mono text-xs text-paper/80">Compare o mesmo indicador e ano entre duas UFs; N/D significa ausência de observação.</p>
+        <select value={compararCom} onChange={e=>setCompararCom(e.target.value)} aria-label="Selecionar outra UF" className="bg-white text-ink border-2 border-punk-acid p-2 font-mono">
+          {states.map(s=><option key={s.uf} value={s.uf}>{s.nome}</option>)}
+        </select>
+        <div className="grid grid-cols-2 gap-3 font-mono text-sm">
+          {[active,states.find(s=>s.uf===compararCom)].filter((x):x is EstadoMapa=>Boolean(x)).map(s=><div key={s.uf} className="border-2 border-paper/40 p-3"><strong className="text-punk-acid">{s.nome}</strong><p className="font-heavy text-xl mt-2 break-words">{representacao(valorIndicador(s,year,metric),metric)}</p></div>)}
+        </div>
+        <a href="/eleicoes/" className="inline-block text-punk-acid underline font-mono text-sm">ACOMPANHAR APURAÇÃO ELEITORAL DE 25/10/2026 →</a>
+      </section>
       <section className="grid lg:grid-cols-2 gap-6">
         <div className="bg-white border-4 border-ink shadow-[8px_8px_0_#101010] p-5">
           <h2 className="font-heavy text-2xl sm:text-3xl uppercase border-b-4 border-ink pb-3">CLASSIFICAÇÃO <span className="text-punk-red">/// {year}</span></h2>
@@ -215,7 +230,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
                 <b className="whitespace-nowrap group-hover:text-punk-red">{representacao(entry.value,metric)}</b>
               </div>
               <div className="mt-2 h-2 bg-paper-card border border-ink/30">
-                <div className="h-full bg-punk-red" style={{width:(max>0?(100*entry.value/max):0)+"%"}}/>
+                <div className="h-full bg-punk-red" style={{width:(maxAbsoluto>0?(100*Math.abs(entry.value)/maxAbsoluto):0)+"%",background:entry.value<0?"#555":"#e42232"}}/>
               </div>
             </button>
           </li>)}</ol>}

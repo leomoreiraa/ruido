@@ -545,7 +545,7 @@ export function EmendasTrackerView({
         <div className="space-y-4">
           <div className="flex justify-between items-center border-b-2 border-dashed border-ink/30 pb-2">
             <h2 className="font-heavy text-2xl uppercase tracking-wider text-ink">
-              DISTRIBUIÇÃO DE RECURSOS POR ESTADO (UF)
+              DISTRIBUIÇÃO DE RECURSOS POR ESTADO (UF) // TABELA
             </h2>
           </div>
 
