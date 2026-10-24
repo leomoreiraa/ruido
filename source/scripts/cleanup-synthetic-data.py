@@ -93,7 +93,6 @@ for r in conn.execute('SELECT * FROM BemDeclarado'):
         expected += [(t,d,v,sum(vals)) for t,d,v in zip(types,descriptions,vals)]
     if (r['tipoBem'],r['descricao'],r['valorDeclarado'],r['totalPatrimonioAno']) in expected:
         matched['BemDeclarado'].append(r['id'])
-# Exact placeholder texts are not genuine transcripts. Preserve any ambiguous text.
 for r in conn.execute('SELECT * FROM Discurso'):
     if r['transcricao'] in ['Pronunciamento em plenário sobre matérias legislativas e interesse público','Pronunciamento em plenário: Discurso oficial'] and not r['sumario']:
         matched['Discurso'].append(r['id'])
