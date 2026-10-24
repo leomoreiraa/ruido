@@ -1,0 +1,96 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+function source(path: string): string {
+  return readFileSync(join(process.cwd(), path), "utf8");
+}
+
+test("sincronização legislativa semanal mantém lock de escrita e não publica o Pages", () => {
+  const schedule = source(".github/workflows/cron-sync.yml");
+  const collector = source(".github/workflows/deploy-gh-pages.yml");
+  const pages = source(".github/workflows/deploy-visual-fast.yml");
+  assert.match(schedule, /cron:\s*'37 5 \* \* 0'/);
+  assert.match(schedule, /uses: \.\/\.github\/workflows\/deploy-gh-pages\.yml/);
+  assert.match(collector, /group:\s*clean-v2-pages/);
+  assert.match(collector, /cancel-in-progress:\s*false/);
+  assert.doesNotMatch(collector, /actions\/deploy-pages@/);
+  assert.equal((pages.match(/actions\/deploy-pages@v4/g) || []).length, 0);
+  assert.equal((pages.match(/actions\/upload-artifact@v4/g) || []).length, 1);
+  assert.match(pages, /git -C "\$dest" push origin HEAD:main/);
+});
+
+test("checkpoint verificável precede auditoria e export; publicação só no workflow visual", () => {
+  const collector = source(".github/workflows/deploy-gh-pages.yml");
+  const pages = source(".github/workflows/deploy-visual-fast.yml");
+  const candidate = collector.indexOf("Criar candidato sanitizado");
+  const checkpoint = collector.indexOf("Salvar checkpoint recuperável antes de compilar");
+  const publicationGate = collector.indexOf("Bloquear base reconstruída");
+  const staticExport = collector.indexOf("Gerar export a partir do candidato");
+  assert.ok(candidate > 0 && checkpoint > candidate);
+  assert.ok(publicationGate > checkpoint);
+  assert.ok(staticExport > publicationGate);
+  assert.doesNotMatch(collector, /actions\/deploy-pages@/);
+  assert.match(pages, /actions\/upload-artifact@v4/);
+  assert.match(pages, /actions\/download-artifact@v4/);
+  assert.match(pages, /scripts\/audit-public-export\.py out/);
+  assert.doesNotMatch(pages, /actions\/deploy-pages@/);
+  assert.ok(pages.indexOf("Verificar que esta execução contém o commit mais recente")
+    < pages.indexOf("Sincronizar site auditado no repositório público"));
+  assert.equal((collector.match(/scripts\/release-snapshot\.py publish/g) ?? []).length, 1);
+});
+
+test("data recovery is isolated to rebuilt-v2, never legacy SQLite or LFS", () => {
+  const deploy = source(".github/workflows/deploy-gh-pages.yml");
+  const release = source("scripts/release-snapshot.py");
+  const verify = source("scripts/verify-rebuilt.py");
+  assert.doesNotMatch(deploy, /merge-lfs-history|lfs:\s*true/);
+  assert.match(release, /CLEAN_TAG\.fullmatch\(r\['tag_name'\]\)/);
+  assert.match(verify, /--checkpoint-only/);
+  assert.match(deploy, /--checkpoint-only/);
+});
+
+test("pipeline deixa margem para checkpoints antes do limite de 3 horas", () => {
+  const deploy = source(".github/workflows/deploy-gh-pages.yml");
+  assert.match(deploy, /timeout-minutes:\s*170/);
+  assert.match(deploy, /timeout-minutes:\s*95/);
+  assert.match(deploy, /timeout-minutes:\s*23/);
+  assert.match(deploy, /timeout-minutes:\s*18/);
+  assert.match(deploy, /rebuilt-v2-fallback-\$\{\{ github\.run_id \}\}-final/);
+  assert.match(deploy, /scripts\/sqlite-snapshot\.py restore/);
+  assert.match(deploy, /if: \$\{\{ success\(\) \|\| failure\(\) \}\}/);
+});
+
+test("o cron repassa credenciais para o workflow reutilizável", () => {
+  const cron = source(".github/workflows/cron-sync.yml");
+  const deploy = source(".github/workflows/deploy-gh-pages.yml");
+  assert.match(cron, /secrets:\s*inherit/);
+  assert.match(deploy, /PORTAL_TRANSPARENCIA_API_KEY:\s*/);
+  assert.match(deploy, /GEMINI_API_KEY:\s*/);
+  assert.match(deploy, /Conferir acesso às credenciais sem revelar valores/);
+});
+
+test("recuperação prefere artifact mais recente que a Release sem sobrescrever antes da validação", () => {
+  const deploy = source(".github/workflows/deploy-gh-pages.yml");
+  const release = source("scripts/release-snapshot.py");
+  assert.match(deploy, /RELEASE_PUBLISHED_AT:/);
+  assert.match(deploy, /\.created_at > \$release/);
+  assert.match(deploy, /recovered-checkpoint\/restored\.sqlite/);
+  assert.match(deploy, /mv -f .*restored\.sqlite/);
+  assert.match(release, /previous_published_at/);
+});
+
+
+test("deploy visual só recupera Release íntegra e impede publicar commit obsoleto", () => {
+  const fast = source(".github/workflows/deploy-visual-fast.yml");
+  assert.match(fast, /sqlite-snapshot\.py restore/);
+  assert.match(fast, /gh release download/);
+  assert.match(fast, /Nenhuma Release rebuilt-v2 íntegra/);
+  assert.match(fast, /if: steps\.freshness\.outputs\.current == 'true'/);
+  assert.match(fast, /latest=.*gh api/);
+  assert.match(fast, /out\/data\/brasil-estados\.json/);
+  assert.match(fast, /out\/data\/idhm-ufs\.json/);
+  assert.match(fast, /npm run build:regional/);
+  assert.match(fast, /if grep -q 'ruido-hero\.webp'/);
+});

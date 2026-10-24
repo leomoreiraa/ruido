@@ -1,0 +1,3847 @@
+/* app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Permanent+Marker&family=UnifrakturMaguntia&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #171512;
+  --paper: #eee4d1;
+  --paper-card: #f0e6d4;
+  --red: #ac2c24;
+  --acid: #d3ff20;
+  --grey: #797269;
+  --white: #faf4e9;
+  --cyan: #81918a;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --heavy: 'Anton', 'Impact', sans-serif;
+  --black: 'Archivo Black', 'Arial Black', sans-serif;
+  --marker: 'Permanent Marker', cursive;
+  --gothic: 'UnifrakturMaguntia', cursive;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(circle, rgba(16, 16, 16, 0.08) 1px, transparent 1.5px),
+    repeating-linear-gradient(0deg, transparent 0 28px, rgba(0, 0, 0, 0.03) 29px 30px);
+  background-size: 10px 10px, 100% 30px;
+}
+
+::selection {
+  background: var(--red);
+  color: #ffffff;
+}
+
+/* Grime / Noise fixed texture overlay */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background: url('/assets/grime.png') repeat;
+  background-size: 550px 550px;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+
+a:hover {
+  color: var(--red);
+}
+
+/* Focus styles */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--acid) !important;
+  outline-offset: 3px !important;
+}
+
+/* Ticker / Running Banner Animation */
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.running-ticker {
+  white-space: nowrap;
+  width: max-content;
+  display: inline-flex;
+  animation: drift 40s linear infinite;
+}
+
+.running-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Distressed Cuts for Ransom Typography */
+.cut-black {
+  color: var(--paper);
+  background: var(--ink);
+  display: inline-block;
+  padding: 2px 14px 6px;
+  transform: rotate(-2deg);
+  clip-path: polygon(0 0, 99% 2%, 100% 15%, 98% 100%, 2% 97%, 0 88%);
+  box-shadow: 4px 4px 0 var(--red);
+}
+
+.cut-white {
+  background: var(--white);
+  color: var(--ink);
+  display: inline-block;
+  padding: 2px 14px 6px;
+  transform: rotate(2deg);
+  clip-path: polygon(1% 2%, 98% 0%, 100% 87%, 95% 100%, 0% 98%);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.cut-red {
+  background: var(--red);
+  color: var(--paper);
+  display: inline-block;
+  padding: 2px 14px 6px;
+  transform: rotate(-1.5deg);
+  clip-path: polygon(0 5%, 97% 0, 100% 98%, 0 94%);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.cut-acid {
+  background: var(--acid);
+  color: var(--ink);
+  display: inline-block;
+  padding: 2px 14px 6px;
+  transform: rotate(1deg);
+  clip-path: polygon(2% 0, 100% 4%, 98% 98%, 0 92%);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Zine / Torn Paper Card */
+.zine-card {
+  position: relative;
+  background: var(--paper-card);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+  clip-path: polygon(0 1%, 99% 0, 100% 12%, 99% 92%, 96% 100%, 54% 98%, 28% 100%, 0 97%);
+}
+
+.zine-card:hover {
+  transform: translateY(-4px) rotate(-0.5deg);
+  box-shadow: 12px 12px 0 var(--red), 14px 14px 0 var(--ink);
+}
+
+/* Scotch Tape Effect */
+.scotch-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 140px;
+  height: 28px;
+  background: rgba(253, 240, 176, 0.85);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  border-left: 2px dashed rgba(200, 180, 100, 0.6);
+  border-right: 2px dashed rgba(200, 180, 100, 0.6);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.scotch-tape-corner {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 90px;
+  height: 24px;
+  background: rgba(253, 240, 176, 0.82);
+  transform: rotate(32deg);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Rubber Stamps */
+.rubber-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--heavy);
+  text-transform: uppercase;
+  border-width: 3px;
+  border-style: dashed;
+  border-radius: 4px;
+  padding: 4px 10px;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.rubber-stamp-red {
+  color: var(--red);
+  border-color: var(--red);
+  transform: rotate(-3deg);
+  box-shadow: 2px 2px 0 rgba(228, 34, 50, 0.3);
+}
+
+.rubber-stamp-acid {
+  color: var(--ink);
+  background: var(--acid);
+  border-color: var(--ink);
+  transform: rotate(2deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.rubber-stamp-green {
+  color: #16a34a;
+  border-color: #16a34a;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0 rgba(22, 163, 74, 0.3);
+}
+
+/* Redaction bar effect */
+.redacted {
+  background: var(--ink);
+  color: transparent;
+  user-select: none;
+  cursor: help;
+  padding: 0 4px;
+  transition: all 0.2s ease;
+}
+
+.redacted:hover {
+  background: var(--red);
+  color: #fff;
+  user-select: text;
+}
+
+/* Spikes Border Element */
+.spikes-strip {
+  height: 28px;
+  background: url('/assets/spikes.svg') repeat-x left bottom / 62px 28px;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Barbed Wire Strip */
+.wire-strip {
+  height: 36px;
+  background: url('/assets/barbed-wire.svg') repeat-x center / auto 36px;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Chain Strip */
+.chain-strip {
+  height: 38px;
+  background: url('/assets/chain.svg') repeat-x center / auto 38px;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Xerox Photo Treatment */
+.xerox-img {
+  filter: grayscale(1) contrast(1.6) brightness(0.95);
+  border: 2px solid var(--ink);
+  transition: filter 0.25s ease-in-out, transform 0.2s;
+}
+
+/* Politician Photo Punk Stencil Target on Hover */
+.politician-mugshot {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background-color: var(--ink);
+}
+
+.politician-mugshot .target-red-layer {
+  position: absolute;
+  inset: 0;
+  background-color: #e42232;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.politician-mugshot .target-stamp {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.politician-mugshot:hover .target-red-layer,
+.group:hover .politician-mugshot .target-red-layer,
+.group\/photo:hover .target-red-layer {
+  opacity: 0.82;
+}
+
+.politician-mugshot:hover .target-stamp,
+.group:hover .politician-mugshot .target-stamp,
+.group\/photo:hover .target-stamp {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.politician-mugshot:hover .xerox-img,
+.group:hover .politician-mugshot .xerox-img {
+  filter: grayscale(0.2) contrast(1.6) brightness(1.05);
+  transform: scale(1.03);
+}
+
+/* Custom Table Styles */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border: 3px solid var(--ink);
+  background: var(--white);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+th {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--heavy);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 3px solid var(--red);
+}
+
+td {
+  padding: 12px 14px;
+  border-bottom: 2px dashed rgba(16, 16, 16, 0.2);
+  font-family: var(--mono);
+}
+
+tr:nth-child(even) td {
+  background: rgba(220, 215, 200, 0.4);
+}
+
+tr:hover td {
+  background: rgba(216, 245, 62, 0.25);
+}
+
+/* Buttons */
+.btn-punk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 18px;
+  background: var(--acid);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  transform: rotate(-1deg);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-punk:hover {
+  transform: rotate(1deg) translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+  background: var(--red);
+  color: #fff;
+}
+
+.btn-punk-red {
+  background: var(--red);
+  color: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  transform: rotate(1deg);
+}
+
+.btn-punk-red:hover {
+  background: var(--ink);
+  color: var(--acid);
+}
+
+.btn-punk-dark {
+  background: var(--ink);
+  color: var(--paper);
+  border: 3px solid var(--acid);
+  box-shadow: 5px 5px 0 var(--red);
+}
+
+.btn-punk-dark:hover {
+  background: var(--acid);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* Inputs & Selects */
+input[type="text"], input[type="search"], select {
+  font-family: var(--mono);
+  font-weight: 600;
+  background: var(--white);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  padding: 8px 12px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all 0.15s ease;
+}
+
+input[type="text"]:focus, input[type="search"]:focus, select:focus {
+  background: #ffffff;
+  border-color: var(--red);
+  box-shadow: 6px 6px 0 var(--acid);
+  outline: none;
+}
+
+/* Newspaper torn clipping container */
+.newspaper-clip {
+  background: #dcd4c3 url('/assets/ripped-paper-strip-newsprint-55.png') top center / 100% auto no-repeat;
+  border: 2px solid var(--ink);
+  padding: 20px;
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--acid);
+  border: 2px solid var(--ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--red);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .running-ticker {
+    animation: none;
+  }
+  * {
+    transition-duration: 0s !important;
+  }
+}
+
+
+/* ==========================================================================
+   RUÍDO / POSTER SYSTEM — COLAGEM URBANA
+   Cartazes originais: WebP comprimido; papel e carimbos reaproveitam assets
+   existentes. Nenhuma camada intercepta controles, links ou regiões do mapa.
+   ========================================================================== */
+:root {
+  --zine-paper: #f4eddf;
+  --zine-printed: #171817;
+  --zine-correction: #d8f53e;
+  --zine-red: #e42232;
+}
+body.collage-body {
+  background-color: #eae2d3;
+  background-image:
+    linear-gradient(125deg,rgba(0,0,0,.04),transparent 44%),
+    repeating-linear-gradient(0deg,transparent 0 53px,rgba(16,16,16,.038) 54px 55px),
+    radial-gradient(circle at 10% 8%,rgba(228,34,50,.075) 0,transparent 23%),
+    url('/assets/papel-fibra.jpg');
+  background-size: auto,auto,auto,440px auto;
+}
+.ruido-site-content { position:relative; isolation:isolate; }
+.ruido-site-content::before {
+  content:""; position:absolute; inset:0 0 auto 0; height:450px; z-index:-1;
+  pointer-events:none; opacity:.44;
+  background:
+    repeating-linear-gradient(105deg,transparent 0 48px,rgba(16,16,16,.045) 49px 51px),
+    radial-gradient(ellipse at 90% 20%,rgba(228,34,50,.10),transparent 64%);
+}
+.collage-nav {
+  background-image:repeating-linear-gradient(142deg,transparent 0 20px,rgba(255,255,255,.027) 21px 24px);
+  border-bottom:5px solid var(--red);
+  box-shadow:0 6px 0 var(--ink);
+}
+.collage-nav::after {
+  content:"";position:absolute;inset:auto 0 -14px;height:14px;pointer-events:none;
+  background:repeating-linear-gradient(115deg,var(--ink) 0 14px,transparent 14px 30px);
+  opacity:.65;
+}
+.collage-brand {
+  position:relative;filter:drop-shadow(2px 2px 0 #d8f53e);
+}
+.collage-brand::after {
+  content:"";position:absolute;width:38%;height:12px;top:-8px;right:-13px;
+  transform:rotate(-31deg);
+  background:rgba(216,245,62,.84);border-left:1px dashed rgba(16,16,16,.4);
+  border-right:1px dashed rgba(16,16,16,.4);
+  pointer-events:none;
+}
+.collage-mascot {
+  display:block;max-width:100%;object-fit:contain;
+  filter:drop-shadow(3px 3px 0 rgba(228,34,50,.65));
+}
+.collage-poster {
+  position:relative;overflow:visible;isolation:isolate;
+  background:var(--ink);border:5px solid var(--ink);
+  box-shadow:10px 10px 0 var(--red),14px 14px 0 var(--ink);
+  transform:rotate(-.45deg);
+  margin:12px 5px 24px 1px;
+}
+.collage-poster img {
+  display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;
+  filter:contrast(1.055) saturate(1.05);
+}
+.collage-poster::before,
+.collage-poster::after {
+  content:"";position:absolute;z-index:2;pointer-events:none;
+  width:clamp(45px,10vw,116px);height:22px;top:-13px;
+  background:rgba(242,226,166,.88);
+  border-inline:1px dashed rgba(16,16,16,.45);
+  box-shadow:1px 2px 2px rgba(16,16,16,.16);
+}
+.collage-poster::before{left:4%;transform:rotate(-9deg)}
+.collage-poster::after{right:6%;transform:rotate(8deg)}
+.collage-poster figcaption {
+  position:absolute;right:3%;bottom:-13px;z-index:3;transform:rotate(-3deg);
+  background:var(--acid);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+  color:var(--ink);padding:4px 12px;
+  font:700 clamp(9px,1vw,12px)/1.2 var(--mono);letter-spacing:.065em;
+}
+.collage-poster + section { scroll-margin-top:5rem; }
+.collage-paper {
+  position:relative;
+  background-image:
+    linear-gradient(146deg,rgba(255,255,255,.55),rgba(255,255,255,0) 46%),
+    url('/assets/papel-fibra.jpg');
+  background-size:auto,600px auto;
+}
+.collage-paper::after {
+  content:"";position:absolute;z-index:1;right:-3px;bottom:-5px;
+  left:-3px;height:9px;pointer-events:none;
+  background:repeating-linear-gradient(120deg,var(--ink) 0 13px,transparent 13px 26px);
+  opacity:.7;
+}
+.collage-sticker {
+  display:inline-block;max-width:100%;font-family:var(--mono);
+  font-weight:800;font-size:.69rem;letter-spacing:.11em;text-transform:uppercase;
+  padding:.5rem .8rem;color:var(--ink);
+  border:2px solid var(--ink);box-shadow:4px 4px 0 var(--red);
+  background:var(--acid);transform:rotate(-2deg);
+}
+.collage-index {
+  position:relative;display:inline-block;
+  background:var(--ink);color:var(--paper);
+  font-family:var(--heavy);font-size:clamp(20px,2.4vw,38px);
+  padding:.12em .48em;transform:rotate(-1deg);
+  border-left:7px solid var(--red);
+}
+.collage-index::after {
+  content:"";display:inline-block;width:14px;height:14px;
+  background:var(--acid);margin-left:12px;transform:rotate(30deg);
+}
+.collage-rail {
+  border:2px solid var(--ink);
+  border-left:8px solid var(--red);
+  background:var(--paper);padding:12px 16px;
+  box-shadow:5px 5px 0 var(--ink);
+}
+.collage-microtype {
+  font:700 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+}
+.collage-footer-mascot {
+  background:var(--paper);border:3px solid var(--acid);
+  box-shadow:6px 6px 0 var(--red);transform:rotate(-4deg);
+  width:92px;height:102px;padding:3px;flex:none;object-fit:contain;
+}
+.ruido-site-content :is(h1,h2) { text-wrap:balance; }
+.ruido-site-content :is(.bg-paper-card,.bg-paper-light) {
+  background-image:linear-gradient(149deg,rgba(255,255,255,.27),transparent 52%);
+}
+.ruido-site-content :is(.rubber-stamp,.btn-punk) {
+  text-shadow:none;
+}
+.ruido-site-content article[class*="border-3"],
+.ruido-site-content div[class*="border-3"][class*="shadow-"] {
+  transition:box-shadow .2s ease,transform .2s ease;
+}
+.ruido-site-content article[class*="border-3"]:hover {
+  box-shadow:7px 7px 0 var(--red);
+}
+.ruido-site-content :is(input,select,button) { min-height:38px; }
+.ruido-site-content .mapa-brasil svg path:focus-visible {
+  stroke:#fff;stroke-width:3px;outline:0;
+}
+@media (max-width:640px) {
+  .collage-poster { margin:12px 2px 20px;transform:none;border-width:3px;box-shadow:5px 5px 0 var(--red); }
+  .collage-poster figcaption { bottom:-16px;right:2%;font-size:9px;padding:3px 6px; }
+  .collage-poster::before,.collage-poster::after { height:13px;top:-9px;width:55px; }
+  .collage-microtype {font-size:10px;}
+  .collage-footer-mascot{width:70px;height:78px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .collage-poster,.collage-sticker,.collage-index,.collage-brand { transition:none!important; }
+}
+
+
+/* ==========================================================================
+   RUÍDO / RECORTE DE RUA — FASE 1
+   Identidade gráfica: xerox, impressão desalinhada, papel rasgado e lambe-lambe.
+   Texturas locais; CSS não altera grade, fluxo de conteúdo ou links.
+   ========================================================================== */
+:root {
+  --ink: #10100f;
+  --paper: #eae4d8;
+  --paper-card: #f2ecdf;
+  --red: #f02632;
+  --acid: #ddff35;
+  --white: #faf5e9;
+  --zine-paper: #f1e9da;
+  --zine-printed: #10100f;
+  --zine-correction: #ddff35;
+  --zine-red: #f02632;
+}
+
+body.collage-body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 8% 11%, rgba(240,38,50,.14), transparent 31%),
+    radial-gradient(ellipse at 88% 67%, rgba(16,16,15,.07), transparent 37%),
+    repeating-linear-gradient(114deg, transparent 0 71px, rgba(16,16,15,.045) 72px 73px),
+    url('/assets/papel-fibra.jpg');
+  background-size: auto, auto, auto, 480px auto;
+}
+
+.grain-overlay {
+  background-image: url('/assets/grime.png');
+  background-size: 420px 420px;
+  opacity: .23;
+  mix-blend-mode: multiply;
+}
+
+.ruido-site-content::before {
+  height: min(80vh, 740px);
+  opacity: .55;
+  background:
+    radial-gradient(circle at 2px 3px, rgba(15,15,15,.17) .8px, transparent 1.8px) 0 0 / 12px 12px,
+    linear-gradient(140deg, transparent 15%, rgba(240,38,50,.10) 37%, transparent 60%);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+}
+
+/* Recorte principal: reaproveita o mesmo hero, sem o cartaz redundante. */
+.ruido-site-content .collage-paper {
+  border-color: var(--ink);
+  background-color: var(--paper-card);
+  background-image:
+    linear-gradient(153deg, rgba(255,255,255,.63), rgba(255,255,255,0) 39%),
+    radial-gradient(ellipse at 87% 23%, rgba(240,38,50,.13), transparent 49%),
+    url('/assets/papel-fibra.jpg');
+  background-size: auto, auto, 460px auto;
+  box-shadow: 10px 10px 0 var(--ink), 16px 16px 0 var(--red);
+}
+
+.ruido-site-content .collage-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .19;
+  background-image:
+    url('/assets/grime.png'),
+    repeating-linear-gradient(107deg, transparent 0 40px, #10100f 41px, transparent 42px);
+  background-size: 340px 340px, auto;
+  mix-blend-mode: multiply;
+}
+
+/* Bordas inferiores irregulares lembram lambe-lambe arrancado de um muro. */
+.ruido-site-content .collage-paper::after {
+  left: -4px;
+  right: -4px;
+  bottom: -14px;
+  height: 18px;
+  opacity: 1;
+  background: var(--ink);
+  clip-path: polygon(
+    0 6%, 3% 25%, 6% 8%, 9% 33%, 13% 8%, 17% 31%,
+    21% 6%, 25% 30%, 29% 11%, 34% 34%, 39% 7%, 43% 28%,
+    48% 6%, 52% 32%, 57% 5%, 62% 29%, 66% 9%, 71% 27%,
+    76% 5%, 81% 31%, 85% 8%, 90% 29%, 94% 6%, 97% 30%,
+    100% 9%, 100% 72%, 96% 61%, 91% 93%, 85% 65%,
+    78% 95%, 73% 69%, 66% 93%, 59% 67%, 53% 94%,
+    46% 70%, 39% 95%, 32% 67%, 25% 92%, 18% 69%,
+    12% 95%, 6% 71%, 0 89%
+  );
+}
+
+/* Superfície compartilhada por cartões claros. A forma rasgada fica
+   em ::before, permitindo que fitas, selos e clipes saiam dos limites. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+  position: relative;
+  isolation: isolate;
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  border-radius: 0;
+}
+
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(163deg, rgba(255,255,255,.52), transparent 40%),
+    url('/assets/papel-fibra.jpg') center / 430px auto,
+    var(--paper-card);
+  box-shadow:
+    inset 0 0 0 3px var(--ink),
+    inset 0 -9px 0 rgba(16,16,15,.06);
+  clip-path: polygon(
+    0 .8%, 3% .2%, 7% 1.3%, 11% .4%, 17% 1.6%,
+    24% .3%, 32% 1.1%, 39% .4%, 46% 1.6%, 53% .3%,
+    60% 1.2%, 68% .2%, 76% 1.5%, 83% .4%, 91% 1.2%,
+    97% .3%, 100% 1%, 99.2% 8%, 100% 18%, 99.1% 27%,
+    100% 37%, 99.3% 47%, 100% 57%, 99.1% 68%,
+    100% 77%, 99.1% 87%, 100% 97%, 97% 99.3%,
+    92% 98.7%, 86% 100%, 78% 98.8%, 71% 99.7%,
+    63% 98.5%, 56% 100%, 49% 98.7%, 42% 99.8%,
+    35% 98.6%, 28% 100%, 21% 98.8%, 14% 99.6%,
+    7% 98.5%, 0 99.3%, .9% 91%, 0 82%, .8% 72%,
+    0 63%, .9% 53%, 0 43%, .8% 32%, 0 22%, .8% 12%
+  );
+}
+
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    url('/assets/grime.png') center / 330px 330px,
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(16,16,15,.04) 31px);
+  opacity: .17;
+  mix-blend-mode: multiply;
+  clip-path: polygon(0 1%,100% 0,99% 99%,1% 100%);
+}
+
+/* Preserve selos, fitas e alvos acima das camadas de textura. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) > :where(.scotch-tape,.scotch-tape-corner,[class*="absolute"]) {
+  z-index: 3;
+}
+
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover {
+  box-shadow: 9px 9px 0 var(--red), 13px 13px 0 var(--ink);
+}
+
+/* Textura de jornal em fichas/painéis claros que já existem no site.
+   Não substituir fundos escuros, pois isso afetaria a legibilidade. */
+.ruido-site-content :is(.newspaper-clip, .collage-rail) {
+  background-color: var(--paper-card);
+  background-image:
+    linear-gradient(22deg, rgba(16,16,15,.035), transparent 65%),
+    url('/assets/papel-fibra.jpg');
+  background-size: auto, 440px auto;
+}
+
+/* Fotos recortadas com rebarba irregular e impressão xerox. */
+.politician-mugshot {
+  background: #e4dbc6 url('/assets/papel-fibra.jpg') center / 360px auto;
+  clip-path: polygon(1% 0, 21% 1%, 40% 0, 62% 2%, 82% 0, 99% 1%,
+    100% 22%, 98% 43%, 100% 63%, 99% 82%, 100% 99%,
+    83% 98%, 65% 100%, 45% 98%, 27% 100%, 1% 99%,
+    2% 81%, 0 63%, 2% 44%, 0 24%);
+  filter: drop-shadow(2px 3px 0 var(--ink));
+}
+
+.politician-mugshot .xerox-img {
+  filter: grayscale(1) contrast(1.43) brightness(1.08);
+  border: 0;
+  outline: 1px solid rgba(16,16,15,.32);
+  outline-offset: -3px;
+}
+
+.politician-mugshot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  background: url('/assets/grime.png') center / 220px 220px;
+  opacity: .2;
+  mix-blend-mode: multiply;
+}
+
+/* Fotos gráficas em cartazes — nunca estiliza os SVG do mapa. */
+.ruido-site-content .ruido-photo-cutout {
+  background: var(--paper-card) url('/assets/papel-fibra.jpg') center / 360px;
+  padding: 5px;
+  border: 3px solid var(--ink);
+  clip-path: polygon(0 1%, 22% 0, 47% 2%, 74% 0, 100% 2%,
+    98% 26%, 100% 52%, 99% 76%, 100% 100%,
+    77% 98%, 51% 100%, 26% 98%, 0 100%, 1% 75%, 0 50%, 2% 23%);
+  box-shadow: 4px 4px 0 var(--red);
+}
+
+/* Etiquetas, carimbos e botões como pedaços de cartaz sobrepostos. */
+.ruido-site-content :is(.collage-index, .collage-sticker, .btn-punk) {
+  clip-path: polygon(1% 2%, 25% 0, 53% 3%, 78% 0, 100% 2%,
+    98% 48%, 100% 97%, 75% 100%, 49% 97%, 24% 100%, 0 98%);
+}
+
+.ruido-site-content :is(.cut-black, .cut-red, .cut-acid, .cut-white) {
+  text-shadow: 1px 1px 0 rgba(16,16,15,.19);
+  filter: drop-shadow(3px 4px 0 rgba(16,16,15,.24));
+}
+
+.ruido-site-content :is(h1,h2,h3).font-heavy {
+  letter-spacing: .015em;
+}
+
+.ruido-site-content .scotch-tape,
+.ruido-site-content .scotch-tape-corner {
+  background-image:
+    repeating-linear-gradient(88deg, transparent 0 5px, rgba(95,79,39,.085) 6px 7px),
+    linear-gradient(90deg, rgba(255,245,198,.87), rgba(255,230,148,.87));
+  backdrop-filter: blur(1px);
+}
+
+/* Corte final no rodapé escuro. Mantém contraste e não cobre links. */
+footer.bg-ink::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: var(--paper);
+  clip-path: polygon(0 0, 100% 0, 100% 29%, 95% 61%,
+    89% 28%, 82% 76%, 76% 42%, 69% 87%, 63% 49%,
+    55% 91%, 48% 42%, 40% 82%, 34% 35%, 27% 78%,
+    21% 38%, 14% 88%, 8% 40%, 3% 75%, 0 41%);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .ruido-site-content .collage-paper {
+    box-shadow: 5px 5px 0 var(--ink), 8px 8px 0 var(--red);
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+    inset: -2px;
+  }
+  .grain-overlay { opacity: .17; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light),
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover {
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   RUÍDO / LAMBE-LAMBE TOTAL — FASE 2
+   Fichários, mapas, painéis, navegação e etiquetas: impressão imperfeita.
+   Assets versionados, nenhuma imagem de terceiros carregada durante a navegação.
+   ========================================================================== */
+
+/* Parede de cartazes sucessivos, com desgaste de tinta entre camadas. */
+.collage-nav {
+  background-color: var(--ink);
+  background-image:
+    repeating-linear-gradient(140deg, transparent 0 15px, rgba(255,255,255,.043) 16px 18px),
+    radial-gradient(ellipse at 80% 0%, rgba(240,38,50,.30), transparent 55%),
+    url('/assets/grime.png');
+  background-size: auto, auto, 510px auto;
+  border-bottom-color: var(--red);
+  box-shadow: 0 7px 0 var(--ink), 0 10px 0 var(--acid);
+}
+
+.running-ticker {
+  font-style: normal;
+  text-shadow: 1px 1px 0 rgba(240,38,50,.25);
+}
+
+.ruido-site-content .ruido-hero-wall {
+  background-image:
+    radial-gradient(circle at 4px 4px, rgba(16,16,15,.07) 1px, transparent 1.7px),
+    linear-gradient(105deg, rgba(255,255,255,.61), transparent 43%),
+    radial-gradient(ellipse at 98% 78%, rgba(240,38,50,.17), transparent 57%),
+    url('/assets/papel-fibra.jpg');
+  background-size: 15px 15px, auto, auto, 420px auto;
+}
+
+.ruido-site-content .ruido-hero-wall h1 {
+  filter: drop-shadow(1px 3px 0 rgba(16,16,15,.13));
+}
+
+.ruido-site-content .ruido-hero-wall :is(.cut-black,.cut-red,.cut-acid) {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  outline: 1px solid rgba(16,16,15,.15);
+}
+
+/* Cartaz em papelão e recorte fotocopiado: sem alterar o conteúdo. */
+.ruido-site-content .ruido-poster-cutout {
+  isolation: isolate;
+  background:
+    linear-gradient(140deg, rgba(255,255,255,.35), rgba(16,16,15,.07)),
+    url('/assets/cardboard.png') center / 350px auto,
+    #e8ddc7;
+  border-style: solid;
+  outline: 2px dashed rgba(16,16,15,.65);
+  outline-offset: -9px;
+  box-shadow: 10px 11px 0 var(--ink), 16px 17px 0 var(--red);
+}
+
+.ruido-site-content .ruido-poster-cutout::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  opacity: .16;
+  background: url('/assets/grime.png') center / 320px auto;
+  mix-blend-mode: multiply;
+}
+
+.ruido-site-content .ruido-photo-cutout {
+  background:
+    url('/assets/papel-fibra.jpg') center / 340px auto,
+    var(--paper-card);
+  filter: saturate(.84) contrast(1.06);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+/* Fichas com tinta desgastada, véu xerox, bordas de tesoura e dobra. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+  box-shadow: 6px 7px 0 var(--ink), 10px 11px 0 rgba(240,38,50,.82);
+}
+
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+  background:
+    linear-gradient(165deg, rgba(255,255,255,.53), transparent 44%),
+    radial-gradient(circle at 7px 7px, rgba(16,16,15,.05) 1px, transparent 1.8px) 0 0 / 14px 14px,
+    url('/assets/papel-fibra.jpg') center / 370px auto,
+    var(--paper-card);
+}
+
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+  opacity: .18;
+  background:
+    url('/assets/grime.png') center / 280px auto,
+    repeating-linear-gradient(95deg, transparent 0 29px, rgba(16,16,15,.07) 30px 31px);
+  background-blend-mode: multiply;
+}
+
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover {
+  box-shadow: 10px 11px 0 var(--red), 14px 15px 0 var(--ink);
+}
+
+/* A estética não quebra tabelas ou painéis de dados com overflow horizontal. */
+.ruido-site-content table {
+  border-color: var(--ink);
+  background:
+    radial-gradient(circle at 8px 4px, rgba(16,16,15,.025) 1px, transparent 2px) 0 0 / 16px 16px,
+    url('/assets/papel-fibra.jpg') center / 520px auto,
+    var(--white);
+  box-shadow: 7px 8px 0 var(--ink), 10px 11px 0 var(--red);
+}
+
+.ruido-site-content table thead,
+.ruido-site-content table th {
+  background-color: var(--ink);
+  background-image:
+    repeating-linear-gradient(105deg, transparent 0 43px, rgba(255,255,255,.045) 44px 46px);
+}
+
+.ruido-site-content table :is(th,td) {
+  border-bottom-style: dashed;
+}
+
+.ruido-site-content table tbody tr:nth-child(odd) td {
+  background-color: rgba(255,250,230,.22);
+}
+
+.ruido-site-content table tbody tr:hover td {
+  background-color: rgba(221,255,53,.26);
+}
+
+/* Mapa, legendas e gráficos seguem legíveis e operáveis; vinheta apenas na moldura. */
+.ruido-site-content .ruido-map-frame {
+  isolation: isolate;
+  background-image:
+    radial-gradient(ellipse at 100% 0%, rgba(240,38,50,.13), transparent 57%),
+    radial-gradient(circle at 3px 4px, rgba(255,255,255,.043) 1px, transparent 1.8px);
+  background-size: auto, 19px 19px;
+  outline: 2px dashed var(--acid);
+  outline-offset: -10px;
+  box-shadow: 8px 9px 0 var(--ink), 12px 13px 0 var(--red);
+}
+
+.ruido-site-content .ruido-map-frame::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background: url('/assets/grime.png') center / 470px auto;
+  opacity: .095;
+  mix-blend-mode: screen;
+}
+
+/* Letras de jornal coladas sobre pôsteres escuros e vermelhos. */
+.ruido-site-content :is(.ruido-ink-poster, .ruido-red-poster) {
+  position: relative;
+  isolation: isolate;
+  background-image:
+    radial-gradient(circle at 5px 7px, rgba(255,255,255,.064) 1px, transparent 1.8px),
+    repeating-linear-gradient(106deg, transparent 0 72px, rgba(255,255,255,.06) 73px 76px),
+    url('/assets/grime.png');
+  background-size: 19px 19px, auto, 440px auto;
+  box-shadow: 9px 9px 0 var(--ink), 15px 15px 0 var(--red);
+}
+
+.ruido-site-content .ruido-red-poster {
+  background-color: var(--red);
+  box-shadow: 9px 9px 0 var(--ink), 15px 15px 0 var(--acid);
+}
+
+.ruido-site-content :is(.ruido-ink-poster,.ruido-red-poster)::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px;
+  z-index: 1;
+  height: 14px;
+  pointer-events: none;
+  background: var(--paper);
+  clip-path: polygon(0 4%, 4% 50%, 9% 10%, 14% 60%,
+    20% 5%, 25% 68%, 30% 12%, 36% 62%, 42% 7%,
+    49% 71%, 55% 13%, 61% 60%, 68% 4%, 74% 70%,
+    81% 14%, 88% 62%, 94% 8%, 100% 54%, 100% 100%, 0 100%);
+}
+
+/* Etiquetas como fitas impressas, mantendo focos e áreas clicáveis. */
+.ruido-site-content :is(.rubber-stamp, .collage-sticker) {
+  filter: drop-shadow(1px 2px 0 rgba(16,16,15,.25));
+}
+
+.ruido-site-content :is(.btn-punk, button[class*="bg-punk-"], a[class*="bg-punk-acid"], a[class*="bg-punk-red"]) {
+  clip-path: polygon(1% 0, 25% 1%, 51% 0, 74% 2%, 99% 0,
+    100% 26%, 99% 54%, 100% 76%, 98% 100%,
+    77% 98%, 51% 100%, 26% 99%, 0 100%, 1% 69%, 0 29%);
+}
+
+.ruido-site-content :is(input,select,textarea) {
+  background-image:
+    linear-gradient(175deg, rgba(255,255,255,.55), rgba(248,243,231,.2)),
+    url('/assets/papel-fibra.jpg');
+  background-size: auto, 370px auto;
+  border-radius: 0;
+}
+
+.ruido-site-content :is(input,select,textarea):focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+.ruido-site-content :is(.scotch-tape,.scotch-tape-corner) {
+  opacity: .94;
+  filter: drop-shadow(2px 2px 0 rgba(16,16,15,.18));
+}
+
+/* Textura de impressão da foto: não cobrir a informação nem o controle hover. */
+.politician-mugshot img {
+  image-rendering: auto;
+}
+
+.politician-mugshot::after {
+  opacity: .17;
+}
+
+/* Etiquetas de dossiê — recortes minúsculos em sobreposição. */
+.ruido-site-content :is(.ruido-paper-card,.collage-paper) :is(.bg-ink,.bg-punk-red,.bg-punk-acid)[class*="font-"] {
+  background-image: repeating-linear-gradient(112deg, transparent 0 17px, rgba(255,255,255,.055) 18px 19px);
+}
+
+/* Preserva navegação, ausência de horizontal scroll e controles em mobile. */
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+    box-shadow: 4px 5px 0 var(--ink), 6px 7px 0 var(--red);
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover {
+    box-shadow: 5px 6px 0 var(--red), 7px 8px 0 var(--ink);
+  }
+  .ruido-site-content :is(.ruido-ink-poster, .ruido-red-poster) {
+    box-shadow: 5px 5px 0 var(--ink), 8px 8px 0 var(--red);
+  }
+  .ruido-site-content .ruido-map-frame {
+    outline-offset: -6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ruido-site-content :is(.ruido-map-frame, .ruido-paper-card, .ruido-poster-cutout) {
+    transition: none !important;
+  }
+}
+
+
+/* Biblioteca compartilhada de interfaces: os componentes seguem sem mudança funcional. */
+.ruido-site-content .ruido-label-cutout {
+  clip-path: polygon(1% 0, 22% 2%, 54% 0, 81% 2%, 100% 0,
+    98% 50%, 100% 100%, 75% 98%, 49% 100%, 23% 97%, 0 100%);
+  background-image: repeating-linear-gradient(135deg, transparent 0 14px, rgba(255,255,255,.10) 15px 16px);
+  filter: drop-shadow(1px 2px 0 rgba(16,16,15,.22));
+}
+
+.ruido-site-content .ruido-press-cutout:not(.border-transparent):not(.underline) {
+  clip-path: polygon(1% 1%, 24% 0, 50% 2%, 76% 0, 100% 1%,
+    98% 25%, 100% 74%, 99% 99%, 77% 97%, 50% 100%, 23% 98%, 0 100%);
+  background-image: repeating-linear-gradient(120deg, transparent 0 21px, rgba(255,255,255,.08) 22px 23px);
+}
+
+.ruido-site-content .ruido-input-cutout {
+  border-radius: 0;
+  background-color: var(--white);
+  box-shadow: 4px 4px 0 var(--ink), 6px 6px 0 var(--red);
+}
+
+.ruido-site-content .ruido-table-wrap {
+  scrollbar-color: var(--red) var(--paper-card);
+  padding-bottom: 12px;
+}
+
+/* Evitar que fitas, recortes ou textura capturem toques em smartphones. */
+.ruido-site-content :is(.ruido-paper-card,.ruido-poster-cutout,.ruido-map-frame)::after {
+  pointer-events: none;
+}
+
+@media print {
+  .grain-overlay { display: none; }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+
+/* ==========================================================================
+   RUÍDO / ZINE MATERIAL — PAPEL DE VERDADE + XEROX + NEON
+   A borda e a textura são arquivos de papel digitalizados, NÃO clip-path.
+   /assets/ripped-paper-*.png fornece o recorte alfa com desgaste material.
+   /assets/textured-paper.png fornece fibra e amassados no miolo.
+   ========================================================================== */
+:root {
+  --ruido-neon: #d8ff24;
+  --ruido-ink: #141312;
+  --ruido-card-sheet: url('/assets/ripped-paper-white-05.png');
+  --ruido-paper-fibers: url('/assets/textured-paper.png');
+  --ruido-frame-photo: url('/assets/collage/frame-photo.webp');
+  --ruido-tape: url('/assets/collage/tape-paper.webp');
+}
+
+/* Cada cartão é um RECORTE INTEIRO, com centro de papel real. A sombra
+   acompanha o alfa da imagem, expondo o verde por baixo das rebarbas. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  color: var(--ruido-ink);
+  clip-path: none !important;
+  --ruido-card-sheet: url('/assets/ripped-paper-white-05.png');
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):nth-child(3n + 2) {
+  --ruido-card-sheet: url('/assets/ripped-paper-vintage-25.png');
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):nth-child(3n + 3) {
+  --ruido-card-sheet: url('/assets/ripped-paper-newsprint-50.png');
+}
+
+/* Camada inferior: o papel arrancado, COM textura fotográfica e alfatransparência. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: -11px -12px;
+  z-index: -2;
+  pointer-events: none;
+  background: var(--ruido-card-sheet) center / 100% 100% no-repeat;
+  border: 0 !important;
+  border-image: none !important;
+  border-radius: 0;
+  opacity: 1;
+  clip-path: none !important;
+  mix-blend-mode: normal;
+  filter:
+    drop-shadow(10px 11px 0 var(--ruido-neon))
+    drop-shadow(-2px -2px 0 rgba(17,16,15,.72));
+}
+
+/* Camada superior: fibra real (não ruído criado por gradiente). */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+  content: "";
+  position: absolute;
+  inset: -11px -12px;
+  z-index: -1;
+  pointer-events: none;
+  border: 0;
+  border-radius: 0;
+  background: var(--ruido-paper-fibers) center / 290px auto repeat;
+  -webkit-mask-image: var(--ruido-card-sheet);
+  mask-image: var(--ruido-card-sheet);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: .62;
+  mix-blend-mode: multiply;
+  clip-path: none !important;
+}
+
+/* Conteúdo real fica legível e clicável, fita não muda posição. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) > * {
+  z-index: 2;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) > :is(.scotch-tape,.scotch-tape-corner) {
+  position: absolute;
+  z-index: 10;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover::after {
+  filter:
+    drop-shadow(12px 13px 0 var(--ruido-neon))
+    drop-shadow(-2px -2px 0 rgba(17,16,15,.75));
+}
+
+/* Fotos: recorte preto-e-branco dentro de uma camada de cartolina fibrosa;
+   o aro também projeta sombra verde, sem recortar rostos. */
+.politician-mugshot {
+  overflow: visible;
+  clip-path: none !important;
+  border-color: transparent !important;
+  background: url('/assets/textured-paper.png') center / 230px auto, #ece2ce !important;
+  padding: 3px;
+  filter: none;
+}
+.politician-mugshot::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  z-index: 12;
+  pointer-events: none;
+  background: none;
+  border: 15px solid transparent;
+  border-image-source: var(--ruido-frame-photo);
+  border-image-slice: 17% 18%;
+  border-image-width: 15px;
+  border-image-repeat: stretch;
+  opacity: 1;
+  clip-path: none;
+  filter: drop-shadow(4px 5px 0 var(--ruido-neon));
+  mix-blend-mode: normal;
+}
+.politician-mugshot .xerox-img {
+  filter: grayscale(1) contrast(1.25) brightness(1.02);
+  border: none;
+}
+.politician-mugshot > .target-stamp { z-index: 20; }
+
+/* Foto editorial em destaques e pôsteres. */
+.ruido-site-content .ruido-photo-cutout {
+  position: relative;
+  clip-path: none;
+  background: url('/assets/textured-paper.png') center / 360px auto, #eee1ca;
+  border: 0;
+  padding: 9px;
+}
+.ruido-site-content .ruido-photo-cutout::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  z-index: 2;
+  background: none;
+  border: 18px solid transparent;
+  border-image-source: var(--ruido-frame-photo);
+  border-image-slice: 17% 18%;
+  border-image-width: 18px;
+  border-image-repeat: stretch;
+  clip-path: none;
+  pointer-events: none;
+  opacity: 1;
+  filter: drop-shadow(7px 6px 0 var(--ruido-neon));
+}
+
+/* Fitas recortadas de imagem, em vez de caixas amarelas CSS. */
+.ruido-site-content :is(.scotch-tape,.scotch-tape-corner),
+.ruido-site-content .ruido-card-tape {
+  background: var(--ruido-tape) center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+  opacity: 1;
+  filter: drop-shadow(1px 2px 1px rgba(0,0,0,.24));
+}
+.ruido-site-content .scotch-tape { width: 154px; height: 32px; }
+.ruido-site-content .ruido-card-tape { width: 116px; height: 31px; }
+
+/* Homepage: pôsteres xerox e lambe-lambe SOBRE o papel envelhecido.
+   Sem dados estáticos, textos falsos ou imagens de políticos inventados. */
+body.collage-body:has(.ruido-home-stage) {
+  background-color: #e9e1cf;
+  background-image:
+    url('/assets/collage/home-wall.svg'),
+    linear-gradient(135deg, rgba(246,238,218,.72), rgba(229,217,196,.81)),
+    url('/assets/grunge-wall.png'),
+    url('/assets/papel-fibra.jpg');
+  background-position: center top 84px, center, center top, left top;
+  background-size: min(1550px, 115vw) auto, cover, 580px 440px, 380px auto;
+  background-repeat: repeat-y, no-repeat, repeat, repeat;
+  background-attachment: scroll;
+}
+.ruido-home-stage {
+  position: relative;
+  isolation: isolate;
+}
+.ruido-home-stage > section {
+  position: relative;
+  z-index: 1;
+}
+/* O papel do cartaz principal recebe fibra no centro e borda neon recortada. */
+.ruido-site-content .ruido-home-stage .ruido-hero-wall {
+  background-color: #f0e5d1;
+  background-image:
+    linear-gradient(115deg, rgba(255,250,236,.15), rgba(255,250,236,.08)),
+    url('/assets/textured-paper.png'),
+    url('/assets/papel-fibra.jpg');
+  background-size: cover, 420px auto, 440px auto;
+  border-color: var(--ruido-ink);
+  box-shadow: 12px 12px 0 var(--ruido-neon), 19px 19px 0 var(--ruido-ink) !important;
+}
+.ruido-site-content .ruido-home-stage .ruido-hero-wall::before {
+  background: url('/assets/grime.png') center / 360px auto;
+  opacity: .13;
+  pointer-events: none;
+}
+/* Em seção inicial, cartões legíveis sob o desgaste de jornal. */
+.ruido-home-stage :is(.bg-paper,.bg-paper-light)[class*="border"] {
+  background-image: url('/assets/textured-paper.png');
+  background-size: 400px auto;
+}
+/* Carimbos verde-neon saem um pouco do recorte sem ocupar a grade. */
+.ruido-site-content :is(.ruido-label-cutout.bg-punk-acid,.collage-index.bg-punk-acid) {
+  background: url('/assets/collage/label-acid.svg') center / 100% 100% no-repeat;
+  clip-path: none;
+}
+
+/* Corrige o antigo brilho artificial: o recorte contém a própria granulação. */
+.grain-overlay { opacity: .12; }
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before,
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+    inset: -8px -7px;
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+    filter: drop-shadow(6px 6px 0 var(--ruido-neon));
+  }
+  body.collage-body:has(.ruido-home-stage) {
+    background-size: 940px auto, cover, 490px 370px, 360px auto;
+    background-position: center top 110px, center, center top, left top;
+  }
+  .ruido-site-content .ruido-home-stage .ruido-hero-wall {
+    box-shadow: 7px 7px 0 var(--ruido-neon), 11px 11px 0 var(--ruido-ink) !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+    transition: none !important;
+  }
+}
+
+/* RUÍDO visual asset phase: preserve content layout */
+
+
+/* ================================================================
+   RUÍDO / MURO DE SÃO PAULO — PALETA, COLAGENS E LEITURA (2026)
+   Preto de tinta, papel envelhecido, vermelho de cartaz e lima neon.
+   Apenas um papel por card; o ::after é tinta de contorno, não papel.
+   ================================================================ */
+:root {
+  --ruido-wall: #141311;
+  --ruido-ink: #171512;
+  --ruido-neon: #d3ff20;
+  --ruido-rust: #ac2c24;
+  --ruido-rust-dark: #842620;
+  --ruido-paper: #eee4d1;
+  --ruido-paper-light: #f6efdf;
+  --ruido-paper-muted: #e7dac4;
+  --ruido-muted-ink: #524b41;
+  --ruido-torn-edge: polygon(
+    .7% 1.1%, 4% .1%, 8% 1%, 12% .2%, 17% 1.1%,
+    22% .2%, 27% 1.2%, 32% .1%, 37% 1.1%, 43% .2%,
+    49% 1.2%, 55% .1%, 61% 1%, 67% .2%, 73% 1.2%,
+    79% .1%, 84% 1.1%, 90% .2%, 95% 1.3%, 99.3% .3%,
+    100% 4%, 99.1% 11%, 100% 18%, 99.2% 25%,
+    100% 33%, 99.1% 41%, 100% 49%, 99.2% 57%,
+    100% 65%, 99.1% 73%, 100% 81%, 99.2% 89%,
+    100% 96%, 99.1% 99.4%, 95% 98.8%, 90% 100%,
+    84% 98.8%, 78% 99.9%, 72% 98.8%, 66% 100%,
+    60% 98.9%, 54% 99.9%, 48% 98.8%, 42% 100%,
+    36% 98.9%, 30% 99.9%, 24% 98.9%, 18% 100%,
+    12% 98.7%, 7% 99.9%, 1% 98.9%, 0 94%,
+    .9% 86%, 0 78%, .8% 70%, 0 62%, .9% 54%,
+    0 46%, .8% 38%, 0 30%, .9% 22%, 0 14%, .8% 7%
+  );
+}
+
+/* O mural fotográfico é EXCLUSIVO da página inicial.
+   Não alterar/comprimir a arte original; uma imagem, sem repetição. */
+body.collage-body:has(.ruido-home-stage) {
+  background-color: var(--ruido-wall);
+  background-image:
+    linear-gradient(180deg, rgba(12,11,10,.34), rgba(12,11,10,.59)),
+    url('/assets/collage/ruido-mural-original.jpg');
+  background-position: center top, center top;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+}
+/* Sujeira fina de parede, sem neblina visual em texto e fotografias. */
+.grain-overlay {
+  opacity: .075;
+  mix-blend-mode: multiply;
+}
+.ruido-site-content {
+  isolation: isolate;
+}
+.ruido-site-content::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  inset: 0 -1rem 0;
+  height: auto;
+  opacity: .24;
+  background-image:
+    repeating-linear-gradient(92deg, transparent 0 210px, rgba(238,228,209,.12) 211px 214px, transparent 215px 420px),
+    url('/assets/grime.png');
+  background-size: auto, 620px auto;
+  background-repeat: repeat;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 160px, #000 85%, transparent);
+}
+
+/* Recorte de papel contínuo: tamanho determinado por texto, fotos e tabelas.
+   ::after forma o OUTLINE verde; ::before é a ÚNICA folha do card.
+   As silhuetas coincidem, mas a linha fluorescente sobressai em todo o perímetro. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+  --ruido-paper-tone: var(--ruido-paper);
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(2.15rem, 3vw, 3rem) !important;
+  color: var(--ruido-ink);
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: -14px -17px;
+  z-index: -2;
+  pointer-events: none;
+  border: 0 !important;
+  border-image: none !important;
+  background: var(--ruido-neon) !important;
+  opacity: 1 !important;
+  clip-path: var(--ruido-torn-edge) !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  mix-blend-mode: normal !important;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.52)) !important;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: -9px -12px;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--ruido-paper-tone);
+  background-image:
+    linear-gradient(145deg,rgba(255,255,255,.18),transparent 52%),
+    url('/assets/textured-paper.png'),
+    url('/assets/papel-fibra.jpg');
+  background-position: center;
+  background-size: auto, 450px auto, 580px auto;
+  background-repeat: no-repeat, repeat, repeat;
+  opacity: 1;
+  mix-blend-mode: normal;
+  box-shadow: none;
+  border: 0;
+  border-image: none;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  clip-path: var(--ruido-torn-edge) !important;
+  filter: drop-shadow(2px 3px 2px rgba(0,0,0,.24));
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover {
+  box-shadow: none !important;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover::after {
+  background: var(--ruido-neon) !important;
+  filter: drop-shadow(0 0 6px rgba(211,255,32,.24))
+          drop-shadow(0 2px 3px rgba(0,0,0,.52)) !important;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) > :is(.scotch-tape,.scotch-tape-corner,.ruido-card-tape,.absolute) {
+  position: absolute;
+  z-index: 3;
+}
+.ruido-site-content .ruido-paper-card.ruido-votacao-folha {
+  --ruido-paper-tone: var(--ruido-paper-light);
+  margin-block: 2.6rem;
+  padding: clamp(2.4rem, 3.2vw, 3.2rem) !important;
+}
+.ruido-site-content .ruido-paper-card.ruido-parlamentar-folha {
+  --ruido-paper-tone: var(--ruido-paper-muted);
+}
+.ruido-site-content .ruido-paper-card.ruido-votacao-folha > :not(.absolute) {
+  min-width: 0;
+  max-width: 100%;
+}
+.ruido-site-content .ruido-paper-card.ruido-votacao-folha :is(h3,p,a,span) {
+  overflow-wrap: anywhere;
+}
+/* O corpo dos textos volta a ser tinta sobre papel, não uma etiqueta neon. */
+.ruido-site-content .ruido-paper-card :is(p,li) {
+  line-height: 1.65;
+}
+.ruido-site-content .ruido-votacao-folha > p {
+  color: #302b25;
+  font-size: clamp(.84rem, .4vw + .78rem, .95rem);
+  line-height: 1.7;
+  border-left-color: var(--ruido-rust);
+}
+.ruido-site-content .ruido-paper-card h3 {
+  line-height: 1.17;
+  text-wrap: balance;
+}
+.ruido-site-content .ruido-paper-card :is(.text-ink\/60,.text-ink\/50,.text-ink\/40) {
+  color: var(--ruido-muted-ink);
+}
+/* Conserva a semântica de sim/não/abstenção, porém usa papel menos colorido. */
+.ruido-votacao-folha .bg-green-100 { background-color: #e5e9d9; }
+.ruido-votacao-folha .bg-red-100 { background-color: #efdfd7; }
+.ruido-votacao-folha .bg-yellow-100 { background-color: #f0e7cf; }
+.ruido-votacao-folha .bg-gray-100 { background-color: #e8e3d9; }
+.ruido-votacao-folha .bg-paper-card {
+  background-color: #eae1d2;
+}
+
+/* Marcas de rua ficam nos títulos e margens, não por cima de parágrafos.
+   Fita, xerox, stencil e cartazes levemente desalinhados. */
+.ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy {
+  position: relative;
+  max-width: 100%;
+  text-wrap: balance;
+  box-shadow: 4px 5px 0 rgba(12,11,10,.83);
+}
+.ruido-site-content .ruido-home-stage > section:nth-of-type(odd):not(:first-child) > .flex:first-child .font-heavy {
+  transform: rotate(-.8deg);
+}
+.ruido-site-content .ruido-home-stage > section:nth-of-type(even) > .flex:first-child .font-heavy {
+  transform: rotate(.7deg);
+}
+.ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 11%;
+  width: 72px;
+  height: 19px;
+  z-index: 3;
+  pointer-events: none;
+  background: url('/assets/collage/tape-paper.webp') center / 100% 100% no-repeat;
+  transform: rotate(-9deg);
+  opacity: .84;
+}
+
+/* Mais papel impresso, menos cores disputando o foco no conteúdo. */
+.ruido-site-content :is(.newspaper-clip,.collage-rail) {
+  background-color: var(--ruido-paper) !important;
+  color: var(--ruido-ink);
+  border-color: rgba(23,21,18,.64);
+}
+.ruido-site-content :is(.ruido-ink-poster,.ruido-red-poster) {
+  background-image:
+    linear-gradient(140deg, rgba(255,255,255,.025), transparent 66%),
+    url('/assets/grime.png');
+  background-size: auto, 510px auto;
+}
+.ruido-site-content .ruido-hero-wall {
+  background-color: var(--ruido-paper);
+}
+.ruido-site-content .ruido-home-stage > section > .border-b-4 {
+  border-bottom-color: var(--ruido-neon);
+  border-bottom-style: dashed;
+}
+.ruido-site-content .ruido-home-stage :is(.bg-punk-acid,.bg-punk-red) {
+  text-shadow: none;
+}
+.collage-nav {
+  border-bottom-color: var(--ruido-rust);
+  box-shadow: 0 7px 0 #12110f, 0 10px 0 var(--ruido-neon);
+}
+/* Tecido de fita e meio-tom permanecem nos detalhes, não no texto. */
+.grain-overlay { opacity: .07; }
+.collage-mascot,
+.collage-footer-mascot,
+.ruido-site-content img[src$="/assets/skull-xerox.svg"] {
+  filter: drop-shadow(0 0 3px rgba(211,255,32,.90))
+          drop-shadow(0 0 8px rgba(211,255,32,.60))
+          drop-shadow(2px 3px 0 rgba(15,15,15,.72));
+}
+.collage-brand {
+  border-color: var(--ruido-neon) !important;
+  box-shadow: 4px 4px 0 var(--ruido-neon), 7px 7px 0 #121212 !important;
+}
+
+@media (max-width: 768px) {
+  body.collage-body:has(.ruido-home-stage) {
+    background-size: cover, auto 100svh;
+    background-position: center top, center top;
+    background-repeat: no-repeat, no-repeat;
+    background-attachment: scroll, scroll;
+  }
+}
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+    padding: 1.95rem !important;
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+    inset: -5px -6px;
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+    inset: -9px -10px;
+  }
+  .ruido-site-content .ruido-paper-card.ruido-votacao-folha {
+    padding: 2.05rem 1.85rem !important;
+  }
+  .ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy::after {
+    width: 48px;
+    height: 14px;
+    top: -8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+    transition: none;
+  }
+}
+
+/* A impressão prioriza dados e documentos, sem fundo de parede nem neon. */
+@media print {
+  body.collage-body,
+  body.collage-body:has(.ruido-home-stage) {
+    background: #fff !important;
+    background-image: none !important;
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+    content: none !important;
+    display: none !important;
+  }
+  .grain-overlay { display: none !important; }
+}
+
+
+/* ================================================================
+   RUÍDO / XEROX & LAMBE-LAMBE: RETORNO AO PUNK (2026)
+   Muro e imagem ORIGINAL não são alterados. A brutalidade fica nas
+   bordas/cartazes/tinta; o miolo de texto mantém contraste forte.
+   ================================================================ */
+:root {
+  --zine-black: #171512;
+  --zine-paper: #f0e5d2;
+  --zine-old-paper: #e2d3bb;
+  --zine-red: #ac2c24;
+  --zine-acid: #d3ff20;
+  --zine-stroke: polygon(
+    .4% 1.2%, 5% .1%, 11% 1%, 17% .1%, 23% .8%, 29% .1%,
+    35% 1.1%, 41% .2%, 48% 1%, 55% .2%, 62% 1.1%,
+    69% .1%, 76% 1%, 83% .1%, 90% 1.1%, 96% .2%, 99.6% 1%,
+    99% 8%, 100% 17%, 99% 26%, 100% 36%, 99.1% 46%,
+    100% 56%, 99% 66%, 100% 76%, 99.1% 87%, 100% 97%,
+    97% 99%, 91% 98.9%, 84% 100%, 77% 99%, 70% 100%,
+    63% 99%, 56% 100%, 49% 99%, 42% 100%, 35% 99%,
+    28% 100%, 21% 99%, 14% 100%, 7% 99%, 1% 99.4%,
+    .8% 92%, 0 82%, .9% 72%, 0 62%, 1% 52%,
+    0 42%, .9% 32%, 0 22%, .8% 12%
+  );
+  --zine-ink-cut: polygon(
+    0 5%, 9% 0, 16% 3%, 25% 0, 34% 3%, 45% 0,
+    54% 4%, 63% 1%, 73% 3%, 83% 0, 92% 2%, 100% 0,
+    98% 18%, 100% 33%, 99% 47%, 100% 62%, 98% 82%, 100% 97%,
+    92% 100%, 84% 97%, 73% 100%, 61% 97%, 52% 100%, 41% 98%,
+    30% 100%, 20% 97%, 12% 100%, 0 97%, 2% 84%, 0 66%, 2% 48%, 0 29%
+  );
+}
+
+/* Cartaz com erro de registro, sem prejudicar a informação. */
+.grain-overlay {
+  opacity: .1;
+  mix-blend-mode: multiply;
+}
+.ruido-site-content :is(.collage-paper,.ruido-home-hero,.collage-rail,.newspaper-clip) {
+  background-color: var(--zine-paper);
+  background-image:
+    url('/assets/textured-paper.png'),
+    url('/assets/papel-fibra.jpg') !important;
+  background-size: 500px auto, 680px auto;
+  background-repeat: repeat, repeat;
+}
+.ruido-site-content :is(.ruido-ink-poster,.ruido-red-poster) {
+  background-image: url('/assets/grime.png') !important;
+  background-size: 420px auto;
+  border: 4px solid var(--zine-black);
+  box-shadow: 8px 8px 0 var(--zine-acid) !important;
+  overflow: visible;
+}
+.ruido-site-content :is(.ruido-ink-poster,.ruido-red-poster)::after {
+  content: "";
+  position: absolute;
+  display: block;
+  inset: auto 0 -1px;
+  height: 13px;
+  background: var(--zine-paper);
+  clip-path: polygon(0 70%, 8% 10%, 16% 60%, 23% 0, 32% 72%, 41% 14%, 52% 67%, 61% 0, 70% 73%, 79% 12%, 87% 65%, 96% 8%, 100% 52%, 100% 100%, 0 100%);
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+  --ruido-paper-tone: var(--zine-paper);
+  position: relative;
+  isolation: isolate;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(2rem, 2.75vw, 2.8rem) !important;
+  border: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  color: var(--zine-black);
+  overflow-wrap: anywhere;
+}
+
+/* Uma folha dimensionada pelo texto, um recorte verde sólido atrás.
+   Não usar PNG de tamanho fixo para delimitar o miolo do artigo. */
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: -6px -8px;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--ruido-paper-tone) !important;
+  background-image:
+    url('/assets/textured-paper.png'),
+    url('/assets/papel-fibra.jpg') !important;
+  background-position: center;
+  background-size: 430px auto, 650px auto;
+  background-repeat: repeat, repeat;
+  clip-path: var(--zine-stroke) !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  mix-blend-mode: normal;
+  opacity: 1 !important;
+  filter: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: -12px -14px;
+  z-index: -2;
+  pointer-events: none;
+  background: var(--zine-acid) !important;
+  clip-path: var(--zine-stroke) !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  border: 0 !important;
+  border-image: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover {
+  box-shadow: none !important;
+}
+.ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light):hover::after {
+  background: var(--zine-acid) !important;
+  filter: none !important;
+}
+.ruido-site-content .ruido-paper-card.ruido-votacao-folha {
+  --ruido-paper-tone: #f7efdf;
+  margin-block: 2.7rem;
+  padding: clamp(2.15rem, 3vw, 3rem) !important;
+}
+.ruido-site-content .ruido-paper-card.ruido-parlamentar-folha {
+  --ruido-paper-tone: var(--zine-old-paper);
+}
+.ruido-site-content .ruido-paper-card :is(p,li) {
+  color: #28231d;
+  line-height: 1.6;
+}
+.ruido-site-content .ruido-paper-card :is(h2,h3,h4) {
+  font-family: var(--heavy);
+  letter-spacing: .016em;
+  line-height: 1.14;
+  text-wrap: balance;
+  color: var(--zine-black);
+}
+.ruido-site-content .ruido-paper-card :is(a,button,span) {
+  overflow-wrap: anywhere;
+}
+
+/* Títulos de cartaz, carimbo, stencil e pichação nos espaços editoriais. */
+.ruido-site-content .ruido-home-stage > section > .flex:first-child .font-heavy,
+.ruido-site-content .collage-page > :is(h1,h2),
+.ruido-site-content :is(.collage-rail,.ruido-ink-poster,.ruido-red-poster) :is(h1,h2) {
+  font-family: var(--heavy);
+  letter-spacing: .02em;
+  font-stretch: condensed;
+  text-wrap: balance;
+}
+.ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy {
+  position: relative;
+  transform: rotate(-1deg);
+  box-shadow: 6px 6px 0 var(--zine-black) !important;
+}
+.ruido-site-content .ruido-home-stage > section:nth-child(even) > .flex:first-child .font-heavy {
+  transform: rotate(.7deg);
+}
+.ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 16%;
+  width: 69px;
+  height: 20px;
+  pointer-events: none;
+  background: url('/assets/collage/tape-paper.webp') center / 100% 100% no-repeat;
+  transform: rotate(8deg);
+  opacity: 1;
+}
+.ruido-eyebrow {
+  display: inline-block;
+  padding: .42rem .65rem;
+  background: var(--zine-black);
+  color: var(--zine-acid);
+  font: 700 .7rem var(--mono);
+  letter-spacing: .06em;
+  transform: rotate(-1deg);
+}
+.ruido-home-title {
+  font: 400 clamp(3.8rem, 8.6vw, 7.5rem)/.89 var(--heavy);
+  color: var(--zine-black);
+  text-transform: uppercase;
+}
+.ruido-home-title > span:first-child {
+  display: inline-block;
+  padding: .04em .15em .06em;
+  color: var(--zine-paper);
+  background: var(--zine-black);
+  transform: rotate(-1.2deg);
+  clip-path: var(--zine-ink-cut);
+}
+.ruido-home-subtitle {
+  display: inline-block;
+  margin-top: .12em;
+  padding: .14em .35em .18em;
+  background: var(--zine-red);
+  color: #fff2da;
+  font: 400 clamp(1.7rem, 3.6vw, 3.45rem)/.99 var(--marker);
+  text-transform: uppercase;
+  transform: rotate(1deg);
+  clip-path: var(--zine-ink-cut);
+}
+.ruido-home-intro {
+  color: #2d281f;
+  font: 600 clamp(.87rem, 1vw, 1rem)/1.6 var(--mono);
+  max-width: 36rem;
+}
+.ruido-home-sync {
+  display: inline-block;
+  background: var(--zine-old-paper);
+  color: var(--zine-black);
+  padding: .3rem .55rem;
+  font: 700 .69rem var(--mono);
+  border-left: 4px solid var(--zine-red);
+}
+.ruido-site-content .ruido-home-stage .ruido-hero-wall {
+  overflow: visible !important;
+  border: 4px solid var(--zine-black) !important;
+  background-color: var(--zine-paper);
+  background-image: url('/assets/textured-paper.png'), url('/assets/papel-fibra.jpg') !important;
+  background-size: 500px auto, 700px auto;
+  box-shadow: 12px 12px 0 var(--zine-acid), 18px 18px 0 var(--zine-black) !important;
+}
+.ruido-site-content .ruido-home-stage .ruido-hero-wall::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 16%;
+  width: 118px;
+  height: 27px;
+  z-index: 11;
+  pointer-events: none;
+  background: url('/assets/collage/tape-paper.webp') center / 100% 100% no-repeat;
+  opacity: 1;
+  transform: rotate(-4deg);
+}
+.ruido-site-content .ruido-home-stage .ruido-hero-wall::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  bottom: 10%;
+  width: 90px;
+  height: 15px;
+  background: var(--zine-red);
+  transform: rotate(-11deg);
+  pointer-events: none;
+  opacity: 1;
+}
+.ruido-home-art {
+  position: relative;
+  padding: 1rem;
+  background: var(--zine-black);
+  border: 5px solid var(--zine-black);
+  transform: rotate(3deg);
+  box-shadow: 7px 7px 0 var(--zine-acid);
+}
+.ruido-home-art::before {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 24px;
+  top: -12px;
+  left: 35%;
+  z-index: 2;
+  background: url('/assets/collage/tape-paper.webp') center / 100% 100% no-repeat;
+  transform: rotate(-9deg);
+}
+.ruido-home-art img { max-height: 235px; object-fit: contain; }
+.ruido-home-art-header {
+  padding: .6rem .4rem;
+  background: var(--zine-acid);
+  color: var(--zine-black);
+  font: 700 .72rem var(--mono);
+  text-align: center;
+}
+.ruido-home-art-footer {
+  padding: .6rem .4rem;
+  background: var(--zine-red);
+  color: #fff5e8;
+  font: 700 .76rem var(--mono);
+  text-align: center;
+}
+
+/* Botões impressos como manchas de tinta, mas com núcleo preenchido
+   opaco para leitura e foco. Irregularidade sutil, nada de blur. */
+.ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action),
+.ruido-nav .ruido-nav-link,
+.ruido-nav .ruido-nav-toggle {
+  clip-path: var(--zine-ink-cut) !important;
+  border-radius: 0 !important;
+  background-image: url('/assets/grime.png') !important;
+  background-size: 260px auto !important;
+  background-blend-mode: multiply;
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+  transition: background-color .14s ease, color .14s ease, transform .14s ease !important;
+}
+.ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 44px;
+  padding: .8rem 1.1rem;
+  border: 3px solid var(--zine-black);
+  font: 700 .78rem/1.17 var(--mono);
+  letter-spacing: .015em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: normal;
+}
+.ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action):hover {
+  transform: translateY(-2px) rotate(-1deg) !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+.ruido-site-content .ruido-action-primary,
+.ruido-site-content .btn-punk {
+  background-color: var(--zine-acid);
+  color: var(--zine-black);
+}
+.ruido-site-content :is(.btn-punk,.ruido-action-primary):hover {
+  background-color: var(--zine-black);
+  color: var(--zine-acid);
+}
+.ruido-site-content .ruido-action-dark {
+  background-color: var(--zine-black);
+  color: var(--zine-paper);
+  border-color: var(--zine-acid);
+}
+.ruido-site-content .ruido-action-dark:hover {
+  background-color: var(--zine-red);
+  color: white;
+}
+.ruido-site-content .ruido-action-light {
+  background-color: var(--zine-paper);
+  color: var(--zine-black);
+}
+.ruido-site-content .ruido-action-light:hover {
+  background-color: var(--zine-acid);
+}
+.ruido-site-content .ruido-home-stage :is(.ruido-hero-links,.ruido-home-search) .ruido-action {
+  min-width: 112px;
+}
+.ruido-site-content .ruido-home-stage .ruido-votacao-folha > p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.ruido-site-content .ruido-votacao-folha > p { overflow-wrap: anywhere; }
+
+/* Barra de navegação lambe-lambe; fundo da página original intocado. */
+.collage-nav.ruido-nav {
+  position: relative;
+  background-color: var(--zine-black) !important;
+  background-image: url('/assets/grime.png') !important;
+  background-size: 580px auto;
+  border-bottom: 5px solid var(--zine-acid) !important;
+  box-shadow: 0 7px 0 var(--zine-red) !important;
+}
+.collage-nav.ruido-nav::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--zine-black);
+  clip-path: var(--zine-ink-cut);
+  pointer-events: none;
+}
+.ruido-nav .collage-brand {
+  border: 3px solid var(--zine-acid) !important;
+  background: var(--zine-black);
+  transform: rotate(-5deg);
+  box-shadow: 4px 4px 0 var(--zine-red) !important;
+}
+.ruido-nav .collage-mascot { filter: none !important; }
+.ruido-nav .ruido-nav-edition {
+  display: inline-block;
+  padding: .4rem .5rem;
+  border-left: 4px solid var(--zine-acid);
+  background: var(--zine-red);
+  color: white;
+  transform: rotate(-2deg);
+}
+.ruido-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  min-height: 43px;
+  padding: .65rem .8rem;
+  color: var(--zine-paper);
+  border: 3px solid var(--zine-paper);
+  background-color: var(--zine-black);
+  font: 700 .73rem/1.15 var(--mono);
+  white-space: nowrap;
+  letter-spacing: .03em;
+}
+.ruido-nav-link:nth-child(2n) { transform: rotate(1deg); }
+.ruido-nav-link:nth-child(2n + 1) { transform: rotate(-1deg); }
+.ruido-nav-link:hover, .ruido-nav-link:focus-visible {
+  background-color: var(--zine-red);
+  border-color: var(--zine-acid);
+  color: #fff8ec;
+  transform: rotate(0deg);
+}
+.ruido-nav-link.is-active, .ruido-nav-link[aria-current="page"] {
+  background-color: var(--zine-acid);
+  color: var(--zine-black);
+  border-color: var(--zine-acid);
+}
+.ruido-nav-toggle {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem .8rem;
+  background-color: var(--zine-acid);
+  color: var(--zine-black);
+  border: 3px solid var(--zine-black);
+  font: 700 .8rem var(--mono);
+}
+.ruido-mobile-menu.is-open {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: .6rem;
+  padding-top: .9rem;
+  border-top: 2px dashed var(--zine-acid);
+}
+.ruido-mobile-menu .ruido-nav-link {
+  white-space: normal;
+  min-width: 0;
+  justify-content: space-between;
+}
+.ruido-status-strip {
+  background: var(--zine-acid);
+  border-bottom: 4px solid var(--zine-black);
+  color: var(--zine-black);
+}
+
+/* Fita real, legenda reduzida e busca construída como papel. */
+.ruido-home-search {
+  position: relative;
+  padding: 1rem;
+  background-color: #e8dac3;
+  background-image: url('/assets/textured-paper.png');
+  background-size: 420px auto;
+  border: 3px solid var(--zine-black);
+  box-shadow: 5px 5px 0 var(--zine-red);
+}
+.ruido-home-search::before {
+  content: "";
+  position: absolute;
+  right: 11%;
+  top: -11px;
+  width: 80px;
+  height: 24px;
+  background: url('/assets/collage/tape-paper.webp') center / 100% 100% no-repeat;
+  transform: rotate(5deg);
+  pointer-events: none;
+}
+.ruido-home-search label { font-family: var(--heavy); font-size: 1.15rem; }
+.ruido-flat-input { min-height: 44px; padding: .55rem .8rem !important; }
+.ruido-site-content :is(input,select,textarea) {
+  background-color: #faf6ea !important;
+  background-image: url('/assets/papel-fibra.jpg') !important;
+  background-size: 570px auto;
+  color: var(--zine-black);
+  border: 3px solid var(--zine-black);
+  border-radius: 0 !important;
+  box-shadow: 3px 3px 0 var(--zine-black);
+}
+.ruido-site-content :is(input,select,textarea):focus-visible {
+  outline: 3px solid var(--zine-acid) !important;
+  outline-offset: 2px !important;
+}
+.ruido-search-results {
+  background: var(--zine-paper) url('/assets/textured-paper.png') center / 360px auto;
+  border: 3px solid var(--zine-black);
+  box-shadow: 5px 5px 0 var(--zine-acid);
+}
+.ruido-search-result {
+  border: 2px solid var(--zine-black);
+  background: #fff8e9;
+}
+.ruido-search-result:hover { background: var(--zine-acid); }
+
+/* Painéis internos seguem o mesmo vocabulário visual, sem textura em texto. */
+.ruido-site-content :is(.collage-rail,.newspaper-clip) {
+  position: relative;
+  border: 3px solid var(--zine-black);
+  background: var(--zine-paper) url('/assets/textured-paper.png') center / 520px auto !important;
+  box-shadow: 7px 7px 0 var(--zine-acid);
+  color: var(--zine-black);
+}
+.ruido-site-content :is(.ruido-label-cutout,.rubber-stamp,.collage-sticker) {
+  background-image: url('/assets/grime.png') !important;
+  background-size: 290px auto;
+  filter: none !important;
+  border-radius: 0 !important;
+}
+.ruido-site-content .ruido-label-cutout {
+  clip-path: var(--zine-ink-cut) !important;
+  transform: rotate(-1deg);
+}
+.ruido-site-content .ruido-label-cutout:nth-of-type(even) { transform: rotate(1deg); }
+.ruido-site-content :is(.rubber-stamp,.rubber-stamp-green,.rubber-stamp-red) {
+  border-style: dashed !important;
+  box-shadow: 2px 2px 0 var(--zine-black);
+  transform: rotate(-1.7deg);
+}
+.ruido-site-content :is(.ruido-map-frame,.ruido-poster-cutout) {
+  background-color: var(--zine-paper);
+  box-shadow: 8px 8px 0 var(--zine-acid) !important;
+}
+.ruido-site-content table th {
+  background: var(--zine-black) url('/assets/grime.png') center / 400px auto;
+  color: var(--zine-paper);
+}
+.ruido-site-content table tr:nth-child(even) td { background: #e8dcc7; }
+.ruido-site-content table tr:hover td { background: #e0e8bf; }
+.ruido-site-content :is(.scotch-tape,.scotch-tape-corner,.ruido-card-tape) {
+  filter: drop-shadow(1px 2px 0 rgba(14,13,12,.4));
+}
+.politician-mugshot::after, .ruido-site-content .ruido-photo-cutout::after {
+  opacity: 1 !important;
+  border: 14px solid transparent !important;
+  border-image-source: var(--ruido-frame-photo) !important;
+  border-image-slice: 17% 18% !important;
+  border-image-width: 14px !important;
+  border-image-repeat: stretch !important;
+  filter: drop-shadow(4px 4px 0 var(--zine-acid));
+}
+.ruido-site-content .ruido-home-manifesto {
+  position: relative;
+  background: var(--zine-red) url('/assets/grime.png') center / 420px auto !important;
+  box-shadow: 10px 10px 0 var(--zine-acid);
+}
+.ruido-site-content .ruido-home-manifesto::before {
+  content: "";
+  position: absolute;
+  top: -11px;
+  right: 15%;
+  width: 100px;
+  height: 26px;
+  background: url('/assets/collage/tape-paper.webp') center / 100% 100% no-repeat;
+  pointer-events: none;
+  transform: rotate(-6deg);
+}
+.ruido-site-content .ruido-home-manifesto :is(h2,p) { color: #fff9ee; }
+
+/* Respiro para parágrafos grandes, menos distrações sobre dados. */
+.ruido-site-content .ruido-paper-card.ruido-votacao-folha p {
+  font-size: clamp(.84rem, .35vw + .79rem, .94rem);
+  line-height: 1.64;
+}
+.ruido-site-content .ruido-paper-card .text-ink\/60,
+.ruido-site-content .ruido-paper-card .text-ink\/50 {
+  color: #544d43 !important;
+}
+.ruido-site-content .ruido-home-stage .ruido-votacao-folha > p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Menos giro em celular, jamais cortar links, fotos, títulos ou números. */
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
+    padding: 1.7rem !important;
+  }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before { inset: -4px -5px; }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after { inset: -8px -9px; }
+  .ruido-site-content .ruido-paper-card.ruido-votacao-folha { padding: 1.85rem !important; }
+  .ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy {
+    transform: rotate(-.3deg);
+  }
+  .ruido-home-title { font-size: clamp(3.2rem, 13vw, 5.1rem); }
+  .ruido-home-subtitle { font-size: clamp(1.3rem, 6vw, 2.2rem); }
+  .ruido-home-search .flex { flex-wrap: wrap; }
+  .ruido-home-search :is(input,button) { width: 100%; }
+}
+@media print {
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after { content: none !important; display: none !important; }
+  .ruido-site-content .ruido-home-stage .ruido-votacao-folha > p { display: block; overflow: visible; }
+  .grain-overlay { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ruido-nav-link,.ruido-nav-toggle,
+  .ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action) { transition: none !important; }
+}
+
+
+/* ==========================================================
+   FUNDOS POR ROTA — HOME: COLAGEM / INTERNAS: CIMENTO
+   A distinção é feita pela presença de .ruido-home-stage.
+   O cimento é uma textura SVG leve de parede envelhecida,
+   sem fotografia nem cartazes atrás dos dados detalhados.
+   Os cartões de papel/texturas/tinta permanecem inalterados.
+   ========================================================== */
+body.collage-body:not(:has(.ruido-home-stage)) {
+  background-color: #555852;
+  background-image:
+    linear-gradient(115deg, rgba(16,19,18,.33) 0%, rgba(23,25,23,.1) 42%, rgba(12,16,14,.35) 100%),
+    url('/assets/collage/cement-wall.svg');
+  background-position: center center, center top;
+  background-size: cover, 1024px 1024px;
+  background-repeat: no-repeat, repeat;
+  background-attachment: fixed, fixed;
+}
+/* Mural sem alterações na home; evita mosaico da fotografia. */
+body.collage-body:has(.ruido-home-stage) {
+  background-color: var(--ruido-wall);
+  background-image:
+    linear-gradient(180deg, rgba(12,11,10,.34), rgba(12,11,10,.59)),
+    url('/assets/collage/ruido-mural-original.jpg');
+  background-position: center top, center top;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+}
+@media (max-width: 768px) {
+  body.collage-body:not(:has(.ruido-home-stage)) {
+    background-size: cover, 700px 700px;
+    background-repeat: no-repeat, repeat;
+    background-position: center, center top;
+    background-attachment: scroll, scroll;
+  }
+  body.collage-body:has(.ruido-home-stage) {
+    background-size: cover, auto 100svh;
+    background-attachment: scroll, scroll;
+  }
+}
+@media print {
+  body.collage-body,
+  body.collage-body:has(.ruido-home-stage),
+  body.collage-body:not(:has(.ruido-home-stage)) {
+    background: #fff !important;
+    background-image: none !important;
+  }
+}
+
+/* ============================================================
+   RUÍDO / MANIFESTO FOTOGRÁFICO — ASSET INDEPENDENTE DA HOME
+   A fotografia enviada pelo usuário ocupa APENAS o manifesto.
+   O mural original da landing e o cimento das páginas internas
+   permanecem intactos. Camada opaca apenas atrás do texto.
+   ============================================================ */
+.ruido-site-content .ruido-home-manifesto {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(270px, 31vw, 385px);
+  overflow: visible;
+  background-color: #191512 !important;
+  background-image:
+    linear-gradient(100deg, rgba(15,13,12,.58) 0%, rgba(15,13,12,.24) 55%, rgba(15,13,12,.08) 100%),
+    url('/assets/collage/manifesto-bg.jpg') !important;
+  background-size: cover, cover !important;
+  background-position: center, center 43% !important;
+  background-repeat: no-repeat, no-repeat !important;
+  border: 4px solid var(--zine-black);
+  box-shadow: 10px 10px 0 var(--zine-acid) !important;
+  padding: clamp(1.3rem, 2.5vw, 2.6rem);
+}
+.ruido-site-content .ruido-home-manifesto > div {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 730px;
+  padding: clamp(1.15rem, 2.4vw, 2rem);
+  background: #171512;
+  border: 3px solid var(--zine-acid);
+  box-shadow: 6px 6px 0 var(--zine-red);
+}
+.ruido-site-content .ruido-home-manifesto :is(h2,p) {
+  position: relative;
+  color: #fff7e7 !important;
+  text-shadow: none !important;
+}
+.ruido-site-content .ruido-home-manifesto h2 {
+  max-width: 18ch;
+  font-family: var(--heavy);
+  line-height: 1.07;
+}
+.ruido-site-content .ruido-home-manifesto p {
+  max-width: 48ch;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+.ruido-site-content .ruido-home-manifesto .ruido-action {
+  align-self: flex-end;
+  flex: 0 0 auto;
+  padding: .9rem 1.1rem;
+  border: 3px solid var(--zine-black);
+  background-color: var(--zine-acid);
+  color: var(--zine-black);
+  box-shadow: 5px 5px 0 var(--zine-black) !important;
+}
+.ruido-site-content .ruido-home-manifesto .ruido-action:hover {
+  background-color: #fff2d7;
+  color: var(--zine-black);
+}
+@media (max-width: 768px) {
+  .ruido-site-content .ruido-home-manifesto {
+    min-height: 325px;
+    background-position: center, 48% center !important;
+  }
+  .ruido-site-content .ruido-home-manifesto > div {
+    max-width: 100%;
+  }
+  .ruido-site-content .ruido-home-manifesto .ruido-action {
+    align-self: flex-start;
+  }
+}
+@media print {
+  .ruido-site-content .ruido-home-manifesto {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .ruido-site-content .ruido-home-manifesto > div {
+    background: #fff !important;
+    border: 2px solid #000;
+    box-shadow: none;
+  }
+  .ruido-site-content .ruido-home-manifesto :is(h2,p) {
+    color: #000 !important;
+  }
+}
+
+
+/* ============================================================
+   RUÍDO / RENDERIZAÇÃO LEVE (2026)
+   Mantém muro, cartazes, papel, rasgos e paleta.
+   Evita superfícies gigantes com filtros e repaint no scroll.
+   ============================================================ */
+
+/* O overlay fixo com mix-blend-mode fazia o navegador recompor a
+   viewport inteira a cada frame. O desgaste continua no topo e nos
+   próprios cartazes, mas agora é uma camada estática e pequena. */
+.grain-overlay {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto !important;
+  width: 100%;
+  height: 300px;
+  z-index: 0;
+  opacity: .09;
+  mix-blend-mode: normal !important;
+  background-size: 500px auto;
+}
+.ruido-site-content::before {
+  inset: 0 -1rem auto !important;
+  height: 560px !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  opacity: .12 !important;
+}
+/* A tinta permanece no mesmo lugar visualmente, mas o browser não
+   precisa recalcular fundos "fixed" em toda rolagem. */
+body.collage-body:has(.ruido-home-stage) {
+  background-attachment: scroll, scroll !important;
+}
+body.collage-body:not(:has(.ruido-home-stage)) {
+  /* Grunge já versionado e compactado no projeto: substitui o
+     SVG com feTurbulence (filtro fractal caro em celulares).
+     Base cinza mantém a aparência do concreto. */
+  background-color: #555852;
+  background-image:
+    linear-gradient(115deg,rgba(21,24,22,.6),rgba(42,44,40,.46)),
+    url('/assets/grunge-wall.png');
+  background-size: cover, 720px auto;
+  background-repeat: no-repeat, repeat;
+  background-attachment: scroll, scroll !important;
+}
+/* As seções fora da tela não precisam ser pintadas antes da rolagem.
+   Nenhum conteúdo é omitido da página, leitura ou busca. */
+@supports (content-visibility: auto) {
+  .ruido-site-content article.ruido-paper-card,
+  .ruido-site-content .ruido-votacao-folha,
+  .ruido-home-stage > section:nth-of-type(n + 3) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 280px;
+  }
+}
+@media (max-width: 900px), (hover: none) {
+  .grain-overlay { display: none !important; }
+  /* Tinta e fibra continuam nos cards; remover composição e filtros
+     de fotos somente em telas de toque mantém a rolagem responsiva. */
+  .politician-mugshot .target-red-layer,
+  .politician-mugshot .target-stamp { display: none !important; }
+  .ruido-site-content .scotch-tape,
+  .ruido-site-content .scotch-tape-corner { backdrop-filter: none !important; }
+  .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
+    background-image: url('/assets/papel-fibra.jpg') !important;
+    background-size: 460px auto;
+  }
+  body.collage-body:not(:has(.ruido-home-stage)) {
+    background-size: cover, 560px auto;
+    background-attachment: scroll, scroll !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ruido-site-content *,
+  .ruido-site-content *::before,
+  .ruido-site-content *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* ================================================================
+   RESTAURAÇÕES VISUAIS / FUNDO NÍTIDO, MANIFESTO E FOTO (2026)
+   ================================================================ */
+
+/* A imagem 1536x864 deve ser dimensionada pela VIEWPORT, e não pela
+   altura de milhares de pixels do documento. O ajuste anterior de
+   performance forçou background-attachment: scroll, que fez "cover"
+   ampliar a foto até a altura inteira da home e causou o borrão.
+   Uma camada fixa simples, sem blend-mode, evita essa ampliação. */
+body.collage-body:has(.ruido-home-stage) {
+  background-color: #141311;
+  background-image:
+    linear-gradient(180deg, rgba(12,11,10,.24), rgba(12,11,10,.42)),
+    url('/assets/collage/ruido-mural-original.jpg') !important;
+  background-position: center center, center center !important;
+  background-size: cover, cover !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
+/* Reduzir a opacidade das camadas decorativas sobre o mural sem alterar
+   a textura do papel e sem precisar criar arquivos de imagem maiores. */
+body.collage-body:has(.ruido-home-stage) > .grain-overlay {
+  opacity: .045 !important;
+}
+
+/* O manifesto principal está na rota /sobre, além do chamado na home.
+   Sua imagem própria não altera o mural de fundo da landing page. */
+.ruido-site-content .ruido-red-poster.ruido-manifesto-poster {
+  isolation: isolate;
+  background-color: #17120f !important;
+  background-image:
+    linear-gradient(90deg, rgba(16,13,12,.52) 0%, rgba(16,13,12,.27) 57%, rgba(16,13,12,.12) 100%),
+    url('/assets/collage/manifesto-bg.jpg') !important;
+  background-position: center center, center 43% !important;
+  background-size: cover, cover !important;
+  background-repeat: no-repeat, no-repeat !important;
+}
+.ruido-site-content .ruido-manifesto-poster > .absolute.inset-0 {
+  opacity: .1 !important;
+}
+.ruido-site-content .ruido-manifesto-poster .ruido-manifesto-copy {
+  background-color: rgba(17,14,12,.72);
+  border-left: 4px solid var(--zine-acid);
+  padding: clamp(1.05rem, 2vw, 1.75rem);
+  min-width: 0;
+}
+.ruido-site-content .ruido-manifesto-poster .ruido-manifesto-copy > p {
+  color: #fff7e7;
+}
+/* A fita sobre a foto e o papel são mantidos; o rosto de stencil
+   aparece com hover em mouse e com toque/teclado em tablets. */
+.politician-mugshot .target-red-layer {
+  display: block !important;
+}
+.politician-mugshot .target-stamp {
+  display: flex !important;
+}
+.politician-mugshot:hover .target-red-layer,
+.politician-mugshot:focus-visible .target-red-layer,
+.politician-mugshot[data-photo-active="true"] .target-red-layer,
+.group:hover .politician-mugshot .target-red-layer,
+.group\/photo:hover .target-red-layer {
+  opacity: .84 !important;
+}
+.politician-mugshot:hover .target-stamp,
+.politician-mugshot:focus-visible .target-stamp,
+.politician-mugshot[data-photo-active="true"] .target-stamp,
+.group:hover .politician-mugshot .target-stamp,
+.group\/photo:hover .target-stamp {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+.politician-mugshot:focus-visible {
+  outline: 3px solid var(--zine-acid);
+  outline-offset: 4px;
+}
+
+/* O popup de toque não deve disparar composições de blend no site inteiro. */
+@media (hover: none), (max-width: 900px) {
+  .politician-mugshot .target-red-layer { display: block !important; }
+  .politician-mugshot .target-stamp { display: flex !important; }
+}
+@media (max-width: 768px) {
+  body.collage-body:has(.ruido-home-stage) {
+    background-size: cover, cover !important;
+    background-attachment: fixed, fixed !important;
+    background-position: center top, center top !important;
+  }
+  .ruido-site-content .ruido-manifesto-poster .ruido-manifesto-copy {
+    background-color: rgba(17,14,12,.82);
+  }
+}
+@media print {
+  body.collage-body:has(.ruido-home-stage) {
+    background: white !important;
+  }
+  .ruido-site-content .ruido-manifesto-poster {
+    background: white !important;
+  }
+}
+
+
+/* Garantia Android/Chrome: alguns navegadores móveis ignoram
+   background-attachment: fixed no elemento raiz e dimensionam o "cover"
+   pela altura do documento. Esta camada tem SEMPRE a dimensão da viewport,
+   mantendo a fotografia nítida em telas touch e desktop.
+   A foto é exclusiva da home, não do manifesto ou das páginas internas. */
+body.collage-body:has(.ruido-home-stage) {
+  background-image: none !important;
+  background-color: #141311 !important;
+}
+body.collage-body:has(.ruido-home-stage)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #141311;
+  background-image:
+    linear-gradient(180deg, rgba(12,11,10,.24), rgba(12,11,10,.42)),
+    url('/assets/collage/ruido-mural-original.jpg');
+  background-repeat: no-repeat, no-repeat;
+  background-position: center center, center center;
+  background-size: cover, cover;
+}
+@media print {
+  body.collage-body:has(.ruido-home-stage)::before { content: none !important; }
+}
+
+
+/* ==============================================================
+   RUÍDO / LAMBE-LAMBE EM TINTA — 22/10/2026
+   Campos legíveis, botões com cerdas, collage exclusivo da /sobre.
+   Nenhum dos dois JPG originais é alterado. Desenho de pincel vetorial
+   leve, sem filtros de blur, GIFs nem texturas gigantes animadas.
+   ============================================================== */
+:root { --ruido-brush-mask: url('/assets/collage/brush-stroke.svg'); }
+
+/* A colagem brasileira/europeia que o usuário selecionou pertence
+   à PAREDE da rota /sobre inteira, não ao conteúdo do manifesto. */
+body.collage-body:has(.ruido-manifesto-page) {
+  background: #191411 !important;
+  background-image: none !important;
+}
+body.collage-body:has(.ruido-manifesto-page)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #17110f;
+  background-image:
+    linear-gradient(180deg, rgba(17,14,12,.32), rgba(17,14,12,.57)),
+    url('/assets/collage/manifesto-bg.jpg');
+  background-size: cover, cover;
+  background-position: center center, center center;
+  background-repeat: no-repeat, no-repeat;
+}
+/* O pôster principal deve ser apenas cartolina impressa, sem duplicar
+   o mural da parede dentro dele. O aviso da home volta a ser vermelho. */
+.ruido-site-content .ruido-red-poster.ruido-manifesto-poster {
+  background-color: var(--zine-red) !important;
+  background-image: url('/assets/grime.png') !important;
+  background-size: 440px auto !important;
+  background-repeat: repeat !important;
+  background-position: center !important;
+}
+.ruido-site-content .ruido-home-manifesto {
+  background-color: var(--zine-red) !important;
+  background-image: url('/assets/grime.png') !important;
+  background-size: 440px auto !important;
+  background-repeat: repeat !important;
+}
+.ruido-site-content .ruido-manifesto-poster .ruido-manifesto-copy {
+  background-color: rgba(23,19,16,.78);
+  border-left: 5px solid var(--zine-acid);
+}
+@media print {
+  body.collage-body:has(.ruido-manifesto-page)::before { content: none !important; }
+}
+
+/* Marquise contínua de texto: leve inclinação e impressão xerox.
+   Os dois segmentos têm a MESMA largura, criando uma repetição limpa. */
+.ruido-marquee-band {
+  overflow: hidden;
+  transform: skewY(-.4deg);
+  transform-origin: left center;
+  background: #d3ff20 !important;
+  border-top: 3px solid #151310 !important;
+  border-bottom: 4px solid #151310 !important;
+  white-space: nowrap;
+  min-height: 43px;
+}
+.ruido-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: ruido-bandeira 35s linear infinite;
+  will-change: transform;
+}
+.ruido-marquee-segment {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2.8rem;
+  min-height: 37px;
+  padding: .35rem 1.4rem;
+  color: #171512;
+  font: 800 .75rem/1.2 var(--mono);
+  letter-spacing: .08em;
+}
+.ruido-marquee-segment span:nth-child(2) { color: #8e241e; }
+.ruido-marquee-segment span:not(:last-child)::after {
+  content: " ✶";
+  color: #8e241e;
+  padding-left: 2.4rem;
+}
+@keyframes ruido-bandeira {
+  from { transform: translate3d(0,0,0); }
+  to { transform: translate3d(-50%,0,0); }
+}
+.ruido-marquee-band:hover .ruido-marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ruido-marquee-track { animation: none !important; will-change: auto; }
+}
+
+/* Os botões e abas são manchas de tinta, inspiradas nas cerdas secas do
+   exemplo. Aplicar a máscara SOMENTE ao controle, sem alterar textos,
+   cards, fotos ou links comuns. */
+.ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action,.ruido-flat-button),
+.ruido-site-content :is(button:not([role="switch"]),input:is([type="submit"],[type="button"],[type="reset"])),
+.ruido-nav :is(.ruido-nav-link,.ruido-nav-toggle),
+.ruido-site-content :is(a[class*="bg-punk-"],button[class*="bg-punk-"]) {
+  -webkit-mask-image: var(--ruido-brush-mask) !important;
+  mask-image: var(--ruido-brush-mask) !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  -webkit-mask-size: 100% 100% !important;
+  mask-size: 100% 100% !important;
+  clip-path: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding-inline: max(1.15rem, 1em) !important;
+  background-blend-mode: normal !important;
+  filter: none !important;
+  outline-offset: -2px;
+}
+.ruido-site-content .ruido-action,
+.ruido-site-content .btn-punk,
+.ruido-nav .ruido-nav-link {
+  min-height: 46px;
+}
+.ruido-nav .ruido-nav-link[aria-current="page"] {
+  color: #171512;
+  background-color: #d3ff20;
+}
+.ruido-site-content :is(.ruido-action,.btn-punk,.ruido-press-cutout):hover {
+  transform: translateY(-1px) !important;
+}
+.ruido-site-content :is(.ruido-action,.btn-punk,.ruido-press-cutout):focus-visible,
+.ruido-nav :is(.ruido-nav-link,.ruido-nav-toggle):focus-visible {
+  outline: 4px solid #d3ff20 !important;
+  outline-offset: -4px !important;
+}
+
+/* Campos editáveis não podem perder clareza nem recortar as letras:
+   miolo off-white, bordas de cerdas pretas, recorte limitado às pontas. */
+.ruido-site-content :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),select,textarea,.ruido-input-cutout) {
+  -webkit-mask-image: var(--ruido-brush-mask) !important;
+  mask-image: var(--ruido-brush-mask) !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-size: 100% 100% !important;
+  mask-size: 100% 100% !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  clip-path: none !important;
+  border: 4px solid #151310 !important;
+  border-radius: 0 !important;
+  min-height: 48px;
+  padding: .75rem 1.1rem !important;
+  background-color: #f8f0dd !important;
+  background-image: url('/assets/papel-fibra.jpg') !important;
+  background-size: 470px auto !important;
+  color: #171512 !important;
+  font-weight: 600;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.ruido-site-content select { padding-right: 1.9rem !important; }
+.ruido-site-content :is(input,select,textarea)::placeholder {
+  color: #63594b !important;
+  opacity: 1 !important;
+}
+.ruido-site-content :is(input,select,textarea):focus-visible {
+  outline: 3px solid #d3ff20 !important;
+  outline-offset: 0 !important;
+}
+
+/* A caveira da HOME vira impressão em papel fibroso. A linha verde está
+   no próprio SVG, chapada; nenhum drop-shadow ou halo externo. */
+.ruido-site-content .ruido-home-art.ruido-skull-paper {
+  background-color: #eadfca !important;
+  background-image: url('/assets/textured-paper.png'),url('/assets/papel-fibra.jpg') !important;
+  background-size: 420px auto,650px auto !important;
+  background-position: center !important;
+  border: 4px solid #171512 !important;
+  clip-path: polygon(2% 0,25% 1%,51% 0,78% 1%,99% 0,100% 24%,99% 50%,100% 76%,98% 100%,75% 99%,50% 100%,25% 99%,0 100%,1% 75%,0 49%,1% 23%) !important;
+  box-shadow: 8px 8px 0 #d3ff20 !important;
+  transform: rotate(2deg);
+}
+.ruido-skull-cutout {
+  background-color: #efe5d2;
+  background-image: url('/assets/papel-fibra.jpg');
+  background-size: 420px auto;
+  padding: .65rem .25rem;
+  border: 3px solid #171512;
+  position: relative;
+  isolation: isolate;
+}
+.ruido-site-content .ruido-skull-cutout img,
+.ruido-site-content .ruido-skull-cutout img[src$="/assets/skull-xerox.svg"],
+.ruido-home-art.ruido-skull-paper::after {
+  filter: none !important;
+  text-shadow: none !important;
+  mix-blend-mode: normal !important;
+}
+.ruido-site-content .ruido-skull-paper .ruido-home-art-header {
+  background: #171512 !important;
+  color: #efe5d2 !important;
+}
+.ruido-site-content .ruido-skull-paper .ruido-home-art-footer {
+  background: #ac2c24 !important;
+  color: #f8efdf !important;
+}
+/* Fita real, não aura projetada. */
+.ruido-home-art.ruido-skull-paper::before {
+  filter: none !important;
+}
+
+/* Dossiê: cada letra em um lambe-lambe individual, alternando preto,
+   vermelho e lima. Tipografia off-white com traço preto nas letras
+   sobre verde para manter contraste sem perder a paleta. */
+.ruido-politicos-headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25em .55em;
+  max-width: 100%;
+  color: #f6ecda;
+  font: 400 clamp(1.1rem, 3.75vw, 3.5rem)/1.07 var(--heavy);
+  letter-spacing: 0;
+  margin: .3rem 0 .65rem;
+  overflow-wrap: normal;
+}
+.ruido-politicos-palavra {
+  display: inline-flex;
+  align-items: center;
+  gap: .045em;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.ruido-politicos-letra {
+  display: inline-flex;
+  min-width: .55em;
+  align-items: center;
+  justify-content: center;
+  padding: .12em .09em .13em;
+  color: #f8f1e5 !important;
+  background: #171512;
+  box-shadow: 2px 3px 0 rgba(13,12,11,.9);
+  transform: rotate(-1deg);
+}
+.ruido-politicos-letra:nth-child(2n) { transform: rotate(1.5deg); }
+.ruido-politicos-letra[data-cor="1"] { background: #ac2c24; }
+.ruido-politicos-letra[data-cor="2"] {
+  background: #d3ff20;
+  color: #f8f1e5 !important;
+  -webkit-text-stroke: 1.8px #171512;
+  paint-order: stroke fill;
+  text-shadow: 1px 1px 0 #171512;
+}
+.ruido-politicos-subtitulo {
+  background: #171512 !important;
+  color: #f6ecda !important;
+  border-left: 5px solid #d3ff20 !important;
+  padding: .9rem 1.1rem !important;
+  box-shadow: 5px 5px 0 #ac2c24;
+  line-height: 1.6;
+}
+.ruido-politicos-header { border-bottom-color: #d3ff20 !important; }
+
+/* Legenda pode quebrar e continuar legível no celular; as palavras
+   do título quebram apenas entre si, não no meio dos recortes. */
+@media (max-width: 640px) {
+  .ruido-politicos-headline { font-size: clamp(.95rem, 3.65vw, 1.55rem); gap: .3em .55em; }
+  .ruido-politicos-letra { padding-inline: .06em; }
+  .ruido-marquee-segment { font-size: .7rem; min-height: 34px; }
+  body.collage-body:has(.ruido-manifesto-page)::before {
+    background-position: center center, 48% center;
+  }
+}
+
+
+/* ===============================================================
+   RUÍDO / LEITURA E TINTA — MAPA, CARTAZES E LINKS (22/10/2026)
+   No conteúdo, a mancha fica ATRÁS do texto, não por cima dele.
+   O mapa mantém sua superfície cinza e as cores dos estados.
+   =============================================================== */
+
+/* Mapa Brasil: impedir que as regras genéricas de papel/pôster
+   substituam o cinza original do mapa interativo. */
+.ruido-site-content .mapa-brasil .ruido-map-frame {
+  background-color: #444b46 !important;
+  background-image: none !important;
+  color: #f1eadc !important;
+  box-shadow: 8px 8px 0 #d3ff20 !important;
+}
+.ruido-site-content .mapa-brasil .ruido-map-canvas {
+  background-color: #4f5651 !important;
+  background-image: radial-gradient(#747d75 .85px,transparent .85px) !important;
+  background-size: 17px 17px !important;
+  box-shadow: inset 0 0 0 1px rgba(246,239,221,.16);
+}
+.ruido-site-content .mapa-brasil .ruido-map-frame > .flex:first-child {
+  color: #d3ff20;
+}
+
+/* Um retângulo editorial discreto para cada parágrafo sobre o papel
+   xerocado. Mantém as bordas rasgadas/textura da folha e reduz o ruído
+   somente atrás da leitura. Não pinta carimbos, fotos nem gráficos. */
+.ruido-site-content .ruido-paper-card p.font-mono:not([class*="text-paper"]):not([class*="text-white"]):not([class*="bg-"]),
+.ruido-site-content .ruido-paper-card > p:not([class*="text-paper"]):not([class*="text-white"]):not([class*="bg-"]),
+.ruido-site-content .ruido-paper-card blockquote {
+  background-color: rgba(251,247,238,.94) !important;
+  color: #26221d;
+  padding: .34rem .52rem !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.ruido-site-content .ruido-paper-card p.font-mono.border-l-4,
+.ruido-site-content .ruido-paper-card p.font-mono.border-l-3 {
+  padding-left: .85rem !important;
+  border-left-color: #ac2c24 !important;
+}
+.ruido-site-content .ruido-paper-card :is(li,td) > p {
+  background-color: rgba(251,247,238,.94);
+  color: #26221d;
+  padding: .2rem .42rem;
+}
+/* Ementa e resumo: contraste ainda melhor nas leituras longas. */
+.ruido-site-content .ruido-paper-card[aria-labelledby="cidadao-title"] > p,
+.ruido-site-content .ruido-paper-card[aria-labelledby="juridico-title"] > p {
+  max-width: 100%;
+  line-height: 1.68;
+  background-color: #fbf8ef !important;
+}
+.ruido-site-content .ruido-paper-card[aria-labelledby="cidadao-title"] h2,
+.ruido-site-content .ruido-paper-card[aria-labelledby="juridico-title"] h2 {
+  display: inline-block;
+  max-width: 100%;
+  padding: .2em .35em;
+  background-color: #f7ecda;
+}
+
+/* Links textuais recebem uma pincelada própria, nunca um halo.
+   NÃO se aplica a links que encapsulam imagens, cards, SVGs ou a
+   mini-lista de busca: esses permanecem acessíveis e sem recortes. */
+.ruido-site-content a:not(:has(img)):not(:has(svg)):not(:has(.ruido-paper-card)):not(:has(.politician-mugshot)):not(.ruido-search-result):not(.ruido-action):not(.btn-punk):not(.ruido-press-cutout):not(.ruido-proposition-text-link):not(.ruido-unmasked-text-link),
+footer a:not(:has(img)):not(:has(svg)):not(.ruido-press-cutout) {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  padding: .42em .72em !important;
+  color: #f9f0df !important;
+  background: #171512 url('/assets/grime.png') center / 320px auto !important;
+  clip-path: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  text-decoration: none !important;
+  overflow-wrap: anywhere;
+  filter: none !important;
+}
+.ruido-site-content a:not(:has(img)):not(:has(svg)):not(:has(.ruido-paper-card)):not(:has(.politician-mugshot)):not(.ruido-search-result):not(.ruido-action):not(.btn-punk):not(.ruido-press-cutout):not(.ruido-proposition-text-link):not(.ruido-unmasked-text-link):hover,
+footer a:not(:has(img)):not(:has(svg)):not(.ruido-press-cutout):hover {
+  background-color: #ac2c24 !important;
+  color: #fff7e9 !important;
+}
+.ruido-site-content a:not(:has(img)):not(:has(svg)):not(:has(.ruido-paper-card)):not(.ruido-search-result):focus-visible,
+footer a:focus-visible {
+  outline: 3px solid #d3ff20 !important;
+  outline-offset: 2px !important;
+}
+/* Também tratar links explicitamente no estilo CTA ou botão. */
+.ruido-site-content :is(a.btn-punk,a.ruido-action,a.ruido-press-cutout),
+.ruido-site-content button:not(:has(.h-full)):not(:has(svg)),
+.ruido-nav :is(.ruido-nav-link,.ruido-nav-toggle) {
+  -webkit-mask-image: var(--ruido-brush-mask) !important;
+  mask-image: var(--ruido-brush-mask) !important;
+  -webkit-mask-size: 100% 100% !important;
+  mask-size: 100% 100% !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  background-blend-mode: normal !important;
+}
+/* Um link-foto ou o card clicável não pode perder sua própria silhueta. */
+.ruido-site-content a:has(img),
+.ruido-site-content a:has(.ruido-paper-card),
+.ruido-site-content a.ruido-search-result {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+@media print {
+  .ruido-site-content .ruido-paper-card p.font-mono {
+    background: #fff !important;
+  }
+  .ruido-site-content a,footer a {
+    -webkit-mask: none !important;
+    mask: none !important;
+    color: #000 !important;
+  }
+}
+
+
+/* ===============================================================
+   RUÍDO / TIPOGRAFIA SEM CORTES + FILTROS EM TINTA (2026)
+   O recorte "dry brush" pertence à DECORAÇÃO, nunca ao texto longo.
+   =============================================================== */
+
+/* Manchetes de projetos frequentemente têm mais de 10 linhas.
+   A antiga máscara aplicada ao <a> inteiro cortava primeira/última
+   linha em telas estreitas. Agora o papel preto cresce com o texto;
+   somente a pincelada decorativa inferior tem máscara. */
+.ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 1.05rem 0 1.35rem !important;
+  padding: .78rem .85rem .92rem !important;
+  background: #191715 !important;
+  color: #f7efe1 !important;
+  border-left: 5px solid #ac2c24;
+  font-family: var(--heavy);
+  font-size: clamp(1.18rem,2.5vw,1.75rem);
+  line-height: 1.3 !important;
+  letter-spacing: .01em;
+  text-wrap: pretty;
+  overflow: visible !important;
+  overflow-wrap: anywhere;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  clip-path: none !important;
+  filter: none !important;
+}
+.ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title::after {
+  content: "";
+  position: absolute;
+  left: -.2rem;
+  right: -.2rem;
+  bottom: -.48rem;
+  height: .6rem;
+  z-index: 0;
+  pointer-events: none;
+  background: #191715;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
+}
+.ruido-site-content .ruido-paper-card h3.ruido-legible-vote-title {
+  display: inline-block;
+  max-width: 100%;
+  margin: .65rem 0 !important;
+  padding: .35rem .6rem !important;
+  background: #191715 !important;
+  color: #f7efe1 !important;
+  line-height: 1.25 !important;
+  border-left: 4px solid #d3ff20;
+  overflow-wrap: anywhere;
+  clip-path: none !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+}
+/* As duas classes de título são explicitamente excluídas da máscara
+   universal de links. Texto sempre à frente da tinta, sem clipping. */
+.ruido-site-content a.ruido-proposition-text-link,
+.ruido-site-content .ruido-paper-card h3 > a.ruido-proposition-text-link {
+  display: block !important;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #f7efe1 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  text-decoration: none !important;
+  white-space: normal !important;
+  line-height: inherit !important;
+  overflow: visible !important;
+  overflow-wrap: anywhere;
+  -webkit-mask: none !important;
+  -webkit-mask-image: none !important;
+  mask: none !important;
+  mask-image: none !important;
+  clip-path: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+.ruido-site-content a.ruido-proposition-text-link:hover {
+  color: #d3ff20 !important;
+  background: transparent !important;
+}
+.ruido-site-content a.ruido-proposition-text-link:focus-visible {
+  outline: 3px solid #d3ff20 !important;
+  outline-offset: 4px !important;
+}
+.ruido-site-content a.ruido-unmasked-text-link {
+  -webkit-mask: none !important;
+  mask: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+  border: 0 !important;
+  text-decoration: underline;
+  text-decoration-color: #ac2c24;
+  text-underline-offset: 3px;
+}
+/* Proteger qualquer outro link que seja manchete (incluindo novas
+   páginas), sem alterar os botões curtos. */
+.ruido-site-content .ruido-paper-card :is(h2,h3) > a:not(.btn-punk):not(.ruido-action) {
+  -webkit-mask: none !important;
+  mask: none !important;
+  clip-path: none !important;
+  white-space: normal !important;
+}
+
+/* Filtros: o PINCEL fica atrás das etiquetas e do cabeçalho.
+   O interior dos inputs e opções nunca é mascarado pelo painel.
+   Papel e fibra continuam visíveis no restante do formulário. */
+.ruido-site-content .ruido-filter-ink-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+.ruido-site-content .ruido-filter-ink-panel::selection { background-color: #d3ff20; }
+.ruido-site-content .ruido-filter-ink-header {
+  position: relative;
+  min-height: 3.25rem;
+  padding: .45rem .45rem .95rem !important;
+  border-bottom: 3px solid #d3ff20 !important;
+  overflow: visible;
+}
+.ruido-site-content .ruido-filter-ink-header > span:first-child {
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  padding: .75rem 1.05rem !important;
+  margin-left: -.3rem;
+  color: #f9efe1 !important;
+  background: transparent !important;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.ruido-site-content .ruido-filter-ink-header > span:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #191715;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
+}
+.ruido-site-content .ruido-filter-ink-header > span:nth-child(2) {
+  background-color: #ac2c24 !important;
+  color: #fff7e9 !important;
+  padding: .5rem .65rem !important;
+  font-weight: 800;
+}
+.ruido-site-content .ruido-filter-ink-form {
+  position: relative;
+  padding: .55rem 0 .4rem;
+}
+.ruido-site-content .ruido-filter-ink-form label {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  display: inline-block !important;
+  max-width: 100%;
+  margin: 0 0 .4rem !important;
+  padding: .48rem .75rem !important;
+  color: #fff7e9 !important;
+  background: transparent !important;
+  font-weight: 800;
+  line-height: 1.3;
+  white-space: normal;
+}
+.ruido-site-content .ruido-filter-ink-form label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: #191715;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
+}
+/* Input/select mantém texto e setas legíveis: só o rótulo é impressão
+   de tinta seca; o campo continua papel off-white com contorno preto. */
+.ruido-site-content .ruido-filter-ink-form :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  padding: .75rem 1rem !important;
+  line-height: 1.45 !important;
+  min-height: 50px !important;
+  color: #171512 !important;
+  background-color: #fff8eb !important;
+  box-shadow: none !important;
+}
+/* Filtros dentro do mapa têm seleção de ano/indicador; nunca recortar
+   as opções nativas nem os nomes compridos dos indicadores. */
+.ruido-site-content .mapa-brasil .ruido-filter-ink-form select {
+  -webkit-mask: none !important;
+  mask: none !important;
+  border: 3px solid #171512 !important;
+  background: #fff7e5 !important;
+}
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {
+    padding: .85rem .75rem 1rem !important;
+    font-size: clamp(1.18rem, 5.35vw, 1.55rem);
+    line-height: 1.28 !important;
+    letter-spacing: .005em;
+  }
+  .ruido-site-content .ruido-filter-ink-header {
+    gap: .4rem;
+  }
+  .ruido-site-content .ruido-filter-ink-form label {
+    font-size: .71rem;
+  }
+}
+@media print {
+  .ruido-site-content .ruido-filter-ink-header > span:first-child::before,
+  .ruido-site-content .ruido-filter-ink-form label::before,
+  .ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title::after {
+    content: none !important;
+  }
+}
+
+
+/* ================================================================
+   TINTA REAL NOS BOTÕES (PC + TOUCH) / CORREÇÃO DE PUBLICAÇÃO 2026-10-23
+   Antes a máscara era aplicada ao CONTROLE INTEIRO: o desenho quase
+   retangular recortava as próprias letras. Agora o texto permanece
+   intocado e somente a camada de tinta recebe a máscara vetorial.
+   ================================================================ */
+.ruido-nav :is(a.ruido-nav-link,button.ruido-nav-toggle),
+.ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button) {
+  --ruido-ink-fill: #d3ff20;
+  position: relative !important;
+  isolation: isolate;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: .35rem;
+  padding: .7rem 1.65rem !important;
+  min-height: 48px;
+  max-width: 100%;
+  text-align: center;
+  line-height: 1.25;
+  white-space: normal;
+  overflow: visible !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  -webkit-mask: none !important;
+  -webkit-mask-image: none !important;
+  mask: none !important;
+  mask-image: none !important;
+  text-decoration: none;
+}
+.ruido-nav :is(a.ruido-nav-link,button.ruido-nav-toggle)::before,
+.ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button)::before {
+  content: "";
+  position: absolute;
+  inset: -3px -5px;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--ruido-ink-fill) !important;
+  -webkit-mask-image: var(--ruido-brush-mask);
+  mask-image: var(--ruido-brush-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.ruido-nav a.ruido-nav-link {
+  /* Tinta off-white CONTRASTA com o cabeçalho preto do PC.
+     Antes era preto sobre preto, parecendo link sem fundo. */
+  --ruido-ink-fill: #f8f0df;
+  color: #191715;
+}
+.ruido-nav a.ruido-nav-link:is(:hover,:focus-visible) {
+  --ruido-ink-fill: #ac2c24;
+  color: #fff5e7;
+}
+.ruido-nav a.ruido-nav-link:is(.is-active,[aria-current="page"]) {
+  --ruido-ink-fill: #d3ff20;
+  color: #191715;
+}
+.ruido-nav button.ruido-nav-toggle {
+  --ruido-ink-fill: #d3ff20;
+  color: #191715;
+}
+.ruido-site-content :is(a.ruido-action-primary,button.ruido-action-primary,a.btn-punk,button.btn-punk,button.ruido-flat-button) {
+  --ruido-ink-fill: #d3ff20;
+  color: #191715;
+}
+.ruido-site-content :is(a.ruido-action-primary,button.ruido-action-primary,a.btn-punk,button.btn-punk):hover {
+  --ruido-ink-fill: #191715;
+  color: #d3ff20;
+}
+.ruido-site-content :is(a.ruido-action-dark,button.ruido-action-dark,button.btn-punk-dark) {
+  --ruido-ink-fill: #191715;
+  color: #fff5e7;
+}
+.ruido-site-content :is(a.ruido-action-dark,button.ruido-action-dark,button.btn-punk-dark):hover {
+  --ruido-ink-fill: #ac2c24;
+  color: #fff5e7;
+}
+.ruido-site-content :is(a.ruido-action-light,button.ruido-action-light) {
+  --ruido-ink-fill: #f9f0df;
+  color: #191715;
+}
+.ruido-site-content :is(a.ruido-action-light,button.ruido-action-light):hover {
+  --ruido-ink-fill: #d3ff20;
+  color: #191715;
+}
+.ruido-site-content :is(a.btn-punk-red,button.btn-punk-red) {
+  --ruido-ink-fill: #ac2c24;
+  color: #fff5e7;
+}
+.ruido-site-content :is(a.btn-punk-red,button.btn-punk-red):hover {
+  --ruido-ink-fill: #191715;
+  color: #fff5e7;
+}
+.ruido-nav :is(.ruido-nav-link,.ruido-nav-toggle):focus-visible,
+.ruido-site-content :is(.ruido-action,.btn-punk,.ruido-press-cutout,.ruido-flat-button):focus-visible {
+  outline: 3px solid #d3ff20 !important;
+  outline-offset: 5px !important;
+}
+/* Botões pequenos não podem ter texto cortado por máscaras de cerdas. */
+@media (max-width: 640px) {
+  .ruido-nav :is(a.ruido-nav-link,button.ruido-nav-toggle),
+  .ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button) {
+    padding: .7rem 1.2rem !important;
+  }
+}
+@media print {
+  .ruido-nav :is(a.ruido-nav-link,button.ruido-nav-toggle)::before,
+  .ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button)::before {
+    content: none !important;
+  }
+  .ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk) {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+  }
+}
+
+
+/* Navegação impressa: a máscara pertence APENAS à tinta que fica
+   atrás das letras. 'ruido-nav-brush' é aplicada aos links do PC e
+   aos do menu móvel, sem criar um segundo botão no desktop. */
+.ruido-nav a.ruido-nav-brush {
+  --ruido-ink-fill: #f8f0df;
+  color: #191715 !important;
+  background: transparent !important;
+  border: 0 !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  clip-path: none !important;
+  isolation: isolate !important;
+  position: relative !important;
+  min-height: 46px;
+  padding: .75rem 1.35rem !important;
+  font-weight: 800;
+  z-index: 0;
+}
+.ruido-nav a.ruido-nav-brush::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -3px -5px !important;
+  z-index: -1 !important;
+  background: var(--ruido-ink-fill) !important;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  pointer-events: none !important;
+}
+.ruido-nav a.ruido-nav-brush:hover,
+.ruido-nav a.ruido-nav-brush:focus-visible {
+  --ruido-ink-fill: #ac2c24;
+  color: #fff5e7 !important;
+}
+.ruido-nav a.ruido-nav-brush:is(.is-active,[aria-current="page"]) {
+  --ruido-ink-fill: #d3ff20;
+  color: #191715 !important;
+}
+@media (min-width: 768px) {
+  .ruido-nav button.ruido-nav-toggle,
+  .ruido-nav #ruido-menu-mobile {
+    display: none !important;
+  }
+}
+
+/* Responsividade da navbar: o estilo visual de pincelada tem maior
+   especificidade que md:hidden. O botão MENU deve existir somente em
+   telas menores que 768px, onde os links principais ficam ocultos. */
+@media (min-width: 768px) {
+  .ruido-nav button.ruido-nav-toggle {
+    display: none !important;
+  }
+  .ruido-nav nav.ruido-mobile-menu {
+    display: none !important;
+  }
+}
+
+
+/* NAVBAR DEFINITIVA: empilhamento explícito, sem z-index negativo.
+   A tinta ocupa a camada 0; rótulos/ícones ficam na camada 1.
+   Evita texto preto invisível no header quando a máscara não pinta. */
+.ruido-nav a.ruido-nav-brush {
+  --ruido-ink-fill: #f8f0df;
+  isolation: isolate !important;
+  position: relative !important;
+  color: #181613 !important;
+  background-color: transparent !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  text-shadow: none !important;
+}
+.ruido-nav a.ruido-nav-brush::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -3px -6px !important;
+  z-index: 0 !important;
+  background: var(--ruido-ink-fill) !important;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+}
+.ruido-nav a.ruido-nav-brush > .ruido-nav-label,
+.ruido-nav a.ruido-nav-brush > .ruido-nav-icon {
+  position: relative !important;
+  z-index: 1 !important;
+  color: inherit;
+  flex-shrink: 0;
+}
+.ruido-nav a.ruido-nav-brush:hover,
+.ruido-nav a.ruido-nav-brush:focus-visible {
+  --ruido-ink-fill: #ad2e26;
+  color: #fff8eb !important;
+}
+.ruido-nav a.ruido-nav-brush:is(.is-active,[aria-current="page"]) {
+  --ruido-ink-fill: #d3ff20;
+  color: #171512 !important;
+}
+/* Logo ganha tinta atrás do carimbo editorial, sem perder contraste. */
+.ruido-nav .ruido-nav-edition { color: #fff8eb !important; }
+/* MENU pertence ao mobile, nunca ao desktop. */
+@media (min-width: 768px) {
+  .ruido-nav button.ruido-nav-toggle,
+  .ruido-nav #ruido-menu-mobile { display: none !important; }
+}
+
+/* Votações: só os cards visíveis entram no layout e pintura enquanto
+   se percorre a lista; a textura de papel permanece nos cards. */
+.ruido-site-content .ruido-pauta-list > .ruido-paper-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 540px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ruido-site-content .ruido-pauta-list > .ruido-paper-card {
+    transition: none !important;
+  }
+}
+
+
+/* Performance mobile exclusiva de /pautas: os papéis continuam com
+   textura e tinta, mas removemos camadas constantemente repintadas e
+   animações fora da área de conteúdo. */
+@media (max-width: 900px), (pointer: coarse) {
+  body:has(.ruido-pautas-page) .grain-overlay {
+    display: none !important;
+  }
+  body:has(.ruido-pautas-page) .ruido-marquee-track {
+    animation: none !important;
+    will-change: auto !important;
+    transform: translate3d(0,0,0) !important;
+  }
+  .ruido-site-content .ruido-pautas-page .ruido-paper-card {
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: none !important;
+  }
+  .ruido-site-content .ruido-pautas-page .ruido-pauta-list > .ruido-paper-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
+  }
+}
+
+/* ================================================================
+   RUÍDO / PARIDADE VISUAL DESKTOP + MOBILE (2026-10-23)
+   A mesma paleta e o mesmo recorte de tinta são usados em todas as
+   telas. Somente a organização dos links muda com o breakpoint.
+   ================================================================ */
+.ruido-nav {
+  --ruido-nav-paper: #f8f0df;
+  --ruido-nav-ink: #191715;
+  --ruido-nav-accent: #d3ff20;
+  --ruido-nav-alert: #ac2c24;
+}
+.ruido-nav a.ruido-nav-brush,
+.ruido-nav .ruido-mobile-menu a.ruido-nav-brush {
+  --ruido-ink-fill: var(--ruido-nav-paper);
+  color: var(--ruido-nav-ink) !important;
+  font-family: var(--mono);
+  font-weight: 800;
+  letter-spacing: .045em;
+  transform: none !important;
+  text-shadow: none !important;
+}
+.ruido-nav a.ruido-nav-brush::before {
+  background-color: var(--ruido-ink-fill) !important;
+  z-index: 0 !important;
+}
+.ruido-nav a.ruido-nav-brush:is(:hover,:focus-visible),
+.ruido-nav .ruido-mobile-menu a.ruido-nav-brush:is(:hover,:focus-visible) {
+  --ruido-ink-fill: var(--ruido-nav-alert);
+  color: #fff5e7 !important;
+}
+.ruido-nav a.ruido-nav-brush:is(.is-active,[aria-current="page"]),
+.ruido-nav .ruido-mobile-menu a.ruido-nav-brush:is(.is-active,[aria-current="page"]) {
+  --ruido-ink-fill: var(--ruido-nav-accent);
+  color: var(--ruido-nav-ink) !important;
+}
+.ruido-nav a.ruido-nav-brush > .ruido-nav-label,
+.ruido-nav a.ruido-nav-brush > .ruido-nav-icon {
+  position: relative !important;
+  z-index: 1 !important;
+}
+/* Componentes de ação recebem tinta idêntica no PC e no toque;
+   texto não é mascarado (apenas o pseudo-elemento decorativo). */
+.ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button) {
+  -webkit-mask: none !important;
+  mask: none !important;
+  clip-path: none !important;
+  transform: none !important;
+}
+.ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button)::before {
+  z-index: -1;
+  -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+  mask: var(--ruido-brush-mask) center / 100% 100% no-repeat !important;
+}
+@media (min-width: 768px) {
+  .ruido-nav button.ruido-nav-toggle,
+  .ruido-nav #ruido-menu-mobile { display: none !important; }
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .35rem;
+  }
+  .ruido-nav a.ruido-nav-brush {
+    padding: .7rem 1rem !important;
+    min-height: 46px;
+  }
+}
+@media (max-width: 767px) {
+  .ruido-nav nav[aria-label="Navegação principal"] { display: none !important; }
+}
+
+
+/* Navbar RUÍDO: tinta real de pincel, sobreposta por trás do texto.
+   PC e celular compartilham EXATAMENTE a mesma superfície visual.
+   Não usar clip-path no link: os recortes pertencem somente à tinta. */
+.ruido-nav a.ruido-nav-brush {
+  --ruido-ink-fill: #eee8da;
+  position: relative !important;
+  isolation: isolate !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  outline-offset: 5px;
+  box-shadow: none !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  min-height: 52px;
+  padding: .75rem 1.3rem !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  color: #151310 !important;
+  text-decoration: none !important;
+}
+.ruido-nav a.ruido-nav-brush::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: -5px -8px !important;
+  background: var(--ruido-ink-fill) !important;
+  -webkit-mask: url('/assets/collage/brush-stroke.svg') center / 100% 100% no-repeat !important;
+  mask: url('/assets/collage/brush-stroke.svg') center / 100% 100% no-repeat !important;
+  clip-path: none !important;
+  opacity: 1 !important;
+  z-index: 0 !important;
+  pointer-events: none;
+}
+.ruido-nav a.ruido-nav-brush > :is(.ruido-nav-label,.ruido-nav-icon) {
+  position: relative !important;
+  z-index: 1 !important;
+  color: inherit !important;
+}
+.ruido-nav a.ruido-nav-brush:is(:hover,:focus-visible) {
+  --ruido-ink-fill: #ac2c24;
+  color: #fff5e7 !important;
+}
+.ruido-nav a.ruido-nav-brush:is(.is-active,[aria-current="page"]) {
+  --ruido-ink-fill: #d3ff20;
+  color: #151310 !important;
+}
+@media (min-width: 768px) {
+  .ruido-nav nav[aria-label="Navegação principal"] { display: flex !important; }
+  .ruido-nav button.ruido-nav-toggle,
+  .ruido-nav #ruido-menu-mobile { display: none !important; }
+}
+@media (max-width: 767px) {
+  .ruido-nav nav[aria-label="Navegação principal"] { display: none !important; }
+}
+/* Espaçamento do menu: as bordas das pinceladas não devem se tocar.
+   O espaço é medido entre superfícies pintadas (pseudo-elementos), não só links. */
+@media (min-width: 1280px) {
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    column-gap: 1.95rem !important;
+    row-gap: .8rem !important;
+  }
+  .ruido-nav nav[aria-label="Navegação principal"] > a.ruido-nav-brush {
+    padding-inline: 1.45rem !important;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    column-gap: 1.15rem !important;
+    row-gap: .75rem !important;
+  }
+  .ruido-nav nav[aria-label="Navegação principal"] > a.ruido-nav-brush {
+    padding-inline: 1.05rem !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    column-gap: .85rem !important;
+    row-gap: .75rem !important;
+  }
+}
+.ruido-nav nav[aria-label="Navegação principal"] > a.ruido-nav-brush::before {
+  left: -4px !important;
+  right: -4px !important;
+}
+
+/* Um único papel por seção: conteúdo interno é linha editorial, não outro card. */
+.ruido-dossie-section {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  background: #efe5d5;
+  color: #191715;
+  border: 0;
+  border-left: 5px solid #d3ff20;
+  box-shadow: 5px 5px 0 rgba(0,0,0,.35);
+  clip-path: polygon(0 0, 17% .4%, 35% 0, 52% .5%, 69% 0, 85% .4%, 100% 0, 100% 100%, 77% 99.6%, 54% 100%, 25% 99.6%, 0 100%);
+}
+.ruido-dossie-section .ruido-dossie-row {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  background: transparent !important;
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-bottom: 1px dashed rgba(25,23,21,.3);
+}
+.ruido-dossie-section .ruido-empty-inline {
+  background: transparent !important;
+  border: 0;
+  border-left: 4px solid #ac2c24;
+  padding: .5rem 0 .5rem 1rem;
+  margin-top: .75rem;
+  line-height: 1.65;
+}
+.ruido-dossier-source {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.ruido-dossie-note { background: transparent; border: 0; border-left: 3px solid #d3ff20; padding: 1rem 1.1rem; }
+
+.ruido-site-content :is(a.ruido-action,button.ruido-action) {
+  position: relative !important;
+  background-color: #d3ff20 !important;
+  color: #191715 !important;
+  clip-path: polygon(0 9%,7% 2%,18% 6%,28% 0,41% 4%,56% 1%,70% 5%,84% 0,96% 7%,100% 0,98% 96%,84% 100%,67% 95%,50% 100%,33% 95%,17% 100%,0 93%) !important;
+  padding: .8rem 1.2rem !important;
+  font-weight: 800 !important;
+}
+.ruido-site-content :is(a.ruido-action,button.ruido-action)::before {
+  display: none !important;
+}
+.ruido-site-content :is(a.ruido-action-dark,button.ruido-action-dark) {
+  background-color: #191715 !important;
+  color: #fff5e7 !important;
+}
+.ruido-site-content :is(a.ruido-action-light,button.ruido-action-light) {
+  background-color: #f8f0df !important;
+  color: #191715 !important;
+}
+@media (min-width: 768px) {
+  .ruido-nav nav[aria-label="Navegação principal"] { display: flex !important; }
+  .ruido-nav button.ruido-nav-toggle { display: none !important; }
+}
+
+
+/* MANIFESTO: destaque vermelho de tinta, inclusive no item ativo.
+   O mesmo link está no menu desktop e no menu móvel. */
+.ruido-nav a.ruido-nav-brush.ruido-nav-manifesto,
+.ruido-nav a.ruido-nav-brush.ruido-nav-manifesto:is(.is-active,[aria-current="page"]) {
+  --ruido-ink-fill: #b62e27 !important;
+  color: #fff5e7 !important;
+}
+.ruido-nav a.ruido-nav-brush.ruido-nav-manifesto:is(:hover,:focus-visible) {
+  --ruido-ink-fill: #d34434 !important;
+  color: #fff5e7 !important;
+}
+
+/* Apoio persistente: adesivo punk no canto inferior em desktop e celular.
+   Regras fora da .ruido-site-content para preservar tinta e contraste. */
+.ruido-support-fab {
+  position: fixed;
+  z-index: 45;
+  right: calc(14px + env(safe-area-inset-right, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  min-height: 50px;
+  max-width: calc(100vw - 32px);
+  padding: .65rem 1rem;
+  border: 3px solid #191715;
+  background: #b62e27;
+  color: #fff5e7;
+  font-family: var(--mono), monospace;
+  font-weight: 900;
+  font-size: .82rem;
+  letter-spacing: .045em;
+  text-decoration: none;
+  text-transform: uppercase;
+  clip-path: polygon(0 6%, 13% 0, 31% 5%, 51% 0, 77% 4%, 100% 0, 97% 96%, 79% 100%, 53% 96%, 23% 100%, 0 94%);
+  box-shadow: 5px 5px 0 #d3ff20;
+  transition: transform 120ms ease, background-color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.ruido-support-fab:hover {
+  background: #8d211c;
+  color: #fff5e7;
+  transform: translateY(-3px);
+}
+.ruido-support-fab:focus-visible {
+  outline: 4px solid #d3ff20;
+  outline-offset: 4px;
+}
+@media (max-width: 767px) {
+  .ruido-support-fab {
+    min-height: 48px;
+    font-size: .72rem;
+    gap: .35rem;
+    padding: .6rem .8rem;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+/* Reserva espaço ao alcançar o rodapé para o botão não tapar links finais. */
+.collage-body > footer { padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .ruido-support-fab { transition: none; }
+}

@@ -1,0 +1,271 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Parlamentar {
+  id                   String    @id @default(cuid())
+  externalId           String // ID na API da Câmara (ex: "204554") ou CodigoParlamentar no Senado (ex: "5672")
+  casa                 String // "CAMARA" | "SENADO"
+  nome                 String
+  nomeCivil            String?
+  partido              String
+  uf                   String
+  urlFoto              String?
+  email                String?
+  ativo                Boolean   @default(false)
+  cadastroAtualizadoEm DateTime? // Apenas o cadastro atual atualiza filiação e situação
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  votos          Voto[]
+  presencas      Presenca[]
+  frequenciaPlenario FrequenciaPlenario[]
+  emendas        EmendaParlamentar[]
+  bensDeclarados BemDeclarado[]
+  discursos      Discurso[]
+  resumosIA      ResumoIA[]
+
+  @@unique([casa, externalId])
+  @@index([casa, ativo])
+  @@index([partido, uf])
+  @@index([nome])
+}
+
+model Proposicao {
+  id               String    @id @default(cuid())
+  externalId       String // ID da proposição na Câmara ou CodigoMateria no Senado
+  casa             String // "CAMARA" | "SENADO"
+  siglaTipo        String // Ex: PL, PEC, MPV, PLP
+  numero           Int
+  ano              Int
+  ementa           String
+  autorNome        String?
+  urlInteiroTeor   String?
+  dataApresentacao DateTime?
+
+  // Leitura cidadã gerada a partir da ementa OFICIAL; cache só vale
+  // enquanto resumoFonteHash corresponde à ementa e à versão do prompt.
+  tituloSimples     String?
+  resumoSimples     String?
+  explicacaoSimples String?
+  resumoFonteHash   String?
+  resumoModelo      String?
+  resumoGeradoEm    DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  votacoes Votacao[]
+
+  @@unique([casa, externalId])
+  @@index([casa, ano, numero])
+  @@index([siglaTipo, numero, ano])
+}
+
+model Votacao {
+  id              String   @id @default(cuid())
+  externalId      String // ID da votação na Câmara (ex: "2192459-43") ou CodigoSessaoVotacao no Senado
+  casa            String // "CAMARA" | "SENADO"
+  dataHora        DateTime
+  orgao           String? // Ex: "PLEN" (Plenário)
+  descricao       String
+  resumo          String?
+  aprovada        Boolean? // true = Aprovada, false = Rejeitada, null = Indefinida/Simbólica
+  placarSim       Int      @default(0)
+  placarNao       Int      @default(0)
+  placarAbstencao Int      @default(0)
+  placarObstrucao Int      @default(0)
+  placarOutros    Int      @default(0) // Outros do agregado oficial; não equivalem a abstenção
+
+  fonteUrl         String?
+  cobertura        String  @default("NAO_VERIFICADA") // NOMINAL_PUBLICA | SECRETA_AGREGADA | SEM_VOTOS_NOMINAIS | EM_IMPORTACAO
+  votacaoSecreta   Boolean @default(false)
+  sessaoExternalId String?
+  casaSessao       String? // SF ou CN no Senado; não confundir Congresso com Senado
+
+  proposicaoId String?
+  proposicao   Proposicao? @relation(fields: [proposicaoId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  votos Voto[]
+
+  @@unique([casa, externalId])
+  @@index([casa, dataHora(sort: Desc)])
+  @@index([proposicaoId])
+}
+
+model Voto {
+  id                String    @id @default(cuid())
+  votacaoId         String
+  parlamentarId     String
+  opcao             String // "SIM" | "NAO" | "ABSTENCAO" | "OBSTRUCAO" | "AUSENTE" | "ARTIGO_17" | "PRESENTE_SEM_VOTO" | "LICENCA_OU_MISSAO" | sigla original
+  opcaoOriginal     String?
+  descricaoOriginal String?
+  registradoEm      DateTime?
+  partidoNaEpoca    String?
+  ufNaEpoca         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  votacao     Votacao     @relation(fields: [votacaoId], references: [id], onDelete: Cascade)
+  parlamentar Parlamentar @relation(fields: [parlamentarId], references: [id], onDelete: Cascade)
+
+  @@unique([votacaoId, parlamentarId])
+  @@index([parlamentarId, opcao])
+  @@index([parlamentarId, votacaoId])
+  @@index([votacaoId, opcao])
+}
+
+model Presenca {
+  id               String   @id @default(cuid())
+  sessaoExternalId String // ID do evento/sessão plenária na API
+  casa             String // "CAMARA" | "SENADO"
+  parlamentarId    String
+  dataSessao       DateTime
+  tituloSessao     String
+  status           String // "PRESENTE" | "AUSENTE" | "JUSTIFICADO"
+  justificativa    String?
+  fonteUrl         String?
+  origem           String   @default("NAO_ESPECIFICADA") // EVENTO_CAMARA | VOTO_SENADO
+  cobertura        String   @default("EVIDENCIA_PARCIAL") // EVIDENCIA_PARCIAL | CHAMADA_OFICIAL
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parlamentar Parlamentar @relation(fields: [parlamentarId], references: [id], onDelete: Cascade)
+
+  @@unique([casa, sessaoExternalId, parlamentarId])
+  @@index([parlamentarId, dataSessao(sort: Desc)])
+  @@index([casa, dataSessao(sort: Desc)])
+}
+
+// Contagens apenas de sessões plenárias cujos status individuais foram
+// publicados pela Câmara. Não equivale a todas as reuniões de comissões.
+model FrequenciaPlenario {
+  id                  String      @id
+  parlamentarId       String
+  dia                 String      // YYYY-MM-DD, UTC (dia civil de Brasília)
+  casa                String      @default("CAMARA")
+  sessoesAuditadas    Int
+  presentes           Int
+  ausentes            Int
+  justificadas        Int
+  fonteUrl            String
+  parlamentar         Parlamentar @relation(fields: [parlamentarId], references: [id], onDelete: Cascade)
+
+  @@unique([parlamentarId, dia])
+  @@index([parlamentarId, dia])
+}
+
+model EmendaParlamentar {
+  id                   String   @id @default(cuid())
+  parlamentarId        String?
+  codigoEmenda         String?  // Identificador oficial; NULL somente para dados legados
+  numeroEmenda         String?
+  autorOriginal        String?  // Exatamente o nome público na fonte, inclusive autoria coletiva
+  localidadeOriginal   String?  // Localidade oficial sem inferência obrigatória de UF
+  ano                  Int
+  tipo                 String   // "INDIVIDUAL" | "BANCADA" | "RELATOR" | "TRANSFERENCIA_ESPECIAL"
+  descricao            String?
+  valorEmpenhado       Float    @default(0)
+  valorPago            Float    @default(0)
+  municipioBeneficiado String?
+  ufBeneficiada        String?
+  funcao               String?  // "Saúde", "Infraestrutura", "Educação", "Segurança", etc.
+  status               String   // "PAGO" | "EMPENHADO" | "LIQUIDADO" | "CANCELADO"
+  fonte                String   @default("PORTAL_TRANSPARENCIA")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parlamentar Parlamentar? @relation(fields: [parlamentarId], references: [id], onDelete: SetNull)
+
+  @@unique([codigoEmenda])
+  @@index([parlamentarId, ano])
+  @@index([tipo, ano])
+  @@index([ufBeneficiada, municipioBeneficiado])
+}
+
+model BemDeclarado {
+  id                 String   @id @default(cuid())
+  parlamentarId      String
+  anoEleicao         Int      // Ex: 2018, 2022
+  tipoBem            String   // "Imóvel", "Veículo", "Ações/Quotas", "Depósito", "Outros"
+  descricao          String?
+  valorDeclarado     Float
+  totalPatrimonioAno Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parlamentar Parlamentar @relation(fields: [parlamentarId], references: [id], onDelete: Cascade)
+
+  @@index([parlamentarId, anoEleicao])
+}
+
+model Discurso {
+  id             String   @id @default(cuid())
+  parlamentarId  String
+  externalId     String?
+  dataHora       DateTime
+  faseEvento     String?  // Ex: "Pequeno Expediente", "Breves Comunicações"
+  sumario        String?
+  transcricao    String
+  analisadoPorIA Boolean  @default(false)
+  urlAudio       String?
+  urlVideo       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parlamentar Parlamentar @relation(fields: [parlamentarId], references: [id], onDelete: Cascade)
+
+  @@index([parlamentarId, dataHora(sort: Desc)])
+  @@index([analisadoPorIA])
+}
+
+model ResumoIA {
+  id            String   @id @default(cuid())
+  parlamentarId String
+  keywords      String   // JSON array de strings ou lista separada por vírgula
+  resumo        String   // Parágrafo sintético (3 linhas) do perfil ideológico/temático
+  modeloUsado   String   @default("gpt-4o-mini")
+  geradoEm      DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parlamentar Parlamentar @relation(fields: [parlamentarId], references: [id], onDelete: Cascade)
+
+  @@index([parlamentarId, geradoEm(sort: Desc)])
+}
+
+model SyncLease {
+  id         String   @id // Ex: "GLOBAL_SYNC"
+  holder     String
+  acquiredAt DateTime @default(now())
+  expiresAt  DateTime
+
+  @@index([expiresAt])
+}
+
+model SyncExecution {
+  id           String    @id @default(cuid())
+  iniciadoEm   DateTime  @default(now())
+  finalizadoEm DateTime?
+  status       String // "EM_ANDAMENTO" | "SUCESSO" | "ERRO"
+  erro         String?
+  parametros   String? // JSON stringificado dos argumentos
+  resumo       String? // JSON stringificado do relatório
+}
