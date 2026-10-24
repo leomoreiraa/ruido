@@ -1,4 +1,3 @@
-// components/GraficoPatrimonio.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -53,7 +52,6 @@ export function GraficoPatrimonio({
     );
   }
 
-  // Agrupa os bens por ano eleitoral
   const bensPorAno = listaBens.reduce<Record<number, BemDeclaradoItem[]>>((acc, item) => {
     if (!acc[item.anoEleicao]) {
       acc[item.anoEleicao] = [];
@@ -66,7 +64,6 @@ export function GraficoPatrimonio({
     .map(Number)
     .sort((a, b) => a - b);
 
-  // Calcula totais por ano
   const totaisPorAno = anosDisponiveis.map((ano) => {
     const itensAno = bensPorAno[ano] || [];
     const soma = itensAno.reduce((total, b) => total + b.valorDeclarado, 0);
