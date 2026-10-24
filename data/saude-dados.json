@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T12:31:17.879970+00:00",
+  "generated_at_utc": "2026-10-24T12:40:57.134767+00:00",
   "json_files": {
     "analises-oficiais.json": 43689,
     "candidaturas-presidenciais.json": 809,
@@ -14,8 +14,8 @@
   "json_bytes_total": 12308336,
   "warnings": [],
   "pages_directory_mib": {
-    "parlamentares": 444.7,
-    "data": 204.9,
+    "parlamentares": 445.3,
+    "data": 205.0,
     "assets": 18.0,
     "pautas": 11.4,
     "_next": 1.0,
@@ -36,10 +36,10 @@
     "workers": 0.0
   },
   "pages_file_types_mib": {
-    ".html": 273.9,
+    ".html": 274.4,
     ".txt": 183.6,
     ".gz": 154.5,
-    ".json": 50.4,
+    ".json": 50.5,
     ".png": 15.2,
     ".jpg": 2.4,
     ".js": 0.8,
@@ -99,7 +99,7 @@
       "mib": 0.6
     }
   ],
-  "pages_files_count": 64600,
-  "pages_bytes": 714471828,
+  "pages_files_count": 64601,
+  "pages_bytes": 715158403,
   "pages_budget_bytes": 943718400
 }
