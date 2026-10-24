@@ -31,6 +31,21 @@ class Election2026Tests(unittest.TestCase):
     def test_does_not_use_ibge_id_as_tse_code(self):
         self.assertIn("ac01120-c0001-e006258-u.json",mod.source_url("ac","01120"))
         with self.assertRaises(ValueError):mod.source_url("ac","1200013")
+    def test_first_round_changes_id_without_mixing_results(self):
+        mod.configurar_turno(1)
+        try:
+            self.assertIn("6257/dados/ac/ac01120-c0001-e006257-u.json",mod.source_url("ac","01120"))
+            raw=stub([55,45],100,100)
+            raw["ele"]="6257"
+            raw["t"]="1"
+            result=mod.resumo(raw)
+            self.assertEqual(result["situacao"],"concluida")
+            self.assertEqual(result["votosValidos"],100)
+            raw["t"]="2"
+            with self.assertRaises(ValueError):
+                mod.resumo(raw)
+        finally:
+            mod.configurar_turno(2)
     def test_duplicate_ea12_rejected(self):
         raw={"abr":[{"cd":"ac","mu":[{"cd":"01120","cdi":"1200013","nm":"ACRELANDIA"},{"cd":"01120","cdi":"1200013","nm":"ACRELANDIA"}]}]}
         with self.assertRaises(ValueError):mod.municipios(raw)
