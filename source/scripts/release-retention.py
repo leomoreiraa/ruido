@@ -78,7 +78,6 @@ def main():
                          if args.apply and len(keep) >= MIN_RECENT else 0,
         "protected_newest": [r["tag_name"] for r in keep[:MIN_RECENT]],
     }, ensure_ascii=False), flush=True)
-    # Conservative bootstrap: first 3 good backups are *never* removed.
     if not args.apply or len(keep) < MIN_RECENT:
         return
     for item in delete[:args.max_delete]:
