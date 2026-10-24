@@ -207,9 +207,6 @@ def main():
         except Exception as exc:
             erros.append(f"CEAP {ano}: {str(exc)[:170]}")
 
-    # API oficial Senado (/adm-dadosabertos/v3/api-docs):
-    # /api/v1/senadores/despesas_ceaps/{ano}/csv, atualizado diariamente.
-    # Mais confiável que extrair valores de HTML dos perfis individuais.
     for ano in YEARS:
         fonte_senado = (
             f"https://adm.senado.gov.br/adm-dadosabertos/api/v1/"
