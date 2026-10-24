@@ -1,9 +1,4 @@
-/**
- * Build-time-only ETL for the choropleth.
- * No API requests are made from visitor browsers; GitHub Actions materializes JSON.
- * Sources: IBGE SIDRA 5938/37 (PIB, R$ thousands), 6579/9324 (population);
- * IBGE geographic meshes v3; BCB SGS credit stock for MEI; persisted CGU amendments.
- */
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import { prisma } from "../lib/prisma";

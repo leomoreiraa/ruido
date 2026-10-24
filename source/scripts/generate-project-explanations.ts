@@ -1,7 +1,4 @@
-/**
- * Run only in trusted GitHub Actions. Never import in app/ or components/.
- * The Gemini credential is a secret on the Actions runner; the site is static.
- */
+
 import { prisma } from "../lib/prisma";
 import { geminiFreeFetch } from "../lib/ai/geminiFree";
 import { AI_MODEL, fonteHash, validarExplicacao, explicacaoFielAoObjeto } from "../lib/ai/explicacaoProjetos";
@@ -92,7 +89,7 @@ async function main() {
         reused++; continue;
       }
       try {
-        aiCalls++; // Limita pedidos enviados, inclusive respostas rejeitadas.
+        aiCalls++; 
         const result = await simplificar(p);
         await prisma.proposicao.update({
           where: { id: p.id },

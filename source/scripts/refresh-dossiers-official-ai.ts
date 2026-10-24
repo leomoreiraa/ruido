@@ -1,9 +1,4 @@
-/**
- * Síntese editorial DESCRITIVA de despesas CEAP/CEAPS e patrimônio eleitoral
- * autodeclarado. A IA apenas reescreve dados oficiais agregados: não emite
- * juízo de legalidade, não classifica processos nem usa matérias jornalísticas.
- * Executado somente no GitHub Actions; a chave jamais chega ao frontend.
- */
+
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -127,7 +122,7 @@ async function main(){
       delete previous.pendentes[p.id];
     }else{
       try{
-        aiCalls++; // Mesmo sintese rejeitada consome quota do Gemini.
+        aiCalls++; 
         const texto=await generate(p.nome,p.casa,f,b);
         previous.dados[p.id]={texto,atualizadoEm:now,fonteHash:digest,modelo:model,
           fontes:[...new Set([...f.map(x=>x.fonte),...b.map(x=>x.fonte)])]};
@@ -151,7 +146,7 @@ async function main(){
       await sleep(12000);
     }
     previous.cursor=(start+regulares)%people.length;
-    persist(); // checkpoint atômico por perfil analisado
+    persist(); 
   }
   persist();
   console.log(JSON.stringify({modelo:model,analisados:scanned,novasSintes:generated,

@@ -1,16 +1,11 @@
-/**
- * Exporta o histórico nominal para download progressivo no GitHub Pages.
- * Cada arquivo é comprimido e pertence a um parlamentar. O build SSR inclui
- * somente os 120 registros mais recentes; todo o histórico continua consultável.
- * Executar APENAS no Actions antes de build:ghpages.
- */
+
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
 import { prisma } from "../lib/prisma";
 
 const folder = path.join(process.cwd(), "public", "data", "historico");
-const maxTotal = 600 * 1024 * 1024; // reserve room for HTML/assets under Pages 1 GiB
+const maxTotal = 600 * 1024 * 1024; 
 let totalBytes = 0;
 let totalProfiles = 0;
 let totalVotes = 0;

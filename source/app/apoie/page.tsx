@@ -16,7 +16,7 @@ export default function ApoiePage() {
     <div className="mx-auto max-w-5xl space-y-10 font-mono">
       <header className="relative overflow-hidden border-[5px] border-ink bg-paper-card p-6 shadow-[9px_9px_0_#101010] sm:p-10">
         <span className="inline-block -rotate-2 bg-punk-red px-4 py-2 font-heavy text-xs uppercase tracking-widest text-white">
-          /// APOIO DIRETO / INDEPENDÊNCIA EDITORIAL
+          
         </span>
         <h1 className="mt-7 max-w-4xl font-heavy text-5xl uppercase leading-[0.92] text-ink sm:text-7xl">
           INFORMAÇÃO <span className="text-punk-red">NÃO SE CALA.</span>
@@ -111,7 +111,7 @@ export default function ApoiePage() {
           </p>
         </div>
         <div className="border-[3px] border-ink bg-paper-light p-6 sm:p-8">
-          <h2 className="font-heavy text-2xl uppercase text-ink">/// PRESTAÇÃO DE CONTAS</h2>
+          <h2 className="font-heavy text-2xl uppercase text-ink">
           <p className="mt-4 text-sm leading-relaxed text-ink">
             Divulgaremos informações agregadas e verificáveis sobre receitas e despesas
             do projeto à medida que houver movimentação. Dados pessoais de

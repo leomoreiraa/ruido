@@ -20,7 +20,7 @@ export default function ErrorBoundary({
         <div className="scotch-tape" aria-hidden="true" />
 
         <div className="inline-block bg-punk-red text-white font-heavy text-xs px-3 py-1 uppercase tracking-widest">
-          ⚠ ALERTA DE SISTEMA // FALHA TÉCNICA
+          ⚠ ALERTA DE SISTEMA 
         </div>
 
         <h1 className="font-heavy text-4xl sm:text-5xl uppercase tracking-tight text-ink leading-tight">

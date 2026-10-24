@@ -18,7 +18,7 @@ export default function Loading() {
           Consultando registros oficiais da Câmara dos Deputados, Senado Federal e TSE. Aguarde um instante.
         </p>
 
-        {/* Punk progress bar */}
+        
         <div className="w-full h-4 bg-ink/10 border-2 border-ink overflow-hidden p-0.5">
           <div className="h-full bg-punk-acid border-r-2 border-ink animate-[drift_2s_linear_infinite] w-full" />
         </div>

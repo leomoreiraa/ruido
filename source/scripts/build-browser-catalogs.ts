@@ -1,8 +1,4 @@
-/**
- * Pré-computa catálogos públicos consumidos sob demanda pelos filtros.
- * Evita hidratar 20 mil+ registros em cada visita à página.
- * Somente dados públicos; sem consultas do navegador às APIs oficiais.
- */
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import { gzipSync } from "node:zlib";

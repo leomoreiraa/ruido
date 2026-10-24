@@ -10,7 +10,7 @@ export const metadata = {
 export default function SobrePage() {
   return (
     <div className="ruido-manifesto-page space-y-12">
-      {/* Back button */}
+      
       <div>
         <Link
           href="/"
@@ -26,9 +26,9 @@ export default function SobrePage() {
 
 
 
-      {/* PUNK MANIFESTO POSTER HERO */}
+      
       <section className="ruido-red-poster ruido-manifesto-poster relative bg-punk-red text-paper p-8 sm:p-14 border-4 border-ink shadow-[12px_12px_0_#101010] overflow-hidden">
-        {/* Grime overlay */}
+        
         <div
           className="absolute inset-0 opacity-25 pointer-events-none"
           style={{
@@ -40,7 +40,7 @@ export default function SobrePage() {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="ruido-manifesto-copy lg:col-span-7 space-y-4">
             <div className="inline-block bg-ink text-punk-acid font-mono font-bold text-xs px-3 py-1 tracking-widest uppercase transform -rotate-1">
-              DECLARAÇÃO NÃO OFICIAL // 2026 // ED. 001
+              DECLARAÇÃO NÃO OFICIAL 
             </div>
 
             <h1 className="font-heavy text-4xl sm:text-6xl md:text-7xl uppercase tracking-tight text-white leading-none">
@@ -60,7 +60,7 @@ export default function SobrePage() {
           </div>
 
           <div className="lg:col-span-5 relative flex justify-center">
-            {/* Manifesto Paper Card */}
+            
             <div className="relative ruido-paper-card bg-paper-card text-ink border-4 border-ink p-6 shadow-[10px_10px_0_#101010] transform rotate-2 hover:rotate-0 transition-transform max-w-md">
               <div className="scotch-tape" aria-hidden="true" />
               <div className="flex justify-between items-center border-b-2 border-dashed border-ink/40 pb-2 mb-3 font-mono text-[11px] font-bold">
@@ -84,7 +84,7 @@ export default function SobrePage() {
         </div>
       </section>
 
-      {/* METODOLOGIA & PRINCÍPIOS */}
+      
       <section className="space-y-6">
         <div className="border-b-4 border-ink pb-3 flex items-center gap-3">
           <span className="font-heavy text-2xl sm:text-4xl uppercase tracking-wider text-ink bg-punk-acid px-3 py-1 border-2 border-ink shadow-[4px_4px_0_#101010]">
@@ -92,7 +92,7 @@ export default function SobrePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1 */}
+          
           <div className="ruido-paper-card bg-paper-card border-3 border-ink p-6 shadow-[6px_6px_0_#101010] relative transform -rotate-1 hover:rotate-0 transition-all">
             <div className="scotch-tape-corner" aria-hidden="true" />
             <div className="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-ink/30">
@@ -107,7 +107,7 @@ export default function SobrePage() {
             </p>
           </div>
 
-          {/* Card 2 */}
+          
           <div className="ruido-paper-card bg-paper-card border-3 border-ink p-6 shadow-[6px_6px_0_#101010] relative transform rotate-1 hover:rotate-0 transition-all">
             <div className="scotch-tape-corner" aria-hidden="true" />
             <div className="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-ink/30">
@@ -122,7 +122,7 @@ export default function SobrePage() {
             </p>
           </div>
 
-          {/* Card 3 */}
+          
           <div className="ruido-paper-card bg-paper-card border-3 border-ink p-6 shadow-[6px_6px_0_#101010] relative transform -rotate-1 hover:rotate-0 transition-all">
             <div className="scotch-tape-corner" aria-hidden="true" />
             <div className="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-ink/30">
@@ -137,7 +137,7 @@ export default function SobrePage() {
             </p>
           </div>
 
-          {/* Card 4 */}
+          
           <div className="ruido-paper-card bg-paper-card border-3 border-ink p-6 shadow-[6px_6px_0_#101010] relative transform rotate-1 hover:rotate-0 transition-all">
             <div className="scotch-tape-corner" aria-hidden="true" />
             <div className="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-ink/30">
@@ -154,7 +154,7 @@ export default function SobrePage() {
         </div>
       </section>
 
-      {/* FONTES DE DADOS */}
+      
       <section className="space-y-4">
         <div className="border-b-4 border-ink pb-3">
           <span className="font-heavy text-2xl sm:text-3xl uppercase tracking-wider text-white bg-punk-red px-3 py-1 shadow-[4px_4px_0_#101010] transform rotate-1 inline-block">
