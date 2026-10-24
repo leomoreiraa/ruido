@@ -47,8 +47,6 @@ def audit(root: Path) -> tuple[int, int]:
     for name in required:
         if not (root / name).exists():
             raise ValueError(f"Required public export asset missing: {name}")
-    # The source mirror carries executable examples and build scripts. Validate
-    # its strict manifest/path allowlist before approving any site publication.
     if (root / "source").exists():
         subprocess.run([sys.executable, "-I", "scripts/build-public-source.py", "verify", str(root / "source")], check=True)
     count = 0
@@ -57,9 +55,6 @@ def audit(root: Path) -> tuple[int, int]:
         relative = path.relative_to(root)
         if path.is_symlink():
             raise ValueError(f"Symlinks cannot be published: {relative}")
-        # Next.js emits legitimate browser chunks under _next/static/chunks/app/.
-        # Operational roots must never be present, while .git/.github and
-        # dependency/cache directories are forbidden at any nesting depth.
         forbidden_anywhere = {".git", ".github", "node_modules", "__pycache__", "_api_backup_during_export"}
         forbidden_at_root = FORBIDDEN_PARTS - forbidden_anywhere
         if (any(part.lower() in forbidden_anywhere for part in relative.parts)
@@ -72,8 +67,6 @@ def audit(root: Path) -> tuple[int, int]:
         is_source = relative.parts[0] == "source"
         if path.name.startswith(".env") or (path.name.lower() in FORBIDDEN_NAMES and not is_source):
             raise ValueError(f"Private filename in public export: {relative}")
-        # Only the generated public JSON archives may be gzip-compressed.
-        # Reject any other gzip payload, including database and build artifacts.
         public_gzip = (
             path.name.endswith(".json.gz")
             and relative.parts[:2] in (("data", "historico"), ("data", "pautas-detalhe"))
@@ -85,7 +78,6 @@ def audit(root: Path) -> tuple[int, int]:
         size += path.stat().st_size
         if path.suffix.lower() in TEXT_SUFFIXES or allowed_source or path.name == "CNAME":
             with path.open("rb") as handle:
-                # Overlap chunks to catch credential strings across read boundaries.
                 previous = b""
                 while chunk := handle.read(1024 * 1024):
                     content = previous + chunk
