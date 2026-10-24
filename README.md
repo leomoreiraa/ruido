@@ -33,9 +33,13 @@
 
 ### ◢ O DADO É PÚBLICO. A LEITURA TAMBÉM DEVE SER. ◣
 
-**[Explorar a plataforma](https://ruido.runs-at.dev/)** · **[Metodologia](https://ruido.runs-at.dev/sobre/)** · **[Cobertura](https://ruido.runs-at.dev/cobertura/)** · **[Código-fonte](./source/)**
+**[Explorar a plataforma](https://ruido.runs-at.dev/)** · **[Documentação completa](./docs/README.md)** · **[Metodologia](https://ruido.runs-at.dev/sobre/)** · **[Código-fonte](./source/)**
 
 </div>
+
+## 📚 Documentação
+
+Acesse a **[documentação completa da aplicação](./docs/README.md)**: funcionalidades, arquitetura, fontes e metodologia, inteligência artificial e desenvolvimento local.
 
 <details>
 <summary><strong>☰ NAVEGAR PELA DOCUMENTAÇÃO</strong></summary>
@@ -265,7 +269,8 @@ ruido/
 │   ├── prisma/            # Schema de persistência
 │   ├── scripts/           # Coleta, exportação e automação
 │   ├── package.json       # Dependências e scripts
-│   └── README.md          # Documentação técnica
+│   └── README.md          # Guia do código-fonte
+├── docs/                  # Documentação técnica e funcional
 └── README.md              # Esta documentação
 ```
 
