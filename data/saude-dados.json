@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T13:23:04.779290+00:00",
+  "generated_at_utc": "2026-10-24T13:32:28.298390+00:00",
   "json_files": {
     "analises-oficiais.json": 43689,
     "candidaturas-presidenciais.json": 809,
@@ -15,7 +15,7 @@
   "warnings": [],
   "pages_directory_mib": {
     "parlamentares": 445.3,
-    "data": 215.9,
+    "data": 217.0,
     "assets": 18.0,
     "pautas": 11.4,
     "_next": 1.0,
@@ -36,10 +36,10 @@
     "workers": 0.0
   },
   "pages_file_types_mib": {
-    ".html": 274.5,
+    ".html": 274.4,
     ".txt": 183.6,
     ".gz": 154.5,
-    ".json": 61.4,
+    ".json": 62.5,
     ".png": 15.2,
     ".jpg": 2.4,
     ".js": 0.8,
@@ -95,11 +95,11 @@
       "mib": 1.4
     },
     {
-      "path": "data/atlas-territorial.json",
-      "mib": 0.8
+      "path": "data/municipios-brasil-malhas.json",
+      "mib": 1.1
     }
   ],
-  "pages_files_count": 64630,
-  "pages_bytes": 726666361,
+  "pages_files_count": 64631,
+  "pages_bytes": 727769969,
   "pages_budget_bytes": 943718400
 }
