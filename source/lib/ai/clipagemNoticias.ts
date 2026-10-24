@@ -1,4 +1,4 @@
-/** Índice de LINKS jornalísticos. Nunca equivale à verificação de alegações. */
+
 export type Clipping={
   url:string; titulo:string; publicadoEm:string; grupoEditorial:string;
   ultimaConferencia:string;
