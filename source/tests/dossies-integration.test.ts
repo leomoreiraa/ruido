@@ -92,8 +92,10 @@ test("dossiês têm agendamento central e solicitam deploy único após dados va
   assert.doesNotMatch(news, /git add .*datajud\.json/);
   assert.match(site, /push:\s*\n\s*branches: \[main\]/);
   assert.match(site, /schedule:/);
-  assert.match(site, /actions\/download-artifact@v4/);
-  assert.match(site, /cancel-in-progress: false/);
+  assert.doesNotMatch(site, /actions\/(?:upload|download)-artifact@/);
+  assert.match(site, /scripts\/audit-public-export\.py out/);
+  assert.match(site, /git -C "\$dest" push origin HEAD:main/);
+  assert.match(site, /cancel-in-progress: true/);
   assert.match(site, /if: steps\.freshness\.outputs\.current == 'true'/);
   assert.doesNotMatch(site, /^  workflow_run:/m);
 });

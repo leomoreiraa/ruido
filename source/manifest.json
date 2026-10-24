@@ -145,7 +145,7 @@
     "tests/datajud-routing.test.py": "892c727cd215372e3c7ddd8de1bb76fc0e75b6a0f1de28e3260f30305f588f2a",
     "tests/deepAiSchedule.test.ts": "3d11ee06308f4d186bd502da0fb9bf428fdef2af6581aac81f6fde1dabf4b1f0",
     "tests/dossie-processual.test.py": "4f251e97254689781673c5a54bd8ec1b49e594ea76bbbb1c3c0cb2cf7700a362",
-    "tests/dossies-integration.test.ts": "4e85d651108a6e2a0163d2dab7ee2c303fe3c1daef4db040ecd832c29bb13d3f",
+    "tests/dossies-integration.test.ts": "6254fd6cbaa2f54cacf9051bcca00648362be94cb26b768b2e42e72b315b3879",
     "tests/election-e2e.spec.mjs": "2dc68d3a684cbd57b63032f39541614c04a22be2d8f8b1c154777d322fcb6a01",
     "tests/election-smoke-2026.mjs": "bef869784cfb0f3c7a2488174096814fd264d3a93c587b8df1c5f98843f86b5a",
     "tests/eleicoes-tse-ao-vivo.test.ts": "302271be6ff95191deeb816f0f5abfe253bf02965c0cbe0f8e0196639189a465",
@@ -168,7 +168,7 @@
     "tests/presencaCoverage.test.ts": "389783580346dc6070a017fdf27f9d335b0bf9c9658c2b5bc22d0bc76b7f7c5d",
     "tests/profile-data-integration.test.ts": "3207251038978f707462fc209ea83eb7f068887e187bf956f988db05d6bb1319",
     "tests/publication-ui.test.ts": "5b8c0ea5cd2ab8bc941950c41c0092905997427669a00075d5fe288bfce399f5",
-    "tests/rebuild-workflow.test.ts": "5d6c8f631a8c9b46ecde4b6df88c69dcaaa76033786aa6f40bcbc34ad814580d",
+    "tests/rebuild-workflow.test.ts": "939ca734baf53489dcb6e3b8ab376f126250d2f31b683e4ee722ace6fe880679",
     "tests/refresh-map-official.test.py": "8aee58b7aed31328dad71eee02fa598ce4de290e9517263de0bae52adca03ed6",
     "tests/release-retention.test.py": "6267612927df8db6f311b14021f87d1ff5c9d9c151e710bd8878461d7a88a114",
     "tests/resolverGoogleNews.test.ts": "f2f8a2bd6d33299f96bdbc9d6147e1e7deaea0270c90efdfe85566e30eda66e8",
@@ -190,7 +190,7 @@
     "tests/test_news_export.py": "6f2930a878c5166f73c63b570ba8d202cc34640eee62ba12c430e083fab3c82b",
     "tests/test_presenca_cobertura.py": "49644760a28bba75134c7618578d83e8336df78ccfc9b08d69945b77ffdfee0f",
     "tests/test_public_export_audit.py": "6f9d4b4bc77a8e2622a58316993d452640d8e116ae172ea25868a7b07db4b9c6",
-    "tests/test_public_mirror_race.py": "b7ebf16bd7bf5eb07a50260ec79ba4b41b947ce41e09fe77ceacfe1fc67e7215",
+    "tests/test_public_mirror_race.py": "d612572e210cabc2a2f9eb636b0af7f6acddd54d5a040ca1d87d08bc9637a2d5",
     "tests/test_publish_collector_safe.py": "90f61434825f562334bda675ea515e21929643eb705e315684057a94a98a483a",
     "tests/test_publish_dossiers_safe.py": "984ef9f1e9aa75275874412ca5b1d00ab3bb3a7da775b93942134c3fc5485e32",
     "tests/test_sqlite_maintenance.py": "d43580c364c652e1fdb84381344c4f407b0afce61965138b3d75df44f0fdd5ec",
@@ -199,7 +199,7 @@
     "tests/tripleDailySchedule.test.ts": "1fc8b6f3f0a0d90f53df83ba35958a7d45c834caf9a1a27ae842b4ea94cb34e7",
     "tests/ui-record-availability.test.ts": "061a6fee7a700fb017b08fac3cd4fed9524c6ed29e36344efc92a462cf99817b",
     "tests/urban-punk-ui.test.ts": "ca31b3c114e726260ec3211de38581a9b4f9b2ac721650dc0522ac90a2b15a0e",
-    "tests/visual-brand.test.ts": "ec2e45db40d2a6223002de1868786daede591917e4b89991b007f4a298eed274",
+    "tests/visual-brand.test.ts": "dc762a859745055436168a7a27f9d8a68d8c31818521b55a68831c14cdac1a5a",
     "tsconfig.json": "1c6463f0827b621325965b87b072bc6428f4c33feea5335004ea470b1bf6d652"
   }
 }

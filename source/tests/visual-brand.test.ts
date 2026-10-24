@@ -37,7 +37,8 @@ test("visual changes preserve map legend, regional IDHM and source information",
 });
 test("a única publicação usa export atualizado e verifica CSS da navbar",()=>{
   const wf=read(".github/workflows/deploy-visual-fast.yml");
-  assert.ok(wf.includes("actions/download-artifact@v4"));
+  assert.doesNotMatch(wf, /actions\/(?:upload|download)-artifact@/);
+  assert.ok(wf.includes("scripts/build-public-source.py verify out/source"));
   assert.ok(wf.includes("scripts/audit-public-export.py"));
   assert.ok(!wf.includes("actions/deploy-pages@v4"));
   assert.ok(wf.includes("ruido-nav-brush"));

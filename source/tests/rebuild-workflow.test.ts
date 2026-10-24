@@ -17,7 +17,7 @@ test("sincronização legislativa semanal mantém lock de escrita e não publica
   assert.match(collector, /cancel-in-progress:\s*false/);
   assert.doesNotMatch(collector, /actions\/deploy-pages@/);
   assert.equal((pages.match(/actions\/deploy-pages@v4/g) || []).length, 0);
-  assert.equal((pages.match(/actions\/upload-artifact@v4/g) || []).length, 1);
+  assert.equal((pages.match(/actions\/(?:upload|download)-artifact@/g) || []).length, 0);
   assert.match(pages, /git -C "\$dest" push origin HEAD:main/);
 });
 
@@ -32,8 +32,8 @@ test("checkpoint verificável precede auditoria e export; publicação só no wo
   assert.ok(publicationGate > checkpoint);
   assert.ok(staticExport > publicationGate);
   assert.doesNotMatch(collector, /actions\/deploy-pages@/);
-  assert.match(pages, /actions\/upload-artifact@v4/);
-  assert.match(pages, /actions\/download-artifact@v4/);
+  assert.doesNotMatch(pages, /actions\/(?:upload|download)-artifact@/);
+  assert.match(pages, /build-public-source\.py verify out\/source/);
   assert.match(pages, /scripts\/audit-public-export\.py out/);
   assert.doesNotMatch(pages, /actions\/deploy-pages@/);
   assert.ok(pages.indexOf("Verificar sequência monotônica de publicação")

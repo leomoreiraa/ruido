@@ -152,6 +152,17 @@ exec /usr/bin/git "$@"
         self.assertEqual(json.loads((checked / "build-info.json").read_text())["run"],
                          "20")
 
+    def test_source_mirror_does_not_require_actions_artifact_storage(self):
+        workflow = (ROOT / ".github/workflows/publish-public-source.yml").read_text()
+        self.assertNotIn("actions/upload-artifact@", workflow)
+        self.assertNotIn("actions/download-artifact@", workflow)
+        self.assertNotIn("needs: export", workflow)
+        self.assertIn("group: ruido-public-write", workflow)
+        self.assertLess(workflow.index("python3 -I scripts/build-public-source.py export source-public"),
+                        workflow.index("python3 -I scripts/build-public-source.py verify source-public"))
+        self.assertLess(workflow.index("python3 -I scripts/build-public-source.py verify source-public"),
+                        workflow.index("      - name: Enviar apenas source/ ao GitHub público"))
+
     def test_source_retry_preserves_concurrent_site(self):
         src = self.workspace / "source-public"
         (src / "app").mkdir(parents=True)
