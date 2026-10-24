@@ -17,11 +17,11 @@ class TestCoverage(unittest.TestCase):
             if i<9:
                 db.execute("INSERT INTO Presenca VALUES (?,?,?,?,?,?,?,?)",
                     ("b","CAMARA",str(i),"2026-06-%02d"%(i+1),"EVENTO_CAMARA","CHAMADA_OFICIAL","PRESENTE","https://www.camara.leg.br"))
-        # Amostra B cobre 9 eventos até o último registrado, não os 12 totais.
-        # Essa limitação precisa ser explícita no rótulo.
+        
+        
         result=m.gerar(db)
         self.assertEqual(result["a"]["percentual"],100.0)
-        self.assertNotIn("b",result)  # apenas 9 eventos: amostra insuficiente
+        self.assertNotIn("b",result)  
         self.assertEqual(result["a"]["criterio"],"EVENTOS_COLETADOS_NAO_ASSIDUIDADE")
     def test_sem_eventos_nao_gera_zero(self):
         db=sqlite3.connect(":memory:")

@@ -91,8 +91,8 @@ class CollectorMergeTest(unittest.TestCase):
                 doc({"p":{"fornecedoresSenado":[record,changed]}},B),doc({},C))
 
     def test_finance_two_supplier_names_same_cnpj_year_are_distinct_records(self):
-        # Reprodução da falha real: Câmara agrupa por CNPJ + nome,
-        # não apenas CNPJ. Não perder nenhum gasto nem somar duas vezes.
+        
+        
         id="cmvithi6u008srdhbur3bbo48"
         cnpj="12345678000190"
         a=supplier(cnpj,2026,200,"EMPRESA EXEMPLO LTDA")

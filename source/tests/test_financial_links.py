@@ -227,7 +227,7 @@ class FinancialLinkTests(unittest.TestCase):
 
 
     def test_ceaps_schema_real_cpfCnpj_aceita_so_pessoa_juridica(self):
-        # Campo publicado no JSON oficial /despesas_ceaps/{ano}.
+        
         people=[{"id":"s","externalId":"5936","casa":"SENADO"}]
         rows=[
             {"codSenador":5936,"fornecedor":"Empresa autorizada",

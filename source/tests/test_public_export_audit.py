@@ -51,7 +51,7 @@ class StaticExportAuditTest(unittest.TestCase):
             AUDIT(self.root)
 
     def test_nextjs_browser_chunk_app_directory_is_allowed(self):
-        # The Next.js export includes _next/static/chunks/app by design.
+        
         f = self.root / "_next/static/chunks/app/page-abc.js"
         f.parent.mkdir(parents=True, exist_ok=True)
         f.write_text("console.log('public client chunk')")

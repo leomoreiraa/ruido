@@ -64,8 +64,8 @@ class PublicMirrorRaceTest(unittest.TestCase):
         self.injected = self.base / "injected"
         self.concurrent = self.base / "concurrent"
         self.summary = self.base / "summary.txt"
-        # Before the first publisher push, a second writer advances the same
-        # remote branch. The first push must fail and the retry must succeed.
+        
+        
         wrapper = """#!/usr/bin/env bash
 set -e
 if [[ "${1:-}" == "clone" ]]; then
@@ -106,7 +106,7 @@ exec /usr/bin/git "$@"
         self.assertIn("git -C \"$dest\" fetch --depth=1 origin main", script)
         self.assertNotIn("push --force", script)
         self.assertNotIn("push -f", script)
-        # Substitute only the external authentication and GitHub remote.
+        
         script = script.replace("gh auth setup-git", "true")
         script = script.replace("https://github.com/leomoreiraa/ruido.git",
                                 str(self.remote))

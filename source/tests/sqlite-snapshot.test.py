@@ -155,7 +155,7 @@ class TestSQLiteSnapshot(unittest.TestCase):
                            (f"voto{i}", f"v{i}", f"p{i}"))
                 db.execute("INSERT INTO Presenca (id, sessaoExternalId, casa, parlamentarId, dataSessao, tituloSessao, status) VALUES (?, 'sess1', 'CAMARA', ?, '2024-03-01 09:00:00', 'Sessao', 'PRESENTE')",
                            (f"pres{i}", f"p{i}"))
-            # Operational internal state
+            
             db.execute("INSERT INTO SyncLease (id, holder, expiresAt) VALUES ('GLOBAL', 'runner-1', '2099-01-01')")
             db.execute("INSERT INTO SyncExecution (id, status, erro, parametros, resumo) VALUES (?, 'SUCESSO', 'token_secret_leaked', ?, ?)",
                        ("history:v1:camara:2024-01",
@@ -181,7 +181,7 @@ class TestSQLiteSnapshot(unittest.TestCase):
         self.assertTrue(manifest_file.is_file())
         self.assertTrue(sqlite_file.is_file())
 
-        # Verify contents of sanitized snapshot
+        
         snap_db = sqlite3.connect(sqlite_file)
         try:
             leases = snap_db.execute("SELECT COUNT(*) FROM SyncLease").fetchone()[0]
@@ -203,13 +203,13 @@ class TestSQLiteSnapshot(unittest.TestCase):
         finally:
             snap_db.close()
 
-        # Verify verify subcommand passes
+        
         res_verify = subprocess.run([sys.executable, "-I", str(SNAPSHOT_SCRIPT), "verify",
                                      "--database", str(sqlite_file), "--manifest", str(manifest_file)],
                                     capture_output=True, text=True)
         self.assertEqual(res_verify.returncode, 0, msg=res_verify.stderr)
 
-        # Restore
+        
         dest = self.dir / "restored.db"
         res_restore = subprocess.run([sys.executable, "-I", str(SNAPSHOT_SCRIPT), "restore",
                                       "--database", str(sqlite_file), "--manifest", str(manifest_file),
@@ -218,7 +218,7 @@ class TestSQLiteSnapshot(unittest.TestCase):
         self.assertEqual(res_restore.returncode, 0, msg=res_restore.stderr)
         self.assertTrue(dest.is_file())
 
-        # Refusal to overwrite existing destination
+        
         res_refuse = subprocess.run([sys.executable, "-I", str(SNAPSHOT_SCRIPT), "restore",
                                      "--database", str(sqlite_file), "--manifest", str(manifest_file),
                                      "--destination", str(dest)],
@@ -250,7 +250,7 @@ class TestSQLiteSnapshot(unittest.TestCase):
         subprocess.run([sys.executable, "-I", str(SNAPSHOT_SCRIPT), "create",
                         "--source", str(source1), "--output-dir", str(out_dir1)], check=True)
 
-        # Shrink history: remove a row
+        
         source2 = self.dir / "source2.db"
         self.create_sample_db(source2, count=2)
         out_dir2 = self.dir / "snap2"
