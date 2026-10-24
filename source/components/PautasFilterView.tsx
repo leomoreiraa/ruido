@@ -1,4 +1,3 @@
-// components/PautasFilterView.tsx
 "use client";
 
 import React, { useState, useMemo, useDeferredValue, useCallback, useRef } from "react";
@@ -44,7 +43,6 @@ export function PautasFilterView({
   const [tipo, setTipo] = useState("");
   const [pagina, setPagina] = useState(1);
   const buscaAdiada = useDeferredValue(busca);
-  // O catálogo completo nunca entra no estado da página: o Worker o processa.
   const [workerSolicitado, setWorkerSolicitado] = useState(false);
   const [workerPronto, setWorkerPronto] = useState(false);
   const [carregandoCatalogo, setCarregandoCatalogo] = useState(false);
@@ -108,7 +106,6 @@ export function PautasFilterView({
 
   React.useEffect(() => {
     if (!catalogoCompleto || !workerPronto || !filtroAtivo || !workerRef.current) return;
-    // Busca com pausa para não reprocessar dezenas de milhares por tecla.
     const timer = window.setTimeout(() => {
       const requestId = ++sequenciaRef.current;
       setCarregandoCatalogo(true);
@@ -120,7 +117,6 @@ export function PautasFilterView({
     return () => window.clearTimeout(timer);
   }, [catalogoCompleto, workerPronto, filtroAtivo, chaveAtual, buscaAdiada, casa, tipo, pagina]);
 
-  // São exibidos no máximo 10 cards; os 20 do HTML inicial ficam prontos.
   const dadosLocais = useMemo(() => {
     if (catalogoCompleto) return pautasIniciais;
     const termo = normalizarTexto(buscaAdiada.trim());
