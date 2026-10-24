@@ -138,16 +138,27 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <p className="font-mono text-xs mt-4 text-ink/70">As porcentagens são calculadas sobre votos válidos. A cor compara somente Lula (13) e Flávio (22), e a intensidade indica a margem entre eles; no 1º turno, outros candidatos também disputaram a eleição.</p>
   </section>
 
-  <section className="ruido-paper-card bg-paper-card border-4 border-ink p-4 sm:p-6 shadow-[6px_6px_0_#101010]">
-   <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-    <h2 className="font-heavy text-2xl uppercase">MAPA DE VOTOS // {uf==="BR"?"BRASIL":nomesUf.get(uf)}</h2>
-    {uf!=="BR"&&<button type="button" onClick={()=>selecionarEstado("BR")} className="bg-ink text-paper font-mono font-bold text-xs px-3 py-2 border-2 border-punk-red">← VOLTAR AO BRASIL</button>}
+  <section className="ruido-map-zine ruido-map-zine--electoral">
+   <span className="ruido-map-zine__tape" aria-hidden="true" />
+   <span className="ruido-map-zine__corner" aria-hidden="true">✕</span>
+   <div className="ruido-map-zine__masthead">
+    <span className="ruido-map-zine__eyebrow">RUÍDO // ATLAS ELEITORAL</span>
+    <span className="ruido-map-zine__serial">ARQUIVO 2026 / TURNO {String(turno).padStart(2,"0")}</span>
    </div>
-   <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] mb-4">
+   <div className="ruido-map-zine__titlebar">
+    <div className="min-w-0">
+     <div className="ruido-map-zine__micro">VOTOS POR MUNICÍPIO · FONTE TSE</div>
+     <h2 className="ruido-map-zine__headline">MAPA DE VOTOS <em>// {uf==="BR"?"BRASIL":nomesUf.get(uf)}</em></h2>
+    </div>
+    {uf!=="BR"?<button type="button" onClick={()=>selecionarEstado("BR")} className="ruido-map-zine__back">← VOLTAR AO BRASIL</button>:<span className="ruido-map-zine__stamp" aria-hidden="true">MAPA<br />NACIONAL<br />///</span>}
+   </div>
+   <div className="ruido-map-zine__legend flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] mb-4">
     {legendas.map(l=><span className="inline-flex gap-1.5 items-center" key={l.nome}><span style={{backgroundColor:l.cor}} className="h-3 w-4 border border-ink/30"/>{l.nome}</span>)}
    </div>
    <div className={uf==="BR"?"space-y-4":"grid lg:grid-cols-[1.35fr_.65fr] gap-5"}>
-    <div className={uf==="BR"?"p-0 overflow-hidden":"bg-[#e8e4db] border border-ink/30 p-2 sm:p-4 overflow-hidden"}>
+    <div className="ruido-map-zine__window">
+     <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>LEITURA / {turno}º TURNO</span><span>ESTADO / MUNICÍPIO</span></div>
+     <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national":"ruido-map-zine__canvas ruido-map-zine__canvas--state"}>
      {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={dados?.resultadosMunicipais} municipios={dados?.municipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">
        {malhasUf.municipios.map(m=>{
@@ -161,8 +172,9 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      </div>:<div className="min-h-[280px] flex items-center justify-center text-ink font-mono text-sm p-6 text-center">
       {erroMalha?"A malha municipal desta UF não está disponível neste deploy. Use o seletor municipal para consultar os votos.":"Carregando os limites municipais..."}
      </div>}
+     </div>
     </div>
-    <div className={uf==="BR"?"grid sm:grid-cols-2 gap-3 items-end":"space-y-3"}>
+    <div className={"ruido-map-zine__controls "+(uf==="BR"?"grid sm:grid-cols-2 gap-3 items-end":"space-y-3")}>
      <div><label htmlFor="eleicao-uf" className="block font-mono text-xs font-bold">BRASIL / ESTADO</label>
      <select id="eleicao-uf" value={uf} onChange={e=>selecionarEstado(e.target.value)} className="w-full bg-white border-2 border-ink p-3 font-heavy text-base text-ink">
       <option value="BR">BRASIL — TODAS AS UFs</option>
@@ -191,6 +203,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      <a href={SITE_TSE} target="_blank" rel="noreferrer" className="inline-block underline font-mono text-sm font-bold">CONFERIR NO TSE ↗</a>
     </div>
    </div>
+   <div className="ruido-map-zine__tagline" aria-hidden="true"><span>OBSERVE // COMPARE // INVESTIGUE</span><span>RUÍDO — INFORMAÇÃO É TERRITÓRIO</span></div>
   </section>
 
   <section className="bg-white border-4 border-ink p-4 sm:p-6 shadow-[6px_6px_0_#e42232]">
