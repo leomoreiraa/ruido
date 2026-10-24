@@ -36,7 +36,6 @@ export default function ApoiePage() {
       <section aria-labelledby="apoie-opcoes" className="space-y-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 id="apoie-opcoes" className="font-heavy text-3xl uppercase text-ink sm:text-4xl">
-            // COMO APOIAR
           </h2>
           <span className="font-mono text-xs font-bold uppercase text-ink/75">
             Toda contribuição é voluntária.
