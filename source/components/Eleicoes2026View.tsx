@@ -76,6 +76,19 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
   return ()=>{ativo=false;if(timer)clearInterval(timer);};
  },[turno]);
 
+
+ useEffect(()=>{
+  if(turno!==2||dadosPorTurno[1])return;
+  let ativo=true;
+  void fetch(filename(1),{cache:"force-cache"})
+   .then(async r=>{if(!r.ok)throw new Error("Catálogo oficial indisponível");return r.json() as Promise<Snapshot>;})
+   .then(snapshot=>{
+    if(ativo&&snapshot.versao===1&&snapshot.turno===1&&snapshot.fonte==="https://resultados.tse.jus.br/oficial"&&Array.isArray(snapshot.municipios))
+     setDadosPorTurno(old=>({...old,1:old[1]??snapshot}));
+   }).catch(()=>{});
+  return ()=>{ativo=false;};
+ },[turno,dadosPorTurno]);
+
  useEffect(()=>{
   let ativo=true;
   if(uf==="BR"){setMalhasUf(null);setErroMalha(false);return;}

@@ -36,7 +36,9 @@ for(const configuracao of [
    await expect(page.locator("#eleicao-busca")).toBeVisible();
    await page.locator("#eleicao-busca").fill("Araras");
    await expect(page.locator("#eleicao-cidade").locator("option",{hasText:"Araras"})).toHaveCount(1,{timeout:20000});
-   await page.locator("#eleicao-cidade").selectOption({label:"Araras"});
+   const codigoAraras=await page.locator("#eleicao-cidade option").filter({hasText:/araras/i}).getAttribute("value");
+   expect(codigoAraras).toBeTruthy();
+   await page.locator("#eleicao-cidade").selectOption(codigoAraras);
    await expect(page.getByRole("heading",{name:/Araras.*RESULTADOS/i})).toBeVisible();
    const segundaRodada=page.locator("section").filter({has:page.getByRole("heading",{name:/COMPARAÇÃO TERRITORIAL/})});
    await expect(segundaRodada).not.toContainText("ESCRITOR AUGUSTO CURY");
@@ -47,9 +49,19 @@ for(const configuracao of [
   test("layout não cria rolagem lateral de página",async({page})=>{
    await page.goto(url,{waitUntil:"domcontentloaded"});
    await expect(page.getByRole("heading",{name:/ELEIÇÕES 2026/})).toBeVisible();
-   await expect.poll(async()=>{
-    return page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-window.innerWidth);
-   },{timeout:25000}).toBeLessThanOrEqual(5);
+   const diagnostico=await page.evaluate(()=>{
+    const largura=window.innerWidth;
+    const excesso=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-largura;
+    const elementos=[...document.body.querySelectorAll("*")].flatMap(el=>{
+     const r=el.getBoundingClientRect();
+     if(r.right<largura+5||r.width===0)return [];
+     const cs=getComputedStyle(el);
+     return [{elemento:el.tagName.toLowerCase(),classe:String(el.className).slice(0,80),right:Math.round(r.right),width:Math.round(r.width),posicao:cs.position,overflow:cs.overflowX}];
+    }).slice(0,25);
+    return {largura,excesso,elementos};
+   });
+   console.log("DIAGNOSTICO-LARGURA "+configuracao.nome+" "+JSON.stringify(diagnostico));
+   expect(diagnostico.excesso).toBeLessThanOrEqual(5);
   });
  });
 }
