@@ -87,7 +87,6 @@ def assert_baseline(repository, baseline_tag):
 
 
 def restore(args):
-    # --paginate avoids silently losing snapshots when unrelated releases accumulate.
     latest, existing_snapshots = latest_published(args.repository)
     if not latest:
         if os.environ.get('BOOTSTRAP') != 'true' or existing_snapshots:
@@ -101,7 +100,6 @@ def restore(args):
         print('Clean-generation first bootstrap authorized. Legacy public-data snapshots will NOT be read.')
         return
     args.work_dir.mkdir(parents=True, exist_ok=False)
-    # Nothing from downloads is executed, imported, or extracted. Scripts stay in checkout.
     gh('release', 'download', latest['tag_name'], '--repo', args.repository,
        '--pattern', 'public.sqlite*', '--pattern', 'manifest.json', '--dir', str(args.work_dir))
     database, manifest = unpack(args.work_dir), args.work_dir / 'manifest.json'
@@ -120,7 +118,6 @@ def publish(args):
     validate(database, manifest)
     if args.baseline_tag is None:
         raise ValueError('Explicit --baseline-tag required (use empty string only for bootstrap)')
-    # Fail before any write when another collector published after this job restored.
     assert_baseline(args.repository, args.baseline_tag)
     if args.baseline_manifest and args.baseline_manifest.is_file():
         current = json.loads(manifest.read_text(encoding='utf-8'))
@@ -131,15 +128,12 @@ def publish(args):
                     out.write('changed=false\n')
             print('Unchanged verified SQLite: no new Release required')
             return
-    # Draft is invisible to restoration until BOTH assets have uploaded successfully.
     gh('release', 'create', args.tag, '--repo', args.repository, '--target', args.commit,
        '--draft', '--title', args.tag, '--notes',
        'Rebuilt from official APIs (generation rebuilt-v2). No legacy SQLite imports. '
        'Coverage describes observed records, not historical completeness.')
     compressed = pack(database, args.candidate / 'public.sqlite.gz')
     gh('release', 'upload', args.tag, str(compressed), str(manifest), '--repo', args.repository)
-    # Protect long uploads too: if someone bypassed workflow concurrency,
-    # leave this Release a draft instead of promoting outdated content.
     assert_baseline(args.repository, args.baseline_tag)
     gh('release', 'edit', args.tag, '--repo', args.repository, '--draft=false', '--latest=false')
     if os.environ.get('GITHUB_OUTPUT'):

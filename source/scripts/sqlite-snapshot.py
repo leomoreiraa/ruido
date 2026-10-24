@@ -99,8 +99,6 @@ def verify(database, manifest):
 def preserve_history(database, previous):
     with connect(previous) as old, connect(database) as new:
         old_counts, new_counts = inspect(old)['counts'], inspect(new)['counts']
-        # SQL anti-join replaces ~1 million Python SQL round-trips per build.
-        # Parameterised URI is read-only; all table names come from PUBLIC.
         uri = previous.resolve().as_uri() + '?mode=ro'
         new.execute('ATTACH DATABASE ? AS previous', (uri,))
         for table in PUBLIC & old_counts.keys():
@@ -128,7 +126,6 @@ def snapshot(source, directory, previous=None):
             if table in tables:
                 dst.execute(f'DELETE FROM "{table}"')
         if 'SyncExecution' in tables:
-            # Retain only successful historical checkpoints; sanitize and whitelist JSON
             rows = dst.execute('SELECT id,status,iniciadoEm,finalizadoEm,parametros,resumo FROM SyncExecution').fetchall()
             dst.execute('DELETE FROM SyncExecution')
             for row in rows:

@@ -40,14 +40,12 @@ def audit(path: Path, require_amendments: bool, checkpoint_only: bool = False) -
             raise ValueError("Too few individual voting records")
         if not checkpoint_only and require_amendments and counts["EmendaParlamentar"] == 0:
             raise ValueError("CGU API configured but no amendments imported")
-        # A full month from the historical start in each house must have been reached.
         checks = {casa: db.execute(
             "SELECT COUNT(*) FROM SyncExecution WHERE status='SUCESSO' AND id LIKE ?",
             (f"history:v1:{casa}:2022-%",),
         ).fetchone()[0] for casa in ("camara", "senado")}
         if not checkpoint_only and min(checks.values()) == 0:
             raise ValueError(f"2022 backfill missing for at least one house: {checks}")
-        # Negative official totals or unexpected voting dates indicate corrupted inputs.
         if db.execute("""SELECT COUNT(*) FROM Votacao
               WHERE placarSim<0 OR placarNao<0 OR placarAbstencao<0
                     OR placarObstrucao<0 OR placarOutros<0""").fetchone()[0]:
