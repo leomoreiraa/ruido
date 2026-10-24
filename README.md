@@ -73,12 +73,12 @@ A cobertura de cada módulo depende da disponibilidade e integridade das fontes 
 | Interface | Lucide React, Radix UI |
 | Backend e integração | Rotas de API, serviços TypeScript, scripts Node.js |
 | Banco de dados | SQLite e Prisma ORM |
-| Inteligência artificial | Google Gemini API (processamento de notícias e resumos fora do navegador) |
+| Inteligência artificial | Processamento automatizado de conteúdo com IA |
 | Automação | GitHub Actions no ambiente de operação |
 | Publicação | Exportação estática e GitHub Pages |
 | Qualidade | Testes executados com TSX e test runner do Node.js |
 
-A rotina pública de explicações legislativas utiliza `GEMINI_API_KEY` e a API Google Gemini; a presença de um pacote no manifesto de dependências não indica necessariamente que ele seja o provedor ativo.\n\nAs versões acima refletem as dependências declaradas no [`package.json`](./source/package.json) do espelho público.
+A documentação técnica das dependências está disponível no código-fonte público.
 
 ## Arquitetura
 
