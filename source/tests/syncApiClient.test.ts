@@ -4,7 +4,7 @@ import { ThrottledApiClient } from "../lib/services/apiClient";
 
 test("ThrottledApiClient: respeita limite de tentativas e timeout", async () => {
   const client = new ThrottledApiClient({
-    baseUrl: "http://127.0.0.1:9999", // Porta inacessível
+    baseUrl: "http://127.0.0.1:9999", 
     maxConcurrency: 1,
     minIntervalMs: 10,
     maxRetries: 1,
@@ -33,7 +33,7 @@ test("ThrottledApiClient: aceita status específicos sem erro quando configurado
     baseBackoffMs: 20,
   });
 
-  // Não depende da rede externa para simular a resposta HTTP oficial.
+  
   const mockedFetch = mock.method(globalThis, "fetch", async () =>
     new Response(null, { status: 404 }));
   try {

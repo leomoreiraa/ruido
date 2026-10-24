@@ -9,7 +9,7 @@ import { normalizarVotoCamara, validarRespostaEnvelopeCamara } from "../lib/serv
 import { OpcaoVoto, StatusPresenca } from "../lib/types";
 
 test("Senado: normalização de votos preservando valores literais desconhecidos", () => {
-  // Padrões
+  
   assert.equal(normalizarVotoSenado("Sim").opcaoNormalizada, OpcaoVoto.SIM);
   assert.equal(normalizarVotoSenado("Não").opcaoNormalizada, OpcaoVoto.NAO);
   assert.equal(normalizarVotoSenado("Nao").opcaoNormalizada, OpcaoVoto.NAO);
@@ -17,47 +17,47 @@ test("Senado: normalização de votos preservando valores literais desconhecidos
   assert.equal(normalizarVotoSenado("Obstrução").opcaoNormalizada, OpcaoVoto.OBSTRUCAO);
   assert.equal(normalizarVotoSenado("Presidente (art. 51 RISF)").opcaoNormalizada, OpcaoVoto.ARTIGO_17);
 
-  // Sem voto ou licença
+  
   assert.equal(normalizarVotoSenado("P-NRV").opcaoNormalizada, "PRESENTE_SEM_VOTO");
   assert.equal(normalizarVotoSenado("AP").opcaoNormalizada, "LICENCA_OU_MISSAO");
   assert.equal(normalizarVotoSenado("LS").opcaoNormalizada, "LICENCA_OU_MISSAO");
   assert.equal(normalizarVotoSenado("MIS").opcaoNormalizada, "LICENCA_OU_MISSAO");
 
-  // Não inventa ausência para código desconhecido
+  
   const desconhecido = normalizarVotoSenado("CODIGO_ESPECIAL_XYZ");
   assert.equal(desconhecido.opcaoNormalizada, "CODIGO_ESPECIAL_XYZ");
   assert.equal(desconhecido.siglaOriginal, "CODIGO_ESPECIAL_XYZ");
 
-  // Voto sem código não pode ser interpretado como ausência
+  
   assert.equal(normalizarVotoSenado("").opcaoNormalizada, "NAO_INFORMADO");
   assert.equal(normalizarVotoSenado(null).opcaoNormalizada, "NAO_INFORMADO");
 });
 
 test("Senado: classificação de evidência de presença (presença ganha e presidente presente)", () => {
-  // Presidente presente
+  
   const pres = classificarEvidenciaPresencaSenado("Presidente (art. 51 RISF)", null);
   assert.deepEqual(pres, { status: StatusPresenca.PRESENTE, justificativa: "Presidência da Sessão" });
 
-  // P-NRV presente
+  
   const pnrv = classificarEvidenciaPresencaSenado("P-NRV", "Presente – Não registrou voto");
   assert.equal(pnrv?.status, StatusPresenca.PRESENTE);
 
-  // Voto sim/não presente
+  
   const sim = classificarEvidenciaPresencaSenado("Sim", null);
   assert.equal(sim?.status, StatusPresenca.PRESENTE);
 
-  // AP / LS justificados
+  
   const ap = classificarEvidenciaPresencaSenado("AP", "Atividade parlamentar");
   assert.equal(ap?.status, StatusPresenca.JUSTIFICADO);
 
   const ls = classificarEvidenciaPresencaSenado("LS", "Licença saúde");
   assert.equal(ls?.status, StatusPresenca.JUSTIFICADO);
 
-  // NCOM ausente explícito no registro
+  
   const ncom = classificarEvidenciaPresencaSenado("NCOM", "Não compareceu");
   assert.equal(ncom?.status, StatusPresenca.AUSENTE);
 
-  // Nulo se não houver siglaVoto (nunca inventa presença/ausência do nada)
+  
   assert.equal(classificarEvidenciaPresencaSenado(null, null), null);
   assert.equal(classificarEvidenciaPresencaSenado("", null), null);
 });
@@ -73,7 +73,7 @@ test("Senado: validação do contrato de votação plana", () => {
     /Formato inválido na resposta do Senado: 'codigoSessaoVotacao' ausente/
   );
 
-  // Item válido não lança exceção
+  
   assert.doesNotThrow(() =>
     validarItemVotacaoSenado({
       codigoSessaoVotacao: 6921,
@@ -90,11 +90,11 @@ test("Câmara: normalização de votos preservando valores desconhecidos", () =>
   assert.equal(normalizarVotoCamara("Obstrução").opcaoNormalizada, OpcaoVoto.OBSTRUCAO);
   assert.equal(normalizarVotoCamara("Art. 17").opcaoNormalizada, OpcaoVoto.ARTIGO_17);
 
-  // Desconhecido preservado literalmente
+  
   assert.equal(normalizarVotoCamara("NOVO_PROCEDIMENTO").opcaoNormalizada, "NOVO_PROCEDIMENTO");
   assert.equal(normalizarVotoCamara("NOVO_PROCEDIMENTO").opcaoOriginal, "NOVO_PROCEDIMENTO");
 
-  // Nulo
+  
   assert.equal(normalizarVotoCamara(null).opcaoNormalizada, "NAO_INFORMADO");
 });
 

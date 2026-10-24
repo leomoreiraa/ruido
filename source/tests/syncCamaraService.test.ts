@@ -12,7 +12,7 @@ const deputado = { id: 1, nome: "Teste" };
 for (const target of ["detail", "votes-first", "votes-next", "attendance-first", "attendance-next"] as const) {
   for (const failure of ["404", "null"] as const) {
     test(`${target}: ${failure} rejects instead of committing empty/partial data`, async t => {
-      // No database connection or real network: intercept both boundaries.
+      
       const transaction = t.mock.method(prisma, "$transaction", async () => {
         throw new Error("Unexpected database transaction");
       });
@@ -28,7 +28,7 @@ for (const target of ["detail", "votes-first", "votes-next", "attendance-first",
           : target.startsWith("votes") ? isVotes && (target.endsWith("next") ? isNext : !isNext)
           : isAttendance && (target.endsWith("next") ? isNext : !isNext);
         if (shouldFail) {
-          // Match the real client's accepted-status behavior so the old bug fails this test.
+          
           if (failure === "null" || options?.acceptStatuses?.includes(404)) return null;
           throw new FatalHttpError("HTTP 404 regression fixture", 404);
         }

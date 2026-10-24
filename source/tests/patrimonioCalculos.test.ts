@@ -53,7 +53,7 @@ describe("patrimonioCalculos: agrupamento e evolução patrimonial TSE", () => {
     const total2022 = 1050000;
 
     const variacaoPct = ((total2022 - total2018) / total2018) * 100;
-    assert.equal(Math.round(variacaoPct), 40); // 40% de crescimento
+    assert.equal(Math.round(variacaoPct), 40); 
   });
 
   test("formata valores monetários em padrão BRL", () => {
