@@ -45,7 +45,8 @@ test("modo profundo eleva limites internos e encerra ao atingir orçamento",()=>
   const dossiers=read("scripts/refresh-dossiers-official-ai.ts");
   assert.match(dossiers,/deepMode\?140:8/);
   assert.match(dossiers,/Date.now\(\)-begun>=budgetMs/);
-  assert.match(dossiers,/persist\(\); \/\/ checkpoint atômico por perfil/);
+  assert.match(dossiers,/fs\.renameSync\(out\+"\.tmp",out\)/);
+  assert.match(dossiers,/previous\.cursor=\(start\+regulares\)%people\.length;\s*persist\(\)/);
 });
 
 test("análise profunda não expõe Gemini ao site nem dispensa verificação",()=>{
