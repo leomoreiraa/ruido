@@ -70,7 +70,7 @@ test("cabecalho eleitoral nao usa letras brancas sobre verde fluorescente",()=>{
  const css=source("app/globals.css");
  assert.match(election,/ruido-election-headline__text/);
  assert.match(election,/ruido-election-headline__place/);
- const scoped=css.slice(css.lastIndexOf("Apuração: o cabeçalho é cartaz em papel"));
+ const scoped=css.slice(css.lastIndexOf(".ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__masthead {"));
  assert.ok(scoped.length>500,"regras de contraste eleitoral presentes");
  assert.match(scoped,/ruido-map-zine--electoral \.ruido-map-zine__titlebar/);
  assert.match(scoped,/background: #f2e6ce/);
