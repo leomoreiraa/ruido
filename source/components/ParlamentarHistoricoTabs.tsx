@@ -122,7 +122,7 @@ export function ParlamentarHistoricoTabs({
 
   return (
     <div className="my-8 space-y-6">
-      {/* Botões de alternância de abas estilo fichário policial */}
+      
       <div className="flex gap-2 sm:gap-3 flex-wrap border-b-4 border-ink pb-2">
         <button
           type="button"
@@ -184,7 +184,7 @@ export function ParlamentarHistoricoTabs({
           {erroHistorico && <p role="alert" className="text-punk-red">Falha: {erroHistorico}</p>}
         </div>
       )}
-      {/* Conteúdo Aba Votos */}
+      
       {abaAtiva === "votos" && (
         <div className="space-y-4">
           {votosPaginados.length > 0 ? (
@@ -203,7 +203,7 @@ export function ParlamentarHistoricoTabs({
                       className="ruido-paper-card bg-paper-light border-2 border-ink p-4 shadow-[4px_4px_0_#101010] flex flex-col justify-between transition-all hover:shadow-[6px_6px_0_#e42232]"
                     >
                       <div>
-                        {/* Header line with Vote Decision Tag */}
+                        
                         <div className="flex justify-between items-start gap-2 mb-2 pb-2 border-b border-dashed border-ink/20 font-mono text-xs">
                           <span className="text-ink/70">
                             {formatarDataHoraBR(vot.dataHora)}
@@ -253,7 +253,7 @@ export function ParlamentarHistoricoTabs({
                 })}
               </div>
 
-              {/* Paginação Votos */}
+              
               {totalPaginasVotos > 1 && (
                 <div className="py-4 border-t-2 border-ink flex justify-between items-center font-mono text-xs">
                   <span>
@@ -288,7 +288,7 @@ export function ParlamentarHistoricoTabs({
         </div>
       )}
 
-      {/* Conteúdo Aba Presenças */}
+      
       {abaAtiva === "presencas" && (
         <div className="space-y-4">
           {presencasPaginadas.length > 0 ? (
@@ -336,7 +336,7 @@ export function ParlamentarHistoricoTabs({
                 </table>
               </div>
 
-              {/* Paginação Presenças */}
+              
               {totalPaginasPresencas > 1 && (
                 <div className="py-4 border-t-2 border-ink flex justify-between items-center font-mono text-xs">
                   <span>
@@ -371,7 +371,7 @@ export function ParlamentarHistoricoTabs({
         </div>
       )}
 
-      {/* Conteúdo Aba Emendas */}
+      
       {abaAtiva === "emendas" && (
         <div className="space-y-4">
           {emendasPaginadas.length > 0 ? (
@@ -409,7 +409,7 @@ export function ParlamentarHistoricoTabs({
                 </table>
               </div>
 
-              {/* Paginação Emendas */}
+              
               {totalPaginasEmendas > 1 && (
                 <div className="py-4 border-t-2 border-ink flex justify-between items-center font-mono text-xs">
                   <span>
@@ -444,7 +444,7 @@ export function ParlamentarHistoricoTabs({
         </div>
       )}
 
-      {/* Conteúdo Aba Patrimônio */}
+      
       {abaAtiva === "patrimonio" && (
         <div className="space-y-4">
           <GraficoPatrimonio
