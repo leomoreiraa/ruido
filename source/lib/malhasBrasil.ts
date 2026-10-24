@@ -1,8 +1,4 @@
-/**
- * Cache estático das malhas geradas a partir do IBGE por publicação anterior do RUÍDO.
- * A geometria muda muito raramente: não deve depender da rede em todos os deploys.
- * A aplicação NÃO usa este arquivo como fonte de PIB, IDHM, emendas ou população.
- */
+
 import { UFS } from "./mapaBrasil";
 
 export const IBGE_MALHAS_SOURCE =

@@ -127,15 +127,15 @@ export interface DiscursoItem {
 export interface ResumoIAItem {
   id: string;
   parlamentarId: string;
-  keywords: string[]; // parsed from JSON array
+  keywords: string[]; 
   resumo: string;
   modeloUsado: string;
   geradoEm: string | Date;
 }
 
 export interface ParametrosSincronizacao {
-  dataInicio: string; // YYYY-MM-DD
-  dataFim: string; // YYYY-MM-DD
+  dataInicio: string; 
+  dataFim: string; 
   limiteVotacoesCamara?: number;
   limiteEventosCamara?: number;
 }

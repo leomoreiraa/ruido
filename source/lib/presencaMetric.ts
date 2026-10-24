@@ -3,7 +3,7 @@ export type CoberturaPresenca={
   percentual:number;inicioRecorte:string;fimRecorte:string;
   criterio:"EVENTOS_COLETADOS_NAO_ASSIDUIDADE";fonte:string;
 };
-/** Percentual fechado: recusa somas diferentes do total de sessões auditadas. */
+
 export function frequenciaAuditadaPercentual(item?:{
   sessoes:number;presentes:number;ausentes:number;justificadas:number;
 }):number|null{

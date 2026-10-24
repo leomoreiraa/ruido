@@ -1,10 +1,4 @@
-/**
- * Pix estático oficial do RUÍDO. Chave pública fornecida pelo mantenedor.
- * O BR Code não consulta contas, não gera cobranças e não define valor.
- * Referência: Manual de Padrões para Iniciação do Pix (Banco Central).
- * Campos de nome/cidade são metadados EMV. O pagador deve confirmar no banco
- * o nome do real recebedor consultado via DICT antes de pagar.
- */
+
 export const RUIDO_PIX_KEY = "7748aa32-17c0-4c16-91bc-fd8f65a87f33";
 export const RUIDO_PIX_NOME = "RUIDO";
 export const RUIDO_PIX_CIDADE = "ARARAS";

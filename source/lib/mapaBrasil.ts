@@ -1,4 +1,4 @@
-/* Official UF codes and standalone helpers for the static choropleth. */
+
 export const UFS = [
   ["11","RO","Rondônia"],["12","AC","Acre"],["13","AM","Amazonas"],["14","RR","Roraima"],
   ["15","PA","Pará"],["16","AP","Amapá"],["17","TO","Tocantins"],["21","MA","Maranhão"],
