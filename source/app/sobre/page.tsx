@@ -1,5 +1,3 @@
-// app/sobre/page.tsx
-
 import React from "react";
 import Link from "next/link";
 
@@ -90,7 +88,6 @@ export default function SobrePage() {
       <section className="space-y-6">
         <div className="border-b-4 border-ink pb-3 flex items-center gap-3">
           <span className="font-heavy text-2xl sm:text-4xl uppercase tracking-wider text-ink bg-punk-acid px-3 py-1 border-2 border-ink shadow-[4px_4px_0_#101010]">
-            // PRINCÍPIOS &amp; METODOLOGIA DE AUDITORIA
           </span>
         </div>
 
@@ -161,7 +158,6 @@ export default function SobrePage() {
       <section className="space-y-4">
         <div className="border-b-4 border-ink pb-3">
           <span className="font-heavy text-2xl sm:text-3xl uppercase tracking-wider text-white bg-punk-red px-3 py-1 shadow-[4px_4px_0_#101010] transform rotate-1 inline-block">
-            // FONTES DE DADOS CONSULTADAS
           </span>
         </div>
 
