@@ -76,8 +76,6 @@ export function municipioDaLocalidade(localidade: unknown): string | null {
 }
 
 async function paginaDaApi(ano: number, pagina: number, chave: string): Promise<PortalEmenda[]> {
-  // No máximo ~50 requisições/minuto em uma execução sequencial:
-  // margem conservadora abaixo das cotas publicadas pela CGU.
   await new Promise(resolve => setTimeout(resolve, 1200));
   const url = new URL(BASE);
   url.searchParams.set("ano", String(ano));
@@ -135,8 +133,6 @@ export async function sincronizarEmendasOficiais(options: EmendasOptions) {
       const prefix = "history:v1:emendas:" + ano + ":";
       const done = prefix + "complete";
       const complete = await prisma.syncExecution.findUnique({ where: { id: done } });
-      // A year still in progress can receive new amendments and updated payments.
-      // After one complete traversal, replay the entire current year in the next cycle.
       if (ano === anoAtual && complete?.status === "SUCESSO" && !options.reprocessar) {
         await prisma.syncExecution.deleteMany({ where: { id: { startsWith: prefix } } });
       }
@@ -177,7 +173,6 @@ export async function sincronizarEmendasOficiais(options: EmendasOptions) {
           if (itemAno !== ano) throw new Error("Ano da emenda diverge do filtro da API");
           const autorOriginal = stringValue(item.nomeAutor || item.autor);
           const tipo = classificarTipoEmenda(item.tipoEmenda);
-          // Bancada, comissão e relator nunca são atribuídos a um parlamentar individual.
           const individual = tipo === "INDIVIDUAL" || tipo === "TRANSFERENCIA_ESPECIAL";
           const parlamentarId = individual ? (porNome.get(nomeNormalizado(autorOriginal)) ?? null) : null;
           const valorPago = lerValorReais(item.valorPago);
