@@ -99,7 +99,6 @@ def manifest_for(root: Path) -> dict[str, str]:
 
 
 def export(destination: Path) -> None:
-    # Git list, not directory copy: no ignored local .env, DB or build output.
     repo = Path.cwd().resolve()
     tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=repo).split(b"\x00")
     if destination.exists():
