@@ -181,7 +181,7 @@
     "tests/test_workflow_json_checkpoint.py": "9ac11fdee4a494b7c1ec8015668f40175462f597dab8beafcaeb0a429f5dc1d8",
     "tests/tripleDailySchedule.test.ts": "1fc8b6f3f0a0d90f53df83ba35958a7d45c834caf9a1a27ae842b4ea94cb34e7",
     "tests/ui-record-availability.test.ts": "061a6fee7a700fb017b08fac3cd4fed9524c6ed29e36344efc92a462cf99817b",
-    "tests/urban-punk-ui.test.ts": "27765f474d2ddbb7c2b7fcc98c14e5d4b28f9522cd468ee9bf96615158d3b106",
+    "tests/urban-punk-ui.test.ts": "84fce9363ff87740012cb6fc1b14ac354045f51d842fd8ce2c3df24077ee2f05",
     "tests/visual-brand.test.ts": "73f39830ddeea1880480133e656d28455968e0ce760d4ccb89a353c87ca79a47",
     "tsconfig.json": "1c6463f0827b621325965b87b072bc6428f4c33feea5335004ea470b1bf6d652"
   }

@@ -55,13 +55,20 @@ test("ticker desliza em dois segmentos e reduz movimento quando solicitado", () 
   assert.match(paintedNav, /--ruido-ink-fill: #d3ff20/);
 });
 
-test("botão de menu é exclusivo de mobile e não duplica navegação no PC", () => {
+test("menu hambúrguer atende celular e tablet sem quebrar a linha no desktop", () => {
   const css = read("app/globals.css");
   const nav = read("components/Navbar.tsx");
-  assert.match(nav, /className="ruido-nav-toggle inline-flex items-center gap-2 md:hidden"/);
-  assert.match(nav, /className="hidden items-center gap-1.5 md:flex"/);
-  assert.match(css, /@media \(min-width: 768px\) \{\s*\.ruido-nav button\.ruido-nav-toggle \{\s*display: none !important;/);
-  assert.match(css, /\.ruido-nav nav\.ruido-mobile-menu \{\s*display: none !important;/);
+  assert.match(nav, /className="ruido-nav-toggle inline-flex shrink-0 items-center gap-2 xl:hidden"/);
+  assert.match(nav, /className="hidden shrink-0 items-center gap-1\.5 xl:flex"/);
+  assert.match(nav, /ruido-mobile-menu pb-4 xl:hidden/);
+  assert.match(nav, /aria-expanded=\{menuAberto\}/);
+  const mobileCss = css.slice(css.lastIndexOf("RUÍDO / NAVEGAÇÃO RESPONSIVA"));
+  assert.match(mobileCss, /@media \(max-width: 1279px\)/);
+  assert.match(mobileCss, /ruido-menu-mobile\.is-open/);
+  assert.match(mobileCss, /@media \(min-width: 1280px\)/);
+  assert.match(mobileCss, /flex-wrap: nowrap !important/);
+  assert.match(mobileCss, /overflow-x: clip/);
+  assert.match(mobileCss, /ruido-marquee-band/);
 });
 
 test("caveira é uma impressão em papel sem halo, e letras do título são acessíveis", () => {
