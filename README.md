@@ -30,7 +30,7 @@
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Dados, fontes e integridade](#dados-fontes-e-integridade)
 - [Publicação e segurança](#publicação-e-segurança)
-- [Testes e contribuições](#testes-e-contribuições)
+- [Contribuições](#contribuições)
 - [Licença e autoria](#licença-e-autoria)
 
 ## Visão geral
@@ -76,7 +76,6 @@ A cobertura de cada módulo depende da disponibilidade e integridade das fontes 
 | Inteligência artificial | Processamento automatizado de conteúdo com IA |
 | Automação | GitHub Actions no ambiente de operação |
 | Publicação | Exportação estática e GitHub Pages |
-| Qualidade | Testes executados com TSX e test runner do Node.js |
 
 A documentação técnica das dependências está disponível no código-fonte público.
 
@@ -226,7 +225,6 @@ ruido/
 │   ├── lib/               # Serviços e integrações
 │   ├── prisma/            # Schema de persistência
 │   ├── scripts/           # Coleta, exportação e automação
-│   ├── tests/             # Testes automatizados
 │   ├── package.json       # Dependências e scripts
 │   └── README.md          # Informações sobre o espelho
 └── README.md              # Esta documentação
@@ -267,17 +265,7 @@ O projeto disponibiliza os arquivos do site e o código-fonte em [`source/`](./s
 
 Se encontrar uma vulnerabilidade, evite publicar credenciais, dados sensíveis ou instruções de exploração em issues públicas. Entre em contato com o mantenedor por um canal apropriado.
 
-## Testes e contribuições
-
-Para executar os testes incluídos no snapshot:
-
-```bash
-cd source
-npm install
-npm test
-```
-
-O resultado depende das dependências e dos requisitos de ambiente de cada teste.
+## Contribuições
 
 ### Como contribuir
 
@@ -286,7 +274,7 @@ O resultado depende das dependências e dos requisitos de ambiente de cada teste
    ```bash
    git checkout -b feature/minha-melhoria
    ```
-3. Faça alterações documentadas e execute os testes aplicáveis.
+3. Faça alterações documentadas e valide seu funcionamento.
 4. Registre o commit:
    ```bash
    git add .
