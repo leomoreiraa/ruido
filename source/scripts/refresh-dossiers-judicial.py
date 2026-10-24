@@ -26,7 +26,6 @@ ROOT = "https://cdn.tse.jus.br/estatistica/sead/odsele/"
 ZIP_PARTES = ROOT + "processual/processos_eleitorais_partes_{ano}.zip"
 ZIP_CAND = ROOT + "consulta_cand/consulta_cand_{ano}.zip"
 MAX_ZIP = 75_000_000
-# CSVs do TSE podem ultrapassar 130 MB. Leitura em fluxo, teto de 600 MB.
 MAX_CSV = 600_000_000
 PER_PROFILE = 25
 
@@ -69,7 +68,6 @@ def iterate_zip(payload, required):
                 cols={key(c) for c in next(csv.reader([first], delimiter=sep))}
                 if not any(required_name in cols for required_name in required):
                     continue
-                # Streaming: cabeçalho já consumido pela checagem das colunas.
                 from itertools import chain
                 lines=io.TextIOWrapper(reader,encoding="latin-1",errors="replace",newline="")
                 for raw in csv.DictReader(chain([first+"\n"],lines),delimiter=sep):
@@ -89,8 +87,6 @@ def main():
     now=datetime.now(timezone.utc).isoformat()
     accepted={}
     report={}
-    # Arquivo de PARTES pode oferecer SQ_CANDIDATO ou não; sem SQ
-    # o nome isolado não constitui prova suficiente de identidade.
     for year in YEARS:
         try:
             candidates=defaultdict(set)
@@ -131,7 +127,6 @@ def main():
                 identifying=(pid,proc,year)
                 if identifying in seen: continue
                 seen.add(identifying)
-                # Registra mera qualidade de parte; não inferir ilícito.
                 accepted.setdefault(pid,[]).append({
                     "numeroProcesso": proc,
                     "anoEleicao": year,
