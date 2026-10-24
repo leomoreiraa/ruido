@@ -1,5 +1,3 @@
-// app/parlamentares/page.tsx
-
 import React from "react";
 import { prisma } from "@/lib/prisma";
 import {
