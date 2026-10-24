@@ -98,6 +98,7 @@
     "scripts/cleanup-synthetic-data.py": "bd864e2013f2feec2787a33a5782d11ff4562edcacfa2b5db4eabad44e64b763",
     "scripts/collect-election-2026.py": "f8f5faafd04937749d781e9dd932ad0f12cfb494f92c4a5580f6f7e5f3f7cfdb",
     "scripts/collect-idhm.py": "6fe18f653e2c444ac1ca545bcecd94b4c3760dbd1a4c59fe33bbc7997b310ee8",
+    "scripts/collect-municipios-ibge.py": "d54975dd7622c7eac53da2484b97a68bf7b1ab2e28c4ba27b7e1285f19d15cb1",
     "scripts/delete-legacy-releases.py": "e1fd60cfe420c8fdf9f582a4808ca669203ba37c926a280504646ea510880fe4",
     "scripts/export-history-archives.ts": "4db77c777ecfe25f578b0a0826977fc07c8c554862846b881ede78c24d0f2815",
     "scripts/fix-pages-basepath.py": "dda024bf135f9e1f55366a66f43e7802474a104c1db1cdcd4947887754d77201",
