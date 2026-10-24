@@ -1,7 +1,5 @@
 import { createHash } from "node:crypto";
 
-// Only this pure validation/hash module may be shared with tests.
-// Never import the server-side Gemini runner into app/ or components/.
 export const AI_MODEL = "gemini-3.5-flash-lite";
 export const AI_PROMPT_VERSION = "ruido-cidadao-v1";
 export type ExplicacaoCidada = { titulo: string; resumo: string; explicacao: string };
