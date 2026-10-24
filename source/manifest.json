@@ -55,7 +55,7 @@
     "lib/ai/coberturaHistoricaNoticias.ts": "5a870cf0adf6fde492b664fa443303459e4216ea92d01b1298bd0fcc14ff1cd2",
     "lib/ai/explicacaoProjetos.ts": "0f00480fa4a0c66bb87b23dc08c94171cfe02a622c6e25f933daea6df7cc00e9",
     "lib/ai/factCheckRelated.ts": "749f136d319d18307b69898f718e52f38ea18bcba11a7c9916506b01aaf5ca19",
-    "lib/ai/gdeltThrottle.ts": "4d8992ea71d0b624cdf26d2b287a0d7098e44bca66bcc8e507a3ccc307fb559a",
+    "lib/ai/gdeltThrottle.ts": "0dbacb405fb13dd0eba9ac79539f7660b5429ade2e50aeb8322b230b6a7cec96",
     "lib/ai/geminiFree.ts": "1f3614eb0ce213ef8a043ec039c23ab3546afb110ac2a29e58cf058e5a29e3f3",
     "lib/ai/noticiasQuatroFontes.ts": "1aae9e276aa77bb1d4be268708c9b5f3ec53b3eabe792ea3b6e73f3bf2412cf3",
     "lib/ai/resolverGoogleNews.ts": "d7fb79f272b41ad269776e6536435db9f40f7f06b32e69298c87615e8ed395e1",
