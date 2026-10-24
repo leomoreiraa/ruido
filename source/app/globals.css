@@ -3845,3 +3845,125 @@ footer a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .ruido-support-fab { transition: none; }
 }
+
+
+/* ==========================================================================
+   RUÍDO / NAVEGAÇÃO RESPONSIVA E LIMITE REAL DA VIEWPORT (2026-10-24)
+   Em tablets de 768 a 1279px, o breakpoint md disparava o menu desktop.
+   As pinceladas e o selo do manifesto então formavam uma segunda linha.
+   Esta regra final substitui os breakpoints antigos, sem mudar as máscaras.
+   ========================================================================== */
+html {
+  max-width: 100%;
+  overflow-x: clip;
+}
+body.collage-body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+.ruido-nav,
+.ruido-status-strip,
+.ruido-marquee-band {
+  width: 100%;
+  max-width: 100%;
+}
+.ruido-nav {
+  overflow-x: clip;
+}
+.ruido-nav > div,
+.ruido-site-content,
+.ruido-site-content > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.ruido-site-content {
+  width: 100%;
+  overflow-wrap: break-word;
+}
+/* A faixa horizontal anima seu texto dentro de uma janela, não alarga body. */
+.ruido-marquee-band {
+  overflow: hidden;
+}
+/* O letreiro longo só aparece quando o cabeçalho tem espaço de verdade. */
+@media (max-width: 1535px) {
+  .ruido-nav .ruido-nav-edition {
+    display: none !important;
+  }
+}
+@media (max-width: 1279px) {
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    display: none !important;
+  }
+  .ruido-nav button.ruido-nav-toggle {
+    display: inline-flex !important;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  .ruido-nav #ruido-menu-mobile.hidden {
+    display: none !important;
+  }
+  .ruido-nav #ruido-menu-mobile.is-open {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    gap: .75rem;
+    padding-top: 1.1rem;
+  }
+  .ruido-nav #ruido-menu-mobile a.ruido-nav-brush {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding-inline: .85rem !important;
+    justify-content: space-between;
+    overflow-wrap: anywhere;
+  }
+  .ruido-nav .ruido-nav-logo {
+    min-width: 0;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 560px) {
+  .ruido-nav #ruido-menu-mobile.is-open {
+    grid-template-columns: 1fr;
+  }
+  .ruido-nav .ruido-nav-logo {
+    gap: .6rem;
+  }
+  .ruido-nav .ruido-nav-logo .font-heavy {
+    font-size: clamp(1.9rem, 8vw, 2.6rem);
+  }
+}
+/* Desktop recebe os links numa única linha, nunca um manifesto órfão. */
+@media (min-width: 1280px) {
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: .5rem !important;
+    row-gap: 0 !important;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .ruido-nav nav[aria-label="Navegação principal"] > a.ruido-nav-brush {
+    white-space: nowrap;
+    padding-inline: .85rem !important;
+    flex: 0 0 auto;
+  }
+  .ruido-nav button.ruido-nav-toggle,
+  .ruido-nav #ruido-menu-mobile {
+    display: none !important;
+  }
+}
+@media (min-width: 1536px) {
+  .ruido-nav nav[aria-label="Navegação principal"] {
+    column-gap: 1.05rem !important;
+  }
+  .ruido-nav nav[aria-label="Navegação principal"] > a.ruido-nav-brush {
+    padding-inline: 1.15rem !important;
+  }
+}
