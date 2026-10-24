@@ -116,7 +116,6 @@ function documentoValido(doc: DocumentoPrimario | undefined, item: AlegacaoVerif
   const url = urlSegura(doc.url);
   if (!url) return false;
   const host = url.hostname.toLowerCase();
-  // Notícias não comprovam sozinhas o status formal de investigado/réu/condenado.
   return host.endsWith(".jus.br") || host.endsWith(".mp.br") ||
     host === "stf.jus.br" || host === "mpf.mp.br";
 }
