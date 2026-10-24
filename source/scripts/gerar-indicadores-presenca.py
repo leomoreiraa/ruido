@@ -47,7 +47,6 @@ def gerar(db):
         by_member[(casa,r["parlamentarId"])][key]=day
     out={}
     for (casa,pid),person in by_member.items():
-        # Apenas intervalos com algum número significativo de registros.
         personal=sorted(set(person.values()))
         if not personal:
             continue
