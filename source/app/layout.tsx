@@ -1,5 +1,3 @@
-// app/layout.tsx
-
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
@@ -97,7 +95,6 @@ export default function RootLayout({
               {/* Navigation Links */}
               <div className="md:col-span-3 space-y-2 font-mono text-sm">
                 <h4 className="font-heavy text-lg tracking-wider text-punk-acid uppercase border-b border-punk-red/60 pb-1 mb-3">
-                  // NAVEGAÇÃO
                 </h4>
                 <ul className="space-y-1.5 text-xs text-paper-dark">
                   <li>
@@ -131,7 +128,6 @@ export default function RootLayout({
               {/* Official Sources & Stamp */}
               <div className="md:col-span-3 space-y-3 font-mono text-xs">
                 <h4 className="font-heavy text-lg tracking-wider text-punk-red uppercase border-b border-punk-acid/60 pb-1 mb-3">
-                  // FONTES ABERTAS
                 </h4>
                 <p className="text-paper/80 leading-relaxed text-[11px]">
                   Consulte sempre o registro original.
