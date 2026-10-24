@@ -1,5 +1,3 @@
-// app/pautas/[id]/page.tsx
-
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -15,12 +13,7 @@ interface PautaDetalhePageProps {
 }
 
 export async function generateStaticParams() {
-  // No Pages cada pauta usa o único leitor estático + JSON gzip independente.
-  // No modo servidor/dev mantemos os caminhos tradicionais.
   if (process.env.GITHUB_PAGES === "true") {
-    // Next.js 14 requer ao menos um parâmetro estático válido no export.
-    // Esta única página de referência será substituída por redirecionamento
-    // após o build; todas as demais são arquivos gzip sob demanda.
     const first = await prisma.proposicao.findFirst({ select: { id: true }, orderBy: { id: "asc" } });
     if (!first) throw new Error("Não há proposições oficiais para exportar");
     return [{ id: first.id }];
