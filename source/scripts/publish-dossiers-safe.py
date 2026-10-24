@@ -82,7 +82,6 @@ def merge_list(base,ours,theirs,path):
     return result[:25]
 
 def merge_value(base,ours,theirs,path):
-    # Uma rotina parcial jamais apaga por omissão evidência já publicada.
     if ours is MISSING and theirs is MISSING:return MISSING
     if ours is MISSING:return copy.deepcopy(theirs)
     if theirs is MISSING:return copy.deepcopy(ours)
@@ -90,11 +89,8 @@ def merge_value(base,ours,theirs,path):
     if theirs==base:return copy.deepcopy(ours)
     if ours==theirs:return copy.deepcopy(ours)
     if ours is MISSING or theirs is MISSING:
-        # Existing evidence should not disappear because one writer omitted it.
         return copy.deepcopy(theirs if ours is MISSING else ours)
     if isinstance(ours,dict) and isinstance(theirs,dict):
-        # Atomic unit of evidence: changing a valuation or its source must not
-        # mix fields from two collection versions.
         record_fields={"valor","totalDeclarado","texto","fonteHash",
                        "conferidoEm","coletadoEm","situacao"}
         if record_fields.intersection(ours)|record_fields.intersection(theirs):
@@ -126,8 +122,6 @@ def merge_document(base,ours,theirs):
     own_time=when(ours)
     remote_time=when(theirs)
     if own_time and (not remote_time or own_time>=remote_time):
-        # Metadata belongs to the newest completed collection; evidence is
-        # merged independently so earlier records remain present.
         for k,v in ours.items():
             if k not in ("version","dados"):merged[k]=copy.deepcopy(v)
     return merged
@@ -146,8 +140,6 @@ def publish(paths,attempts=6):
         merged={}
         for p in paths:
             merged[p]=merge_document(originals[p],candidates[p],git_doc(current,p))
-        # Candidate data is in memory. Resetting a runner checkout never
-        # resets or force-pushes the remote branch.
         git("reset","--hard",current)
         for p,doc in merged.items():
             dest=Path(p)
