@@ -1,4 +1,3 @@
-// components/PerfilIADiscursos.tsx
 import React from "react";
 
 export interface PerfilIADiscursosProps {
@@ -70,7 +69,6 @@ export function PerfilIADiscursos({
       {/* Keywords as Ransom Tags */}
       <div className="my-4">
         <span className="block font-mono text-xs font-bold uppercase text-ink mb-2">
-          // PRINCIPAIS TERMOS &amp; TEMAS ABORDADOS:
         </span>
         {keywords.length > 0 ? (
           <div className="flex flex-wrap gap-2">
