@@ -4703,3 +4703,113 @@ body.collage-body {
 @media(prefers-reduced-motion:reduce){
  .ruido-site-content .ruido-map-zoom__content{transition:none !important;}
 }
+
+
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar {
+  background: #d3ff20 !important;
+  color: #171512 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead {
+  padding: 12px clamp(10px, 2vw, 20px);
+  border-bottom: 2px dashed #202018 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar {
+  padding: clamp(12px, 2vw, 22px) clamp(10px, 2vw, 20px);
+  margin-bottom: 9px;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead .ruido-map-zine__serial,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead .ruido-map-zine__eyebrow,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__micro,
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__headline {
+  color: #171512 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__headline {
+  font-size: clamp(1.65rem, 3vw, 3rem);
+  letter-spacing: -.015em;
+  line-height: 1.1;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__headline em {
+  color: #8c1d17 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__micro {
+  font-size: clamp(11px, 1.1vw, 13px);
+  font-weight: 900;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead .ruido-map-zine__eyebrow {
+  background: #f8f0d8 !important;
+  padding: 7px 10px;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__masthead .ruido-map-zine__serial {
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 900;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__stamp {
+  color: #8c1d17 !important;
+  border-color: #8c1d17 !important;
+  outline-color: #8c1d17 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+.ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__back {
+  color: #171512 !important;
+  background: #f8f0d8 !important;
+}
+.ruido-site-content .ruido-text-on-acid,
+.ruido-site-content .ruido-acid-surface {
+  color: #171512 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-acid-surface :is(h1,h2,h3,h4,p,span,strong,small,label) {
+  color: #171512 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-text-on-acid-red {
+  color: #8c1d17 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-text-on-acid-outline {
+  color: #fffaf0 !important;
+  -webkit-text-stroke: 2px #11110f;
+  paint-order: stroke fill;
+  text-shadow: 2px 2px 0 #11110f, -1px -1px 0 #11110f, 1px -1px 0 #11110f, -1px 1px 0 #11110f !important;
+}
+.ruido-site-content .ruido-map-zoom__surface {
+  touch-action: none;
+  overflow: hidden;
+  cursor: grab;
+}
+.ruido-site-content .ruido-map-zoom__surface:active {cursor:grabbing;}
+.ruido-site-content .ruido-map-zoom__surface > svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  will-change: auto !important;
+  transform: none !important;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}
+.ruido-site-content .ruido-map-zoom__surface > svg path {
+  shape-rendering: geometricPrecision;
+}
+.ruido-site-content .ruido-map-zine--electoral .ruido-map-zine__canvas--national .ruido-map-zoom__surface > svg {
+  width: min(100%, 960px);
+  margin-inline: auto;
+  max-height: none;
+}
+@media(max-width:640px){
+  .ruido-site-content .ruido-map-zine .ruido-map-zine__masthead {padding:10px;}
+  .ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar {padding:13px 10px;}
+  .ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__headline {font-size:clamp(1.35rem,6.7vw,2.4rem);}
+  .ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__micro {font-size:11px;}
+}

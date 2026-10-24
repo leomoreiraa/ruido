@@ -50,6 +50,7 @@ const GrupoMunicipal = memo(function GrupoMunicipal({ grupo, resultados }: { gru
       d={m.d}
       fill={corDoMunicipio(resultados?.[m.id])}
       fillRule="evenodd"
+      vectorEffect="non-scaling-stroke"
       stroke={BRANCO}
       strokeOpacity={0.28}
       strokeWidth={0.18}
@@ -131,6 +132,7 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
           stroke="#2b3532"
           strokeOpacity={0.46}
           strokeWidth={0.7}
+          vectorEffect="non-scaling-stroke"
           strokeLinejoin="round"
           pointerEvents="none"
         />)}

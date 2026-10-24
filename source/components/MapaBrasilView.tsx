@@ -150,6 +150,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
                 fill={fill(s)}
                 stroke={s.uf===uf?"#fff":"#111512"}
                 strokeWidth={s.uf===uf?2.8:1.05}
+                vectorEffect="non-scaling-stroke"
                 fillRule="evenodd"
                 role="button" tabIndex={0}
                 aria-label={s.nome+": "+representacao(valorIndicador(s,year,metric),metric)}
