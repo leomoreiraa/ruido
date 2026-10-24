@@ -155,7 +155,7 @@
     "tests/presencaCoverage.test.ts": "389783580346dc6070a017fdf27f9d335b0bf9c9658c2b5bc22d0bc76b7f7c5d",
     "tests/profile-data-integration.test.ts": "3207251038978f707462fc209ea83eb7f068887e187bf956f988db05d6bb1319",
     "tests/publication-ui.test.ts": "5b8c0ea5cd2ab8bc941950c41c0092905997427669a00075d5fe288bfce399f5",
-    "tests/rebuild-workflow.test.ts": "4f51b126b8a9d4591610a8b70f4501a57a32fb502503aa6a0551005cc89f39a8",
+    "tests/rebuild-workflow.test.ts": "78d5cce3341ddced6a106bf49d8cc07f09a91f29d3b4704c6065f90743615612",
     "tests/refresh-map-official.test.py": "8aee58b7aed31328dad71eee02fa598ce4de290e9517263de0bae52adca03ed6",
     "tests/release-retention.test.py": "6267612927df8db6f311b14021f87d1ff5c9d9c151e710bd8878461d7a88a114",
     "tests/resolverGoogleNews.test.ts": "f2f8a2bd6d33299f96bdbc9d6147e1e7deaea0270c90efdfe85566e30eda66e8",

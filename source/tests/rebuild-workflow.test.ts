@@ -36,7 +36,7 @@ test("checkpoint verificável precede auditoria e export; publicação só no wo
   assert.match(pages, /actions\/download-artifact@v4/);
   assert.match(pages, /scripts\/audit-public-export\.py out/);
   assert.doesNotMatch(pages, /actions\/deploy-pages@/);
-  assert.ok(pages.indexOf("Verificar que esta execução contém o commit mais recente")
+  assert.ok(pages.indexOf("Verificar sequência monotônica de publicação")
     < pages.indexOf("Sincronizar site auditado no repositório público"));
   assert.equal((collector.match(/scripts\/release-snapshot\.py publish/g) ?? []).length, 1);
 });
@@ -88,7 +88,9 @@ test("deploy visual só recupera Release íntegra e impede publicar commit obsol
   assert.match(fast, /gh release download/);
   assert.match(fast, /Nenhuma Release rebuilt-v2 íntegra/);
   assert.match(fast, /if: steps\.freshness\.outputs\.current == 'true'/);
-  assert.match(fast, /latest=.*gh api/);
+  assert.match(fast, /published_run=0/);
+  assert.match(fast, /GITHUB_RUN_ID > published_run/);
+  assert.match(fast, /build-info\\.json\\?ref=main/);
   assert.match(fast, /out\/data\/brasil-estados\.json/);
   assert.match(fast, /out\/data\/idhm-ufs\.json/);
   assert.match(fast, /npm run build:regional/);
