@@ -117,7 +117,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="ruido-home-stage space-y-10">
-      {/* Entrada direta: dado público, busca e três caminhos principais. */}
+      
       <section className="ruido-hero-wall ruido-home-hero collage-paper relative bg-paper-card border-4 border-ink px-6 py-8 sm:px-9 sm:py-10">
         <div className="relative z-10 grid grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-9">
           <div className="min-w-0 space-y-5">
@@ -149,7 +149,7 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* STATS OVERVIEW — The 4 Brutalist Crooked Cards with Scotch Tape */}
+      
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="font-heavy text-2xl sm:text-3xl uppercase tracking-wider text-ink bg-punk-acid px-3 py-1 border-2 border-ink shadow-[4px_4px_0_#101010] transform -rotate-1">
@@ -158,7 +158,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
-          {/* Card 1: Políticos */}
+          
           <div className="relative ruido-paper-card bg-paper-card border-3 border-ink p-5 shadow-[7px_7px_0_#101010] transform -rotate-2 hover:rotate-0 hover:-translate-y-2 hover:shadow-[10px_10px_0_#e42232] transition-all">
             <div className="scotch-tape-corner transform rotate-45" aria-hidden="true" />
             <span className="font-mono text-[10px] font-bold text-ink/70 uppercase tracking-wider block mb-1">
@@ -175,7 +175,7 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          {/* Card 2: Votações */}
+          
           <div className="relative ruido-paper-card bg-paper-card border-3 border-ink p-5 shadow-[7px_7px_0_#101010] transform rotate-2.5 hover:rotate-0 hover:-translate-y-2 hover:shadow-[10px_10px_0_#e42232] transition-all -translate-y-1">
             <div className="scotch-tape-corner transform -rotate-45" aria-hidden="true" />
             <span className="font-mono text-[10px] font-bold text-ink/70 uppercase tracking-wider block mb-1">
@@ -193,7 +193,7 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          {/* Card 3: Votos Nominais */}
+          
           <div className="relative ruido-paper-card bg-paper-card border-3 border-ink p-5 shadow-[7px_7px_0_#101010] transform -rotate-1.5 hover:rotate-0 hover:-translate-y-2 hover:shadow-[10px_10px_0_#e42232] transition-all translate-y-1">
             <div className="scotch-tape-corner transform rotate-30" aria-hidden="true" />
             <span className="font-mono text-[10px] font-bold text-ink/70 uppercase tracking-wider block mb-1">
@@ -210,7 +210,7 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          {/* Card 4: Matérias */}
+          
           <div className="relative ruido-paper-card bg-paper-card border-3 border-ink p-5 shadow-[7px_7px_0_#101010] transform rotate-2 hover:rotate-0 hover:-translate-y-2 hover:shadow-[10px_10px_0_#e42232] transition-all -translate-y-1">
             <div className="scotch-tape-corner transform -rotate-30" aria-hidden="true" />
             <span className="font-mono text-[10px] font-bold text-ink/70 uppercase tracking-wider block mb-1">
@@ -229,7 +229,7 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* 7 DAYS RECENT ACTIVITY — Hazard Style Box */}
+      
       <section className="ruido-ink-poster bg-ink text-paper p-6 sm:p-8 border-4 border-punk-red shadow-[8px_8px_0_#101010] relative">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b-2 border-dashed border-paper/30">
           <div>
@@ -279,7 +279,7 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* SECTION: LATEST VOTES IN CONGRESS */}
+      
       <section className="space-y-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b-4 border-ink">
           <div className="flex items-center gap-3">
@@ -325,7 +325,7 @@ export default async function DashboardPage() {
         )}
       </section>
 
-      {/* SECTION: MOST ACTIVE POLITICIANS */}
+      
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b-4 border-ink">
           <div className="flex items-center gap-3">
