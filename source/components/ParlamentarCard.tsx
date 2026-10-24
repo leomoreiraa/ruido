@@ -40,14 +40,14 @@ export function ParlamentarCard({
 
   return (
     <article className={`group relative ruido-paper-card ruido-parlamentar-folha bg-paper-card border-3 border-ink p-4 sm:p-5 shadow-[6px_6px_0_#101010] transition-all duration-200 hover:-translate-y-2 hover:shadow-[10px_10px_0_#e42232] flex flex-col justify-between ${rotClass}`}>
-      {/* Mismatched Crooked Scotch Tape */}
+      
       <div
         className="ruido-card-tape absolute -top-3.5 right-4 pointer-events-none z-30"
         style={{ transform: `rotate(${((charSum % 14) - 7)}deg)` }}
       />
 
       <div>
-        {/* Top Badges */}
+        
         <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b-2 border-dashed border-ink/30 font-mono text-[11px]">
           <span className="font-bold text-ink">
             {isCamara ? (
@@ -66,9 +66,9 @@ export function ParlamentarCard({
           </span>
         </div>
 
-        {/* Photo + Info */}
+        
         <div className="flex gap-3.5 items-start">
-          {/* Mugshot with red hover & user stencil stamp */}
+          
           <div className="relative flex-shrink-0 group/photo">
             <PoliticianPhoto
               urlFoto={urlFoto}
@@ -94,7 +94,7 @@ export function ParlamentarCard({
               </strong>
             </div>
 
-            {/* Micro stats grid */}
+            
             <div className="mt-2.5 grid grid-cols-2 gap-2 font-mono text-[11px]">
               <div className="bg-paper border border-ink p-1 text-center shadow-[1px_1px_0_#101010]">
                 <span className="block text-[9px] text-ink/60 uppercase font-bold">Votos</span>
@@ -109,7 +109,7 @@ export function ParlamentarCard({
         </div>
       </div>
 
-      {/* Action CTA link */}
+      
       <div className="mt-3.5 pt-2 border-t border-dashed border-ink/20 flex justify-between items-center text-xs font-mono font-bold">
         <Link
           href={`/parlamentares/${id}`}
