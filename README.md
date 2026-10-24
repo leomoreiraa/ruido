@@ -1,107 +1,326 @@
 <div align="center">
 
 # RUÍDO
-### Observatório independente de transparência política brasileira
 
-**Dados públicos. Linguagem clara. Fiscalização cidadã.**
+### Plataforma independente de transparência e acompanhamento legislativo
 
-[![Acessar plataforma](https://img.shields.io/badge/Acessar-RU%C3%8DDO-E53935?style=for-the-badge)](https://ruido.runs-at.dev/)
-[![Código aberto](https://img.shields.io/badge/C%C3%B3digo-aberto-222222?style=for-the-badge&logo=github)](https://github.com/leomoreiraa/ruido/tree/main/source)
-[![Licença](https://img.shields.io/badge/Licen%C3%A7a-consulte_o_reposit%C3%B3rio-555555?style=flat-square)](https://github.com/leomoreiraa/ruido)
+**Dados públicos · Engenharia de dados · Automação · Tecnologia cívica**
 
-**[Explorar o site](https://ruido.runs-at.dev/) · [Entender a metodologia](https://ruido.runs-at.dev/sobre/) · [Ver cobertura](https://ruido.runs-at.dev/cobertura/)**
+[![Website](https://img.shields.io/badge/Website-Acessar%20RU%C3%8DDO-dc2626?style=for-the-badge)](https://ruido.runs-at.dev/)
+[![Source](https://img.shields.io/badge/Source-C%C3%B3digo%20p%C3%BAblico-181717?style=for-the-badge&logo=github)](./source/)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=nextdotjs)](./source/package.json)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](./source/package.json)
+[![React](https://img.shields.io/badge/React-18-149ECA?logo=react&logoColor=white)](./source/package.json)
+
+[**Plataforma**](https://ruido.runs-at.dev/) · [**Metodologia**](https://ruido.runs-at.dev/sobre/) · [**Cobertura**](https://ruido.runs-at.dev/cobertura/) · [**Código-fonte**](./source/) · [**Reportar problema**](https://github.com/leomoreiraa/ruido/issues)
 
 </div>
 
 ---
 
-## Sobre o projeto
+## Índice
 
-O **RUÍDO** é uma plataforma independente de acompanhamento da política brasileira. Seu objetivo é transformar registros públicos dispersos em informação **acessível, rastreável e contextualizada**, facilitando a fiscalização cidadã.
+- [Visão geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias](#tecnologias)
+- [Arquitetura](#arquitetura)
+- [Começando](#começando)
+- [Executando localmente](#executando-localmente)
+- [Scripts disponíveis](#scripts-disponíveis)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Dados, fontes e integridade](#dados-fontes-e-integridade)
+- [Publicação e segurança](#publicação-e-segurança)
+- [Testes e contribuições](#testes-e-contribuições)
+- [Licença e autoria](#licença-e-autoria)
 
-O projeto combina engenharia de dados, automação, desenvolvimento web e recursos de inteligência artificial para organizar informações sem substituir os documentos oficiais.
+## Visão geral
+
+O **RUÍDO** é um projeto independente de tecnologia cívica que organiza registros públicos da política brasileira para facilitar a consulta, o acompanhamento e a fiscalização cidadã.
+
+O sistema reúne dados institucionais e os apresenta em uma interface acessível, com contextualização e explicações assistidas por inteligência artificial. Seu objetivo é reduzir a distância entre informações governamentais dispersas e quem precisa compreendê-las.
+
+**O projeto integra:**
+- Desenvolvimento de aplicações web e interfaces responsivas;
+- Integração e normalização de dados provenientes de APIs públicas;
+- Rotinas automatizadas de coleta e atualização;
+- Persistência estruturada e tratamento de dados incompletos;
+- Geração de conteúdo explicativo com apoio de IA;
+- Publicação estática e disponibilização de código para auditoria.
 
 > **O dado é público. A leitura também deve ser.**
 
 ## Funcionalidades
 
-- **Parlamentares:** consulta de perfis e registros públicos associados à atuação parlamentar.
-- **Pautas e proposições:** acompanhamento de matérias legislativas e informações de tramitação.
-- **Votações e presença:** visualização de registros disponíveis, respeitando os limites de cobertura de cada fonte.
-- **Emendas e dados públicos:** organização de informações financeiras e institucionais quando disponibilizadas pelas fontes.
-- **Leitura simplificada:** explicações assistidas por IA, preservando o acesso ao conteúdo original.
-- **Cobertura e rastreabilidade:** indicação de lacunas e limites dos dados, sem tratar ausência de registro como resultado negativo.
-
-> A disponibilidade de cada informação varia conforme a fonte, a legislatura e a etapa de coleta.
-
-## Arquitetura e tecnologias
-
-| Camada | Tecnologias / abordagem |
+| Módulo | Descrição |
 | --- | --- |
-| Interface | React, Next.js, TypeScript |
-| Publicação | Exportação estática e GitHub Pages |
-| Ingestão | Coletores e integrações com APIs públicas |
-| Automação | GitHub Actions no ambiente operacional privado |
-| Persistência operacional | SQLite |
-| IA | Processamento automatizado fora do navegador |
-| Auditoria | Código-fonte público em [`source/`](./source/) |
+| Parlamentares | Perfis e informações públicas de representantes |
+| Pautas e proposições | Consulta de matérias e tramitações legislativas |
+| Votações | Registros e detalhamento de votações conforme disponibilidade oficial |
+| Presença | Indicadores baseados nos registros efetivamente disponibilizados |
+| Emendas e informações financeiras | Consulta de dados associados a fontes públicas |
+| IA explicativa | Apoio à compreensão de textos legislativos, sem substituir documentos oficiais |
+| Cobertura | Indicação de limites, ausências e progresso da coleta |
+| Interface responsiva | Navegação adaptada para dispositivos móveis e desktop |
 
-### Fluxo de dados
+A cobertura de cada módulo depende da disponibilidade e integridade das fontes de origem.
+
+## Tecnologias
+
+| Área | Stack |
+| --- | --- |
+| Aplicação web | Next.js 14, React 18, TypeScript |
+| Estilização | Tailwind CSS |
+| Interface | Lucide React, Radix UI |
+| Backend e integração | Rotas de API, serviços TypeScript, scripts Node.js |
+| Banco de dados | SQLite e Prisma ORM |
+| Inteligência artificial | Integração via SDK OpenAI no processamento operacional |
+| Automação | GitHub Actions no ambiente de operação |
+| Publicação | Exportação estática e GitHub Pages |
+| Qualidade | Testes executados com TSX e test runner do Node.js |
+
+As versões acima refletem as dependências declaradas no [`package.json`](./source/package.json) do espelho público.
+
+## Arquitetura
+
+O RUÍDO separa **processamento operacional** de **entrega pública**. Coleta, persistência e preparação de conteúdo acontecem fora do navegador; a plataforma pública recebe os artefatos estáticos gerados.
 
 ```mermaid
-flowchart LR
-    A["Fontes públicas oficiais"] --> B["Coletores e validação"]
-    B --> C["Armazenamento operacional"]
-    C --> D["Preparação de dados e conteúdo"]
-    D --> E["Exportação estática"]
-    E --> F["GitHub Pages"]
-    F --> G["Cidadãos e pesquisadores"]
+flowchart TD
+    A["APIs e fontes públicas"] --> B["Coletores e normalização"]
+    B --> C["Verificações de integridade"]
+    C --> D[("SQLite / Prisma")]
+    D --> E["Preparação e enriquecimento de dados"]
+    E --> F["Exportação estática"]
+    F --> G["Repositório público"]
+    G --> H["GitHub Pages"]
+    H --> I["Navegador do usuário"]
+    J["Processamento de IA fora do navegador"] --> E
 ```
 
-**Separação entre código e operação:** este repositório publica o site e um espelho auditável do código-fonte em [`source/`](./source/). O banco SQLite operacional, credenciais, checkpoints, históricos internos e configurações privadas de execução não fazem parte do espelho público. O código em `source/` não é executado diretamente pelo GitHub Pages.
+### Decisões arquiteturais
 
-## Fontes e princípios de integridade
+**Separação de responsabilidades:** a coleta e o processamento não dependem de visitas ao site.
 
-O projeto trabalha com dados públicos de instituições como **Câmara dos Deputados, Senado Federal, Controladoria-Geral da União, IBGE, PNUD/FJP e Banco Central**, de acordo com a disponibilidade das respectivas integrações.
+**Publicação estática:** os visitantes não recebem credenciais de APIs, conexão com banco operacional ou serviços de geração de conteúdo.
 
-A interpretação dos dados segue três princípios:
+**Rastreabilidade:** o código público inclui um snapshot auditável da aplicação, enquanto a metodologia explicita limites e lacunas de cobertura.
 
-1. **Ausência de dado não significa zero.**
-2. **Voto não nominal não pode ser atribuído individualmente sem registro.**
-3. **Cobertura parcial não deve ser apresentada como histórico completo.**
+**Atualizações progressivas:** novos registros podem ser incorporados por rotinas automatizadas, respeitando a disponibilidade das fontes.
 
-Resumos gerados com apoio de IA são auxiliares de leitura e **não substituem a fonte primária**, nem constituem afirmações conclusivas sobre pessoas ou processos.
+## Começando
 
-## Estrutura do repositório
+Existem **duas maneiras de explorar o projeto**: abrir o site já publicado ou clonar o código-fonte para estudo e desenvolvimento.
+
+### Pré-requisitos
+
+Para trabalhar com o código-fonte:
+
+- [Git](https://git-scm.com/downloads);
+- [Node.js](https://nodejs.org/) compatível com Next.js 14 (recomendado: Node.js 20 LTS);
+- npm;
+- Um editor, como [Visual Studio Code](https://code.visualstudio.com/).
+
+### 1. Clonar o repositório
+
+No terminal:
+
+```bash
+git clone https://github.com/leomoreiraa/ruido.git
+cd ruido
+```
+
+Para obter futuras atualizações:
+
+```bash
+git pull origin main
+```
+
+### 2. Explorar o site publicado
+
+A raiz do repositório contém os arquivos estáticos utilizados na publicação. Para conhecer a plataforma sem instalar dependências, basta acessar:
+
+**https://ruido.runs-at.dev/**
+
+### 3. Acessar o código-fonte
+
+O projeto Next.js fica em `source/`:
+
+```bash
+cd source
+npm install
+```
+
+> **Importante:** o repositório é um espelho de publicação e auditoria, não uma distribuição pronta do ambiente operacional completo. Arquivos locais de configuração, variáveis de ambiente e banco de desenvolvimento podem ser necessários para executar determinadas funcionalidades.
+
+## Executando localmente
+
+### Ambiente de desenvolvimento
+
+Na pasta `source/`, execute:
+
+```bash
+npm run dev
+```
+
+O servidor Next.js normalmente fica disponível em **http://localhost:3000**.
+
+A inicialização e o funcionamento de páginas que dependem de banco, serviços externos ou variáveis de ambiente exigem configuração local adicional. **Não há garantia de execução integral apenas com `npm install`**, pois os dados operacionais e as credenciais não acompanham o espelho.
+
+### Banco de dados de desenvolvimento
+
+O código utiliza Prisma. Após configurar uma conexão local adequada e as variáveis exigidas pelo schema, os comandos disponíveis incluem:
+
+```bash
+npm run db:generate
+npm run db:push
+```
+
+Consulte [o schema Prisma](./source/prisma/) e os arquivos de configuração do código antes de executar migrações. **Nunca use credenciais ou banco de produção em um ambiente de testes.**
+
+### Build
+
+```bash
+npm run build
+```
+
+Para o fluxo específico de exportação estática:
+
+```bash
+npm run build:ghpages
+```
+
+Esses comandos podem exigir dados e configurações que não são distribuídos neste repositório. A publicação oficial é preparada no ambiente operacional e então espelhada publicamente.
+
+## Scripts disponíveis
+
+Execute os comandos abaixo dentro de `source/`.
+
+| Comando | Finalidade |
+| --- | --- |
+| `npm run dev` | Inicia o servidor de desenvolvimento Next.js |
+| `npm run build` | Gera o cliente Prisma e compila a aplicação |
+| `npm run start` | Inicia a aplicação compilada |
+| `npm run test` | Executa os testes automatizados |
+| `npm run db:generate` | Gera o cliente Prisma |
+| `npm run db:push` | Sincroniza o schema com um banco configurado |
+| `npm run db:migrate` | Executa migrações em ambiente de desenvolvimento |
+| `npm run build:ghpages` | Executa o script de exportação para GitHub Pages |
+| `npm run build:historico` | Prepara arquivos históricos |
+| `npm run build:regional` | Prepara dados regionais |
+| `npm run sync` | Executa a rotina de sincronização |
+| `npm run sync:emendas` | Executa a rotina de emendas |
+| `npm run sync:historico` | Executa a rotina de histórico legislativo |
+| `npm run ai:projetos` | Executa o processamento explicativo de projetos |
+
+**Atenção:** scripts de coleta e processamento podem realizar chamadas externas e modificar dados locais. Configure um ambiente isolado antes de utilizá-los.
+
+## Estrutura do projeto
 
 ```text
 ruido/
-├── index.html          # Entrada do site publicado
-├── 404.html            # Página de erro personalizada
-├── source/             # Espelho público do código-fonte
-└── README.md           # Documentação do projeto
+├── index.html             # Entrada do site estático
+├── 404.html               # Página de erro personalizada
+├── source/                # Snapshot auditável do código
+│   ├── app/               # Páginas e rotas Next.js
+│   ├── components/        # Componentes da interface
+│   ├── lib/               # Serviços e integrações
+│   ├── prisma/            # Schema de persistência
+│   ├── scripts/           # Coleta, exportação e automação
+│   ├── tests/             # Testes automatizados
+│   ├── package.json       # Dependências e scripts
+│   └── README.md          # Informações sobre o espelho
+└── README.md              # Esta documentação
 ```
 
-Outros diretórios e arquivos estáticos são produzidos conforme a exportação do site.
+A árvore é uma visão conceitual dos principais módulos; arquivos e diretórios gerados podem variar conforme a versão publicada.
 
-## Objetivo e impacto
+### Integridade do espelho
 
-O RUÍDO foi criado para diminuir a distância entre a informação institucional e a população. A proposta é facilitar consultas, apoiar pesquisas e incentivar o acompanhamento crítico da atividade legislativa, sem filiação partidária institucional.
+O diretório [`source/`](./source/) inclui um manifesto com hashes SHA-256 para apoiar a comparação dos arquivos publicados. O snapshot público permite examinar a implementação, mas não reproduz os dados privados de execução.
 
-**Público de interesse:** cidadãos, estudantes, jornalistas, pesquisadores e desenvolvedores interessados em transparência pública e tecnologia cívica.
+## Dados, fontes e integridade
 
-## Contribuições e contato
+Entre as fontes institucionais contempladas pelo projeto estão:
 
-Encontrou uma inconsistência, problema de acessibilidade ou oportunidade de melhoria? Utilize as [issues do GitHub](https://github.com/leomoreiraa/ruido/issues) para registrar a sugestão com contexto e, quando possível, a fonte correspondente.
+- [Câmara dos Deputados — Dados Abertos](https://dadosabertos.camara.leg.br/);
+- [Senado Federal — Dados Abertos](https://www12.senado.leg.br/dados-abertos);
+- [Portal da Transparência / CGU](https://portaldatransparencia.gov.br/);
+- [IBGE](https://www.ibge.gov.br/);
+- [Banco Central do Brasil](https://dadosabertos.bcb.gov.br/);
+- Indicadores públicos de desenvolvimento humano, conforme disponibilidade das fontes.
 
-**Desenvolvimento:** [Leonardo Moreira](https://github.com/leomoreiraa)
+**Princípios de interpretação:**
+
+1. Dado ausente **não equivale a zero**.
+2. Voto sem identificação nominal **não deve ser atribuído a um parlamentar específico**.
+3. Cobertura parcial **não deve ser apresentada como histórico completo**.
+4. Explicações geradas por IA **não substituem os textos oficiais**.
+5. Referências a denúncias, investigações ou processos **não constituem prova de culpa**.
+
+Para entender o escopo e as limitações atuais, consulte as páginas de [metodologia](https://ruido.runs-at.dev/sobre/) e [cobertura](https://ruido.runs-at.dev/cobertura/).
+
+## Publicação e segurança
+
+O domínio público é **https://ruido.runs-at.dev/**.
+
+Este repositório distribui:
+- Arquivos estáticos do website;
+- Código-fonte auditável do frontend e backend;
+- Scripts e definições de dados presentes no snapshot público.
+
+**Não distribui:** banco SQLite operacional, credenciais, tokens, segredos, checkpoints, histórico interno de execução ou configurações privadas de GitHub Actions.
+
+O código em `source/` é disponibilizado para leitura e auditoria; **não é executado como backend no GitHub Pages**.
+
+Se encontrar uma vulnerabilidade, evite publicar credenciais, dados sensíveis ou instruções de exploração em issues públicas. Entre em contato com o mantenedor por um canal apropriado.
+
+## Testes e contribuições
+
+Para executar os testes incluídos no snapshot:
+
+```bash
+cd source
+npm install
+npm test
+```
+
+O resultado depende das dependências e dos requisitos de ambiente de cada teste.
+
+### Como contribuir
+
+1. Abra uma [issue](https://github.com/leomoreiraa/ruido/issues) descrevendo o problema ou proposta.
+2. Para experimentações, crie um fork do repositório e uma branch dedicada:
+   ```bash
+   git checkout -b feature/minha-melhoria
+   ```
+3. Faça alterações documentadas e execute os testes aplicáveis.
+4. Registre o commit:
+   ```bash
+   git add .
+   git commit -m "feat: descreve a melhoria"
+   ```
+5. Envie a branch ao seu fork e, quando apropriado, proponha um pull request.
+
+**Observação:** este repositório é um espelho de publicação. O recebimento e a incorporação de contribuições ao ambiente operacional dependem da avaliação do mantenedor; um pull request aqui não implica alteração automática da produção.
+
+Para reportar dados incorretos, inclua o endereço da página, o registro questionado, a fonte oficial correspondente e a data da consulta.
+
+## Licença e autoria
+
+**Desenvolvido e mantido por [Leonardo Moreira](https://github.com/leomoreiraa).**
+
+O código está disponível publicamente para consulta e auditoria. **A disponibilidade pública do repositório não significa, por si só, autorização irrestrita de redistribuição ou reutilização.** Consulte o arquivo de licença, caso exista, antes de reutilizar o projeto.
+
+Este é um projeto independente, sem representação oficial das instituições utilizadas como fonte.
 
 ---
 
 <div align="center">
 
-**TRANSPARÊNCIA NÃO DEVERIA EXIGIR CONHECIMENTO TÉCNICO.**
+### TRANSPARÊNCIA NÃO DEVERIA EXIGIR CONHECIMENTO TÉCNICO.
 
-[**ACESSAR RUÍDO ↗**](https://ruido.runs-at.dev/)
+**[Acessar RUÍDO ↗](https://ruido.runs-at.dev/)**
+
+[GitHub](https://github.com/leomoreiraa/ruido) · [Código-fonte](./source/) · [Metodologia](https://ruido.runs-at.dev/sobre/)
 
 </div>
