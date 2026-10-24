@@ -29,7 +29,7 @@
     "components/GraficoVotos.tsx": "50017e789586da9705bf804cfbc74fe057e52de66a9ec3b011d506d8bded3bd7",
     "components/HomeInstantSearch.tsx": "56b70f173fa8de55c8c8afeac9b5c70bfeb75621100e0d90a398bfa1b805b76d",
     "components/MapaBrasilView.tsx": "f26fcfec89e3bf6812a1960ea83efa00dbe1cd9bfdf073f88d7dba88f624f53e",
-    "components/Navbar.tsx": "36d179abfd6b729e8a55e9a512829c2612baf71f4506321716e9e421d9be8a49",
+    "components/Navbar.tsx": "a09f081fea309de0e1c3ee6257530d7c644260a822102c3287e044a23d09cb5b",
     "components/ParlamentarCard.tsx": "46a18c4b75fa99ce4907af3b40e5f3f8d3cabc00adc23bd07f911a6f7ab80c03",
     "components/ParlamentarHistoricoTabs.tsx": "24ebfa700664ffbe3df02a3243c9aa4e92b4f255e2a30956a186e3bd53da1609",
     "components/ParlamentaresFilterView.tsx": "e95a45c17097356fd66d9c1f6b28d7fb63f3b41a14d31fb104819031df5db750",

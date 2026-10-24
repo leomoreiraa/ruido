@@ -20,8 +20,8 @@ export function Navbar() {
   return (
     <header className="collage-nav ruido-nav relative z-30">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex min-h-[76px] items-center justify-between gap-4 py-3">
-          <Link href="/" className="ruido-nav-logo group inline-flex min-w-0 items-center gap-3" aria-label="RUÍDO — início">
+        <div className="flex min-h-[76px] min-w-0 items-center justify-between gap-3 py-3">
+          <Link href="/" className="ruido-nav-logo group inline-flex min-w-0 shrink items-center gap-3" aria-label="RUÍDO — início">
             <span className="collage-brand flex h-12 w-12 shrink-0 items-center justify-center border-[3px] border-punk-acid bg-ink">
               <img
                 src="/assets/skull-xerox.svg"
@@ -33,12 +33,12 @@ export function Navbar() {
               />
             </span>
             <span className="font-heavy text-4xl leading-none tracking-wide text-paper sm:text-5xl">RUÍDO</span>
-            <span className="ruido-nav-edition hidden font-mono text-[10px] font-bold uppercase tracking-widest lg:inline-block">
+            <span className="ruido-nav-edition hidden font-mono text-[10px] font-bold uppercase tracking-widest 2xl:inline-block">
               DADOS PÚBLICOS / SEM FILTRO
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1.5 md:flex" aria-label="Navegação principal">
+          <nav className="hidden shrink-0 items-center gap-1.5 xl:flex" aria-label="Navegação principal">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
               return (
@@ -57,7 +57,7 @@ export function Navbar() {
 
           <button
             type="button"
-            className="ruido-nav-toggle inline-flex items-center gap-2 md:hidden"
+            className="ruido-nav-toggle inline-flex shrink-0 items-center gap-2 xl:hidden"
             aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuAberto}
             aria-controls="ruido-menu-mobile"
@@ -70,7 +70,7 @@ export function Navbar() {
 
         <nav
           id="ruido-menu-mobile"
-          className={["ruido-mobile-menu pb-4 md:hidden", menuAberto ? "is-open" : "hidden"].join(" ")}
+          className={["ruido-mobile-menu pb-4 xl:hidden", menuAberto ? "is-open" : "hidden"].join(" ")}
           aria-label="Navegação móvel"
         >
           {navLinks.map((link) => {
