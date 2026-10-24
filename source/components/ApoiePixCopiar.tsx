@@ -12,7 +12,6 @@ export function ApoiePixCopiar({ chave, copiaECola }: { chave: string; copiaECol
       await navigator.clipboard.writeText(valor);
       setCopiado(tipo);
     } catch {
-      // Compatibilidade com navegadores móveis sem acesso à API assíncrona.
       try {
         const campo = document.createElement("textarea");
         campo.value = valor;
