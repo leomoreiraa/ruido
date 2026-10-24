@@ -1,4 +1,3 @@
-// lib/services/senadoNormalizer.ts
 import { OpcaoVoto, StatusPresenca } from "@/lib/types";
 
 export interface SenadoVotoItemContract {
@@ -92,7 +91,6 @@ export function normalizarVotoSenado(siglaBruta?: string | null): {
     return { opcaoNormalizada: "LICENCA_OU_MISSAO", siglaOriginal: trimmed };
   }
 
-  // Preserva valor original literalmente sem inventar ausência
   return { opcaoNormalizada: trimmed, siglaOriginal: trimmed };
 }
 
@@ -115,12 +113,10 @@ export function classificarEvidenciaPresencaSenado(
   const v = siglaVoto.trim().toUpperCase();
   const desc = descricaoVoto?.trim() || null;
 
-  // Presidente da sessão está presente
   if (v.includes("PRESIDENTE") || v.includes("ART.")) {
     return { status: StatusPresenca.PRESENTE, justificativa: "Presidência da Sessão" };
   }
 
-  // P-NRV: Presente – Não registrou voto
   if (v === "P-NRV" || v.includes("PRESENTE")) {
     return {
       status: StatusPresenca.PRESENTE,
@@ -128,7 +124,6 @@ export function classificarEvidenciaPresencaSenado(
     };
   }
 
-  // Voto emitido: Sim, Não, Abstenção, Obstrução
   if (
     v === "SIM" ||
     v === "NÃO" ||
@@ -139,12 +134,10 @@ export function classificarEvidenciaPresencaSenado(
     return { status: StatusPresenca.PRESENTE, justificativa: null };
   }
 
-  // Não compareceu explícito no registro
   if (v === "NCOM") {
     return { status: StatusPresenca.AUSENTE, justificativa: desc ?? "Não compareceu" };
   }
 
-  // Justificativas regimentais (Atividade Parlamentar, Licença Saúde, Missão, etc.)
   if (v === "AP" || v === "LS" || v === "MIS" || v === "LP") {
     return {
       status: StatusPresenca.JUSTIFICADO,
@@ -152,7 +145,5 @@ export function classificarEvidenciaPresencaSenado(
     };
   }
 
-  // Unknown codes may denote anything, including abstention or missing data.
-  // Never invent a justified absence without an explicit recognized Senate code.
   return null;
 }
