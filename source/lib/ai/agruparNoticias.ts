@@ -1,8 +1,4 @@
-/**
- * Agrupamento conservador de títulos para triagem jornalística. Agrupar NÃO
- * significa verificar um fato: somente a leitura original + Gemini + gate de
- * quatro redações independentes pode publicar uma notícia.
- */
+
 export type MancheteVerificada = { url: string; title: string; group: string; published: string };
 
 const COMMON = new Set([
