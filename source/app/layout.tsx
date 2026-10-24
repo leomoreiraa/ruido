@@ -22,16 +22,16 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="collage-body min-h-screen flex flex-col bg-paper text-ink relative selection:bg-punk-red selection:text-white">
-        {/* Grain overlay for photocopy/grime effect */}
+        
         <div className="grain-overlay" aria-hidden="true" />
 
-        {/* Link permanente para apoiar, com área segura em mobile. */}
+        
         <RuidoSupportFloating />
 
-        {/* Main Navigation */}
+        
         <Navbar />
 
-        {/* Faixa lambe-lambe, rolando sem JavaScript; duplicação apenas visual. */}
+        
         <div className="ruido-status-strip ruido-marquee-band relative z-20" aria-label="RUÍDO — dados públicos, política sob lupa">
           <div className="ruido-marquee-track" aria-hidden="true">
             {[0, 1].map((indice) => (
@@ -45,17 +45,17 @@ export default function RootLayout({
           </div>
         </div>
 
-        {/* Main Content Area */}
+        
         <main className="ruido-site-content flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
           {children}
         </main>
 
-        {/* Decorative divider before footer */}
+        
         <div className="spikes-strip mt-12 mb-0" aria-hidden="true" />
 
-        {/* Punk Footer */}
+        
         <footer className="bg-ink text-paper border-t-8 border-ink pt-12 pb-8 px-4 sm:px-8 relative overflow-hidden">
-          {/* Halftone texture background in footer */}
+          
           <div
             className="absolute inset-0 opacity-10 pointer-events-none"
             style={{
@@ -76,7 +76,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10 pb-8 border-b-2 border-dashed border-paper/30">
-              {/* Brand and Manifesto Statement */}
+              
               <div className="md:col-span-6 space-y-4">
                 <div className="inline-block transform -rotate-3">
                   <span className="bg-punk-red text-white font-heavy text-3xl sm:text-5xl px-3 py-1 tracking-tight border-3 border-white shadow-[5px_5px_0_#d8f53e] inline-block">
@@ -92,7 +92,7 @@ export default function RootLayout({
                 </div>
               </div>
 
-              {/* Navigation Links */}
+              
               <div className="md:col-span-3 space-y-2 font-mono text-sm">
                 <h4 className="font-heavy text-lg tracking-wider text-punk-acid uppercase border-b border-punk-red/60 pb-1 mb-3">
                 </h4>
@@ -125,7 +125,7 @@ export default function RootLayout({
                 </ul>
               </div>
 
-              {/* Official Sources & Stamp */}
+              
               <div className="md:col-span-3 space-y-3 font-mono text-xs">
                 <h4 className="font-heavy text-lg tracking-wider text-punk-red uppercase border-b border-punk-acid/60 pb-1 mb-3">
                 </h4>
@@ -161,7 +161,7 @@ export default function RootLayout({
               </div>
             </div>
 
-            {/* Bottom bar */}
+            
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono text-paper-dark uppercase">
               <div>
                 © 2026 DESCONFIE DOS GOVERNANTES &bull;{" "}
