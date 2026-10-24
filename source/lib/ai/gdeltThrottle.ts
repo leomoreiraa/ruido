@@ -25,8 +25,6 @@ export function marcarTentativaGdelt(
 export function registrarLimiteGdelt(
   estado: EstadoGdelt, agora:number, retryAfter: string | null,
 ): EstadoGdelt {
-  // Retry-After pode ser segundos ou data HTTP; restringe o máximo para
-  // impedir entradas externas que suspendam a busca por tempo desmedido.
   let ms = GDELT_BACKOFF_MS;
   if (retryAfter) {
     const parsed=/^\d+$/.test(retryAfter) ? Number(retryAfter)*1000 :
