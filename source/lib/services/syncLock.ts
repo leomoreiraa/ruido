@@ -1,3 +1,4 @@
+// lib/services/syncLock.ts
 import { prisma } from "@/lib/prisma";
 
 export interface SyncLeaseHandle {
@@ -27,6 +28,7 @@ export async function acquireSyncLease(
   const now = new Date();
   const expiresAt = new Date(now.getTime() + ttlMs);
 
+  // Tenta criação atômica primeiro
   try {
     await prisma.syncLease.create({
       data: {
@@ -37,6 +39,7 @@ export async function acquireSyncLease(
       },
     });
   } catch {
+    // Se já existe, tenta assumir atomicamente apenas se estiver expirado
     const updated = await prisma.syncLease.updateMany({
       where: {
         id: leaseId,
@@ -75,6 +78,7 @@ export async function acquireSyncLease(
     }
   }, Math.max(10_000, Math.floor(ttlMs / 3)));
 
+  // Evita que o timer mantenha o processo aberto
   if (heartbeatInterval.unref) {
     heartbeatInterval.unref();
   }

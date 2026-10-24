@@ -36,7 +36,6 @@ export function normalizarStatusEmenda(statusBruto?: string | null): StatusEmend
   return StatusEmenda.EMPENHADO;
 }
 
-// These integrations are unavailable, not empty official datasets. Never synthesize a fallback.
 export async function sincronizarEmendas(_options: OpcoesSincronizacaoEmendas = {}): Promise<{ totalSincronizadas: number; fonteUtilizada: string }> {
   throw new Error("Emendas indisponíveis: importador oficial com identificação de autor e paginação ainda não implementado. Nenhum dado foi gerado.");
 }
@@ -59,7 +58,6 @@ export async function sincronizarDiscursos(options: OpcoesSincronizacaoDiscursos
   let totalColetados = 0;
   for (const p of parlamentares) {
     try {
-      // Senate list responses contain summaries/indexing, not transcripts. Do not label those as speech text.
       if (p.casa !== "CAMARA") continue;
       const url = `/deputados/${p.externalId}/discursos?dataInicio=${dataInicio}&dataFim=${dataFim}&ordenarPor=dataHoraInicio&ordem=DESC&itens=20`;
       const res = await camaraApiClient.fetchJson<{ dados?: any[] }>(url);
