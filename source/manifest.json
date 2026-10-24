@@ -146,7 +146,7 @@
     "tests/deepAiSchedule.test.ts": "3d11ee06308f4d186bd502da0fb9bf428fdef2af6581aac81f6fde1dabf4b1f0",
     "tests/dossie-processual.test.py": "4f251e97254689781673c5a54bd8ec1b49e594ea76bbbb1c3c0cb2cf7700a362",
     "tests/dossies-integration.test.ts": "4e85d651108a6e2a0163d2dab7ee2c303fe3c1daef4db040ecd832c29bb13d3f",
-    "tests/eleicoes-tse-ao-vivo.test.ts": "5c398d8831d26cfa02a25e6cb273737b5901dfabef728bd6cb9762c521e3b9bb",
+    "tests/eleicoes-tse-ao-vivo.test.ts": "302271be6ff95191deeb816f0f5abfe253bf02965c0cbe0f8e0196639189a465",
     "tests/emendasPortal.test.ts": "e804aeecc2a6a43df9e7a07de9dbbef047030efdda8bc9bfa8d2d64da5090caa",
     "tests/explicacaoProjetos.test.ts": "4921b62ba3b6c9511902b0b602062f7fffc8df59a50e6f1fc707887626a4870d",
     "tests/factCheckRelated.test.ts": "a62f5b15861413459cf4d1bb4fd973e7bc37c94e0926555bef876cbe4c2ce7ae",

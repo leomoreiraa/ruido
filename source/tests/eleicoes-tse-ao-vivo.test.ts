@@ -52,3 +52,23 @@ test("todos os tres mapas incluem zoom e atualizacao live nao depende de deploy"
  assert.match(eleicoes,/backendEleitoralConfigurado/);
  assert.match(eleicoes,/sem redeploy/);
 });
+
+test("zoom do RUÍDO mantém geometria vetorial e legibilidade no fundo ácido",()=>{
+ const zoom=readFileSync("components/MapaZoomArea.tsx","utf8");
+ const css=readFileSync("app/globals.css","utf8");
+ const national=readFileSync("components/MapaEleitoralMunicipalBrasil.tsx","utf8");
+ const election=readFileSync("components/Eleicoes2026View.tsx","utf8");
+ const atlas=readFileSync("components/MapaBrasilView.tsx","utf8");
+ assert.match(zoom,/React\.cloneElement\(svg/);
+ assert.match(zoom,/viewBox:/);
+ assert.match(zoom,/shapeRendering:"geometricPrecision"/);
+ assert.doesNotMatch(zoom,/translate3d|transformOrigin|scale\(/);
+ assert.match(zoom,/onPointerMove/);
+ assert.match(zoom,/zoomEm/);
+ assert.match(css,/ruido-map-zoom__surface > svg/);
+ assert.match(css,/transform: none !important/);
+ assert.match(css,/ruido-map-zine__titlebar \.ruido-map-zine__headline/);
+ assert.match(css,/color: #171512 !important/);
+ assert.match(css,/ruido-text-on-acid-outline/);
+ for (const code of [national,election,atlas]) assert.match(code,/vectorEffect="non-scaling-stroke"/);
+});
