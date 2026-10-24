@@ -1,5 +1,3 @@
-// app/pautas/page.tsx
-
 import React from "react";
 import { prisma } from "@/lib/prisma";
 import { PautasFilterView, PautaListItem } from "@/components/PautasFilterView";
