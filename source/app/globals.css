@@ -4169,3 +4169,250 @@ body.collage-body {
 @media (prefers-reduced-motion: reduce) {
   .ruido-site-content .ruido-map-zine :is(button, svg path) { transition: none !important; }
 }
+
+
+.ruido-site-content .ruido-eleicoes-page,
+.ruido-site-content .mapa-brasil {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.ruido-site-content .ruido-eleicoes-page > *,
+.ruido-site-content .mapa-brasil > *,
+.ruido-site-content .ruido-map-zine > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.ruido-site-content .ruido-map-zine {
+  max-width: 100%;
+  margin-inline: auto;
+  overflow-wrap: break-word;
+  background-color: #282722 !important;
+  color: #f4edda !important;
+}
+.ruido-site-content .ruido-map-zine--electoral {
+  width: 100%;
+  max-width: 1420px;
+  margin-inline: auto;
+}
+.ruido-site-content .ruido-map-zine__window {
+  min-width: 0;
+  width: 100%;
+}
+.ruido-site-content .ruido-map-zine--electoral .ruido-map-zine__canvas--national {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+.ruido-site-content .ruido-map-zine--electoral .ruido-map-zine__canvas--national > div,
+.ruido-site-content .ruido-map-zine--electoral .ruido-map-zine__canvas--national .ruido-map-zine__viewport {
+  min-width: 0;
+  max-width: 100%;
+}
+.ruido-site-content .ruido-map-zine--electoral .ruido-map-zine__canvas--national .ruido-map-zine__viewport > svg {
+  display: block;
+  width: min(100%, 960px);
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+  margin: 0 auto;
+}
+.ruido-site-content .ruido-map-zine__guide {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 17px;
+  padding: clamp(12px, 1.7vw, 19px);
+  color: #1b1915;
+  background-color: #f2e9d8;
+  background-image: linear-gradient(108deg, rgba(255,255,255,.43), transparent 55%), url('/assets/textured-paper.png');
+  background-size: auto, 340px auto;
+  border: 3px solid #13130f;
+  border-left: 9px solid #d3ff20;
+  box-shadow: 4px 4px 0 #b72e29;
+}
+.ruido-site-content .ruido-map-zine__guide-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed rgba(23,21,17,.45);
+}
+.ruido-site-content .ruido-map-zine__guide-head > div {
+  min-width: 0;
+  max-width: 100%;
+}
+.ruido-site-content .ruido-map-zine__guide-kicker {
+  display: block;
+  color: #8b2923;
+  font: 900 10px/1.4 var(--mono), monospace;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+.ruido-site-content .ruido-map-zine__guide-head h3 {
+  margin: 4px 0 0;
+  color: #141311;
+  font: 900 clamp(17px, 2vw, 23px)/1.12 var(--heavy), Impact, sans-serif;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.ruido-site-content .ruido-map-zine__guide-seal {
+  flex: 0 0 auto;
+  min-width: 52px;
+  color: #aa2822;
+  border: 2px solid #aa2822;
+  padding: 7px 8px;
+  text-align: center;
+  font: 900 12px/1.05 var(--heavy), Impact, sans-serif;
+  transform: rotate(5deg);
+}
+.ruido-site-content .ruido-map-zine__guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 15px 18px;
+  margin-top: 14px;
+}
+.ruido-site-content .ruido-map-zine__guide-party {
+  min-width: 0;
+}
+.ruido-site-content .ruido-map-zine__guide-party-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #181713;
+  font: 900 clamp(11px, 1vw, 13px)/1.35 var(--mono), monospace;
+  text-transform: uppercase;
+}
+.ruido-site-content .ruido-map-zine__guide-dot {
+  display: inline-block;
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #141311;
+  transform: rotate(-5deg);
+}
+.ruido-site-content .ruido-map-zine__guide-swatches {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
+  margin-top: 8px;
+  min-height: 18px;
+}
+.ruido-site-content .ruido-map-zine__guide-swatches > span {
+  display: block;
+  min-width: 0;
+  height: 20px;
+  border: 1px solid rgba(20,19,17,.18);
+}
+.ruido-site-content .ruido-map-zine__guide-special,
+.ruido-site-content .ruido-map-zine__guide-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px 20px;
+  color: #171614;
+  font: 800 11px/1.4 var(--mono), monospace;
+}
+.ruido-site-content .ruido-map-zine__guide-special {
+  grid-column: 1 / -1;
+  border-top: 1px dashed rgba(19,19,15,.4);
+  padding-top: 12px;
+}
+.ruido-site-content .ruido-map-zine__guide-special > span,
+.ruido-site-content .ruido-map-zine__guide-items > span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: 7px;
+}
+.ruido-site-content .ruido-map-zine__guide-special i,
+.ruido-site-content .ruido-map-zine__guide-items i {
+  display: inline-block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #171614;
+  transform: rotate(3deg);
+}
+.ruido-site-content .ruido-map-zine__guide-scale {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 2px dashed rgba(25,23,19,.38);
+}
+.ruido-site-content .ruido-map-zine__guide-scale > strong {
+  display: block;
+  color: #9c2823;
+  font: 900 11px/1.35 var(--mono), monospace;
+  letter-spacing: .055em;
+  margin-bottom: 7px;
+}
+.ruido-site-content .ruido-map-zine__guide-range {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 5px;
+  font: 700 10px/1.3 var(--mono), monospace;
+}
+.ruido-site-content .ruido-map-zine__guide-range > span {
+  display: block;
+  color: #332d28;
+  padding: 4px 3px;
+  background: rgba(16,16,15,.07);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.ruido-site-content .ruido-map-zine__guide-scale p,
+.ruido-site-content .ruido-map-zine__guide-footnote,
+.ruido-site-content .ruido-map-zine__guide-atlas-ramp p {
+  margin: 9px 0 0;
+  color: #332f28;
+  font: 500 11px/1.65 var(--mono), monospace;
+}
+.ruido-site-content .ruido-map-zine__guide--atlas {
+  margin: 16px 0 0;
+  border-left-color: #cf302a;
+  box-shadow: 4px 4px 0 #d3ff20;
+}
+.ruido-site-content .ruido-map-zine__guide--atlas .ruido-map-zine__guide-items {
+  margin-top: 15px;
+}
+.ruido-site-content .ruido-map-zine__guide-atlas-ramp {
+  margin-top: 13px;
+}
+.ruido-site-content .ruido-map-zine__guide-atlas-ramp .ruido-map-zine__guide-swatches {
+  grid-template-columns: repeat(5, minmax(0,1fr));
+}
+.ruido-site-content .ruido-map-zine__guide-atlas-labels {
+  display: flex;
+  justify-content: space-between;
+  color: #302d25;
+  font: 800 10px/1.4 var(--mono), monospace;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-map-zine__guide {
+    padding: 12px;
+    border-width: 2px;
+    border-left-width: 6px;
+    box-shadow: 3px 3px 0 #b72e29;
+  }
+  .ruido-site-content .ruido-map-zine__guide-grid {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+  .ruido-site-content .ruido-map-zine__guide-special {
+    grid-column: auto;
+  }
+  .ruido-site-content .ruido-map-zine__guide-range {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+  }
+  .ruido-site-content .ruido-map-zine__guide-head h3 {
+    font-size: 17px;
+  }
+  .ruido-site-content .ruido-map-zine--electoral .ruido-map-zine__canvas--national .ruido-map-zine__viewport > svg {
+    width: 100%;
+  }
+}
