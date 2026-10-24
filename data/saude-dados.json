@@ -1,0 +1,105 @@
+{
+  "generated_at_utc": "2026-10-24T07:08:47.693958+00:00",
+  "json_files": {
+    "analises-oficiais.json": 41460,
+    "candidaturas-presidenciais.json": 809,
+    "datajud.json": 58301,
+    "financeiro.json": 241259,
+    "noticias.json": 87225,
+    "patrimonio.json": 60742,
+    "presenca-cobertura.json": 276559,
+    "processos-eleitorais.json": 466851,
+    "redes-financeiras.json": 11055615
+  },
+  "json_bytes_total": 12288821,
+  "warnings": [],
+  "pages_directory_mib": {
+    "parlamentares": 444.7,
+    "data": 204.8,
+    "assets": 18.0,
+    "pautas": 11.4,
+    "_next": 0.9,
+    "mapa": 0.3,
+    "index.html": 0.3,
+    "index.txt": 0.2,
+    "apoie": 0.1,
+    "emendas": 0.1,
+    "sobre": 0.1,
+    "cobertura": 0.1,
+    "404.html": 0.0,
+    "404": 0.0,
+    "favicon.svg": 0.0,
+    "icon.svg": 0.0,
+    "workers": 0.0,
+    "favicon.ico": 0.0,
+    "favicon.png": 0.0,
+    ".nojekyll": 0.0
+  },
+  "pages_file_types_mib": {
+    ".html": 273.7,
+    ".txt": 183.5,
+    ".gz": 154.5,
+    ".json": 50.4,
+    ".png": 15.2,
+    ".jpg": 2.4,
+    ".js": 0.8,
+    ".webp": 0.3,
+    ".css": 0.1,
+    ".svg": 0.0,
+    ".ico": 0.0,
+    "(none)": 0.0
+  },
+  "pages_largest_files": [
+    {
+      "path": "data/pautas-index.json",
+      "mib": 19.7
+    },
+    {
+      "path": "data/emendas-index.json",
+      "mib": 18.9
+    },
+    {
+      "path": "data/dossies/redes-financeiras.json",
+      "mib": 10.5
+    },
+    {
+      "path": "assets/ripped-paper-white-05.png",
+      "mib": 2.1
+    },
+    {
+      "path": "assets/ripped-paper-graph-57.png",
+      "mib": 2.0
+    },
+    {
+      "path": "assets/ripped-paper-vintage-25.png",
+      "mib": 1.7
+    },
+    {
+      "path": "assets/ripped-paper-newsprint-50.png",
+      "mib": 1.7
+    },
+    {
+      "path": "assets/ripped-paper-black-41.png",
+      "mib": 1.7
+    },
+    {
+      "path": "assets/ripped-paper-kraft-17.png",
+      "mib": 1.7
+    },
+    {
+      "path": "assets/punk-target-raw.png",
+      "mib": 1.4
+    },
+    {
+      "path": "assets/ripped-paper-strip-white-07.png",
+      "mib": 0.6
+    },
+    {
+      "path": "assets/collage/ruido-mural-original.jpg",
+      "mib": 0.6
+    }
+  ],
+  "pages_files_count": 64597,
+  "pages_bytes": 714208219,
+  "pages_budget_bytes": 943718400
+}

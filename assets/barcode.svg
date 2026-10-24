@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 65" width="200" height="65">
+  <rect width="200" height="65" fill="#f8f5ea" fill-opacity="0.9"/>
+  <!-- Barcode vertical lines -->
+  <g fill="#101010">
+    <rect x="12" y="8" width="4" height="40"/>
+    <rect x="18" y="8" width="2" height="40"/>
+    <rect x="23" y="8" width="5" height="40"/>
+    <rect x="31" y="8" width="2" height="40"/>
+    <rect x="36" y="8" width="6" height="40"/>
+    <rect x="45" y="8" width="3" height="40"/>
+    <rect x="51" y="8" width="2" height="40"/>
+    <rect x="56" y="8" width="5" height="40"/>
+    <rect x="64" y="8" width="2" height="40"/>
+    <rect x="70" y="8" width="4" height="40"/>
+    <rect x="77" y="8" width="7" height="40"/>
+    <rect x="87" y="8" width="2" height="40"/>
+    <rect x="92" y="8" width="5" height="40"/>
+    <rect x="100" y="8" width="3" height="40"/>
+    <rect x="106" y="8" width="6" height="40"/>
+    <rect x="115" y="8" width="2" height="40"/>
+    <rect x="120" y="8" width="4" height="40"/>
+    <rect x="127" y="8" width="6" height="40"/>
+    <rect x="136" y="8" width="2" height="40"/>
+    <rect x="141" y="8" width="5" height="40"/>
+    <rect x="149" y="8" width="3" height="40"/>
+    <rect x="155" y="8" width="6" height="40"/>
+    <rect x="164" y="8" width="2" height="40"/>
+    <rect x="169" y="8" width="5" height="40"/>
+    <rect x="177" y="8" width="3" height="40"/>
+    <rect x="183" y="8" width="4" height="40"/>
+  </g>
+  <text x="100" y="58" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" font-weight="700" fill="#101010" text-anchor="middle" letter-spacing="3">BR-CONG-88-2026</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="120" height="40">
+  <defs>
+    <filter id="metal-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <g filter="url(#metal-shadow)" fill="none" stroke="#silver" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Pin wire -->
+    <path d="M 32 14 L 105 14 C 112 14 116 19 113 25 C 110 30 102 30 96 30 L 25 30 A 8 8 0 0 1 18 20 A 8 8 0 0 1 27 12 L 35 12" 
+          stroke="#444" stroke-width="4.5"/>
+    <path d="M 32 14 L 105 14 C 112 14 116 19 113 25 C 110 30 102 30 96 30 L 25 30 A 8 8 0 0 1 18 20 A 8 8 0 0 1 27 12 L 35 12" 
+          stroke="#c7c7c7" stroke-width="3"/>
+    <!-- Head cap -->
+    <rect x="2" y="8" width="34" height="24" rx="4" fill="#222" stroke="#bbb" stroke-width="1.5"/>
+    <rect x="6" y="12" width="16" height="16" rx="2" fill="#555"/>
+    <circle cx="28" cy="20" r="3" fill="#aaa"/>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 60" width="50" height="60">
+  <defs>
+    <filter id="pin-shadow">
+      <feDropShadow dx="3" dy="4" stdDeviation="2" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <g filter="url(#pin-shadow)">
+    <!-- Red plastic pin head -->
+    <ellipse cx="25" cy="18" rx="14" ry="7" fill="#b10e1d"/>
+    <path d="M 11 18 C 11 10 39 10 39 18 C 39 28 32 30 31 38 L 19 38 C 18 30 11 28 11 18 Z" fill="#e42232"/>
+    <ellipse cx="25" cy="14" rx="10" ry="4" fill="#ff6b6b"/>
+    <!-- Metal needle tip -->
+    <polygon points="23,38 27,38 25,56" fill="#silver" stroke="#222" stroke-width="0.8"/>
+  </g>
+</svg>

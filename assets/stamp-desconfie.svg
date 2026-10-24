@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <defs>
+    <filter id="distress-circ">
+      <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="4" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" />
+    </filter>
+  </defs>
+  <g transform="rotate(7 80 80)" filter="url(#distress-circ)">
+    <circle cx="80" cy="80" r="72" fill="none" stroke="#e42232" stroke-width="4.5" stroke-dasharray="18 3 35 4"/>
+    <circle cx="80" cy="80" r="64" fill="none" stroke="#e42232" stroke-width="1.8"/>
+    <path id="curveTop" d="M 28 80 A 52 52 0 0 1 132 80" fill="none"/>
+    <path id="curveBottom" d="M 132 80 A 52 52 0 0 1 28 80" fill="none"/>
+    <text font-family="'Impact', sans-serif" font-size="13" fill="#e42232" letter-spacing="3" text-anchor="middle">
+      <textPath href="#curveTop" startOffset="50%">DESCONFIE SEMPRE</textPath>
+    </text>
+    <text font-family="'Impact', sans-serif" font-size="12" fill="#e42232" letter-spacing="2" text-anchor="middle">
+      <textPath href="#curveBottom" startOffset="50%">DADOS OFICIAIS 2026</textPath>
+    </text>
+    <text x="80" y="76" font-family="'Impact', sans-serif" font-size="26" fill="#e42232" letter-spacing="1" text-anchor="middle">AUDITADO</text>
+    <text x="80" y="94" font-family="'Courier New', monospace" font-weight="900" font-size="11" fill="#e42232" text-anchor="middle">★ 100% CÍVICO ★</text>
+  </g>
+</svg>

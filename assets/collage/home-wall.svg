@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1160" viewBox="0 0 1440 1160" aria-hidden="true">
+<defs>
+ <pattern id="news" width="164" height="115" patternUnits="userSpaceOnUse"><path d="M8 14H155M8 20H155M8 28H126M8 40H154M8 46H151M8 52H133M8 65H153M8 72H143M8 80H156M8 94H146M8 102H126" stroke="#161615" opacity=".22" stroke-width="3"/><rect width="43" height="6" x="8" y="5" fill="#151514" opacity=".45"/></pattern>
+ <pattern id="stipple" width="19" height="19" patternUnits="userSpaceOnUse"><circle cx="4" cy="5" r="1.7" fill="#151514"/><circle cx="13" cy="16" r=".9" fill="#151514"/></pattern>
+ <pattern id="print" width="67" height="79" patternUnits="userSpaceOnUse"><path d="M3 0v79M12 0v79M33 0v79M52 0v79" stroke="#141311" opacity=".045"/><circle cx="12" cy="9" r="2.4" fill="#111" opacity=".19"/><circle cx="37" cy="53" r="1.3" fill="#111" opacity=".23"/></pattern>
+ <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".075" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4"/></filter>
+</defs>
+<!-- Distressed print and ripped-poster shapes, no UI or fabricated data -->
+<path d="M-30 0H550L498 39L455 28L415 62L364 50L318 87L277 65L212 113L159 92L107 130L48 103L-30 158Z" fill="#161615" opacity=".91"/>
+<path d="M1010 -21H1467V228L1401 205L1373 258L1320 222L1277 286L1230 246L1182 298L1146 239L1093 244L1114 185L1033 181Z" fill="#181717" opacity=".82"/>
+<path d="M-24 865L87 835L144 884L201 832L269 886L321 839L384 894L469 857L536 918L605 874L679 947L756 904L849 976L945 945L1029 1026L1114 976L1219 1043L1320 995L1464 1041V1199H-24Z" fill="#171615" opacity=".65"/>
+<path d="M-30 0H550L498 39L455 28L415 62L364 50L318 87L277 65L212 113L159 92L107 130L48 103L-30 158Z" fill="url(#stipple)" opacity=".38"/>
+<path d="M1010 0H1440V305H1230Z" fill="url(#stipple)" opacity=".24"/>
+<g opacity=".38">
+ <path d="M35 260L210 209L245 346L64 399Z" fill="#141414"/>
+ <path d="M49 257L234 211L264 356L63 403Z" fill="url(#news)" transform="rotate(-3 120 270)"/>
+ <path d="M1118 556L1388 498L1444 663L1176 724Z" fill="#191817"/>
+ <path d="M1151 542L1374 495L1428 690L1174 739Z" fill="url(#news)" transform="rotate(5 1270 603)"/>
+ <path d="M-72 568L194 498L228 689L-42 753Z" fill="url(#news)" transform="rotate(-6 80 580)"/>
+ <path d="M954 898L1301 829L1347 1009L971 1085Z" fill="url(#news)" transform="rotate(4 1090 900)"/>
+</g>
+<!-- rough marker underlines, electric-neon smears and cut-paper zigzags -->
+<g fill="#d3ff20" opacity=".97" filter="url(#rough)">
+ <path d="M-9 142L379 90L377 129L-11 193Z"/>
+ <path d="M1009 76L1449 39L1455 77L1017 118Z"/>
+ <path d="M1073 357L1449 303L1463 354L1078 407Z"/>
+ <path d="M-6 755L337 715L334 750L-6 808Z"/>
+ <path d="M879 1013L1457 955L1464 1004L884 1060Z"/>
+ <path d="M382 1097L626 1079L621 1114L387 1142Z"/>
+</g>
+<g stroke="#161615" fill="none" stroke-width="9" stroke-linecap="square" opacity=".88">
+ <path d="M15 181L432 115M1026 128L1480 89M17 802L322 773M902 1071L1468 1009"/>
+ <path d="M1215 207L1284 154L1332 235M1296 193L1286 280M1243 210L1358 211"/>
+</g>
+<!-- Red ink, distressed circles, registration x's, stencil zigzags -->
+<g stroke="#f32636" stroke-width="13" fill="none" opacity=".92" filter="url(#rough)">
+ <path d="M47 452Q154 403 256 469M61 476Q155 434 274 485"/>
+ <path d="M1300 716C1190 661 1101 754 1194 835C1277 916 1417 840 1390 765C1373 729 1352 724 1300 716Z"/>
+ <path d="M1342 743L1391 803M1394 739L1343 804"/>
+ <path d="M90 904L149 964M151 899L93 969"/>
+ <path d="M1014 336L1066 386M1076 324L1017 404"/>
+</g>
+<g fill="#151413" opacity=".42" filter="url(#rough)">
+ <path d="M456 205L568 191L575 223L463 235Z"/>
+ <path d="M766 558L911 533L916 562L773 584Z"/>
+ <path d="M291 988L462 957L467 993L290 1024Z"/>
+</g>
+<g stroke="#d4ff25" stroke-width="6" fill="none" opacity=".9" stroke-linecap="round">
+ <path d="M687 64L720 94L750 50M706 44L729 114"/>
+ <path d="M1008 661L1037 701L1061 644M1021 646L1046 712"/>
+ <path d="M208 1034L238 1073L276 1028M221 1023L250 1082"/>
+ <path d="M136 545Q178 580 223 551M181 527L224 553L199 592"/>
+</g>
+<g fill="url(#print)" opacity=".56"><rect x="0" y="0" width="1440" height="1160"/></g>
+</svg>

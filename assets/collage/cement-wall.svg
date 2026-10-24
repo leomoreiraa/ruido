@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Textura de muro de cimento urbano envelhecido">
+  <defs>
+    <!-- Textura procedural: detalhe contínuo, independente da densidade do dispositivo. -->
+    <filter id="concrete-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".085" numOctaves="3" seed="19" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
+      <feComponentTransfer in="mono" result="stone">
+        <feFuncR type="gamma" amplitude="1" exponent=".85" offset="0"/>
+        <feFuncG type="gamma" amplitude="1" exponent=".85" offset="0"/>
+        <feFuncB type="gamma" amplitude="1" exponent=".85" offset="0"/>
+        <feFuncA type="linear" slope=".25" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="plaster">
+      <feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="4" seed="7" stitchTiles="stitch" result="cloud"/>
+      <feColorMatrix in="cloud" type="matrix" values=".35 0 0 0 .24  0 .35 0 0 .24  0 0 .35 0 .22  0 0 0 .38 0" />
+    </filter>
+    <pattern id="rain-streaks" width="180" height="260" patternUnits="userSpaceOnUse">
+      <path d="M25 0V141m-1 0v32m79-173v80m2 1v49M164 34v174" fill="none" stroke="#1b211f" stroke-width="1.1" opacity=".2"/>
+      <path d="M63 0v110m1 16v41m87-167v122" fill="none" stroke="#9e9c90" stroke-width=".8" opacity=".18"/>
+    </pattern>
+  </defs>
+  <rect width="1024" height="1024" fill="#656761"/>
+  <rect width="1024" height="1024" filter="url(#plaster)"/>
+  <g fill="#222924" opacity=".10">
+    <path d="M0 112q100-61 200-28t158-12q80-38 145-18l88 37q-89-4-169 29t-166 10q-108-28-256 34Z"/>
+    <path d="M565 494q112-61 210-29t249-7v127q-167-33-271 4t-188-10Z"/>
+    <path d="M0 851q140-45 284-10t265-11q87-30 183 9t292-1v186H0Z"/>
+  </g>
+  <g fill="#b1ada1" opacity=".10">
+    <path d="M0 284q106-22 165-2t130-3q85-26 145-10q102 23 175-9l89-19q-71 61-173 62t-190 0q-139-7-341 32Z"/>
+    <path d="M283 629q100-28 206 3t143-1q143-38 282 11l110 7v76q-181-43-320-3t-233-2q-99-47-188-16Z"/>
+  </g>
+  <rect width="1024" height="1024" fill="url(#rain-streaks)" opacity=".54"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M52 0l6 53-8 57 12 25-5 41 8 24-1 35" stroke="#222723" stroke-width="2" opacity=".23"/>
+    <path d="M54 0l6 50-7 60 10 26-4 40 8 22" stroke="#d0c7b4" stroke-width=".8" opacity=".26"/>
+    <path d="M777 54l-8 60 12 33-9 48 15 29-6 66 9 23" stroke="#292d28" stroke-width="2" opacity=".31"/>
+    <path d="M782 55l-7 56 12 33-8 49 14 33" stroke="#aea99a" stroke-width=".7" opacity=".23"/>
+    <path d="M988 443l-31 52-6 74-22 54 9 24-18 40-9 28" stroke="#2a2f2a" stroke-width="2.4" opacity=".25"/>
+    <path d="M0 680l62-13 24 7 56-14 34 2 27-11 58 7" stroke="#30332c" stroke-width="2" opacity=".26"/>
+    <path d="M0 685l61-12 26 6 54-14" stroke="#b8b3a5" stroke-width=".8" opacity=".25"/>
+    <path d="M395 1012l12-49-4-24 18-48-9-45" stroke="#252923" stroke-width="2" opacity=".21"/>
+  </g>
+  <rect width="1024" height="1024" fill="#f7f1e1" filter="url(#concrete-grain)" opacity=".49"/>
+  <g opacity=".13" stroke="#1c211e" fill="none">
+    <path d="M0 400h1024M0 404h1024" stroke-width=".6" stroke-dasharray="11 2 34 9 16 4"/>
+    <path d="M0 813h1024" stroke-width="1" stroke-dasharray="78 3 200 12"/>
+  </g>
+</svg>
