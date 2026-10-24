@@ -176,9 +176,9 @@ def main():
             from bisect import bisect_right
             pos=bisect_right(available,number)
             next_number=available[pos%len(available)] if available else ""
-        coverage=save()   # checkpoint atômico por processo consultado
+        coverage=save()   
         if interrupted:break
-        time.sleep(1.25)  # Reduz a pressao sobre CNJ; checkpoint por numero.
+        time.sleep(1.25)  
     coverage=save()
     print("DataJud CNJ: "+json.dumps(coverage,ensure_ascii=False))
 

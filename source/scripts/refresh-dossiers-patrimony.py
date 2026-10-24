@@ -116,7 +116,7 @@ def executar():
                     continue
                 val = totais.get((p["uf"], next(iter(ids))))
                 if not val or val[1] == 0:
-                    continue # sem declaração de bens ≠ patrimônio zerado
+                    continue 
                 dados.setdefault(p["id"], {})[str(ano)] = {
                     "totalDeclarado": round(val[0] / 100, 2),
                     "quantidadeBens": val[1],
