@@ -24,7 +24,7 @@ for(const configuracao of [
    await expect.poll(()=>imagem.getAttribute("viewBox")).not.toBe(original);
    await expect(mapa).toHaveAttribute("data-zoom",/^(?!1\.00)/);
    await mapa.getByRole("button",{name:"Restaurar enquadramento do mapa"}).click();
-   await expect(imagem).toHaveAttribute("viewBox",original!);
+   await expect(imagem).toHaveAttribute("viewBox",original);
    await expect(page.getByText("MUNICÍPIOS NO MAPA")).toHaveCount(0);
   });
 
