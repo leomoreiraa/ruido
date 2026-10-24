@@ -3,17 +3,23 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 const source=(p:string)=>readFileSync(p,"utf8");
 
-test("mapa do Brasil preserva fundo cinza e cores sem confundir regiões",()=>{
-  const map=source("components/MapaBrasilView.tsx");
+test("os mapas preservam leitura territorial em molduras punk consistentes",()=>{
+  const atlas=source("components/MapaBrasilView.tsx");
+  const election=source("components/Eleicoes2026View.tsx");
+  const national=source("components/MapaEleitoralMunicipalBrasil.tsx");
   const css=source("app/globals.css");
-  const next=css.slice(css.indexOf(".mapa-brasil .ruido-map-frame"));
-  assert.match(map,/ruido-map-frame bg-\[#424943\]/);
-  assert.match(map,/ruido-map-canvas/);
-  assert.match(next,/\.mapa-brasil \.ruido-map-frame\s*\{/);
-  assert.match(next,/background-color: #444b46 !important/);
-  assert.match(next,/\.mapa-brasil \.ruido-map-canvas\s*\{/);
-  assert.match(next,/background-color: #4f5651 !important/);
-  assert.match(map,/if\(s\.uf===uf\)return "#e42232"/);
+  assert.match(atlas,/ruido-map-zine ruido-map-zine--atlas/);
+  assert.match(election,/ruido-map-zine ruido-map-zine--electoral/);
+  assert.match(atlas,/ruido-map-zine__atlas-canvas/);
+  assert.match(election,/ruido-map-zine__legend/);
+  assert.match(national,/ruido-map-zine__viewport/);
+  assert.match(css,/\.ruido-site-content \.ruido-map-zine__window\s*\{/);
+  assert.match(css,/\.ruido-site-content \.ruido-map-zine__canvas\s*\{/);
+  assert.match(css,/\.ruido-site-content \.ruido-map-zine__tape\s*\{/);
+  assert.match(css,/\.ruido-site-content \.ruido-map-zine__controls\s*\{/);
+  assert.match(css,/@media \(max-width: 720px\)/);
+  assert.match(atlas,/if\(s\.uf===uf\)return "#e42232"/);
+  assert.match(election,/aria-label=.*Mapa municipal/);
 });
 test("cards textuais ganharam pequena superfície editorial de leitura",()=>{
   const css=source("app/globals.css");

@@ -152,7 +152,7 @@
     "tests/geminiFreeQuota.test.ts": "0c026b228cc1d81af2efbbe5b64e909da2490b0ab16510f19e5a4fbdc7c89395",
     "tests/idhm-ui.test.ts": "3e7682597c1cc5e32764bc63d853cd133dce599d5bf614365de42c1e86ebc593",
     "tests/ink-filter-legibility.test.ts": "4c49f94fc7e9ecd382196b34a1048feba2520749a9f9c1f7124f26cb95e2902e",
-    "tests/mapa-interfaces-e-resumos.test.ts": "780e948e4fdde843821924916dcee724e08b1d03585ff706d85135f3f48ef89c",
+    "tests/mapa-interfaces-e-resumos.test.ts": "9d5b191a354496cfbd4dff1720812fe2cb905a898754ca5556399183aaa7de61",
     "tests/mapaBrasil.test.ts": "c5a14633c1b6182fde19f6fe364650d2fceda9dff164b506a8ae2d1e7958a7b2",
     "tests/normalizers.test.ts": "f7749873e14f214a345b50938316e1612bb1721760007ce98792283e8ec0814f",
     "tests/noticiasFocus.test.ts": "146672ad41a42b6a761bb69bacf91ab034bd449f65d60fe7b4d5cfea9b007732",
