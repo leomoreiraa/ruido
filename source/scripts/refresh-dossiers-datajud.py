@@ -19,8 +19,6 @@ SOURCE = Path("public/data/dossies/processos-eleitorais.json")
 TARGET = Path("public/data/dossies/datajud.json")
 ROOT = "https://api-publica.datajud.cnj.jus.br"
 ACCESS = "https://datajud-wiki.cnj.jus.br/api-publica/acesso/"
-# Numeração CNJ resolução 65/2008: TR em ordem alfabética dos ESTADOS,
-# não das siglas. Aliases oficiais DataJud consultados na Wiki do CNJ.
 TRIBUNAIS = {
     "00":"tse", "01":"tre-ac", "02":"tre-al", "03":"tre-ap",
     "04":"tre-am", "05":"tre-ba", "06":"tre-ce", "07":"tre-dft",
@@ -30,8 +28,6 @@ TRIBUNAIS = {
     "20":"tre-rn", "21":"tre-rs", "22":"tre-ro", "23":"tre-rr",
     "24":"tre-sc", "25":"tre-se", "26":"tre-sp", "27":"tre-to",
 }
-# Chave pública da Wiki oficial do CNJ, utilizada apenas como contingência.
-# Não é segredo; a Wiki ou o secret do GitHub Actions têm prioridade.
 PUBLIC_WIKI_KEY = "cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw=="
 MAX_REQUESTS = min(80,max(1,int(os.environ.get("DATAJUD_MAX_REQUESTS","32"))))
 MAX_SECONDS = min(900,max(60,int(os.environ.get("DATAJUD_MAX_SECONDS","510"))))
@@ -96,7 +92,6 @@ def main():
             if number in stored.get(pid,{}):continue
             unique.setdefault(number,{"tribunal":tribunal,"pids":set()})["pids"].add(pid)
 
-    # Cursor estável por número CNJ, não por índice de fila mutável.
     pending={number:item for number,item in retries.items()
              if number in unique and isinstance(item,dict)}
     now=datetime.now(timezone.utc)
@@ -147,7 +142,6 @@ def main():
             found=next((m for m in result if re.sub(r"\D","",str(m.get("numeroProcesso","")))==number),None)
             if found is None:
                 not_found+=1
-                # Sem retorno não comprova inexistência: tentar novamente em 24h.
                 raise LookupError("CNJ sem registro correspondente na resposta")
             movimentos=found.get("movimentos")
             latest=max((m.get("dataHora","") for m in (
@@ -178,7 +172,6 @@ def main():
             print(f"DataJud pendente {info['tribunal']}: {type(exc).__name__}")
         if successful:
             pending.pop(number,None)
-        # Somente um item já concluído avança a âncora principal.
         if successful:
             from bisect import bisect_right
             pos=bisect_right(available,number)
