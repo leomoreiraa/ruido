@@ -69,7 +69,7 @@
     "lib/apoie-config.ts": "ac13cfdfda3ac85e168b0d68068cfbc0c0daa8700b449354d163c7eaa1d62b4f",
     "lib/cron-auth.ts": "cabbb58ff6ee398ecc66ae0f2a1b979e1d83b516b451f1f2b9a37797e1443658",
     "lib/eleicoes/candidaturaPresidencial.ts": "9c1f15cbc4a9835509f5bf7c8128365be456bfc9586383cc2a9085f45e0a8673",
-    "lib/eleicoesTseAoVivo.ts": "636361d188ebc061f365fb47b8be3affbba57f02a981d0566928fd9779bb5e30",
+    "lib/eleicoesTseAoVivo.ts": "3ca8c0674141e2f7be2492b6158026f235d60955f16026a95975d65f0cf9f225",
     "lib/malhasBrasil.ts": "1a855e7507facde62fa3a04197c2ca6b200f8a93e1267625df500f13d3d415de",
     "lib/mapaBrasil.ts": "d66a3e50a748cecc9c8b424ce8cc1a2dd5a4ffed9b4bdafc7a98a94641ca8768",
     "lib/pix-brcode.ts": "14db4d5b166d8c818d2364f820d6433b9fcf7558a9489cc797394901dcce05e7",

@@ -83,11 +83,35 @@ export function interpretarResultadoAoVivo(raw:unknown):ResultadoTSEAoVivo {
   candidatos,
  };
 }
-export async function buscarResultadoTSE(url:string,signal:AbortSignal):Promise<ResultadoTSEAoVivo> {
- if(!url.startsWith(BASE+"/"))throw new Error("URL fora da origem oficial");
- const resposta=await fetch(url,{method:"GET",cache:"no-store",mode:"cors",signal});
- if(resposta.status===429||resposta.status===403)
-  throw new Error("O TSE limitou temporariamente as consultas.");
- if(!resposta.ok)throw new Error("Fonte TSE indisponivel: HTTP "+resposta.status);
- return interpretarResultadoAoVivo(await resposta.json());
+export type ConsultaCentral={versao:number;fonte:string;estado:"atual"|"desatualizado"|"indisponivel"|"aguardando_inicio";consultadoEm:number|null;resultado:ResultadoTSEAoVivo|null;aviso?:string};
+export const RUIDO_ELECTION_API_ORIGIN=(process.env.NEXT_PUBLIC_RUIDO_ELECTION_API_URL||"").trim().replace(/\/+$/,"");
+export function backendEleitoralConfigurado():boolean {
+ if(!RUIDO_ELECTION_API_ORIGIN)return false;
+ try {
+  const parsed=new URL(RUIDO_ELECTION_API_ORIGIN);
+  return parsed.protocol==="https:"&&parsed.username===""&&parsed.password===""&&parsed.pathname==="/"&&!parsed.search&&!parsed.hash;
+ }catch{return false;}
+}
+export function urlResultadoCentral(uf="BR",municipioTSE?:string):string {
+ if(!backendEleitoralConfigurado())throw new Error("API dinâmica do RUÍDO ainda não configurada");
+ const codigo=uf.toUpperCase();
+ if(codigo!=="BR"&&!UFS.has(codigo))throw new Error("UF inválida");
+ if(municipioTSE!==undefined&&(codigo==="BR"||!/^[0-9]{5}$/.test(municipioTSE)))throw new Error("Código TSE inválido");
+ const url=new URL(RUIDO_ELECTION_API_ORIGIN+"/v1/apuracao/2026/presidente");
+ url.searchParams.set("uf",codigo);
+ if(municipioTSE)url.searchParams.set("municipioTSE",municipioTSE);
+ return url.toString();
+}
+export async function buscarResultadoCentral(uf:string,municipioTSE:string|undefined,signal:AbortSignal):Promise<ConsultaCentral> {
+ const resposta=await fetch(urlResultadoCentral(uf,municipioTSE),{method:"GET",cache:"no-store",mode:"cors",signal});
+ if(!resposta.ok)throw new Error("Serviço central de apuração temporariamente indisponível ("+resposta.status+")");
+ const data=await resposta.json() as ConsultaCentral;
+ if(data.versao!==1||data.fonte!=="https://resultados.tse.jus.br/oficial"||
+    !["atual","desatualizado","aguardando_inicio"].includes(data.estado))
+  throw new Error("Resposta da API central não foi validada");
+ if(data.estado!=="aguardando_inicio"&&!data.resultado)
+  throw new Error("Resultado eleitoral ausente na API central");
+ if(data.resultado&&(!Array.isArray(data.resultado.candidatos)||data.resultado.secoesTotalizadas>data.resultado.secoesPrevistas))
+  throw new Error("Resultados de apuração inconsistentes");
+ return data;
 }
