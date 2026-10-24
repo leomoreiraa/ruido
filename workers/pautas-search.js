@@ -1,7 +1,4 @@
-/* RUÍDO: consulta do catálogo legislativo fora da thread do navegador.
- * Apenas os resultados da página atual (até 10 itens) cruzam postMessage.
- * Nunca executa código vindo de notícias, ementas ou das APIs externas.
- */
+
 "use strict";
 
 let catalogo = null;
@@ -31,7 +28,7 @@ async function inicializar() {
       const dados = await resposta.json();
       if (!Array.isArray(dados) || dados.length < 20) throw new Error("Catálogo incompleto");
       catalogo = dados;
-      // O custo da normalização e indexação fica SOMENTE no Worker.
+      
       indice = dados.map(indiceTexto);
       return dados.length;
     })();
