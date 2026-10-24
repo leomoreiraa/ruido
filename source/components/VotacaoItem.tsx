@@ -1,5 +1,3 @@
-// components/VotacaoItem.tsx
-
 import React from "react";
 import Link from "next/link";
 import { formatarDataHoraBR } from "@/lib/utils";
