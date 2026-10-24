@@ -82,7 +82,7 @@ A documentação técnica das dependências está disponível no código-fonte p
 
 ## Arquitetura
 
-O RUÍDO separa **processamento operacional** de **entrega pública**. Coleta, persistência e preparação de conteúdo acontecem fora do navegador; a plataforma pública recebe os artefatos estáticos gerados.
+O RUÍDO utiliza uma arquitetura em etapas para coleta, tratamento e apresentação de dados. A interface pública é disponibilizada por meio de arquivos estáticos.
 
 ```mermaid
 flowchart TD
@@ -103,7 +103,7 @@ flowchart TD
 
 **Publicação estática:** os visitantes não recebem credenciais de APIs, conexão com banco operacional ou serviços de geração de conteúdo.
 
-**Rastreabilidade:** o código público inclui um snapshot auditável da aplicação, enquanto a metodologia explicita limites e lacunas de cobertura.
+**Rastreabilidade:** o código-fonte pode ser consultado, enquanto a metodologia explicita limites e lacunas de cobertura.
 
 **Atualizações progressivas:** novos registros podem ser incorporados por rotinas automatizadas, respeitando a disponibilidade das fontes.
 
@@ -150,7 +150,7 @@ cd source
 npm install
 ```
 
-> **Importante:** o repositório é um espelho de publicação e auditoria, não uma distribuição pronta do ambiente operacional completo. Arquivos locais de configuração, variáveis de ambiente e banco de desenvolvimento podem ser necessários para executar determinadas funcionalidades.
+> **Importante:** algumas funcionalidades exigem configuração local, variáveis de ambiente e um banco de desenvolvimento.
 
 ## Executando localmente
 
@@ -164,7 +164,7 @@ npm run dev
 
 O servidor Next.js normalmente fica disponível em **http://localhost:3000**.
 
-A inicialização e o funcionamento de páginas que dependem de banco, serviços externos ou variáveis de ambiente exigem configuração local adicional. **Não há garantia de execução integral apenas com `npm install`**, pois os dados operacionais e as credenciais não acompanham o espelho.
+Páginas que dependem de banco, serviços externos ou variáveis de ambiente exigem configuração local adicional. **A instalação de dependências, isoladamente, não garante a execução integral de todos os módulos.**
 
 ### Banco de dados de desenvolvimento
 
@@ -189,7 +189,7 @@ Para o fluxo específico de exportação estática:
 npm run build:ghpages
 ```
 
-Esses comandos podem exigir dados e configurações que não são distribuídos neste repositório. A publicação oficial é preparada no ambiente operacional e então espelhada publicamente.
+Esses comandos podem exigir configurações adicionais conforme o ambiente de desenvolvimento.
 
 ## Scripts disponíveis
 
@@ -220,7 +220,7 @@ Execute os comandos abaixo dentro de `source/`.
 ruido/
 ├── index.html             # Entrada do site estático
 ├── 404.html               # Página de erro personalizada
-├── source/                # Snapshot auditável do código
+├── source/                # Código-fonte da aplicação
 │   ├── app/               # Páginas e rotas Next.js
 │   ├── components/        # Componentes da interface
 │   ├── lib/               # Serviços e integrações
@@ -234,9 +234,9 @@ ruido/
 
 A árvore é uma visão conceitual dos principais módulos; arquivos e diretórios gerados podem variar conforme a versão publicada.
 
-### Integridade do espelho
+### Integridade do código
 
-O diretório [`source/`](./source/) inclui um manifesto com hashes SHA-256 para apoiar a comparação dos arquivos publicados. O snapshot público permite examinar a implementação, mas não reproduz os dados privados de execução.
+O código-fonte está disponível em [`source/`](./source/) para consulta e estudo.
 
 ## Dados, fontes e integridade
 
@@ -263,14 +263,7 @@ Para entender o escopo e as limitações atuais, consulte as páginas de [metodo
 
 O domínio público é **https://ruido.runs-at.dev/**.
 
-Este repositório distribui:
-- Arquivos estáticos do website;
-- Código-fonte auditável do frontend e backend;
-- Scripts e definições de dados presentes no snapshot público.
-
-**Não distribui:** banco SQLite operacional, credenciais, tokens, segredos, checkpoints, histórico interno de execução ou configurações privadas de GitHub Actions.
-
-O código em `source/` é disponibilizado para leitura e auditoria; **não é executado como backend no GitHub Pages**.
+O projeto disponibiliza os arquivos do site e o código-fonte em [`source/`](./source/). As funcionalidades que dependem de serviços externos exigem configuração adequada para desenvolvimento local.
 
 Se encontrar uma vulnerabilidade, evite publicar credenciais, dados sensíveis ou instruções de exploração em issues públicas. Entre em contato com o mantenedor por um canal apropriado.
 
@@ -301,7 +294,7 @@ O resultado depende das dependências e dos requisitos de ambiente de cada teste
    ```
 5. Envie a branch ao seu fork e, quando apropriado, proponha um pull request.
 
-**Observação:** este repositório é um espelho de publicação. O recebimento e a incorporação de contribuições ao ambiente operacional dependem da avaliação do mantenedor; um pull request aqui não implica alteração automática da produção.
+**Observação:** as contribuições são avaliadas pelo mantenedor antes de serem incorporadas ao projeto.
 
 Para reportar dados incorretos, inclua o endereço da página, o registro questionado, a fonte oficial correspondente e a data da consulta.
 
