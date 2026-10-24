@@ -150,7 +150,7 @@
     "tests/financial-links-ui.test.ts": "97be135ba5ce4f856c47d1bc1a9c782798bf6f812ed864b966bd4e6cb82bdbf5",
     "tests/gdeltThrottle.test.ts": "ff82956181e542d07bb8ffeb8235d647421e449ea2367736261d9e1c48f58dfc",
     "tests/geminiFreeQuota.test.ts": "0c026b228cc1d81af2efbbe5b64e909da2490b0ab16510f19e5a4fbdc7c89395",
-    "tests/idhm-ui.test.ts": "3e7682597c1cc5e32764bc63d853cd133dce599d5bf614365de42c1e86ebc593",
+    "tests/idhm-ui.test.ts": "374ea3f479cb8a052c5fb906dfbe8eb2d33424e5875ae780a2e071727c2e70da",
     "tests/ink-filter-legibility.test.ts": "4c49f94fc7e9ecd382196b34a1048feba2520749a9f9c1f7124f26cb95e2902e",
     "tests/mapa-interfaces-e-resumos.test.ts": "50864236c7502839b4635902d2d40b3625abf1ac1925f1e9e08da67f3e463022",
     "tests/mapaBrasil.test.ts": "c5a14633c1b6182fde19f6fe364650d2fceda9dff164b506a8ae2d1e7958a7b2",
@@ -194,7 +194,7 @@
     "tests/tripleDailySchedule.test.ts": "1fc8b6f3f0a0d90f53df83ba35958a7d45c834caf9a1a27ae842b4ea94cb34e7",
     "tests/ui-record-availability.test.ts": "061a6fee7a700fb017b08fac3cd4fed9524c6ed29e36344efc92a462cf99817b",
     "tests/urban-punk-ui.test.ts": "ca31b3c114e726260ec3211de38581a9b4f9b2ac721650dc0522ac90a2b15a0e",
-    "tests/visual-brand.test.ts": "f0808f9a97edec757d85b1787b43ec75c0133fd5805702757772e18c99dad7af",
+    "tests/visual-brand.test.ts": "ec2e45db40d2a6223002de1868786daede591917e4b89991b007f4a298eed274",
     "tsconfig.json": "1c6463f0827b621325965b87b072bc6428f4c33feea5335004ea470b1bf6d652"
   }
 }

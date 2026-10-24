@@ -12,7 +12,8 @@ test("presenças incompletas não geram taxa falsa de 100%",()=>{
 test("mapa prioriza IDHM, mantém evolução anual e indicadores oficiais",()=>{
   assert.match(map,/EVOLUÇÃO DO IDHM|EVOLUÇÃO/);
   assert.match(map,/useState<VisibleMedida>\("idhm"\)/);
-  assert.doesNotMatch(map,/MAPA TEMÁTICO/);
+  assert.match(map,/ruido-map-zine__guide--atlas/);
+  assert.match(map,/MAPA TEMÁTICO/);
   assert.match(map,/pibPerCapita:\{titulo:"PIB POR HABITANTE"/);
   assert.match(pipeline,/collect-idhm\.py/);
 });

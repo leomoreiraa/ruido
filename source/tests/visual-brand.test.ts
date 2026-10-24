@@ -30,7 +30,8 @@ test("skull remains the mascot and favicon across site and map; deputy punk face
 });
 test("visual changes preserve map legend, regional IDHM and source information",()=>{
   const map=read("components/MapaBrasilView.tsx");
-  assert.match(map,/MENOR/);assert.match(map,/MAIOR/);
+  assert.match(map,/Menor valor/);assert.match(map,/Maior valor/);
+  assert.match(map,/ruido-map-zine__guide--atlas/);
   assert.match(map,/IDHM • DESENVOLVIMENTO HUMANO/);
   assert.match(read("scripts/publish-idhm-map.py"),/Legenda de cores do mapa/);
 });
