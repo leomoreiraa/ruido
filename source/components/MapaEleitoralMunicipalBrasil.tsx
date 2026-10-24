@@ -106,12 +106,12 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
     return total;
   }, [malha, resultados]);
 
-  if (!malha) return <div className="min-h-[360px] flex items-center justify-center bg-[#e8e4db] border border-ink/20 px-5 text-center font-mono text-sm text-ink" aria-live="polite">
+  if (!malha) return <div className="ruido-map-zine__viewport min-h-[360px] flex items-center justify-center px-5 text-center font-mono text-sm text-ink" aria-live="polite">
     {falhou ? "A malha municipal nacional não está disponível nesta publicação. Os números oficiais seguem acessíveis na pesquisa por cidade." : "Carregando mosaico dos municípios brasileiros..."}
   </div>;
 
   return <div className="space-y-3">
-    <div className="bg-[#e8e4db] border border-ink/25 relative overflow-hidden rounded-sm">
+    <div className="ruido-map-zine__viewport relative overflow-hidden">
       <svg
         viewBox={malha.viewBox}
         className="block w-full max-h-[700px]"
