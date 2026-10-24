@@ -1,4 +1,3 @@
-// lib/services/camaraNormalizer.ts
 import { OpcaoVoto } from "@/lib/types";
 
 export interface CamaraDeputadoContract {
@@ -130,7 +129,6 @@ export function normalizarVotoCamara(tipoVoto?: string | null): {
     return { opcaoNormalizada: OpcaoVoto.ARTIGO_17, opcaoOriginal: trimmed };
   }
 
-  // Preserva valor original
   return { opcaoNormalizada: trimmed, opcaoOriginal: trimmed };
 }
 
