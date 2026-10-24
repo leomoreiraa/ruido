@@ -90,7 +90,7 @@ test("deploy visual só recupera Release íntegra e impede publicar commit obsol
   assert.match(fast, /if: steps\.freshness\.outputs\.current == 'true'/);
   assert.match(fast, /published_run=0/);
   assert.match(fast, /GITHUB_RUN_ID > published_run/);
-  assert.match(fast, /build-info\\.json\\?ref=main/);
+  assert.match(fast, /build-info\.json\?ref=main/);
   assert.match(fast, /out\/data\/brasil-estados\.json/);
   assert.match(fast, /out\/data\/idhm-ufs\.json/);
   assert.match(fast, /npm run build:regional/);
