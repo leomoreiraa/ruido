@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Coleta a apuração presidencial do 2º turno de 2026 exclusivamente do TSE."""
+"""Coleta resultados presidenciais de ambos os turnos de 2026 exclusivamente do TSE."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
@@ -12,9 +12,16 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 BASE = "https://resultados.tse.jus.br/oficial"
-CONFIG = BASE + "/ele2026/6258/config/mun-e006258-cm.json"
 CONFIG_ELECTION = BASE + "/comum/config/ele-c.json"
 ELECTION = "6258"
+TURNO = 2
+
+def configurar_turno(turno):
+    global ELECTION, TURNO
+    if turno not in (1, 2):
+        raise ValueError("Turno eleitoral invalido")
+    TURNO = turno
+    ELECTION = "6257" if turno == 1 else "6258"
 CARGO = "0001"
 UFS = ("ac al ap am ba ce df es go ma mt ms mg pa pb pr pe pi rj rn rs ro rr sc sp se to").split()
 _RATE_LOCK = Lock()
@@ -50,7 +57,7 @@ def source_url(uf, code=None):
     if code is not None and (len(code) != 5 or not code.isascii() or not code.isdecimal()):
         raise ValueError("Codigo TSE deve ter cinco digitos")
     stem = uf + (code or "")
-    return BASE + f"/ele2026/{ELECTION}/dados/{uf}/{stem}-c{CARGO}-e006258-u.json"
+    return BASE + f"/ele2026/{ELECTION}/dados/{uf}/{stem}-c{CARGO}-e{int(ELECTION):06d}-u.json"
 
 def inteiro(v):
     try:
@@ -62,8 +69,8 @@ def inteiro(v):
         return 0
 
 def resumo(raw):
-    if not isinstance(raw, dict) or str(raw.get("ele")) != ELECTION or str(raw.get("t")) != "2":
-        raise ValueError("Resposta nao corresponde ao segundo turno de 2026")
+    if not isinstance(raw, dict) or str(raw.get("ele")) != ELECTION or str(raw.get("t")) != str(TURNO):
+        raise ValueError("Resposta nao corresponde ao turno presidencial solicitado")
     voters = raw.get("v") or {}
     sections = raw.get("s") or {}
     if not isinstance(voters, dict) or not isinstance(sections, dict):
@@ -129,16 +136,21 @@ def fetch_city(city):
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument("--output",default="public/data/eleicoes-2026.json")
+    p.add_argument("--turno",type=int,choices=(1,2),default=2)
+    p.add_argument("--output",default=None)
     p.add_argument("--workers",type=int,default=28)
     p.add_argument("--all-cities",action="store_true")
     args=p.parse_args()
+    configurar_turno(args.turno)
+    if args.output is None:
+        args.output="public/data/eleicoes-2026"+("-1" if TURNO==1 else "")+".json"
     if not 1<=args.workers<=40:
         raise ValueError("workers: 1..40")
     conf=get(CONFIG_ELECTION)
-    if not any(str(e.get("cdt2"))=="6258" for pleito in conf.get("pl",[]) for e in pleito.get("e",[])):
-        raise ValueError("TSE nao confirmou codigo 6258")
-    cities=municipios(get(CONFIG))
+    if not any(str(e.get("cd"))=="6257" and str(e.get("cdt2"))=="6258" for pleito in conf.get("pl",[]) for e in pleito.get("e",[])):
+        raise ValueError("TSE nao confirmou os codigos dos turnos")
+    config_url=BASE+f"/ele2026/{ELECTION}/config/mun-e{int(ELECTION):06d}-cm.json"
+    cities=municipios(get(config_url))
     national=resumo(get(source_url("br")))
     by_uf={}
     with ThreadPoolExecutor(max_workers=min(12,args.workers)) as pool:
@@ -156,7 +168,7 @@ def main():
     if old_path.is_file():
         try:
             old=json.loads(old_path.read_text(encoding="utf-8"))
-            if old.get("fonte")==BASE and old.get("turno")==2:
+            if old.get("fonte")==BASE and old.get("turno")==TURNO:
                 current=old.get("resultadosMunicipais",{})
         except (ValueError,OSError):
             pass
@@ -180,7 +192,7 @@ def main():
         by_city=current
     now=datetime.now(timezone.utc).isoformat()
     snapshot={"versao":1,"fonte":BASE,"urlOficial":"https://resultados.tse.jus.br/oficial/app/index.html",
-      "eleicao":"6258","ano":2026,"turno":2,"cargo":"Presidente","dataEleicao":"2026-10-25",
+      "eleicao":ELECTION,"ano":2026,"turno":TURNO,"cargo":"Presidente","dataEleicao":"2026-10-04" if TURNO==1 else "2026-10-25",
       "coletadoEm":now,"municipiosConsultados":len(by_city),"municipiosPrevistos":len(cities),
       "falhasNaRodada":fail_count,"brasil":national,"estados":by_uf,
       "municipios":cities,"resultadosMunicipais":by_city}

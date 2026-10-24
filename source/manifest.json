@@ -97,7 +97,7 @@
     "scripts/build-regional-data.ts": "836c67b44075fb152b00f10c3b6fd20eb34c8ec5f29fe9f23ddd08837de25e5e",
     "scripts/check-status.ts": "39f211f9ad4ae8b054813eb71de17d1aafbb46d0261c74a493285dc47a4b8097",
     "scripts/cleanup-synthetic-data.py": "bd864e2013f2feec2787a33a5782d11ff4562edcacfa2b5db4eabad44e64b763",
-    "scripts/collect-election-2026.py": "4d9c36f1c39f99683cd14592e489e4b99272348ffb26b6dc77242046398d077f",
+    "scripts/collect-election-2026.py": "90484ef907ab7bf543eb390a04de7fdbb5a1c3f9a69d4f95d6b6389505087440",
     "scripts/collect-idhm.py": "6fe18f653e2c444ac1ca545bcecd94b4c3760dbd1a4c59fe33bbc7997b310ee8",
     "scripts/collect-municipios-ibge.py": "d54975dd7622c7eac53da2484b97a68bf7b1ab2e28c4ba27b7e1285f19d15cb1",
     "scripts/delete-legacy-releases.py": "e1fd60cfe420c8fdf9f582a4808ca669203ba37c926a280504646ea510880fe4",
