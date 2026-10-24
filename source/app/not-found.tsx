@@ -44,7 +44,7 @@ export default function NotFound() {
       </div>
       <div className={styles.bottom}>
         <span>ERRO 404 / NENHUM DADO INVENTADO</span>
-        <span>O SILÊNCIO TAMBÉM É UM SINAL. 
+        <span>O SILÊNCIO TAMBÉM É UM SINAL. /// RUÍDO</span>
       </div>
     </section>
   );

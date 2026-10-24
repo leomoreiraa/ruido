@@ -13,5 +13,5 @@ export function coberturaPresenca(parlamentarId:string,casa:string):CoberturaPre
     if(p&&p.casa===casa&&p.criterio==="EVENTOS_COLETADOS_NAO_ASSIDUIDADE"&&
       Number.isFinite(p.percentual)&&p.percentual>=0&&p.percentual<=100&&
       p.eventosMonitorados>=10&&p.eventosComRegistro<=p.eventosMonitorados)return p;
-  }catch 
+  }catch {}
 }

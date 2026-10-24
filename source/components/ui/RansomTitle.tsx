@@ -31,7 +31,7 @@ export function RansomTitle({
         <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 border-2 border-punk-red shadow-[3px_3px_0_#101010] transform -rotate-1">
           <span className="w-2 h-2 bg-punk-acid inline-block" />
           <span>{tag}</span>
-          <span className="text-punk-red">
+          <span className="text-punk-red">///</span>
         </div>
       )}
 

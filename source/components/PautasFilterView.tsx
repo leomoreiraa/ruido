@@ -147,8 +147,8 @@ export function PautasFilterView({
       
       <div className="collage-paper collage-rail border-b-4 border-ink pb-6 px-4 py-5">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 transform -rotate-1">
-          <span>
-          <span className="text-punk-red">
+          <span>// MATÉRIAS LEGISLATIVAS &amp; DELIBERAÇÕES</span>
+          <span className="text-punk-red">///</span>
         </div>
         <h1 className="font-heavy text-4xl sm:text-6xl uppercase tracking-tight text-ink">
           PAUTAS &amp; <span className="text-punk-red">VOTAÇÕES</span>

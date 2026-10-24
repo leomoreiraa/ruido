@@ -46,7 +46,7 @@ export default async function CoberturaPage() {
   };
   return <div className="space-y-8 font-mono pb-12">
     <header className="ruido-ink-poster bg-ink text-paper border-4 border-ink shadow-[10px_10px_0_#e42232] p-6 sm:p-10">
-      <span className="text-xs text-punk-acid tracking-widest">
+      <span className="text-xs text-punk-acid tracking-widest">/// AUDITORIA DO ACERVO</span>
       <h1 className="font-heavy text-5xl sm:text-7xl mt-3">SEM DADOS <span className="text-punk-red">FALSOS.</span></h1>
       <p className="max-w-3xl mt-4 text-sm text-paper/80">Relatório do SQLite utilizado para publicar este site.
         Os números medem o que foi coletado, não tudo o que ocorreu no Congresso.
@@ -83,7 +83,7 @@ export default async function CoberturaPage() {
       </div>)}
     </section>
     <section className="ruido-paper-card border-4 border-ink bg-paper-light shadow-[7px_7px_0_#101010] p-6">
-      <h2 className="font-heavy text-3xl border-b-4 border-ink pb-3">LACUNAS DECLARADAS 
+      <h2 className="font-heavy text-3xl border-b-4 border-ink pb-3">LACUNAS DECLARADAS //</h2>
       <div className="grid md:grid-cols-2 gap-4 mt-5">
         {[
           ["Votações sem contagem numérica",semPlacar,"Pode incluir decisões simbólicas e votações sem placar na fonte oficial."],
@@ -96,7 +96,7 @@ export default async function CoberturaPage() {
           <p className="text-xs mt-2 text-ink/70">{description}</p>
         </article>)}
       </div>
-      <h3 className="font-heavy text-2xl mt-7">EMENDAS POR ANO 
+      <h3 className="font-heavy text-2xl mt-7">EMENDAS POR ANO // COBERTURA PARCIAL</h3>
       <div className="flex flex-wrap gap-3 mt-2">
         {emendas.map(row=><div key={row.ano} className="border-2 border-ink p-3 bg-punk-acid">
           <b className="font-heavy text-xl">{row.ano}</b>
@@ -105,7 +105,7 @@ export default async function CoberturaPage() {
       </div>
     </section>
     <footer className="ruido-ink-poster bg-ink border-l-8 border-punk-red text-paper p-6 text-sm space-y-4">
-      <h2 className="font-heavy text-2xl text-punk-acid">O QUE OS NÚMEROS NÃO DIZEM 
+      <h2 className="font-heavy text-2xl text-punk-acid">O QUE OS NÚMEROS NÃO DIZEM //</h2>
       <p>Registros de presença não representam todas as sessões da legislatura. Votos nominais só existem quando
         identificados oficialmente. Emendas são coletadas em lotes desde 2022. No <Link href="/mapa" className="underline text-punk-acid">Mapa BR</Link>,
         PIB e população dependem do calendário do IBGE, e crédito ao MEI do Banco Central.</p>

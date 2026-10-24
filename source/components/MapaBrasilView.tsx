@@ -71,8 +71,8 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
 
   return <div className="mapa-brasil collage-page space-y-8 pb-12">
     <header className="ruido-ink-poster border-4 border-ink bg-ink text-paper p-5 sm:p-8 shadow-[10px_10px_0_#e42232] collage-stage relative overflow-hidden">
-      <div className="absolute right-3 top-3 border-2 border-punk-red px-3 py-1 font-heavy text-punk-red text-sm -rotate-6 hidden sm:block">DOCUMENTO PÚBLICO 
-      <span className="font-mono text-xs text-punk-acid tracking-[.25em]">ARQUIVO CIDADÃO 
+      <div className="absolute right-3 top-3 border-2 border-punk-red px-3 py-1 font-heavy text-punk-red text-sm -rotate-6 hidden sm:block">DOCUMENTO PÚBLICO // #027</div>
+      <span className="font-mono text-xs text-punk-acid tracking-[.25em]">ARQUIVO CIDADÃO /// DESENVOLVIMENTO HUMANO</span>
       <h1 className="font-heavy text-5xl sm:text-7xl leading-tight mt-3 uppercase">BRASIL <span className="text-punk-red">EM RAIO X</span></h1>
       <p className="font-mono text-xs sm:text-sm text-paper/80 max-w-3xl mt-4 border-l-4 border-punk-acid pl-4">
         Compare o desenvolvimento humano dos estados e a sua evolução em relação ao ano anterior.
@@ -94,7 +94,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
       <section className="ruido-filter-ink-panel ruido-paper-card bg-paper-card border-4 border-ink shadow-[8px_8px_0_#101010] p-4 sm:p-6">
         <div className="ruido-filter-ink-form flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-6 justify-between">
           <div className="min-w-0 flex-1">
-            <label htmlFor="map-metric" className="font-mono text-[10px] font-bold uppercase tracking-widest block mb-2">
+            <label htmlFor="map-metric" className="font-mono text-[10px] font-bold uppercase tracking-widest block mb-2">// CAMADA DE INFORMAÇÃO</label>
             <select id="map-metric" value={metric} onChange={e=>{
                 const next=e.target.value as VisibleMedida;
                 setMetric(next);
@@ -107,7 +107,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
             </select>
           </div>
           <div>
-            <label htmlFor="map-year" className="font-mono text-[10px] font-bold uppercase tracking-widest block mb-2">
+            <label htmlFor="map-year" className="font-mono text-[10px] font-bold uppercase tracking-widest block mb-2">// ANO DE REFERÊNCIA</label>
             <select id="map-year" value={year} onChange={e=>setYear(Number(e.target.value))}
               className="bg-white border-3 border-ink font-heavy text-xl px-5 py-2 w-full lg:w-auto">
               {(yearsAvailable.length?yearsAvailable:data.anos).map(a=><option value={a} key={a}>{a}</option>)}
@@ -123,7 +123,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
       <section className="grid lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,.75fr)] gap-5">
         <div className="ruido-map-frame bg-[#424943] border-4 border-ink shadow-[9px_9px_0_#101010] relative p-3 sm:p-5 text-paper">
           <div className="flex items-center justify-between font-mono text-[10px] text-punk-acid tracking-wider">
-            <span>
+            <span>/// TERRITÓRIO NACIONAL</span>
           </div>
           <div className="ruido-map-canvas border border-dashed border-paper/20 mt-2 relative overflow-hidden"
             style={{backgroundImage:"radial-gradient(#747a73 1px,transparent 1px)",backgroundSize:"17px 17px"}}>
@@ -155,7 +155,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
         <div className="flex flex-col gap-5">
           <div className="ruido-paper-card bg-paper-card border-4 border-ink shadow-[8px_8px_0_#e42232] p-6 relative">
             <div className="absolute -top-3 right-5 bg-punk-acid border-2 border-ink px-3 py-1 rotate-3 font-mono font-bold text-[10px]">UF / DOSSIÊ</div>
-            <div className="font-mono text-xs border-b-2 border-dashed border-ink pb-2">
+            <div className="font-mono text-xs border-b-2 border-dashed border-ink pb-2">// SELECIONADO NO MAPA</div>
             <div className="flex justify-between items-center gap-3 mt-5">
               <h2 className="font-heavy text-2xl sm:text-3xl">{chosen?.nome??"—"}</h2>
               <span className="font-heavy bg-ink text-punk-acid text-3xl px-3 py-1 border-2 border-punk-red -rotate-3">{chosen?.uf??"BR"}</span>
@@ -190,7 +190,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
             </div>
           </div>
           <div className="bg-ink text-paper border-4 border-punk-red p-4 sm:p-5">
-            <h3 className="font-heavy text-2xl text-punk-acid">LEITURA DOS DADOS 
+            <h3 className="font-heavy text-2xl text-punk-acid">LEITURA DOS DADOS //</h3>
             <p className="mt-3 font-mono text-xs leading-relaxed text-paper/80">
               IDHM mede educação, renda e longevidade. A variação anual é calculada em pontos
               do índice e não estima a influência de políticas ou emendas específicas.
@@ -205,7 +205,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
 
       <section className="grid lg:grid-cols-2 gap-6">
         <div className="bg-white border-4 border-ink shadow-[8px_8px_0_#101010] p-5">
-          <h2 className="font-heavy text-2xl sm:text-3xl uppercase border-b-4 border-ink pb-3">CLASSIFICAÇÃO <span className="text-punk-red">
+          <h2 className="font-heavy text-2xl sm:text-3xl uppercase border-b-4 border-ink pb-3">CLASSIFICAÇÃO <span className="text-punk-red">/// {year}</span></h2>
           <p className="font-mono text-[11px] mt-2 mb-5 text-ink/70">Maior valor de {LABELS[metric].titulo.toLowerCase()} entre os estados com informação disponível.</p>
           {!ordered.length?<p className="font-mono text-sm">Sem observações publicadas para este recorte.</p>:
           <ol className="space-y-2">{ordered.map((entry,i)=><li key={entry.state.uf}>
@@ -248,7 +248,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
       </section>
 
       <footer className="bg-ink border-l-8 border-punk-red text-paper p-5 sm:p-7 font-mono text-xs space-y-3">
-        <h2 className="text-punk-acid font-heavy text-2xl">
+        <h2 className="text-punk-acid font-heavy text-2xl">// FONTES E CRITÉRIOS</h2>
         <p>IDHM: Radar IDHM 2012–2024 do PNUD/FJP/IBGE, com base na PNAD Contínua; nenhum IDHM de 2025/2026 foi estimado. A variação é uma diferença entre anos consecutivos, em pontos. Ausência de dados aparece como N/D. Crédito MEI é mostrado apenas no ano efetivamente observado pelo BCB.</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2 text-punk-acid underline">
           <a href={data.fontes.idhm??"https://www.undp.org/pt/brazil/desenvolvimento-humano/painel-idhm"} target="_blank" rel="noopener noreferrer">PNUD/FJP/IBGE • IDHM</a>

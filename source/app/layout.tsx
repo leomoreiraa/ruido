@@ -36,10 +36,10 @@ export default function RootLayout({
           <div className="ruido-marquee-track" aria-hidden="true">
             {[0, 1].map((indice) => (
               <div className="ruido-marquee-segment" key={indice}>
-                <span>
-                <span>
-                <span>
-                <span>
+                <span>/// DADOS PÚBLICOS • CONGRESSO NACIONAL</span>
+                <span>/// POLÍTICA SOB LUPA</span>
+                <span>/// SEM MAQUIAGEM • FONTES OFICIAIS</span>
+                <span>/// VOTOS, PRESENÇAS E EMENDAS</span>
               </div>
             ))}
           </div>
@@ -69,7 +69,7 @@ export default function RootLayout({
               <img src="/assets/skull-xerox.svg" className="collage-footer-mascot" width="92" height="102"
                 alt="Caveira xerox — mascote do RUÍDO" loading="lazy" />
               <div>
-                <div className="font-heavy uppercase text-3xl sm:text-4xl text-paper">RUÍDO <span className="text-punk-acid">
+                <div className="font-heavy uppercase text-3xl sm:text-4xl text-paper">RUÍDO <span className="text-punk-acid">///</span> DADOS ABERTOS</div>
                 <p className="font-mono text-xs sm:text-sm text-paper/75 mt-2 max-w-3xl">
                   Votos, presenças e emendas com fontes verificáveis.
                 </p>

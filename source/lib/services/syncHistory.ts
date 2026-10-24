@@ -157,7 +157,7 @@ export async function executarHistorico(options: HistoryOptions, injected?: Hist
       const id = options.dias ? `history:v1:${options.fonte}:daily:${window.dataInicio}:${window.dataFim}` : `history:v1:${options.fonte}:${window.mes}`;
       const previous = await deps.executions.findUnique({ where: { id } });
       let checkpoint: Partial<HistoryWindow> = {};
-      try { checkpoint = JSON.parse(previous?.parametros ?? "{}") ?? {}; } catch 
+      try { checkpoint = JSON.parse(previous?.parametros ?? "{}") ?? {}; } catch {}
       if (!options.reprocessar && window.encerrada && previous?.status === "SUCESSO" && Object.entries(window).every(([key, value]) => checkpoint[key as keyof HistoryWindow] === value)) {
         ignoradas++;
         continue;

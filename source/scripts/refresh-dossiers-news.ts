@@ -128,7 +128,7 @@ function parseRss(xml: string): Art[] {
         if (original) u = new URL(original);
       }
       if (title && originGroup(u.href)) out.push({title, url:u.href});
-    } catch 
+    } catch {}
   }
   return out;
 }
@@ -216,7 +216,7 @@ async function searchGoogleNewsRss(p: Parliamentary, deep = false, archiveYear?:
       if(url.protocol!=="https:"||!title)continue;
       if(originGroup(url.href)){direct.push({url:url.href,title,anoArquivo:archiveYear});continue}
       if(url.hostname==="news.google.com") redirects.push({url:url.href,title});
-    } catch 
+    } catch {}
   }
   const outcomes = await Promise.allSettled(redirects.slice(0,archiveYear ? (deep ? 12 : 8) : (deep ? 16 : 10)).map(async art=>{
     const url=await resolverUrlGoogleNews(art.url);
@@ -347,7 +347,7 @@ function officialArticleDate(html: string): string | null {
           if (obj["@graph"]) stack.push(obj["@graph"]);
         }
       }
-    } catch 
+    } catch {}
   }
   return null;
 }
