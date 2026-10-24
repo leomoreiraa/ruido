@@ -1,4 +1,4 @@
-/** Candidatura e cargo exercido são dimensões independentes. */
+
 export type CandidaturaPresidencial={
   eleicao:number;cargo:"PRESIDENTE";candidato:string;nomeUrna:string;
   partido:string;numero:string;vice?:string;turno?:number;
