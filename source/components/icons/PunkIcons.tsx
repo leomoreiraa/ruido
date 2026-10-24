@@ -1,4 +1,3 @@
-// components/icons/PunkIcons.tsx
 import React from "react";
 
 export function PunkSmiley({ className = "w-6 h-6" }: { className?: string }) {
