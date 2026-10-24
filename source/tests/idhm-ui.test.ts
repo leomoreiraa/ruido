@@ -9,9 +9,10 @@ test("presenças incompletas não geram taxa falsa de 100%",()=>{
   assert.match(graph,/FREQUÊNCIA TOTAL: NÃO CALCULÁVEL/);
   assert.match(graph,/Não registrados ≠ ausentes/);
 });
-test("mapa prioriza IDHM, evolução anual e retira rótulo antigo",()=>{
+test("mapa prioriza IDHM, mantém evolução anual e indicadores oficiais",()=>{
   assert.match(map,/EVOLUÇÃO DO IDHM|EVOLUÇÃO/);
   assert.match(map,/useState<VisibleMedida>\("idhm"\)/);
-  assert.doesNotMatch(map,/MAPA TEMÁTICO|PIB POR HABITANTE/);
+  assert.doesNotMatch(map,/MAPA TEMÁTICO/);
+  assert.match(map,/pibPerCapita:\{titulo:"PIB POR HABITANTE"/);
   assert.match(pipeline,/collect-idhm\.py/);
 });

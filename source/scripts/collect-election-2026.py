@@ -2,6 +2,7 @@
 """Coleta a apuração presidencial do 2º turno de 2026 exclusivamente do TSE."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 from datetime import datetime, timezone
 from pathlib import Path
 import json
@@ -16,10 +17,22 @@ CONFIG_ELECTION = BASE + "/comum/config/ele-c.json"
 ELECTION = "6258"
 CARGO = "0001"
 UFS = ("ac al ap am ba ce df es go ma mt ms mg pa pb pr pe pi rj rn rs ro rr sc sp se to").split()
+_RATE_LOCK = Lock()
+_NEXT_REQUEST = 0.0
+
+def aguardar_limite():
+    global _NEXT_REQUEST
+    with _RATE_LOCK:
+        now=time.monotonic()
+        deadline=max(now,_NEXT_REQUEST)
+        _NEXT_REQUEST=deadline+0.05
+    delay=deadline-time.monotonic()
+    if delay>0:time.sleep(delay)
 
 def get(url, retries=2):
     for attempt in range(retries + 1):
         try:
+            aguardar_limite()
             request = Request(url, headers={"User-Agent":"RUIDO/1.0 (divulgacao de resultados eleitorais; contato via repositorio)", "Accept":"application/json"})
             with urlopen(request, timeout=16) as res:
                 if res.status != 200:

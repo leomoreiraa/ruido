@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import type { DadosMapa, EstadoMapa, Medida } from "@/lib/mapaBrasil";
 import { valorIndicador } from "@/lib/mapaBrasil";
+import { AtlasTerritorialView } from "@/components/AtlasTerritorialView";
 
 type VisibleMedida = Medida;
 const LABELS: Record<VisibleMedida,{titulo:string;resumo:string;unidade:string}> = {
@@ -218,6 +219,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
         </div>
         <a href="/eleicoes/" className="inline-block text-punk-acid underline font-mono text-sm">ACOMPANHAR APURAÇÃO ELEITORAL DE 25/10/2026 →</a>
       </section>
+      <AtlasTerritorialView uf={uf} />
       <section className="grid lg:grid-cols-2 gap-6">
         <div className="bg-white border-4 border-ink shadow-[8px_8px_0_#101010] p-5">
           <h2 className="font-heavy text-2xl sm:text-3xl uppercase border-b-4 border-ink pb-3">CLASSIFICAÇÃO <span className="text-punk-red">/// {year}</span></h2>

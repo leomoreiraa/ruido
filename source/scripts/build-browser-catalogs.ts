@@ -176,6 +176,46 @@ async function main() {
   }));
   await fs.writeFile(path.join(dest, "emendas-index.json"), JSON.stringify(catalogo), "utf8");
   console.log("Catálogo de emendas gerado: " + catalogo.length + " registros.");
+  const normalMunicipio = (value:string) => value.trim().toLocaleLowerCase("pt-BR")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ");
+  let cidades: Array<{codigoIBGE:string;nome:string;uf:string;populacaoCenso2022:number|null}> = [];
+  try {
+    const raw = JSON.parse(await fs.readFile(path.join(dest, "municipios-brasil.json"),"utf8"));
+    if(raw.versao===1 && raw.municipios.length>=5500)cidades=raw.municipios;
+  } catch {
+    console.warn("Catálogo municipal IBGE ausente: execute collect-municipios-ibge.py antes do build.");
+  }
+  const indices=new Map(cidades.map(c=>[c.uf+":"+normalMunicipio(c.nome),c.codigoIBGE]));
+  const locais:Record<string,{quantidadeEmendas:number;totalPago:number;totalEmpenhado:number;porAno:Record<string,{pago:number;quantidade:number}>}>={};
+  let semLocalidade=0;
+  for(const e of emendas){
+    const chave=e.ufBeneficiada&&e.municipioBeneficiado?e.ufBeneficiada+":"+normalMunicipio(e.municipioBeneficiado):"";
+    const codigo=indices.get(chave);
+    if(!codigo){semLocalidade++;continue;}
+    const reg=locais[codigo]??={quantidadeEmendas:0,totalPago:0,totalEmpenhado:0,porAno:{}};
+    reg.quantidadeEmendas++;
+    reg.totalPago+=e.valorPago;
+    reg.totalEmpenhado+=e.valorEmpenhado;
+    const ano=String(e.ano);
+    const anual=reg.porAno[ano]??={pago:0,quantidade:0};
+    anual.pago+=e.valorPago;anual.quantidade++;
+  }
+  const ativos=await prisma.parlamentar.findMany({
+    where:{ativo:true},select:{id:true,nome:true,partido:true,uf:true,casa:true,urlFoto:true},
+    orderBy:{nome:"asc"},
+  });
+  const representacao:Record<string,typeof ativos>={};
+  for(const p of ativos)(representacao[p.uf]??=[]).push(p);
+  await fs.writeFile(path.join(dest,"atlas-territorial.json"),JSON.stringify({
+    versao:1,anoBasePopulacao:2022,fonteMunicipios:"https://servicodados.ibge.gov.br/api/v1/localidades/municipios",
+    fonteEmendas:"https://portaldatransparencia.gov.br/emendas",
+    fonteEducacao:"https://www.gov.br/inep/pt-br/areas-de-atuacao/pesquisas-estatisticas-e-indicadores/ideb/resultados/2005-2025",
+    fonteSaneamento:"https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/saneamento/sinisa/resultados-sinisa/resultados-sinisa-2025",
+    cobertura:{municipios:cidades.length,emendasComMunicipioIdentificado:emendas.length-semLocalidade,emendasSemMunicipioIdentificado:semLocalidade},
+    municipios:cidades,emendasMunicipais:locais,representacaoPorUf:representacao,
+  }),"utf8");
+  console.log("Atlas municipal: "+cidades.length+" municípios oficiais; emendas identificáveis="+(emendas.length-semLocalidade));
+
 }
 
 main().catch(e => { console.error("Falha na exportação dos catálogos:", e); process.exitCode = 1; })
