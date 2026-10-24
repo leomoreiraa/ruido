@@ -42,14 +42,14 @@ export function DossierCard({
       )}
       {...props}
     >
-      {/* Scotch Tape Element */}
+      
       {tape && (
         <div className="scotch-tape flex items-center justify-center font-mono text-[9px] font-bold tracking-wider text-ink/70">
           {tapeText || "EVIDÊNCIA // AUDITORIA"}
         </div>
       )}
 
-      {/* Safety Pin */}
+      
       {pin && (
         <img
           src="/assets/safety-pin.svg"
@@ -59,7 +59,7 @@ export function DossierCard({
         />
       )}
 
-      {/* Paper Clip */}
+      
       {clip && (
         <img
           src="/assets/paperclip.svg"
@@ -69,7 +69,7 @@ export function DossierCard({
         />
       )}
 
-      {/* Rubber Stamp */}
+      
       {stamp && (
         <div
           className={cn(
@@ -85,10 +85,10 @@ export function DossierCard({
         </div>
       )}
 
-      {/* Content */}
+      
       <div className="relative z-10">{children}</div>
 
-      {/* Barcode Strip */}
+      
       {barcode && (
         <div className="mt-4 pt-3 border-t-2 border-dashed border-ink/30 flex justify-between items-center text-[10px] font-mono text-ink/60">
           <img
