@@ -4601,3 +4601,105 @@ body.collage-body {
     font-size: 12px;
   }
 }
+
+
+.ruido-site-content .ruido-map-zoom {
+ position:relative;
+ isolation:isolate;
+ width:100%;
+ max-width:100%;
+ min-width:0;
+ overflow:hidden;
+ color:#171512;
+ background:#e7e0cf;
+}
+.ruido-site-content .ruido-map-zoom__surface {
+ width:100%;
+ max-width:100%;
+ min-width:0;
+ overflow:hidden;
+ cursor:grab;
+ touch-action:none;
+ overscroll-behavior:contain;
+ user-select:none;
+ -webkit-user-select:none;
+}
+.ruido-site-content .ruido-map-zoom__surface:active { cursor:grabbing; }
+.ruido-site-content .ruido-map-zoom__content {
+ width:100%;
+ min-width:0;
+ will-change:transform;
+}
+.ruido-site-content .ruido-map-zoom__content svg {
+ width:100%;
+ max-width:100%;
+ height:auto;
+ display:block;
+}
+.ruido-site-content .ruido-map-zoom__tools {
+ position:absolute;
+ z-index:15;
+ top:12px;
+ right:12px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:3px;
+ padding:5px;
+ border:2px solid #141411;
+ background:#171612;
+ box-shadow:3px 3px 0 #d22f2c;
+}
+.ruido-site-content .ruido-map-zoom__tools button {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:38px;
+ height:38px;
+ min-width:38px;
+ padding:0;
+ color:#161512 !important;
+ background:#d3ff20 !important;
+ border:1px solid #171612;
+ font:900 25px/1 var(--heavy),Impact,sans-serif;
+ cursor:pointer;
+}
+.ruido-site-content .ruido-map-zoom__tools button:is(:focus-visible,:hover) {
+ outline:2px solid #fffaf0;
+ outline-offset:1px;
+ background:#fffaf0 !important;
+}
+.ruido-site-content .ruido-map-zoom__tools button:disabled {
+ opacity:.35;
+ cursor:not-allowed;
+}
+.ruido-site-content .ruido-map-zoom__tools .ruido-map-zoom__reset {
+ background:#eee3d0 !important;
+ font-size:23px;
+}
+.ruido-site-content .ruido-map-zoom__percent {
+ display:block;
+ padding:5px 1px;
+ color:#fff8e7 !important;
+ font:800 10px/1.25 var(--mono),monospace;
+ white-space:nowrap;
+}
+@media(max-width:640px){
+ .ruido-site-content .ruido-map-zoom__tools {
+  top:6px;
+  right:6px;
+  gap:2px;
+  padding:3px;
+  box-shadow:2px 2px 0 #d22f2c;
+ }
+ .ruido-site-content .ruido-map-zoom__tools button {
+  width:32px;
+  height:32px;
+  min-width:32px;
+  font-size:22px;
+ }
+ .ruido-site-content .ruido-map-zoom__percent {font-size:9px;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ruido-site-content .ruido-map-zoom__content{transition:none !important;}
+}

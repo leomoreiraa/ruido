@@ -1,6 +1,7 @@
 "use client";
 
 import React,{useCallback,useEffect,useMemo,useState} from "react";
+import {MapaZoomArea} from "@/components/MapaZoomArea";
 import {MapaEleitoralMunicipalBrasil} from "@/components/MapaEleitoralMunicipalBrasil";
 
 type Candidato={numero:string;nome:string;partido:string;votos:number;percentual:number|null};
@@ -181,6 +182,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>LEITURA / {turno}º TURNO</span><span>ESTADO / MUNICÍPIO</span></div>
      <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national":"ruido-map-zine__canvas ruido-map-zine__canvas--state"}>
      {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={dados?.resultadosMunicipais} municipios={dados?.municipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
+      <MapaZoomArea key={uf} rotulo={"Mapa dos municípios de "+nomesUf.get(uf)}>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">
        {malhasUf.municipios.map(m=>{
         const registro=dados?.resultadosMunicipais[m.id];
@@ -189,6 +191,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
         return <path key={m.id} d={m.d} fill={cor(registro)} fillRule="evenodd" stroke={selecionado?"#101010":"#f5f1e8"} strokeOpacity={selecionado?1:.32} strokeWidth={selecionado?1.35:.23} style={{cursor:"pointer",outline:"none"}} role="button" tabIndex={0} aria-pressed={selecionado} aria-label={nome+": "+titulos(registro)} onClick={()=>selecionarMunicipio(m.id)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selecionarMunicipio(m.id);}}}/>;
        })}
       </svg>
+      </MapaZoomArea>
       <p className="text-ink font-mono text-[11px] mt-2">Clique em uma cidade para consultar seus números. Malhas geográficas aproximadas, derivadas do IBGE, com possíveis diferenças históricas.</p>
      </div>:<div className="min-h-[280px] flex items-center justify-center text-ink font-mono text-sm p-6 text-center">
       {erroMalha?"A malha municipal desta UF não está disponível neste deploy. Use o seletor municipal para consultar os votos.":"Carregando os limites municipais..."}

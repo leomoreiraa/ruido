@@ -1,6 +1,7 @@
 "use client";
 
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import {MapaZoomArea} from "@/components/MapaZoomArea";
 
 type Candidato = { numero: string; nome: string; votos: number; percentual: number | null };
 type Resultado = { situacao: "aguardando" | "parcial" | "concluida"; votosValidos: number | null; candidatos: Candidato[] };
@@ -111,7 +112,7 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
   </div>;
 
   return <div className="space-y-3">
-    <div className="ruido-map-zine__viewport relative overflow-hidden">
+    <MapaZoomArea rotulo="Mapa municipal de todo o Brasil" className="ruido-map-zine__viewport">
       <svg
         viewBox={malha.viewBox}
         className="block w-full max-h-[700px]"
@@ -134,7 +135,7 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
           pointerEvents="none"
         />)}
       </svg>
-    </div>
+    </MapaZoomArea>
     <div className="ruido-map-readable-panel">
       <div className="ruido-map-readable-panel__text" aria-live="polite">
         {focado ? <>

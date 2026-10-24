@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import {MapaZoomArea} from "@/components/MapaZoomArea";
 import type { DadosMapa, EstadoMapa, Medida } from "@/lib/mapaBrasil";
 import { valorIndicador } from "@/lib/mapaBrasil";
 import { AtlasTerritorialView } from "@/components/AtlasTerritorialView";
@@ -143,6 +144,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
           <div className="ruido-map-zine__window">
             <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>ESCANEAMENTO / 001</span><span>▲ NORTE</span></div>
             <div className="ruido-map-zine__atlas-canvas">
+            <MapaZoomArea rotulo="Mapa dos indicadores por estado do Brasil">
             <svg viewBox="0 0 720 710" role="group" aria-label="Mapa interativo das unidades federativas do Brasil" className="w-full h-auto max-h-[670px]">
               {states.map(s=><path key={s.uf} d={s.svgPath}
                 fill={fill(s)}
@@ -159,6 +161,7 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
                 onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setUf(s.uf);}}}
               />)}
             </svg>
+            </MapaZoomArea>
             </div>
           </div>
           <aside className="ruido-map-zine__guide ruido-map-zine__guide--atlas" aria-label="Legenda dos indicadores estaduais">
