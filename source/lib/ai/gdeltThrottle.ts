@@ -1,8 +1,8 @@
 
 export type EstadoGdelt = {
   tentativas: number;
-  ultimaTentativa: number; // Unix ms
-  pausadoAte: number; // Unix ms
+  ultimaTentativa: number; 
+  pausadoAte: number; 
 };
 export const GDELT_MAX_REQUESTS = 6;
 export const GDELT_MIN_INTERVAL_MS = 12_000;
