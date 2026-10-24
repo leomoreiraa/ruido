@@ -47,6 +47,8 @@ test("todos os tres mapas incluem zoom e atualizacao live nao depende de deploy"
   assert.match(word==="touch-action"?readFileSync("app/globals.css","utf8"):zoom,new RegExp(word));
  }
  assert.match(eleicoes,/INTERVALO_LIVE_MS/);
- assert.match(eleicoes,/buscarResultadoTSE/);
+ assert.match(eleicoes,/buscarResultadoCentral/);
+ assert.doesNotMatch(eleicoes,/buscarResultadoTSE|urlResultadoAoVivo/);
+ assert.match(eleicoes,/backendEleitoralConfigurado/);
  assert.match(eleicoes,/sem redeploy/);
 });

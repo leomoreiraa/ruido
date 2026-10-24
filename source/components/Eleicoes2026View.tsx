@@ -2,7 +2,7 @@
 
 import React,{useCallback,useEffect,useMemo,useState} from "react";
 import {MapaZoomArea} from "@/components/MapaZoomArea";
-import {buscarResultadoTSE,consultaAoVivoDisponivel,urlResultadoAoVivo,INTERVALO_LIVE_MS} from "@/lib/eleicoesTseAoVivo";
+import {buscarResultadoCentral,backendEleitoralConfigurado,consultaAoVivoDisponivel,INTERVALO_LIVE_MS} from "@/lib/eleicoesTseAoVivo";
 import {MapaEleitoralMunicipalBrasil} from "@/components/MapaEleitoralMunicipalBrasil";
 
 type Candidato={numero:string;nome:string;partido:string;votos:number;percentual:number|null};
@@ -54,9 +54,9 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
  const [busca,setBusca]=useState("");
  const [filtroComparar,setFiltroComparar]=useState("SP");
  const [lidoEm,setLidoEm]=useState<string>("");
- const [dadosLive,setDadosLive]=useState<Record<string,{resultado:Resultado;consultadoEm:number}>>({});
+ const [dadosLive,setDadosLive]=useState<Record<string,{resultado:Resultado;consultadoEm:number;estado:"atual"|"desatualizado"}>>({});
  const [erroLive,setErroLive]=useState<string|null>(null);
- const [consultaLive,setConsultaLive]=useState(0);
+ 
 
  useEffect(()=>{
   let ativo=true;
@@ -72,8 +72,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    }catch{if(ativo)setErroPorTurno(old=>({...old,[turno]:true}));}
   }
   void atualizar();
-  const timer=setInterval(()=>void atualizar(),90000);
-  return ()=>{ativo=false;clearInterval(timer);};
+  return ()=>{ativo=false;};
  },[turno]);
 
  useEffect(()=>{
@@ -99,12 +98,16 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
  const mapaMunicipios=useMemo(()=>new Map(catalogoMunicipios.map(c=>[c.codigoIBGE,c])),[catalogoMunicipios]);
  const codigoTSE=cidade?mapaMunicipios.get(cidade)?.codigoTSE:undefined;
  const chaveLive=uf==="BR"?"BR":codigoTSE?uf+":"+codigoTSE:uf;
- const liveAtivo=turno===2&&consultaAoVivoDisponivel();
+ const liveAtivo=turno===2&&consultaAoVivoDisponivel()&&backendEleitoralConfigurado();
  const resultadoLive=liveAtivo?dadosLive[chaveLive]?.resultado:null;
  const consultadoEmLive=liveAtivo?dadosLive[chaveLive]?.consultadoEm:null;
 
  useEffect(()=>{
   if(turno!==2)return;
+  if(!backendEleitoralConfigurado()){
+   setErroLive("A API dinâmica central do RUÍDO ainda não está configurada. Dados estáticos de contingência não representam apuração ao vivo.");
+   return;
+  }
   let ativo=true;
   const abort=new AbortController();
   let rodando=false;
@@ -113,27 +116,27 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    if(!ativo||rodando||!consultaAoVivoDisponivel()||document.visibilityState==="hidden")return;
    if(Date.now()-ultimaConsulta<INTERVALO_LIVE_MS-1000)return;
    ultimaConsulta=Date.now();rodando=true;
-   const alvos:[string,string][]=[["BR",urlResultadoAoVivo("BR")]];
+   const alvos:[string,string,string|undefined][]=[["BR","BR",undefined]];
    if(uf!=="BR"){
-    if(cidade&&codigoTSE)alvos.push([uf+":"+codigoTSE,urlResultadoAoVivo(uf,codigoTSE)]);
-    else if(!cidade)alvos.push([uf,urlResultadoAoVivo(uf)]);
+    if(cidade&&codigoTSE)alvos.push([uf+":"+codigoTSE,uf,codigoTSE]);
+    else if(!cidade)alvos.push([uf,uf,undefined]);
    }
-   const results=await Promise.allSettled(alvos.map(async ([chave,url])=>{
-    const result=await buscarResultadoTSE(url,abort.signal);
-    return {chave,resultado:result,consultadoEm:Date.now()};
+   const results=await Promise.allSettled(alvos.map(async ([chave,alvoUf,alvoCidade])=>{
+    const consulta=await buscarResultadoCentral(alvoUf,alvoCidade,abort.signal);
+    if(!consulta.resultado||consulta.consultadoEm===null)throw new Error("Ainda não há resultados oficiais");
+    return {chave,resultado:consulta.resultado,consultadoEm:consulta.consultadoEm,estado:consulta.estado as "atual"|"desatualizado"};
    }));
    if(ativo){
-    const aprovados=results.filter((x):x is PromiseFulfilledResult<{chave:string;resultado:Resultado;consultadoEm:number}>=>x.status==="fulfilled");
+    const aprovados=results.filter((x):x is PromiseFulfilledResult<{chave:string;resultado:Resultado;consultadoEm:number;estado:"atual"|"desatualizado"}>=>x.status==="fulfilled");
     if(aprovados.length){
      setDadosLive(anterior=>{
       const atualizado={...anterior};
-      for(const r of aprovados)atualizado[r.value.chave]={resultado:r.value.resultado,consultadoEm:r.value.consultadoEm};
+      for(const r of aprovados)atualizado[r.value.chave]={resultado:r.value.resultado,consultadoEm:r.value.consultadoEm,estado:r.value.estado};
       return atualizado;
      });
-     setConsultaLive(Date.now());
     }
     const problema=results.find(x=>x.status==="rejected");
-    setErroLive(problema?"Consulta direta ao TSE indisponível neste navegador. Exibindo última observação válida quando houver.":null);
+    setErroLive(problema?"O serviço central do RUÍDO não respondeu. Exibindo a última observação disponível, que pode estar desatualizada.":aprovados.some(x=>x.value.estado==="desatualizado")?"O TSE está temporariamente indisponível. O RUÍDO preservou a última parcial validada.":null);
    }
    rodando=false;
   }
@@ -143,8 +146,18 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
   document.addEventListener("visibilitychange",visibility);
   return ()=>{ativo=false;abort.abort();clearInterval(timer);document.removeEventListener("visibilitychange",visibility);};
  },[turno,uf,cidade,codigoTSE]);
+ const resultadosMunicipais=useMemo(()=>{
+  const base=dados?.resultadosMunicipais??{};
+  if(turno!==2)return base;
+  const atualizado={...base};
+  for(const m of catalogoMunicipios){
+   const parcial=dadosLive[m.uf+":"+m.codigoTSE];
+   if(parcial)atualizado[m.codigoIBGE]=parcial.resultado;
+  }
+  return atualizado;
+ },[dados,turno,catalogoMunicipios,dadosLive]);
  const selecionada=cidade?mapaMunicipios.get(cidade):undefined;
- const resultado:Resultado|null|undefined=resultadoLive??(uf==="BR"?dados?.brasil:cidade?dados?.resultadosMunicipais[cidade]??null:dados?.estados[uf]);
+ const resultado:Resultado|null|undefined=resultadoLive??(uf==="BR"?dados?.brasil:cidade?resultadosMunicipais[cidade]??null:dados?.estados[uf]);
  const comparado=uf==="BR"?dados?.estados[filtroComparar]:dadosLive.BR?.resultado??dados?.brasil;
  const iniciado=!!resultado&&resultado.situacao!=="aguardando"&&resultado.votosValidos!==null;
  const municipios=useMemo(()=>{
@@ -157,11 +170,11 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
   const cityCodes=new Set((malhasUf?.municipios??[]).map(m=>m.id));
   let vermelho=0,verde=0,empate=0,indisponivel=0;
   for(const code of cityCodes){
-   const tipo=votosComparados(dados?.resultadosMunicipais[code]);
+   const tipo=votosComparados(resultadosMunicipais[code]);
    if(tipo==="lula")vermelho++;else if(tipo==="flavio")verde++;else if(tipo==="empate")empate++;else indisponivel++;
   }
   return {vermelho,verde,empate,indisponivel};
- },[malhasUf,dados]);
+ },[malhasUf,resultadosMunicipais]);
 
  function selecionarEstado(next:string){setUf(next);setCidade("");setBusca("");}
  function selecionarMunicipio(codigo:string){setCidade(codigo);setBusca("");}
@@ -180,7 +193,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
     <span className="bg-punk-acid text-ink px-2 py-1 font-bold">{turno}º TURNO — {turno===1?"04/10/2026":"25/10/2026"}</span>
     <span className="border border-paper/50 px-2 py-1">{!dados?"SEM SNAPSHOT PUBLICADO":!iniciado?"AGUARDANDO RESULTADOS":resultado?.situacao==="concluida"?"TOTALIZAÇÃO CONCLUÍDA":"RESULTADOS PARCIAIS / NÃO FINALIZADOS"}</span>
     <span className="border border-paper/50 px-2 py-1">Consulta: {lidoEm||"—"}</span>
-    {turno===2&&<span className="border border-punk-acid px-2 py-1 text-punk-acid">{!consultaAoVivoDisponivel()?"LIVE DISPONÍVEL APÓS 17H DE 25/10":consultadoEmLive?"TSE DIRETO • "+new Date(consultadoEmLive).toLocaleTimeString("pt-BR"):"TSE DIRETO • TENTANDO CONEXÃO"}</span>}
+    {turno===2&&<span className="border border-punk-acid px-2 py-1 text-punk-acid">{!consultaAoVivoDisponivel()?"APURAÇÃO A PARTIR DAS 17H":!backendEleitoralConfigurado()?"SERVIÇO AO VIVO AINDA NÃO ATIVADO":consultadoEmLive?"RUÍDO AO VIVO • "+new Date(consultadoEmLive).toLocaleTimeString("pt-BR"):"RUÍDO AO VIVO • CONECTANDO"}</span>}
    </div>
   </header>
 
@@ -227,7 +240,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      <strong>INTENSIDADE DA COR = DIFERENÇA DE VOTOS</strong>
      <div className="ruido-map-zine__guide-range"><span>Menos de 5 p.p.</span><span>5 a menos de 15 p.p.</span><span>15 a menos de 30 p.p.</span><span>30 p.p. ou mais</span></div>
      <p>Em cada município, comparamos somente os votos de Lula e Flávio. O tom representa a diferença entre seus percentuais de votos válidos. No 1º turno, outros candidatos também participaram.</p>
-     {turno===2&&<p><strong>APURAÇÃO AO VIVO:</strong> Brasil e território selecionado consultam diretamente o TSE a cada 30 segundos, se o navegador permitir. A coloração do mapa nacional completo representa o último snapshot municipal publicado, não atualização simultânea das 5.571 cidades.</p>}
+     {turno===2&&<p><strong>APURAÇÃO DINÂMICA:</strong> A página consulta o serviço central do RUÍDO a cada 30 segundos, sem atualizar a página nem refazer o deploy. O cache coletivo limita as consultas ao TSE. A coloração do mosaico nacional completo continua refletindo o último snapshot municipal publicado; ela não representa atualização simultânea de todas as 5.571 cidades.</p>}
      {turno===2&&erroLive&&<p role="status">{erroLive}</p>}
     </div>
    </aside>
@@ -235,11 +248,11 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
     <div className="ruido-map-zine__window">
      <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>LEITURA / {turno}º TURNO</span><span>ESTADO / MUNICÍPIO</span></div>
      <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national":"ruido-map-zine__canvas ruido-map-zine__canvas--state"}>
-     {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={dados?.resultadosMunicipais} municipios={dados?.municipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
+     {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={resultadosMunicipais} municipios={dados?.municipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
       <MapaZoomArea key={uf} rotulo={"Mapa dos municípios de "+nomesUf.get(uf)}>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">
        {malhasUf.municipios.map(m=>{
-        const registro=dados?.resultadosMunicipais[m.id];
+        const registro=resultadosMunicipais[m.id];
         const nome=mapaMunicipios.get(m.id)?.nome??m.id;
         const selecionado=cidade===m.id;
         return <path key={m.id} d={m.d} fill={cor(registro)} fillRule="evenodd" stroke={selecionado?"#101010":"#f5f1e8"} strokeOpacity={selecionado?1:.32} strokeWidth={selecionado?1.35:.23} style={{cursor:"pointer",outline:"none"}} role="button" tabIndex={0} aria-pressed={selecionado} aria-label={nome+": "+titulos(registro)} onClick={()=>selecionarMunicipio(m.id)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selecionarMunicipio(m.id);}}}/>;
@@ -287,7 +300,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
   <section className="bg-white border-4 border-ink p-4 sm:p-6 shadow-[6px_6px_0_#e42232]">
    <h2 className="font-heavy text-2xl sm:text-4xl uppercase">{selecionada?.nome??(uf==="BR"?"BRASIL":nomesUf.get(uf))} <span className="text-punk-red">/// RESULTADOS</span></h2>
    <p className="font-mono text-xs my-3">Presidência • {turno}º turno • {turno===1?"04/10/2026":"25/10/2026"} • Fonte TSE</p>
-   {turno===2&&<p className="font-mono text-xs mb-3" role="status">{consultadoEmLive?"Última consulta direta ao TSE: "+new Date(consultadoEmLive).toLocaleTimeString("pt-BR")+". Atualização automática a cada 30 segundos, sem redeploy.":consultaAoVivoDisponivel()?"Aguardando consulta ao TSE; informações disponíveis podem ser do snapshot estático.":"A totalização começa a partir das 17h de Brasília."}</p>}
+   {turno===2&&<p className="font-mono text-xs mb-3" role="status">{consultadoEmLive?(dadosLive[chaveLive]?.estado==="desatualizado"?"Última observação preservada":"Última consulta do serviço central") + ": "+new Date(consultadoEmLive).toLocaleTimeString("pt-BR")+". Atualização automática a cada 30 segundos, sem redeploy.":!backendEleitoralConfigurado()?"API dinâmica do RUÍDO ainda não ativada. Resultados exibidos abaixo podem ser um snapshot antigo.":consultaAoVivoDisponivel()?"Conectando ao serviço central. Se indisponível, os números do snapshot não são ao vivo.":"A totalização começa a partir das 17h de Brasília."}</p>}
    {!dados&&!resultado?<p className="font-mono border-2 border-dashed border-ink/40 p-5">{erroPorTurno[turno]?"Os dados deste turno ainda não estão disponíveis no RUÍDO. Consulte o TSE.":"Carregando o snapshot oficial..."}</p>:
    !resultado?<p className="font-mono border-2 border-dashed border-ink/40 p-5">Não há resultados verificados para este recorte no snapshot. Não mostramos os resultados estaduais como se fossem municipais.</p>:
    <>
