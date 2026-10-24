@@ -82,7 +82,6 @@ def executar():
     resultados = {}
     erros = []
 
-    # Chave TSE estrita: ano + UF + sequencial. Código SQ sozinho NÃO é global.
     for ano in ANOS:
         try:
             candidatos_raw = fetch(URLS["candidatos"].format(ano=ano))
@@ -111,8 +110,6 @@ def executar():
             encontrados = 0
             for p in politicos:
                 cargo = "DEPUTADO FEDERAL" if p["casa"] == "CAMARA" else "SENADOR"
-                # Exige identificação UNÍVOCA mesmo com homônimos. Nome civil
-                # cadastrado tem preferência; apelido sozinho não é usado.
                 nome = normalizar(p["nomeCivil"] or p["nome"])
                 ids = set(candidatos.get((p["uf"], cargo, nome), []))
                 if len(ids) != 1:
@@ -133,7 +130,6 @@ def executar():
         except Exception as error:
             erros.append(f"{ano}: {str(error)[:130]}")
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    # Never overwrite a nonempty cache with an empty dataset due to failure.
     if not resultados and not dados:
         print("⚠️ Patrimônio não obtido: " + str(erros))
         return
