@@ -1,5 +1,3 @@
-// app/page.tsx
-
 import React from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
@@ -9,8 +7,6 @@ import { HomeInstantSearch } from "@/components/HomeInstantSearch";
 import { formatarDataHoraBR } from "@/lib/utils";
 
 export default async function DashboardPage() {
-  // O snapshot pode estar completo historicamente, mas sem votação nos últimos dias.
-  // Nunca tratar ausência de atividade recente como erro de sincronização.
   const agora = new Date();
   const seteDiasAtras = new Date(agora.getTime() - 7 * 24 * 60 * 60 * 1000);
   const ultimaDataRegistrada = await prisma.votacao.findFirst({
@@ -18,8 +14,6 @@ export default async function DashboardPage() {
     select: { dataHora: true },
   });
   const periodoSemAtividade = !!ultimaDataRegistrada && ultimaDataRegistrada.dataHora < seteDiasAtras;
-  // Quando não houver atividade na janela atual, expor explicitamente
-  // a última janela de 7 dias COM registros, sem chamá-la de "últimos 7 dias".
   const fimPeriodo = periodoSemAtividade ? ultimaDataRegistrada!.dataHora : agora;
   const inicioPeriodo = new Date(fimPeriodo.getTime() - 7 * 24 * 60 * 60 * 1000);
 
@@ -62,7 +56,6 @@ export default async function DashboardPage() {
     prisma.emendaParlamentar.count(),
     prisma.votacao.findMany({
       where: {
-        // Dar preferência a decisões com placar público ou votos individuais.
         OR: [
           { placarSim: { gt: 0 } },
           { placarNao: { gt: 0 } },
@@ -160,7 +153,6 @@ export default async function DashboardPage() {
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="font-heavy text-2xl sm:text-3xl uppercase tracking-wider text-ink bg-punk-acid px-3 py-1 border-2 border-ink shadow-[4px_4px_0_#101010] transform -rotate-1">
-            // EM NÚMEROS
           </span>
           <div className="flex-1 border-b-2 border-ink border-dashed hidden sm:block" />
         </div>
@@ -292,7 +284,6 @@ export default async function DashboardPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b-4 border-ink">
           <div className="flex items-center gap-3">
             <span className="font-heavy text-2xl sm:text-4xl uppercase tracking-wider text-white bg-punk-red px-3 py-1 shadow-[4px_4px_0_#101010] transform -rotate-1">
-              // VOTAÇÕES RECENTES
             </span>
           </div>
           <Link
@@ -339,7 +330,6 @@ export default async function DashboardPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b-4 border-ink">
           <div className="flex items-center gap-3">
             <span className="font-heavy text-2xl sm:text-4xl uppercase tracking-wider text-ink bg-punk-acid px-3 py-1 border-2 border-ink shadow-[4px_4px_0_#101010] transform rotate-1">
-              // PARLAMENTARES
             </span>
           </div>
           <Link
