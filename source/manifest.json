@@ -107,7 +107,7 @@
     "scripts/refresh-dossiers-datajud.py": "818ae32af00e359b6a634cbd088c2844d01d816a26e3ca6a1b2a672ae1c2f2ae",
     "scripts/refresh-dossiers-finance.py": "ebdd5678452dc3e3d8b0950da29b74e0cc28afd5eb9808b485f7a7a580f793d5",
     "scripts/refresh-dossiers-judicial.py": "eeb88bd64c388fca55c32cae1a7514925a0cfb6c21c0a597216330c82c3536c2",
-    "scripts/refresh-dossiers-news.ts": "82c41425807595286194446600dd330129a2e3e386690719bd1f87c00e8a08ee",
+    "scripts/refresh-dossiers-news.ts": "a7c69bd63411997a0b39dc024a29f90ad70e74c11c712bba16c6ab88d8684eac",
     "scripts/refresh-dossiers-official-ai.ts": "8aeabf0a6239e8f89f3aa1d7c74bbabfbb16c5737a096545d61689ac03a843db",
     "scripts/refresh-dossiers-patrimony.py": "29fd54b2b5cc8009974db74ff28d93eb262b861cf5efc1599cdf674799db47f6",
     "scripts/refresh-financial-links.py": "c8c09e4117b0a47b5e755a01c4fb9225a52f4051496db3cbaa1ae2552b9b80d8",
