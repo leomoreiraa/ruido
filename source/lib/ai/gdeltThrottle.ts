@@ -1,4 +1,4 @@
-/** Protege GDELT contra rajadas de consultas em runners compartilhados. */
+
 export type EstadoGdelt = {
   tentativas: number;
   ultimaTentativa: number; // Unix ms

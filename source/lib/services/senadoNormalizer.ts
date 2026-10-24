@@ -41,15 +41,7 @@ export function validarItemVotacaoSenado(item: unknown): asserts item is SenadoV
   }
 }
 
-/**
- * Normaliza o voto do Senado preservando códigos originais não padronizados.
- * Nunca converte códigos desconhecidos para AUSENTE.
- * P-NRV: Presente - Não registrou voto (não ausência)
- * AP: Atividade parlamentar (justificado)
- * LS: Licença saúde (justificado)
- * MIS: Missão oficial (justificado)
- * Presidente (art. 51 RISF): Presidência (Artigo 17)
- */
+
 export function normalizarVotoSenado(siglaBruta?: string | null): {
   opcaoNormalizada: OpcaoVoto;
   siglaOriginal: string | null;
@@ -94,14 +86,7 @@ export function normalizarVotoSenado(siglaBruta?: string | null): {
   return { opcaoNormalizada: trimmed, siglaOriginal: trimmed };
 }
 
-/**
- * Deriva evidência de presença a partir do registro de votação do Senado.
- * No Senado, não existe endpoint público completo de chamada nominal para todas as sessões;
- * a presença é derivada a partir das votações nominais.
- * Se o parlamentar compareceu ou votou ou foi presidente ou P-NRV => PRESENTE.
- * Se teve AP, LS, MIS => JUSTIFICADO.
- * Se o nome sequer consta na votação => nenhuma inferência é feita (sem ausência inventada).
- */
+
 export function classificarEvidenciaPresencaSenado(
   siglaVoto?: string | null,
   descricaoVoto?: string | null

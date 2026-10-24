@@ -1,8 +1,4 @@
-/**
- * Resolução opcional, limitada e sem credenciais de links do RSS do Google
- * Notícias. O endereço do agregador NÃO serve como evidência. A API RPC é
- * não documentada e pode falhar: tratar 429/consentimento como indisponibilidade.
- */
+
 export function extrairUrlGoogleNews(value: unknown): string | null {
   if (!Array.isArray(value)) return null;
   const frame=value.find(x=>Array.isArray(x) && x[0]==="wrb.fr" && x[1]==="Fbv4je");

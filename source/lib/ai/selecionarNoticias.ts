@@ -1,4 +1,4 @@
-/** Filtra fila por sigla partidária e prioriza apenas identidades únicas. */
+
 export type PessoaNoticia = {id:string;nome:string;nomeCivil:string|null;partido:string};
 export const nomeNormal = (s:string) => s.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
   .toLowerCase().replace(/\s+/g," ").trim();

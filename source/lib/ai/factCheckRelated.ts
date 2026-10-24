@@ -1,8 +1,4 @@
-/**
- * Consulta OPCIONAL à Fact Check Tools API, apenas como referência para o
- * leitor. O resultado da busca NÃO transforma uma notícia em fato confirmado,
- * nem altera níveis de evidência, acusações ou situações judiciais.
- */
+
 export type ChecagemExterna = {
   url:string; titulo:string; veiculo:string; avaliacao:string; afirmacao:string;
 };

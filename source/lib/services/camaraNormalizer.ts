@@ -95,10 +95,7 @@ export function validarRespostaEnvelopeCamara<T>(
   return envelope;
 }
 
-/**
- * Normaliza o voto nominal da Câmara mantendo valores não mapeados de forma literal.
- * Nunca converte códigos desconhecidos para AUSENTE.
- */
+
 export function normalizarVotoCamara(tipoVoto?: string | null): {
   opcaoNormalizada: OpcaoVoto;
   opcaoOriginal: string | null;
@@ -132,7 +129,7 @@ export function normalizarVotoCamara(tipoVoto?: string | null): {
   return { opcaoNormalizada: trimmed, opcaoOriginal: trimmed };
 }
 
-/** Counts published by the Câmara are aggregate registered votes, not a roll-call of every deputy. */
+
 export function obterContagensCamara(
   resumo: CamaraVotacaoResumoContract, detalhe: CamaraVotacaoDetalheContract | null,
   votos: CamaraVotoNominalContract[]

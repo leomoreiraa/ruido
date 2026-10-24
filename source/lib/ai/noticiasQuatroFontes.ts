@@ -1,11 +1,4 @@
-/**
- * Política editorial do RUÍDO — validação conservadora de notícias sobre
- * parlamentares. Função PURA usada como última barreira antes de publicar.
- *
- * O coletor precisa obter textos diretamente das páginas acessadas. A IA
- * pode propor eventos e passagens, mas nunca desativar esta verificação.
- * Não persistir o texto integral das reportagens no HTML/JSON exportado.
- */
+
 import { createHash } from "node:crypto";
 
 export const FONTES_INDEPENDENTES_MINIMAS = 2 as const;
@@ -14,8 +7,7 @@ export type SituacaoDocumentada =
   | "NOTICIA" | "CITADO" | "INVESTIGADO" | "DENUNCIADO"
   | "REU" | "CONDENADO" | "ABSOLVIDO" | "ARQUIVADO";
 
-/** Sem grupo editorial conhecido, o candidato é mantido na triagem,
- * nunca considerado automaticamente uma fonte independente. */
+
 const GRUPOS_VERIFICADOS: Readonly<Record<string, string>> = Object.freeze({
   "g1.globo.com": "grupo-globo",
   "oglobo.globo.com": "grupo-globo",
@@ -47,7 +39,7 @@ const GRUPOS_VERIFICADOS: Readonly<Record<string, string>> = Object.freeze({
   "noticias.r7.com": "record",
 });
 
-/** Dados transitórios de auditoria: textoAcessado NÃO é persistido. */
+
 export interface EvidenciaJornalistica {
   url: string;
   titulo: string;
@@ -120,9 +112,7 @@ function documentoValido(doc: DocumentoPrimario | undefined, item: AlegacaoVerif
     host === "stf.jus.br" || host === "mpf.mp.br";
 }
 
-/** Aprovação técnica da evidência, não juízo de culpa.
- * Alterações, decisões posteriores e direito de resposta precisam ser
- * investigados na etapa de coleta/reverificação antes da publicação. */
+
 export function avaliarCoberturaJornalistica(item: AlegacaoVerificavel): AvaliacaoNoticias {
   const motivos: string[] = [];
   const fontesAprovadas: FonteAprovada[] = [];
@@ -167,5 +157,5 @@ export function avaliarCoberturaJornalistica(item: AlegacaoVerificavel): Avaliac
   };
 }
 
-/** Compatibilidade com importadores antigos; a classificação agora é graduada. */
+
 export const avaliarNoticiasQuatroFontes = avaliarCoberturaJornalistica;

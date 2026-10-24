@@ -46,10 +46,7 @@ const STOPWORDS_PT = new Set([
   "deste", "desta", "disse", "apenas", "ainda", "assim", "onde", "então", "pois"
 ]);
 
-/**
- * Extrai 5 palavras-chave e resumo sintético a partir de textos de discursos,
- * garantindo fallback determinístico e neutro na ausência de API Key.
- */
+
 export function extrairResumoAlgoritmico(
   textos: Array<{ transcricao: string; sumario?: string | null }>
 ): ResultadoExtracaoIA {
@@ -114,10 +111,7 @@ export function extrairResumoAlgoritmico(
   };
 }
 
-/**
- * Gera ou atualiza o perfil temático/ideológico de um parlamentar
- * baseado nos seus últimos 20 pronunciamentos em plenário.
- */
+
 export async function gerarResumoTematicoParlamentar(
   parlamentarId: string,
   options: OpcoesResumoIA = {}
@@ -256,10 +250,7 @@ export async function gerarResumoTematicoParlamentar(
   };
 }
 
-/**
- * Processa em lote a geração de resumos de IA para parlamentares que possuam
- * discursos indexados mas ainda não possuam resumo gerado.
- */
+
 export async function gerarResumosIAParlamentares(
   options: { limite?: number; forcar?: boolean } = {}
 ): Promise<{ total: number; gerados: number; erros: number }> {

@@ -1,6 +1,4 @@
-/** Gemini Free tier: runner-only pacing, bounded retry, sanitized failures.
- * GitHub Actions workflow concurrency must serialize all three AI consumers.
- */
+
 const configured=Number(process.env.GEMINI_FREE_MIN_INTERVAL_MS || "35000");
 const intervalMs=Math.max(30000,Math.min(120000,Number.isFinite(configured)?configured:35000));
 const sleep=(ms:number)=>new Promise<void>(resolve=>setTimeout(resolve,ms));
