@@ -86,10 +86,10 @@ export function GraficoPatrimonio({
 
   return (
     <div className="relative bg-paper-card border-3 border-ink p-5 sm:p-6 my-6 shadow-[6px_6px_0_#101010]">
-      {/* Scotch tape */}
+      
       <div className="scotch-tape-corner" aria-hidden="true" />
 
-      {/* Header */}
+      
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 pb-4 border-b-2 border-dashed border-ink/30">
         <div>
           <div className="inline-block bg-punk-red text-white font-mono text-[10px] font-bold px-2 py-0.5 uppercase mb-1">
@@ -129,7 +129,7 @@ export function GraficoPatrimonio({
         </div>
       </div>
 
-      {/* Variation callout */}
+      
       {variacaoPercentual !== null && (
         <div className="bg-paper-light border-2 border-ink p-3 mb-6 shadow-[3px_3px_0_#101010] flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
           <div>
