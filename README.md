@@ -1,39 +1,65 @@
 <div align="center">
 
-# RUÍDO
+<img src="./assets/readme-hero.svg" alt="RUÍDO — Transparência não deveria exigir conhecimento técnico" width="100%" />
 
-### Plataforma independente de transparência e acompanhamento legislativo
+<br />
 
-**Dados públicos · Engenharia de dados · Automação · Tecnologia cívica**
+**Uma plataforma independente para explorar, compreender e acompanhar dados públicos da política brasileira.**
 
-[![Website](https://img.shields.io/badge/Website-Acessar%20RU%C3%8DDO-dc2626?style=for-the-badge)](https://ruido.runs-at.dev/)
-[![Source](https://img.shields.io/badge/Source-C%C3%B3digo%20p%C3%BAblico-181717?style=for-the-badge&logo=github)](./source/)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=nextdotjs)](./source/package.json)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](./source/package.json)
-[![React](https://img.shields.io/badge/React-18-149ECA?logo=react&logoColor=white)](./source/package.json)
+<br />
 
-[**Plataforma**](https://ruido.runs-at.dev/) · [**Metodologia**](https://ruido.runs-at.dev/sobre/) · [**Cobertura**](https://ruido.runs-at.dev/cobertura/) · [**Código-fonte**](./source/) · [**Reportar problema**](https://github.com/leomoreiraa/ruido/issues)
+[![ACESSAR PLATAFORMA](https://img.shields.io/badge/◈_ACESSAR_PLATAFORMA-C21E2B?style=for-the-badge&labelColor=171717)](https://ruido.runs-at.dev/)
+[![EXPLORAR CÓDIGO](https://img.shields.io/badge/⌘_EXPLORAR_CÓDIGO-EEE8DC?style=for-the-badge&labelColor=171717&color=555555)](./source/)
+[![ABRIR ISSUE](https://img.shields.io/badge/↗_ABRIR_ISSUE-27272A?style=for-the-badge)](https://github.com/leomoreiraa/ruido/issues)
+
+<br />
+
+![Next.js](https://img.shields.io/badge/Next.js_14-171717?style=flat-square&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_18-171717?style=flat-square&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-171717?style=flat-square&logo=typescript&logoColor=3178C6)
+![Prisma](https://img.shields.io/badge/Prisma-171717?style=flat-square&logo=prisma&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-171717?style=flat-square&logo=sqlite&logoColor=7EC8E3)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-171717?style=flat-square&logo=githubpages&logoColor=white)
+
+<sub>PROJETO INDEPENDENTE · DADOS ABERTOS · TECNOLOGIA CÍVICA</sub>
 
 </div>
 
 ---
 
-## Índice
+<div align="center">
 
-- [Visão geral](#visão-geral)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias](#tecnologias)
-- [Arquitetura](#arquitetura)
-- [Começando](#começando)
-- [Executando localmente](#executando-localmente)
-- [Scripts disponíveis](#scripts-disponíveis)
-- [Estrutura do projeto](#estrutura-do-projeto)
-- [Dados, fontes e integridade](#dados-fontes-e-integridade)
-- [Publicação e segurança](#publicação-e-segurança)
-- [Contribuições](#contribuições)
-- [Licença e autoria](#licença-e-autoria)
+### ◢ O DADO É PÚBLICO. A LEITURA TAMBÉM DEVE SER. ◣
 
-## Visão geral
+**[Explorar a plataforma](https://ruido.runs-at.dev/)** · **[Metodologia](https://ruido.runs-at.dev/sobre/)** · **[Cobertura](https://ruido.runs-at.dev/cobertura/)** · **[Código-fonte](./source/)**
+
+</div>
+
+<details>
+<summary><strong>☰ NAVEGAR PELA DOCUMENTAÇÃO</strong></summary>
+
+- [O projeto](#-01--o-projeto)
+- [Funcionalidades](#-02--o-que-você-encontra)
+- [Tecnologias](#-03--tecnologias)
+- [Arquitetura](#-04--como-funciona)
+- [Instalação](#-05--comece-por-aqui)
+- [Desenvolvimento local](#-06--desenvolvimento-local)
+- [Comandos](#-07--comandos)
+- [Estrutura](#-08--estrutura)
+- [Fontes](#-09--fontes-e-responsabilidade)
+- [Publicação](#-10--publicação)
+- [Contribuições](#-11--contribua)
+- [Autoria](#-12--autoria-e-licença)
+
+</details>
+
+---
+
+## ◼ 01 / O projeto
+
+> **INFORMAÇÃO SEM BARREIRAS.**
+>
+> Acompanhar a política não deveria exigir que você navegue por dezenas de portais e documentos técnicos.
 
 O **RUÍDO** é um projeto independente de tecnologia cívica que organiza registros públicos da política brasileira para facilitar a consulta, o acompanhamento e a fiscalização cidadã.
 
@@ -49,7 +75,14 @@ O sistema reúne dados institucionais e os apresenta em uma interface acessível
 
 > **O dado é público. A leitura também deve ser.**
 
-## Funcionalidades
+## ◼ 02 / O que você encontra
+
+<div align="center">
+
+**PARLAMENTARES** · **VOTAÇÕES** · **PROPOSIÇÕES** · **PRESENÇA** · **DADOS FINANCEIROS**
+
+</div>
+
 
 | Módulo | Descrição |
 | --- | --- |
@@ -64,7 +97,7 @@ O sistema reúne dados institucionais e os apresenta em uma interface acessível
 
 A cobertura de cada módulo depende da disponibilidade e integridade das fontes de origem.
 
-## Tecnologias
+## ◼ 03 / Tecnologias
 
 | Área | Stack |
 | --- | --- |
@@ -79,7 +112,10 @@ A cobertura de cada módulo depende da disponibilidade e integridade das fontes 
 
 A documentação técnica das dependências está disponível no código-fonte público.
 
-## Arquitetura
+## ◼ 04 / Como funciona
+
+> **Da fonte oficial à consulta pública.** Dados são organizados, verificados e apresentados de forma acessível.
+
 
 O RUÍDO utiliza uma arquitetura em etapas para coleta, tratamento e apresentação de dados. A interface pública é disponibilizada por meio de arquivos estáticos.
 
@@ -90,8 +126,7 @@ flowchart TD
     C --> D[("SQLite / Prisma")]
     D --> E["Preparação e enriquecimento de dados"]
     E --> F["Exportação estática"]
-    F --> G["Repositório público"]
-    G --> H["GitHub Pages"]
+    F --> H["Publicação web"]
     H --> I["Navegador do usuário"]
     J["Processamento de IA fora do navegador"] --> E
 ```
@@ -106,7 +141,10 @@ flowchart TD
 
 **Atualizações progressivas:** novos registros podem ser incorporados por rotinas automatizadas, respeitando a disponibilidade das fontes.
 
-## Começando
+## ◼ 05 / Comece por aqui
+
+**01 — CLONE** · **02 — INSTALE** · **03 — EXECUTE**
+
 
 Existem **duas maneiras de explorar o projeto**: abrir o site já publicado ou clonar o código-fonte para estudo e desenvolvimento.
 
@@ -151,7 +189,7 @@ npm install
 
 > **Importante:** algumas funcionalidades exigem configuração local, variáveis de ambiente e um banco de desenvolvimento.
 
-## Executando localmente
+## ◼ 06 / Desenvolvimento local
 
 ### Ambiente de desenvolvimento
 
@@ -190,7 +228,7 @@ npm run build:ghpages
 
 Esses comandos podem exigir configurações adicionais conforme o ambiente de desenvolvimento.
 
-## Scripts disponíveis
+## ◼ 07 / Comandos
 
 Execute os comandos abaixo dentro de `source/`.
 
@@ -199,7 +237,6 @@ Execute os comandos abaixo dentro de `source/`.
 | `npm run dev` | Inicia o servidor de desenvolvimento Next.js |
 | `npm run build` | Gera o cliente Prisma e compila a aplicação |
 | `npm run start` | Inicia a aplicação compilada |
-| `npm run test` | Executa os testes automatizados |
 | `npm run db:generate` | Gera o cliente Prisma |
 | `npm run db:push` | Sincroniza o schema com um banco configurado |
 | `npm run db:migrate` | Executa migrações em ambiente de desenvolvimento |
@@ -213,7 +250,7 @@ Execute os comandos abaixo dentro de `source/`.
 
 **Atenção:** scripts de coleta e processamento podem realizar chamadas externas e modificar dados locais. Configure um ambiente isolado antes de utilizá-los.
 
-## Estrutura do projeto
+## ◼ 08 / Estrutura
 
 ```text
 ruido/
@@ -226,7 +263,7 @@ ruido/
 │   ├── prisma/            # Schema de persistência
 │   ├── scripts/           # Coleta, exportação e automação
 │   ├── package.json       # Dependências e scripts
-│   └── README.md          # Informações sobre o espelho
+│   └── README.md          # Documentação técnica
 └── README.md              # Esta documentação
 ```
 
@@ -236,7 +273,7 @@ A árvore é uma visão conceitual dos principais módulos; arquivos e diretóri
 
 O código-fonte está disponível em [`source/`](./source/) para consulta e estudo.
 
-## Dados, fontes e integridade
+## ◼ 09 / Fontes e responsabilidade
 
 Entre as fontes institucionais contempladas pelo projeto estão:
 
@@ -257,7 +294,7 @@ Entre as fontes institucionais contempladas pelo projeto estão:
 
 Para entender o escopo e as limitações atuais, consulte as páginas de [metodologia](https://ruido.runs-at.dev/sobre/) e [cobertura](https://ruido.runs-at.dev/cobertura/).
 
-## Publicação e segurança
+## ◼ 10 / Publicação
 
 O domínio público é **https://ruido.runs-at.dev/**.
 
@@ -265,7 +302,10 @@ O projeto disponibiliza os arquivos do site e o código-fonte em [`source/`](./s
 
 Se encontrar uma vulnerabilidade, evite publicar credenciais, dados sensíveis ou instruções de exploração em issues públicas. Entre em contato com o mantenedor por um canal apropriado.
 
-## Contribuições
+## ◼ 11 / Contribua
+
+Bugs, sugestões de melhoria e correções de dados são bem-vindos. Para começar, [abra uma issue](https://github.com/leomoreiraa/ruido/issues).
+
 
 ### Como contribuir
 
@@ -286,7 +326,7 @@ Se encontrar uma vulnerabilidade, evite publicar credenciais, dados sensíveis o
 
 Para reportar dados incorretos, inclua o endereço da página, o registro questionado, a fonte oficial correspondente e a data da consulta.
 
-## Licença e autoria
+## ◼ 12 / Autoria e licença
 
 **Desenvolvido e mantido por [Leonardo Moreira](https://github.com/leomoreiraa).**
 
@@ -298,7 +338,7 @@ Este é um projeto independente, sem representação oficial das instituições 
 
 <div align="center">
 
-### TRANSPARÊNCIA NÃO DEVERIA EXIGIR CONHECIMENTO TÉCNICO.
+### ✳ FAÇA BARULHO COM INFORMAÇÃO.
 
 **[Acessar RUÍDO ↗](https://ruido.runs-at.dev/)**
 
