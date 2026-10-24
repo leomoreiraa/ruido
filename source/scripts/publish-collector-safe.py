@@ -31,15 +31,10 @@ KINDS={"news":(NEWS,), "finance":(FIN,PRES)}
 ABSENT=object()
 FIELDS={
     "campanhas":("ano",),
-    # Uma empresa pode ter vários nomes de fornecedor no CSV anual
-    # (outras filiais/grafias), cada qual com valor próprio já agregado.
-    # Usar só CNPJ+ano transforma registros distintos em falsa duplicata.
     "fornecedoresGabinete":("ano","cnpj","nome"),
     "fornecedoresSenado":("ano","cnpj","nome"),
     "cotasSenado":("ano",),
     "emendas":("ano","codigo"),
-    # Uma coincidência CNPJ pode envolver mais de uma despesa de gabinete
-    # e valores diferentes do mesmo ano; preservar cada ocorrência documentada.
     "coincidencias":("anoCampanha","anoGabinete","cnpj","nomeFornecedor",
                      "valorContratadoCampanha","valorCEAP","fonteCEAP"),
 }
@@ -131,8 +126,6 @@ def mix_news(base,local,remote):
             ("url",),lt,rt,"clippings/"+pid)
         items.sort(key=lambda x:timestamp(x,"publicadoEm") or 0,reverse=True)
         if items:output["clippings"][pid]=items[:80]
-    # A fila pendente não é prova sobre uma pessoa. Manter retries novos,
-    # mas limpar aqueles que o snapshot mais novo concluiu com sucesso.
     pending=output.get("pendentes",{})
     if not isinstance(pending,dict):pending={}
     output["pendentes"]=pending
@@ -162,8 +155,6 @@ def mix_finance(base,local,remote):
             merged=choose(old.get(field,ABSENT),current.get(field,ABSENT),
                           published.get(field,ABSENT),lt,rt,pid+"/"+field)
             if merged is not ABSENT:entry[field]=merged
-        # Os cruzamentos só são publicados se existem fornecedores em ambas
-        # as bases. Evitar publicar relação sem seus documentos de suporte.
         if entry.get("coincidencias"):
             ceap={(x.get("cnpj"),x.get("ano")) for x in
                   entry.get("fornecedoresGabinete",[])+entry.get("fornecedoresSenado",[])}
@@ -194,8 +185,6 @@ def mix_presidency(base,local,remote):
                 raise ValueError("Identidades TSE divergentes: "+pid)
         picked=choose(old,a,z,lt,rt,"presidencial/"+pid)
         if picked is ABSENT:continue
-        # Fontes oficiais verificadas anteriormente não somem por omissão do CSV
-        # TSE. Nunca deduzir turno, resultado ou posse.
         for evidence in ("fonteTurno","turno","fontePropostas","vice"):
             if isinstance(a,dict) and isinstance(z,dict):
                 left=a.get(evidence);right=z.get(evidence)
@@ -224,7 +213,6 @@ def publish(kind,attempts=6):
                 changes[path]=mix_finance(older,collected,active)
             elif path==PRES:
                 changes[path]=mix_presidency(older,collected,active)
-        # Only after ALL mergers validate is the runner's checkout replaced.
         base_module.git("reset","--hard",latest)
         for path,document in changes.items():
             target=Path(path)
