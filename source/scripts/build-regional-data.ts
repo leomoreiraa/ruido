@@ -63,9 +63,6 @@ async function previous():Promise<DadosMapa|null>{
 }
 async function main(){
   const old=await previous();
-  // Malhas geográficas são estáveis. A cópia verificada das 27 UFs é versionada
-  // no GitHub, portanto indisponibilidade do IBGE não derruba a publicação.
-  // Dados econômicos, IDHM e emendas continuam vindo de fontes oficiais atuais.
   const cachePath=path.join(process.cwd(),"data","ibge-ufs-geometry.json");
   const cachedShapes=validarCacheMalhasIBGE(JSON.parse(await fs.readFile(cachePath,"utf8")));
   const notices:string[]=[];
@@ -77,8 +74,6 @@ async function main(){
     return [uf,{id,uf,nome,svgPath:cachedShapes[uf],porAno:years,idhmPorAno:{},creditoMei:null}];
   }));
 
-  // PNUD/FJP/IBGE Radar IDHM 2012-2024, downloaded with pinned provenance
-  // by collect-idhm.py. Never extrapolate 2025/2026 or infer an annual rate.
   const IDHM_PATH=path.join(process.cwd(),"public","data","idhm-ufs.json");
   const idhm=JSON.parse(await fs.readFile(IDHM_PATH,"utf8")) as {
     serieAte:number;porUF:Record<string,Record<string,number>>
@@ -93,9 +88,6 @@ async function main(){
   }
   notices.push("IDHM oficial PNUD/FJP/IBGE disponível até 2024; 2025 e 2026 ainda não são publicados nesta série.");
 
-  // Atualizar a malha é uma opção EXPLÍCITA para manutenção, nunca uma
-  // dependência do deploy normal. Em caso de 404, timeout ou DNS, preserva
-  // o SVG versionado e documenta qual UF ficou no cache.
   if(process.env.REFRESH_IBGE_MESHES==="1"){
     await pool(UFS,3,async ([id,uf])=>{
       try{
@@ -139,8 +131,6 @@ async function main(){
       }
     }
   }
-  // 2022 was a census year, not an annual population estimate in SIDRA 6579.
-  // Use the actual 2022 Census population rather than leaving the series empty.
   try {
     const raw=await obterJSON("https://apisidra.ibge.gov.br/values/t/4714/n3/all/v/93/p/2022",35000,2);
     const census=lerSidra(raw,2022,2022);
@@ -153,8 +143,6 @@ async function main(){
   }catch(error){
     notices.push("População do Censo 2022 não consultada: "+String(error));
   }
-  // CGU amendment totals come from the SAME validated SQLite release as all other pages.
-  // NULL signifies absent regionalized records, not proof of zero transfers.
   const emendas=await prisma.emendaParlamentar.groupBy({
     by:["ano","ufBeneficiada"],
     where:{ano:{gte:2022},ufBeneficiada:{not:null}},
@@ -168,7 +156,6 @@ async function main(){
     record.emendasPagas=(record.emendasPagas??0)+(item._sum.valorPago??0);
     record.emendasCount+=item._count._all;
   }
-  // SGS may have slower publication than SIDRA: preserve actual reference date and never extrapolate.
   let bcok=0;
   await pool(UFS,5,async ([,uf])=>{
     const serie=SERIES_MEI[uf];
