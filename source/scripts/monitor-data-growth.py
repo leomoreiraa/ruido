@@ -8,9 +8,7 @@ from pathlib import Path
 import sys
 
 MIB = 1024 * 1024
-# JSONs financeiros de 30 MiB são aceitáveis; limite apenas informativo.
 JSON_ALERT = 50 * MIB
-# GitHub Pages tem teto de 1 GiB: margem operacional para novos recursos.
 PAGES_HARD_LIMIT = 900 * MIB
 
 
