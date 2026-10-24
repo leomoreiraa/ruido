@@ -161,13 +161,26 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
             </svg>
             </div>
           </div>
-          <div className="ruido-map-zine__footer flex flex-wrap gap-4 justify-between items-center font-mono text-[10px] uppercase">
-            <div className="flex flex-wrap gap-2 items-center">
-              <span>MENOR</span>{["#424b46","#657361","#949e57","#c4d74f","#d8f53e"].map(c=><span key={c} style={{background:c}} className="h-3 w-5 border border-white/20"/>)}
-              <span>MAIOR</span>
+          <aside className="ruido-map-zine__guide ruido-map-zine__guide--atlas" aria-label="Legenda dos indicadores estaduais">
+            <div className="ruido-map-zine__guide-head">
+              <div><span className="ruido-map-zine__guide-kicker">LEGENDA / MAPA TEMÁTICO</span><h3>COMO LER OS INDICADORES?</h3></div>
+              <span className="ruido-map-zine__guide-seal">{year}<br/>UF</span>
             </div>
-            <span className="ruido-map-zine__note">ESCALA RELATIVA AO MAIOR VALOR • UF VERMELHA = SELECIONADA</span>
-          </div>
+            {metric==="idhmVariacao"?
+              <div className="ruido-map-zine__guide-items">
+                {([{nome:"Aumento acima de 0,004 ponto",cor:"#d8f53e"},{nome:"Aumento de até 0,004 ponto",cor:"#829e6b"},{nome:"Redução do IDHM",cor:"#b73c4c"},{nome:"Sem mudança",cor:"#6a706d"}]).map(item=><span key={item.nome}><i style={{backgroundColor:item.cor}}/>{item.nome}</span>)}
+              </div>:
+              <div className="ruido-map-zine__guide-atlas-ramp">
+                <p>Os tons mais claros representam valores maiores para <strong>{LABELS[metric].titulo.toLowerCase()}</strong>.</p>
+                <div className="ruido-map-zine__guide-swatches" aria-hidden="true">{["#424b46","#657361","#949e57","#c4d74f","#d8f53e"].map(c=><span style={{backgroundColor:c}} key={c}/>)}</div>
+                <div className="ruido-map-zine__guide-atlas-labels"><span>Menor valor</span><span>Maior valor</span></div>
+              </div>}
+            <div className="ruido-map-zine__guide-items">
+              <span><i style={{backgroundColor:"#e42232"}}/>Estado selecionado</span>
+              <span><i style={{backgroundColor:"#999891"}}/>Dado não disponível</span>
+            </div>
+            <p className="ruido-map-zine__guide-footnote">{LABELS[metric].unidade} · {year}. A cor destaca diferenças entre UFs; não representa automaticamente o desempenho do município.</p>
+          </aside>
         </div>
         <div className="flex flex-col gap-5">
           <div className="ruido-paper-card bg-paper-card border-4 border-ink shadow-[8px_8px_0_#e42232] p-6 relative">

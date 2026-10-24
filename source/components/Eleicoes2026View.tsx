@@ -114,9 +114,12 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
  function selecionarEstado(next:string){setUf(next);setCidade("");setBusca("");}
  function selecionarMunicipio(codigo:string){setCidade(codigo);setBusca("");}
  const selecionarCidadeBrasil=useCallback((nextUf:string,codigoIBGE:string)=>{setUf(nextUf);setCidade(codigoIBGE);setBusca("");},[]);
- const legendas=[{nome:"Lula > Flávio",cor:VERMELHO},{nome:"Flávio > Lula",cor:VERDE},{nome:"Empate",cor:EMPATE},{nome:"Sem dados",cor:SEM_DADOS}];
+ const legendas=[
+  {nome:"Lula recebeu mais votos",cor:VERMELHO,escala:["#f6c8c8","#f18b90","#eb555e",VERMELHO]},
+  {nome:"Flávio recebeu mais votos",cor:VERDE,escala:["#c0e3cd","#90d1a6","#5cbe86",VERDE]},
+ ];
 
- return <div className="collage-page pb-12 space-y-7">
+ return <div className="ruido-eleicoes-page collage-page pb-12 space-y-7">
   <header className="ruido-ink-poster border-4 border-ink bg-ink text-paper p-5 sm:p-8 shadow-[8px_8px_0_#e42232]">
    <p className="font-mono text-xs text-punk-acid tracking-widest">ARQUIVO ELEITORAL // FONTE: TRIBUNAL SUPERIOR ELEITORAL</p>
    <h1 className="font-heavy text-4xl sm:text-7xl mt-2">ELEIÇÕES <span className="text-punk-red">2026</span></h1>
@@ -152,9 +155,27 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
     </div>
     {uf!=="BR"?<button type="button" onClick={()=>selecionarEstado("BR")} className="ruido-map-zine__back">← VOLTAR AO BRASIL</button>:<span className="ruido-map-zine__stamp" aria-hidden="true">MAPA<br />NACIONAL<br />///</span>}
    </div>
-   <div className="ruido-map-zine__legend flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] mb-4">
-    {legendas.map(l=><span className="inline-flex gap-1.5 items-center" key={l.nome}><span style={{backgroundColor:l.cor}} className="h-3 w-4 border border-ink/30"/>{l.nome}</span>)}
-   </div>
+   <aside className="ruido-map-zine__guide" aria-label="Legenda do mapa de votos">
+    <div className="ruido-map-zine__guide-head">
+     <div><span className="ruido-map-zine__guide-kicker">LEGENDA / GUIA DE LEITURA</span><h3>O QUE CADA COR SIGNIFICA?</h3></div>
+     <span className="ruido-map-zine__guide-seal">TSE<br/>2026</span>
+    </div>
+    <div className="ruido-map-zine__guide-grid">
+     {legendas.map(l=><div className="ruido-map-zine__guide-party" key={l.nome}>
+      <div className="ruido-map-zine__guide-party-name"><span className="ruido-map-zine__guide-dot" style={{backgroundColor:l.cor}}/>{l.nome}</div>
+      <div className="ruido-map-zine__guide-swatches" aria-hidden="true">{l.escala.map((color,i)=><span key={i} style={{backgroundColor:color}} />)}</div>
+     </div>)}
+     <div className="ruido-map-zine__guide-special">
+      <span><i style={{backgroundColor:EMPATE}}/> Empate entre os dois</span>
+      <span><i style={{backgroundColor:SEM_DADOS}}/> Sem resultado disponível</span>
+     </div>
+    </div>
+    <div className="ruido-map-zine__guide-scale">
+     <strong>INTENSIDADE DA COR = DIFERENÇA DE VOTOS</strong>
+     <div className="ruido-map-zine__guide-range"><span>Menos de 5 p.p.</span><span>5 a menos de 15 p.p.</span><span>15 a menos de 30 p.p.</span><span>30 p.p. ou mais</span></div>
+     <p>Em cada município, comparamos somente os votos de Lula e Flávio. O tom representa a diferença entre seus percentuais de votos válidos. No 1º turno, outros candidatos também participaram.</p>
+    </div>
+   </aside>
    <div className={uf==="BR"?"space-y-4":"grid lg:grid-cols-[1.35fr_.65fr] gap-5"}>
     <div className="ruido-map-zine__window">
      <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>LEITURA / {turno}º TURNO</span><span>ESTADO / MUNICÍPIO</span></div>
