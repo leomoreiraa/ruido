@@ -47,7 +47,6 @@ const schema = {
 };
 
 async function simplificar(p: Source) {
-  // Fixed hostname, never a URL from legislative records.
   const url = "https://generativelanguage.googleapis.com/v1beta/models/" +
     encodeURIComponent(model) + ":generateContent";
   const response=await geminiFreeFetch(url,key!,{
