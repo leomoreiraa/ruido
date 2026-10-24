@@ -93,6 +93,7 @@
     "scripts/audit-public-export.py": "bd79bfa6e5b0c9707638424b12b0066d238e43dca9bb4e9aa501ba1179e815a7",
     "scripts/build-browser-catalogs.ts": "c13d489c0e0160b918ab7d3b5b4d27e9751383de6968da22847206b070dc0ce2",
     "scripts/build-ghpages.ts": "0b7ced87b424e3b7d9bf86c450225f4dae797e26b4f1e3dbe6eef3da89380b17",
+    "scripts/build-municipal-geometry.py": "2fbcd0f1411f5d784d3053125a1e57e7066fa20a7bbd867beb20c46832b7d0d3",
     "scripts/build-public-source.py": "f67e0f5e2fabd531c4787b9ab795dc551e2822ddf02e077e6440cc06b1976cae",
     "scripts/build-regional-data.ts": "836c67b44075fb152b00f10c3b6fd20eb34c8ec5f29fe9f23ddd08837de25e5e",
     "scripts/check-status.ts": "39f211f9ad4ae8b054813eb71de17d1aafbb46d0261c74a493285dc47a4b8097",
