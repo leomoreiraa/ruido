@@ -1,4 +1,3 @@
-/* app/globals.css */
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Permanent+Marker&family=UnifrakturMaguntia&display=swap');
 
 @tailwind base;
@@ -48,7 +47,7 @@ body {
   color: #ffffff;
 }
 
-/* Grime / Noise fixed texture overlay */
+
 .grain-overlay {
   position: fixed;
   inset: 0;
@@ -60,7 +59,7 @@ body {
   mix-blend-mode: multiply;
 }
 
-/* Links */
+
 a {
   color: inherit;
   text-decoration: none;
@@ -71,13 +70,13 @@ a:hover {
   color: var(--red);
 }
 
-/* Focus styles */
+
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
   outline: 3px solid var(--acid) !important;
   outline-offset: 3px !important;
 }
 
-/* Ticker / Running Banner Animation */
+
 @keyframes drift {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -94,7 +93,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   animation-play-state: paused;
 }
 
-/* Distressed Cuts for Ransom Typography */
+
 .cut-black {
   color: var(--paper);
   background: var(--ink);
@@ -135,7 +134,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 4px 4px 0 var(--ink);
 }
 
-/* Zine / Torn Paper Card */
+
 .zine-card {
   position: relative;
   background: var(--paper-card);
@@ -150,7 +149,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 12px 12px 0 var(--red), 14px 14px 0 var(--ink);
 }
 
-/* Scotch Tape Effect */
+
 .scotch-tape {
   position: absolute;
   top: -12px;
@@ -179,7 +178,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   pointer-events: none;
 }
 
-/* Rubber Stamps */
+
 .rubber-stamp {
   display: inline-flex;
   align-items: center;
@@ -216,7 +215,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 2px 2px 0 rgba(22, 163, 74, 0.3);
 }
 
-/* Redaction bar effect */
+
 .redacted {
   background: var(--ink);
   color: transparent;
@@ -232,7 +231,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   user-select: text;
 }
 
-/* Spikes Border Element */
+
 .spikes-strip {
   height: 28px;
   background: url('/assets/spikes.svg') repeat-x left bottom / 62px 28px;
@@ -240,7 +239,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   pointer-events: none;
 }
 
-/* Barbed Wire Strip */
+
 .wire-strip {
   height: 36px;
   background: url('/assets/barbed-wire.svg') repeat-x center / auto 36px;
@@ -248,7 +247,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   pointer-events: none;
 }
 
-/* Chain Strip */
+
 .chain-strip {
   height: 38px;
   background: url('/assets/chain.svg') repeat-x center / auto 38px;
@@ -256,14 +255,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   pointer-events: none;
 }
 
-/* Xerox Photo Treatment */
+
 .xerox-img {
   filter: grayscale(1) contrast(1.6) brightness(0.95);
   border: 2px solid var(--ink);
   transition: filter 0.25s ease-in-out, transform 0.2s;
 }
 
-/* Politician Photo Punk Stencil Target on Hover */
+
 .politician-mugshot {
   position: relative;
   overflow: hidden;
@@ -315,7 +314,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   transform: scale(1.03);
 }
 
-/* Custom Table Styles */
+
 table {
   border-collapse: separate;
   border-spacing: 0;
@@ -350,7 +349,7 @@ tr:hover td {
   background: rgba(216, 245, 62, 0.25);
 }
 
-/* Buttons */
+
 .btn-punk {
   display: inline-flex;
   align-items: center;
@@ -403,7 +402,7 @@ tr:hover td {
   border-color: var(--ink);
 }
 
-/* Inputs & Selects */
+
 input[type="text"], input[type="search"], select {
   font-family: var(--mono);
   font-weight: 600;
@@ -422,7 +421,7 @@ input[type="text"]:focus, input[type="search"]:focus, select:focus {
   outline: none;
 }
 
-/* Newspaper torn clipping container */
+
 .newspaper-clip {
   background: #dcd4c3 url('/assets/ripped-paper-strip-newsprint-55.png') top center / 100% auto no-repeat;
   border: 2px solid var(--ink);
@@ -430,7 +429,7 @@ input[type="text"]:focus, input[type="search"]:focus, select:focus {
   box-shadow: 7px 7px 0 var(--ink);
 }
 
-/* Custom Scrollbar */
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -456,11 +455,7 @@ input[type="text"]:focus, input[type="search"]:focus, select:focus {
 }
 
 
-/* ==========================================================================
-   RUÍDO / POSTER SYSTEM — COLAGEM URBANA
-   Cartazes originais: WebP comprimido; papel e carimbos reaproveitam assets
-   existentes. Nenhuma camada intercepta controles, links ou regiões do mapa.
-   ========================================================================== */
+
 :root {
   --zine-paper: #f4eddf;
   --zine-printed: #171817;
@@ -611,11 +606,7 @@ body.collage-body {
 }
 
 
-/* ==========================================================================
-   RUÍDO / RECORTE DE RUA — FASE 1
-   Identidade gráfica: xerox, impressão desalinhada, papel rasgado e lambe-lambe.
-   Texturas locais; CSS não altera grade, fluxo de conteúdo ou links.
-   ========================================================================== */
+
 :root {
   --ink: #10100f;
   --paper: #eae4d8;
@@ -655,7 +646,7 @@ body.collage-body {
   mask-image: linear-gradient(to bottom, #000, transparent);
 }
 
-/* Recorte principal: reaproveita o mesmo hero, sem o cartaz redundante. */
+
 .ruido-site-content .collage-paper {
   border-color: var(--ink);
   background-color: var(--paper-card);
@@ -681,7 +672,7 @@ body.collage-body {
   mix-blend-mode: multiply;
 }
 
-/* Bordas inferiores irregulares lembram lambe-lambe arrancado de um muro. */
+
 .ruido-site-content .collage-paper::after {
   left: -4px;
   right: -4px;
@@ -701,8 +692,7 @@ body.collage-body {
   );
 }
 
-/* Superfície compartilhada por cartões claros. A forma rasgada fica
-   em ::before, permitindo que fitas, selos e clipes saiam dos limites. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
   position: relative;
   isolation: isolate;
@@ -754,7 +744,7 @@ body.collage-body {
   clip-path: polygon(0 1%,100% 0,99% 99%,1% 100%);
 }
 
-/* Preserve selos, fitas e alvos acima das camadas de textura. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) > :where(.scotch-tape,.scotch-tape-corner,[class*="absolute"]) {
   z-index: 3;
 }
@@ -763,8 +753,7 @@ body.collage-body {
   box-shadow: 9px 9px 0 var(--red), 13px 13px 0 var(--ink);
 }
 
-/* Textura de jornal em fichas/painéis claros que já existem no site.
-   Não substituir fundos escuros, pois isso afetaria a legibilidade. */
+
 .ruido-site-content :is(.newspaper-clip, .collage-rail) {
   background-color: var(--paper-card);
   background-image:
@@ -773,7 +762,7 @@ body.collage-body {
   background-size: auto, 440px auto;
 }
 
-/* Fotos recortadas com rebarba irregular e impressão xerox. */
+
 .politician-mugshot {
   background: #e4dbc6 url('/assets/papel-fibra.jpg') center / 360px auto;
   clip-path: polygon(1% 0, 21% 1%, 40% 0, 62% 2%, 82% 0, 99% 1%,
@@ -801,7 +790,7 @@ body.collage-body {
   mix-blend-mode: multiply;
 }
 
-/* Fotos gráficas em cartazes — nunca estiliza os SVG do mapa. */
+
 .ruido-site-content .ruido-photo-cutout {
   background: var(--paper-card) url('/assets/papel-fibra.jpg') center / 360px;
   padding: 5px;
@@ -812,7 +801,7 @@ body.collage-body {
   box-shadow: 4px 4px 0 var(--red);
 }
 
-/* Etiquetas, carimbos e botões como pedaços de cartaz sobrepostos. */
+
 .ruido-site-content :is(.collage-index, .collage-sticker, .btn-punk) {
   clip-path: polygon(1% 2%, 25% 0, 53% 3%, 78% 0, 100% 2%,
     98% 48%, 100% 97%, 75% 100%, 49% 97%, 24% 100%, 0 98%);
@@ -835,7 +824,7 @@ body.collage-body {
   backdrop-filter: blur(1px);
 }
 
-/* Corte final no rodapé escuro. Mantém contraste e não cobre links. */
+
 footer.bg-ink::before {
   content: "";
   position: absolute;
@@ -869,13 +858,9 @@ footer.bg-ink::before {
 }
 
 
-/* ==========================================================================
-   RUÍDO / LAMBE-LAMBE TOTAL — FASE 2
-   Fichários, mapas, painéis, navegação e etiquetas: impressão imperfeita.
-   Assets versionados, nenhuma imagem de terceiros carregada durante a navegação.
-   ========================================================================== */
 
-/* Parede de cartazes sucessivos, com desgaste de tinta entre camadas. */
+
+
 .collage-nav {
   background-color: var(--ink);
   background-image:
@@ -911,7 +896,7 @@ footer.bg-ink::before {
   outline: 1px solid rgba(16,16,15,.15);
 }
 
-/* Cartaz em papelão e recorte fotocopiado: sem alterar o conteúdo. */
+
 .ruido-site-content .ruido-poster-cutout {
   isolation: isolate;
   background:
@@ -943,7 +928,7 @@ footer.bg-ink::before {
   box-shadow: 5px 5px 0 var(--ink);
 }
 
-/* Fichas com tinta desgastada, véu xerox, bordas de tesoura e dobra. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
   box-shadow: 6px 7px 0 var(--ink), 10px 11px 0 rgba(240,38,50,.82);
 }
@@ -968,7 +953,7 @@ footer.bg-ink::before {
   box-shadow: 10px 11px 0 var(--red), 14px 15px 0 var(--ink);
 }
 
-/* A estética não quebra tabelas ou painéis de dados com overflow horizontal. */
+
 .ruido-site-content table {
   border-color: var(--ink);
   background:
@@ -997,7 +982,7 @@ footer.bg-ink::before {
   background-color: rgba(221,255,53,.26);
 }
 
-/* Mapa, legendas e gráficos seguem legíveis e operáveis; vinheta apenas na moldura. */
+
 .ruido-site-content .ruido-map-frame {
   isolation: isolate;
   background-image:
@@ -1020,7 +1005,7 @@ footer.bg-ink::before {
   mix-blend-mode: screen;
 }
 
-/* Letras de jornal coladas sobre pôsteres escuros e vermelhos. */
+
 .ruido-site-content :is(.ruido-ink-poster, .ruido-red-poster) {
   position: relative;
   isolation: isolate;
@@ -1051,7 +1036,7 @@ footer.bg-ink::before {
     81% 14%, 88% 62%, 94% 8%, 100% 54%, 100% 100%, 0 100%);
 }
 
-/* Etiquetas como fitas impressas, mantendo focos e áreas clicáveis. */
+
 .ruido-site-content :is(.rubber-stamp, .collage-sticker) {
   filter: drop-shadow(1px 2px 0 rgba(16,16,15,.25));
 }
@@ -1080,7 +1065,7 @@ footer.bg-ink::before {
   filter: drop-shadow(2px 2px 0 rgba(16,16,15,.18));
 }
 
-/* Textura de impressão da foto: não cobrir a informação nem o controle hover. */
+
 .politician-mugshot img {
   image-rendering: auto;
 }
@@ -1089,12 +1074,12 @@ footer.bg-ink::before {
   opacity: .17;
 }
 
-/* Etiquetas de dossiê — recortes minúsculos em sobreposição. */
+
 .ruido-site-content :is(.ruido-paper-card,.collage-paper) :is(.bg-ink,.bg-punk-red,.bg-punk-acid)[class*="font-"] {
   background-image: repeating-linear-gradient(112deg, transparent 0 17px, rgba(255,255,255,.055) 18px 19px);
 }
 
-/* Preserva navegação, ausência de horizontal scroll e controles em mobile. */
+
 @media (max-width: 640px) {
   .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
     box-shadow: 4px 5px 0 var(--ink), 6px 7px 0 var(--red);
@@ -1117,7 +1102,7 @@ footer.bg-ink::before {
 }
 
 
-/* Biblioteca compartilhada de interfaces: os componentes seguem sem mudança funcional. */
+
 .ruido-site-content .ruido-label-cutout {
   clip-path: polygon(1% 0, 22% 2%, 54% 0, 81% 2%, 100% 0,
     98% 50%, 100% 100%, 75% 98%, 49% 100%, 23% 97%, 0 100%);
@@ -1142,7 +1127,7 @@ footer.bg-ink::before {
   padding-bottom: 12px;
 }
 
-/* Evitar que fitas, recortes ou textura capturem toques em smartphones. */
+
 .ruido-site-content :is(.ruido-paper-card,.ruido-poster-cutout,.ruido-map-frame)::after {
   pointer-events: none;
 }
@@ -1156,12 +1141,7 @@ footer.bg-ink::before {
 }
 
 
-/* ==========================================================================
-   RUÍDO / ZINE MATERIAL — PAPEL DE VERDADE + XEROX + NEON
-   A borda e a textura são arquivos de papel digitalizados, NÃO clip-path.
-   /assets/ripped-paper-*.png fornece o recorte alfa com desgaste material.
-   /assets/textured-paper.png fornece fibra e amassados no miolo.
-   ========================================================================== */
+
 :root {
   --ruido-neon: #d8ff24;
   --ruido-ink: #141312;
@@ -1171,8 +1151,7 @@ footer.bg-ink::before {
   --ruido-tape: url('/assets/collage/tape-paper.webp');
 }
 
-/* Cada cartão é um RECORTE INTEIRO, com centro de papel real. A sombra
-   acompanha o alfa da imagem, expondo o verde por baixo das rebarbas. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
   position: relative;
   isolation: isolate;
@@ -1192,7 +1171,7 @@ footer.bg-ink::before {
   --ruido-card-sheet: url('/assets/ripped-paper-newsprint-50.png');
 }
 
-/* Camada inferior: o papel arrancado, COM textura fotográfica e alfatransparência. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::after {
   content: "";
   display: block;
@@ -1212,7 +1191,7 @@ footer.bg-ink::before {
     drop-shadow(-2px -2px 0 rgba(17,16,15,.72));
 }
 
-/* Camada superior: fibra real (não ruído criado por gradiente). */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
   content: "";
   position: absolute;
@@ -1235,7 +1214,7 @@ footer.bg-ink::before {
   clip-path: none !important;
 }
 
-/* Conteúdo real fica legível e clicável, fita não muda posição. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) > * {
   z-index: 2;
 }
@@ -1249,8 +1228,7 @@ footer.bg-ink::before {
     drop-shadow(-2px -2px 0 rgba(17,16,15,.75));
 }
 
-/* Fotos: recorte preto-e-branco dentro de uma camada de cartolina fibrosa;
-   o aro também projeta sombra verde, sem recortar rostos. */
+
 .politician-mugshot {
   overflow: visible;
   clip-path: none !important;
@@ -1282,7 +1260,7 @@ footer.bg-ink::before {
 }
 .politician-mugshot > .target-stamp { z-index: 20; }
 
-/* Foto editorial em destaques e pôsteres. */
+
 .ruido-site-content .ruido-photo-cutout {
   position: relative;
   clip-path: none;
@@ -1307,7 +1285,7 @@ footer.bg-ink::before {
   filter: drop-shadow(7px 6px 0 var(--ruido-neon));
 }
 
-/* Fitas recortadas de imagem, em vez de caixas amarelas CSS. */
+
 .ruido-site-content :is(.scotch-tape,.scotch-tape-corner),
 .ruido-site-content .ruido-card-tape {
   background: var(--ruido-tape) center / 100% 100% no-repeat !important;
@@ -1320,8 +1298,7 @@ footer.bg-ink::before {
 .ruido-site-content .scotch-tape { width: 154px; height: 32px; }
 .ruido-site-content .ruido-card-tape { width: 116px; height: 31px; }
 
-/* Homepage: pôsteres xerox e lambe-lambe SOBRE o papel envelhecido.
-   Sem dados estáticos, textos falsos ou imagens de políticos inventados. */
+
 body.collage-body:has(.ruido-home-stage) {
   background-color: #e9e1cf;
   background-image:
@@ -1342,7 +1319,7 @@ body.collage-body:has(.ruido-home-stage) {
   position: relative;
   z-index: 1;
 }
-/* O papel do cartaz principal recebe fibra no centro e borda neon recortada. */
+
 .ruido-site-content .ruido-home-stage .ruido-hero-wall {
   background-color: #f0e5d1;
   background-image:
@@ -1358,18 +1335,18 @@ body.collage-body:has(.ruido-home-stage) {
   opacity: .13;
   pointer-events: none;
 }
-/* Em seção inicial, cartões legíveis sob o desgaste de jornal. */
+
 .ruido-home-stage :is(.bg-paper,.bg-paper-light)[class*="border"] {
   background-image: url('/assets/textured-paper.png');
   background-size: 400px auto;
 }
-/* Carimbos verde-neon saem um pouco do recorte sem ocupar a grade. */
+
 .ruido-site-content :is(.ruido-label-cutout.bg-punk-acid,.collage-index.bg-punk-acid) {
   background: url('/assets/collage/label-acid.svg') center / 100% 100% no-repeat;
   clip-path: none;
 }
 
-/* Corrige o antigo brilho artificial: o recorte contém a própria granulação. */
+
 .grain-overlay { opacity: .12; }
 @media (max-width: 640px) {
   .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before,
@@ -1393,14 +1370,10 @@ body.collage-body:has(.ruido-home-stage) {
   }
 }
 
-/* RUÍDO visual asset phase: preserve content layout */
 
 
-/* ================================================================
-   RUÍDO / MURO DE SÃO PAULO — PALETA, COLAGENS E LEITURA (2026)
-   Preto de tinta, papel envelhecido, vermelho de cartaz e lima neon.
-   Apenas um papel por card; o ::after é tinta de contorno, não papel.
-   ================================================================ */
+
+
 :root {
   --ruido-wall: #141311;
   --ruido-ink: #171512;
@@ -1429,8 +1402,7 @@ body.collage-body:has(.ruido-home-stage) {
   );
 }
 
-/* O mural fotográfico é EXCLUSIVO da página inicial.
-   Não alterar/comprimir a arte original; uma imagem, sem repetição. */
+
 body.collage-body:has(.ruido-home-stage) {
   background-color: var(--ruido-wall);
   background-image:
@@ -1441,7 +1413,7 @@ body.collage-body:has(.ruido-home-stage) {
   background-repeat: no-repeat, no-repeat;
   background-attachment: fixed, fixed;
 }
-/* Sujeira fina de parede, sem neblina visual em texto e fotografias. */
+
 .grain-overlay {
   opacity: .075;
   mix-blend-mode: multiply;
@@ -1465,9 +1437,7 @@ body.collage-body:has(.ruido-home-stage) {
   mask-image: linear-gradient(to bottom, transparent 0, #000 160px, #000 85%, transparent);
 }
 
-/* Recorte de papel contínuo: tamanho determinado por texto, fotos e tabelas.
-   ::after forma o OUTLINE verde; ::before é a ÚNICA folha do card.
-   As silhuetas coincidem, mas a linha fluorescente sobressai em todo o perímetro. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
   --ruido-paper-tone: var(--ruido-paper);
   position: relative;
@@ -1558,7 +1528,7 @@ body.collage-body:has(.ruido-home-stage) {
 .ruido-site-content .ruido-paper-card.ruido-votacao-folha :is(h3,p,a,span) {
   overflow-wrap: anywhere;
 }
-/* O corpo dos textos volta a ser tinta sobre papel, não uma etiqueta neon. */
+
 .ruido-site-content .ruido-paper-card :is(p,li) {
   line-height: 1.65;
 }
@@ -1575,7 +1545,7 @@ body.collage-body:has(.ruido-home-stage) {
 .ruido-site-content .ruido-paper-card :is(.text-ink\/60,.text-ink\/50,.text-ink\/40) {
   color: var(--ruido-muted-ink);
 }
-/* Conserva a semântica de sim/não/abstenção, porém usa papel menos colorido. */
+
 .ruido-votacao-folha .bg-green-100 { background-color: #e5e9d9; }
 .ruido-votacao-folha .bg-red-100 { background-color: #efdfd7; }
 .ruido-votacao-folha .bg-yellow-100 { background-color: #f0e7cf; }
@@ -1584,8 +1554,7 @@ body.collage-body:has(.ruido-home-stage) {
   background-color: #eae1d2;
 }
 
-/* Marcas de rua ficam nos títulos e margens, não por cima de parágrafos.
-   Fita, xerox, stencil e cartazes levemente desalinhados. */
+
 .ruido-site-content .ruido-home-stage > section:not(:first-child) > .flex:first-child .font-heavy {
   position: relative;
   max-width: 100%;
@@ -1612,7 +1581,7 @@ body.collage-body:has(.ruido-home-stage) {
   opacity: .84;
 }
 
-/* Mais papel impresso, menos cores disputando o foco no conteúdo. */
+
 .ruido-site-content :is(.newspaper-clip,.collage-rail) {
   background-color: var(--ruido-paper) !important;
   color: var(--ruido-ink);
@@ -1638,7 +1607,7 @@ body.collage-body:has(.ruido-home-stage) {
   border-bottom-color: var(--ruido-rust);
   box-shadow: 0 7px 0 #12110f, 0 10px 0 var(--ruido-neon);
 }
-/* Tecido de fita e meio-tom permanecem nos detalhes, não no texto. */
+
 .grain-overlay { opacity: .07; }
 .collage-mascot,
 .collage-footer-mascot,
@@ -1685,7 +1654,7 @@ body.collage-body:has(.ruido-home-stage) {
   }
 }
 
-/* A impressão prioriza dados e documentos, sem fundo de parede nem neon. */
+
 @media print {
   body.collage-body,
   body.collage-body:has(.ruido-home-stage) {
@@ -1700,11 +1669,7 @@ body.collage-body:has(.ruido-home-stage) {
 }
 
 
-/* ================================================================
-   RUÍDO / XEROX & LAMBE-LAMBE: RETORNO AO PUNK (2026)
-   Muro e imagem ORIGINAL não são alterados. A brutalidade fica nas
-   bordas/cartazes/tinta; o miolo de texto mantém contraste forte.
-   ================================================================ */
+
 :root {
   --zine-black: #171512;
   --zine-paper: #f0e5d2;
@@ -1732,7 +1697,7 @@ body.collage-body:has(.ruido-home-stage) {
   );
 }
 
-/* Cartaz com erro de registro, sem prejudicar a informação. */
+
 .grain-overlay {
   opacity: .1;
   mix-blend-mode: multiply;
@@ -1780,8 +1745,7 @@ body.collage-body:has(.ruido-home-stage) {
   overflow-wrap: anywhere;
 }
 
-/* Uma folha dimensionada pelo texto, um recorte verde sólido atrás.
-   Não usar PNG de tamanho fixo para delimitar o miolo do artigo. */
+
 .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light)::before {
   content: "" !important;
   display: block !important;
@@ -1852,7 +1816,7 @@ body.collage-body:has(.ruido-home-stage) {
   overflow-wrap: anywhere;
 }
 
-/* Títulos de cartaz, carimbo, stencil e pichação nos espaços editoriais. */
+
 .ruido-site-content .ruido-home-stage > section > .flex:first-child .font-heavy,
 .ruido-site-content .collage-page > :is(h1,h2),
 .ruido-site-content :is(.collage-rail,.ruido-ink-poster,.ruido-red-poster) :is(h1,h2) {
@@ -1995,8 +1959,7 @@ body.collage-body:has(.ruido-home-stage) {
   text-align: center;
 }
 
-/* Botões impressos como manchas de tinta, mas com núcleo preenchido
-   opaco para leitura e foco. Irregularidade sutil, nada de blur. */
+
 .ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action),
 .ruido-nav .ruido-nav-link,
 .ruido-nav .ruido-nav-toggle {
@@ -2065,7 +2028,7 @@ body.collage-body:has(.ruido-home-stage) {
 }
 .ruido-site-content .ruido-votacao-folha > p { overflow-wrap: anywhere; }
 
-/* Barra de navegação lambe-lambe; fundo da página original intocado. */
+
 .collage-nav.ruido-nav {
   position: relative;
   background-color: var(--zine-black) !important;
@@ -2156,7 +2119,7 @@ body.collage-body:has(.ruido-home-stage) {
   color: var(--zine-black);
 }
 
-/* Fita real, legenda reduzida e busca construída como papel. */
+
 .ruido-home-search {
   position: relative;
   padding: 1rem;
@@ -2203,7 +2166,7 @@ body.collage-body:has(.ruido-home-stage) {
 }
 .ruido-search-result:hover { background: var(--zine-acid); }
 
-/* Painéis internos seguem o mesmo vocabulário visual, sem textura em texto. */
+
 .ruido-site-content :is(.collage-rail,.newspaper-clip) {
   position: relative;
   border: 3px solid var(--zine-black);
@@ -2267,7 +2230,7 @@ body.collage-body:has(.ruido-home-stage) {
 }
 .ruido-site-content .ruido-home-manifesto :is(h2,p) { color: #fff9ee; }
 
-/* Respiro para parágrafos grandes, menos distrações sobre dados. */
+
 .ruido-site-content .ruido-paper-card.ruido-votacao-folha p {
   font-size: clamp(.84rem, .35vw + .79rem, .94rem);
   line-height: 1.64;
@@ -2283,7 +2246,7 @@ body.collage-body:has(.ruido-home-stage) {
   overflow: hidden;
 }
 
-/* Menos giro em celular, jamais cortar links, fotos, títulos ou números. */
+
 @media (max-width: 640px) {
   .ruido-site-content .ruido-paper-card:is(.bg-paper-card,.bg-paper-light) {
     padding: 1.7rem !important;
@@ -2310,13 +2273,7 @@ body.collage-body:has(.ruido-home-stage) {
 }
 
 
-/* ==========================================================
-   FUNDOS POR ROTA — HOME: COLAGEM / INTERNAS: CIMENTO
-   A distinção é feita pela presença de .ruido-home-stage.
-   O cimento é uma textura SVG leve de parede envelhecida,
-   sem fotografia nem cartazes atrás dos dados detalhados.
-   Os cartões de papel/texturas/tinta permanecem inalterados.
-   ========================================================== */
+
 body.collage-body:not(:has(.ruido-home-stage)) {
   background-color: #555852;
   background-image:
@@ -2327,7 +2284,7 @@ body.collage-body:not(:has(.ruido-home-stage)) {
   background-repeat: no-repeat, repeat;
   background-attachment: fixed, fixed;
 }
-/* Mural sem alterações na home; evita mosaico da fotografia. */
+
 body.collage-body:has(.ruido-home-stage) {
   background-color: var(--ruido-wall);
   background-image:
@@ -2359,12 +2316,7 @@ body.collage-body:has(.ruido-home-stage) {
   }
 }
 
-/* ============================================================
-   RUÍDO / MANIFESTO FOTOGRÁFICO — ASSET INDEPENDENTE DA HOME
-   A fotografia enviada pelo usuário ocupa APENAS o manifesto.
-   O mural original da landing e o cimento das páginas internas
-   permanecem intactos. Camada opaca apenas atrás do texto.
-   ============================================================ */
+
 .ruido-site-content .ruido-home-manifesto {
   position: relative;
   isolation: isolate;
@@ -2446,15 +2398,9 @@ body.collage-body:has(.ruido-home-stage) {
 }
 
 
-/* ============================================================
-   RUÍDO / RENDERIZAÇÃO LEVE (2026)
-   Mantém muro, cartazes, papel, rasgos e paleta.
-   Evita superfícies gigantes com filtros e repaint no scroll.
-   ============================================================ */
 
-/* O overlay fixo com mix-blend-mode fazia o navegador recompor a
-   viewport inteira a cada frame. O desgaste continua no topo e nos
-   próprios cartazes, mas agora é uma camada estática e pequena. */
+
+
 .grain-overlay {
   position: absolute !important;
   top: 0;
@@ -2475,15 +2421,12 @@ body.collage-body:has(.ruido-home-stage) {
   mask-image: none !important;
   opacity: .12 !important;
 }
-/* A tinta permanece no mesmo lugar visualmente, mas o browser não
-   precisa recalcular fundos "fixed" em toda rolagem. */
+
 body.collage-body:has(.ruido-home-stage) {
   background-attachment: scroll, scroll !important;
 }
 body.collage-body:not(:has(.ruido-home-stage)) {
-  /* Grunge já versionado e compactado no projeto: substitui o
-     SVG com feTurbulence (filtro fractal caro em celulares).
-     Base cinza mantém a aparência do concreto. */
+  
   background-color: #555852;
   background-image:
     linear-gradient(115deg,rgba(21,24,22,.6),rgba(42,44,40,.46)),
@@ -2492,8 +2435,7 @@ body.collage-body:not(:has(.ruido-home-stage)) {
   background-repeat: no-repeat, repeat;
   background-attachment: scroll, scroll !important;
 }
-/* As seções fora da tela não precisam ser pintadas antes da rolagem.
-   Nenhum conteúdo é omitido da página, leitura ou busca. */
+
 @supports (content-visibility: auto) {
   .ruido-site-content article.ruido-paper-card,
   .ruido-site-content .ruido-votacao-folha,
@@ -2504,8 +2446,7 @@ body.collage-body:not(:has(.ruido-home-stage)) {
 }
 @media (max-width: 900px), (hover: none) {
   .grain-overlay { display: none !important; }
-  /* Tinta e fibra continuam nos cards; remover composição e filtros
-     de fotos somente em telas de toque mantém a rolagem responsiva. */
+  
   .politician-mugshot .target-red-layer,
   .politician-mugshot .target-stamp { display: none !important; }
   .ruido-site-content .scotch-tape,
@@ -2530,15 +2471,9 @@ body.collage-body:not(:has(.ruido-home-stage)) {
 }
 
 
-/* ================================================================
-   RESTAURAÇÕES VISUAIS / FUNDO NÍTIDO, MANIFESTO E FOTO (2026)
-   ================================================================ */
 
-/* A imagem 1536x864 deve ser dimensionada pela VIEWPORT, e não pela
-   altura de milhares de pixels do documento. O ajuste anterior de
-   performance forçou background-attachment: scroll, que fez "cover"
-   ampliar a foto até a altura inteira da home e causou o borrão.
-   Uma camada fixa simples, sem blend-mode, evita essa ampliação. */
+
+
 body.collage-body:has(.ruido-home-stage) {
   background-color: #141311;
   background-image:
@@ -2549,14 +2484,12 @@ body.collage-body:has(.ruido-home-stage) {
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
 }
-/* Reduzir a opacidade das camadas decorativas sobre o mural sem alterar
-   a textura do papel e sem precisar criar arquivos de imagem maiores. */
+
 body.collage-body:has(.ruido-home-stage) > .grain-overlay {
   opacity: .045 !important;
 }
 
-/* O manifesto principal está na rota /sobre, além do chamado na home.
-   Sua imagem própria não altera o mural de fundo da landing page. */
+
 .ruido-site-content .ruido-red-poster.ruido-manifesto-poster {
   isolation: isolate;
   background-color: #17120f !important;
@@ -2579,8 +2512,7 @@ body.collage-body:has(.ruido-home-stage) > .grain-overlay {
 .ruido-site-content .ruido-manifesto-poster .ruido-manifesto-copy > p {
   color: #fff7e7;
 }
-/* A fita sobre a foto e o papel são mantidos; o rosto de stencil
-   aparece com hover em mouse e com toque/teclado em tablets. */
+
 .politician-mugshot .target-red-layer {
   display: block !important;
 }
@@ -2607,7 +2539,7 @@ body.collage-body:has(.ruido-home-stage) > .grain-overlay {
   outline-offset: 4px;
 }
 
-/* O popup de toque não deve disparar composições de blend no site inteiro. */
+
 @media (hover: none), (max-width: 900px) {
   .politician-mugshot .target-red-layer { display: block !important; }
   .politician-mugshot .target-stamp { display: flex !important; }
@@ -2632,11 +2564,7 @@ body.collage-body:has(.ruido-home-stage) > .grain-overlay {
 }
 
 
-/* Garantia Android/Chrome: alguns navegadores móveis ignoram
-   background-attachment: fixed no elemento raiz e dimensionam o "cover"
-   pela altura do documento. Esta camada tem SEMPRE a dimensão da viewport,
-   mantendo a fotografia nítida em telas touch e desktop.
-   A foto é exclusiva da home, não do manifesto ou das páginas internas. */
+
 body.collage-body:has(.ruido-home-stage) {
   background-image: none !important;
   background-color: #141311 !important;
@@ -2660,16 +2588,10 @@ body.collage-body:has(.ruido-home-stage)::before {
 }
 
 
-/* ==============================================================
-   RUÍDO / LAMBE-LAMBE EM TINTA — 22/10/2026
-   Campos legíveis, botões com cerdas, collage exclusivo da /sobre.
-   Nenhum dos dois JPG originais é alterado. Desenho de pincel vetorial
-   leve, sem filtros de blur, GIFs nem texturas gigantes animadas.
-   ============================================================== */
+
 :root { --ruido-brush-mask: url('/assets/collage/brush-stroke.svg'); }
 
-/* A colagem brasileira/europeia que o usuário selecionou pertence
-   à PAREDE da rota /sobre inteira, não ao conteúdo do manifesto. */
+
 body.collage-body:has(.ruido-manifesto-page) {
   background: #191411 !important;
   background-image: none !important;
@@ -2688,8 +2610,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   background-position: center center, center center;
   background-repeat: no-repeat, no-repeat;
 }
-/* O pôster principal deve ser apenas cartolina impressa, sem duplicar
-   o mural da parede dentro dele. O aviso da home volta a ser vermelho. */
+
 .ruido-site-content .ruido-red-poster.ruido-manifesto-poster {
   background-color: var(--zine-red) !important;
   background-image: url('/assets/grime.png') !important;
@@ -2711,8 +2632,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   body.collage-body:has(.ruido-manifesto-page)::before { content: none !important; }
 }
 
-/* Marquise contínua de texto: leve inclinação e impressão xerox.
-   Os dois segmentos têm a MESMA largura, criando uma repetição limpa. */
+
 .ruido-marquee-band {
   overflow: hidden;
   transform: skewY(-.4deg);
@@ -2756,9 +2676,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   .ruido-marquee-track { animation: none !important; will-change: auto; }
 }
 
-/* Os botões e abas são manchas de tinta, inspiradas nas cerdas secas do
-   exemplo. Aplicar a máscara SOMENTE ao controle, sem alterar textos,
-   cards, fotos ou links comuns. */
+
 .ruido-site-content :is(.btn-punk,.ruido-press-cutout,.ruido-action,.ruido-flat-button),
 .ruido-site-content :is(button:not([role="switch"]),input:is([type="submit"],[type="button"],[type="reset"])),
 .ruido-nav :is(.ruido-nav-link,.ruido-nav-toggle),
@@ -2797,8 +2715,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   outline-offset: -4px !important;
 }
 
-/* Campos editáveis não podem perder clareza nem recortar as letras:
-   miolo off-white, bordas de cerdas pretas, recorte limitado às pontas. */
+
 .ruido-site-content :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),select,textarea,.ruido-input-cutout) {
   -webkit-mask-image: var(--ruido-brush-mask) !important;
   mask-image: var(--ruido-brush-mask) !important;
@@ -2831,8 +2748,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   outline-offset: 0 !important;
 }
 
-/* A caveira da HOME vira impressão em papel fibroso. A linha verde está
-   no próprio SVG, chapada; nenhum drop-shadow ou halo externo. */
+
 .ruido-site-content .ruido-home-art.ruido-skull-paper {
   background-color: #eadfca !important;
   background-image: url('/assets/textured-paper.png'),url('/assets/papel-fibra.jpg') !important;
@@ -2867,14 +2783,12 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   background: #ac2c24 !important;
   color: #f8efdf !important;
 }
-/* Fita real, não aura projetada. */
+
 .ruido-home-art.ruido-skull-paper::before {
   filter: none !important;
 }
 
-/* Dossiê: cada letra em um lambe-lambe individual, alternando preto,
-   vermelho e lima. Tipografia off-white com traço preto nas letras
-   sobre verde para manter contraste sem perder a paleta. */
+
 .ruido-politicos-headline {
   display: flex;
   flex-wrap: wrap;
@@ -2924,8 +2838,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
 }
 .ruido-politicos-header { border-bottom-color: #d3ff20 !important; }
 
-/* Legenda pode quebrar e continuar legível no celular; as palavras
-   do título quebram apenas entre si, não no meio dos recortes. */
+
 @media (max-width: 640px) {
   .ruido-politicos-headline { font-size: clamp(.95rem, 3.65vw, 1.55rem); gap: .3em .55em; }
   .ruido-politicos-letra { padding-inline: .06em; }
@@ -2936,14 +2849,9 @@ body.collage-body:has(.ruido-manifesto-page)::before {
 }
 
 
-/* ===============================================================
-   RUÍDO / LEITURA E TINTA — MAPA, CARTAZES E LINKS (22/10/2026)
-   No conteúdo, a mancha fica ATRÁS do texto, não por cima dele.
-   O mapa mantém sua superfície cinza e as cores dos estados.
-   =============================================================== */
 
-/* Mapa Brasil: impedir que as regras genéricas de papel/pôster
-   substituam o cinza original do mapa interativo. */
+
+
 .ruido-site-content .mapa-brasil .ruido-map-frame {
   background-color: #444b46 !important;
   background-image: none !important;
@@ -2960,9 +2868,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   color: #d3ff20;
 }
 
-/* Um retângulo editorial discreto para cada parágrafo sobre o papel
-   xerocado. Mantém as bordas rasgadas/textura da folha e reduz o ruído
-   somente atrás da leitura. Não pinta carimbos, fotos nem gráficos. */
+
 .ruido-site-content .ruido-paper-card p.font-mono:not([class*="text-paper"]):not([class*="text-white"]):not([class*="bg-"]),
 .ruido-site-content .ruido-paper-card > p:not([class*="text-paper"]):not([class*="text-white"]):not([class*="bg-"]),
 .ruido-site-content .ruido-paper-card blockquote {
@@ -2982,7 +2888,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   color: #26221d;
   padding: .2rem .42rem;
 }
-/* Ementa e resumo: contraste ainda melhor nas leituras longas. */
+
 .ruido-site-content .ruido-paper-card[aria-labelledby="cidadao-title"] > p,
 .ruido-site-content .ruido-paper-card[aria-labelledby="juridico-title"] > p {
   max-width: 100%;
@@ -2997,9 +2903,7 @@ body.collage-body:has(.ruido-manifesto-page)::before {
   background-color: #f7ecda;
 }
 
-/* Links textuais recebem uma pincelada própria, nunca um halo.
-   NÃO se aplica a links que encapsulam imagens, cards, SVGs ou a
-   mini-lista de busca: esses permanecem acessíveis e sem recortes. */
+
 .ruido-site-content a:not(:has(img)):not(:has(svg)):not(:has(.ruido-paper-card)):not(:has(.politician-mugshot)):not(.ruido-search-result):not(.ruido-action):not(.btn-punk):not(.ruido-press-cutout):not(.ruido-proposition-text-link):not(.ruido-unmasked-text-link),
 footer a:not(:has(img)):not(:has(svg)):not(.ruido-press-cutout) {
   display: inline-block;
@@ -3027,7 +2931,7 @@ footer a:focus-visible {
   outline: 3px solid #d3ff20 !important;
   outline-offset: 2px !important;
 }
-/* Também tratar links explicitamente no estilo CTA ou botão. */
+
 .ruido-site-content :is(a.btn-punk,a.ruido-action,a.ruido-press-cutout),
 .ruido-site-content button:not(:has(.h-full)):not(:has(svg)),
 .ruido-nav :is(.ruido-nav-link,.ruido-nav-toggle) {
@@ -3039,7 +2943,7 @@ footer a:focus-visible {
   mask-repeat: no-repeat !important;
   background-blend-mode: normal !important;
 }
-/* Um link-foto ou o card clicável não pode perder sua própria silhueta. */
+
 .ruido-site-content a:has(img),
 .ruido-site-content a:has(.ruido-paper-card),
 .ruido-site-content a.ruido-search-result {
@@ -3058,15 +2962,9 @@ footer a:focus-visible {
 }
 
 
-/* ===============================================================
-   RUÍDO / TIPOGRAFIA SEM CORTES + FILTROS EM TINTA (2026)
-   O recorte "dry brush" pertence à DECORAÇÃO, nunca ao texto longo.
-   =============================================================== */
 
-/* Manchetes de projetos frequentemente têm mais de 10 linhas.
-   A antiga máscara aplicada ao <a> inteiro cortava primeira/última
-   linha em telas estreitas. Agora o papel preto cresce com o texto;
-   somente a pincelada decorativa inferior tem máscara. */
+
+
 .ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {
   position: relative;
   display: block;
@@ -3117,8 +3015,7 @@ footer a:focus-visible {
   -webkit-mask: none !important;
   mask: none !important;
 }
-/* As duas classes de título são explicitamente excluídas da máscara
-   universal de links. Texto sempre à frente da tinta, sem clipping. */
+
 .ruido-site-content a.ruido-proposition-text-link,
 .ruido-site-content .ruido-paper-card h3 > a.ruido-proposition-text-link {
   display: block !important;
@@ -3164,8 +3061,7 @@ footer a:focus-visible {
   text-decoration-color: #ac2c24;
   text-underline-offset: 3px;
 }
-/* Proteger qualquer outro link que seja manchete (incluindo novas
-   páginas), sem alterar os botões curtos. */
+
 .ruido-site-content .ruido-paper-card :is(h2,h3) > a:not(.btn-punk):not(.ruido-action) {
   -webkit-mask: none !important;
   mask: none !important;
@@ -3173,9 +3069,7 @@ footer a:focus-visible {
   white-space: normal !important;
 }
 
-/* Filtros: o PINCEL fica atrás das etiquetas e do cabeçalho.
-   O interior dos inputs e opções nunca é mascarado pelo painel.
-   Papel e fibra continuam visíveis no restante do formulário. */
+
 .ruido-site-content .ruido-filter-ink-panel {
   position: relative;
   isolation: isolate;
@@ -3244,8 +3138,7 @@ footer a:focus-visible {
   -webkit-mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
   mask: var(--ruido-brush-mask) center / 100% 100% no-repeat;
 }
-/* Input/select mantém texto e setas legíveis: só o rótulo é impressão
-   de tinta seca; o campo continua papel off-white com contorno preto. */
+
 .ruido-site-content .ruido-filter-ink-form :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
   padding: .75rem 1rem !important;
   line-height: 1.45 !important;
@@ -3254,8 +3147,7 @@ footer a:focus-visible {
   background-color: #fff8eb !important;
   box-shadow: none !important;
 }
-/* Filtros dentro do mapa têm seleção de ano/indicador; nunca recortar
-   as opções nativas nem os nomes compridos dos indicadores. */
+
 .ruido-site-content .mapa-brasil .ruido-filter-ink-form select {
   -webkit-mask: none !important;
   mask: none !important;
@@ -3285,12 +3177,7 @@ footer a:focus-visible {
 }
 
 
-/* ================================================================
-   TINTA REAL NOS BOTÕES (PC + TOUCH) / CORREÇÃO DE PUBLICAÇÃO 2026-10-23
-   Antes a máscara era aplicada ao CONTROLE INTEIRO: o desenho quase
-   retangular recortava as próprias letras. Agora o texto permanece
-   intocado e somente a camada de tinta recebe a máscara vetorial.
-   ================================================================ */
+
 .ruido-nav :is(a.ruido-nav-link,button.ruido-nav-toggle),
 .ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button) {
   --ruido-ink-fill: #d3ff20;
@@ -3337,8 +3224,7 @@ footer a:focus-visible {
   mask-size: 100% 100%;
 }
 .ruido-nav a.ruido-nav-link {
-  /* Tinta off-white CONTRASTA com o cabeçalho preto do PC.
-     Antes era preto sobre preto, parecendo link sem fundo. */
+  
   --ruido-ink-fill: #f8f0df;
   color: #191715;
 }
@@ -3391,7 +3277,7 @@ footer a:focus-visible {
   outline: 3px solid #d3ff20 !important;
   outline-offset: 5px !important;
 }
-/* Botões pequenos não podem ter texto cortado por máscaras de cerdas. */
+
 @media (max-width: 640px) {
   .ruido-nav :is(a.ruido-nav-link,button.ruido-nav-toggle),
   .ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button) {
@@ -3411,9 +3297,7 @@ footer a:focus-visible {
 }
 
 
-/* Navegação impressa: a máscara pertence APENAS à tinta que fica
-   atrás das letras. 'ruido-nav-brush' é aplicada aos links do PC e
-   aos do menu móvel, sem criar um segundo botão no desktop. */
+
 .ruido-nav a.ruido-nav-brush {
   --ruido-ink-fill: #f8f0df;
   color: #191715 !important;
@@ -3455,9 +3339,7 @@ footer a:focus-visible {
   }
 }
 
-/* Responsividade da navbar: o estilo visual de pincelada tem maior
-   especificidade que md:hidden. O botão MENU deve existir somente em
-   telas menores que 768px, onde os links principais ficam ocultos. */
+
 @media (min-width: 768px) {
   .ruido-nav button.ruido-nav-toggle {
     display: none !important;
@@ -3468,9 +3350,7 @@ footer a:focus-visible {
 }
 
 
-/* NAVBAR DEFINITIVA: empilhamento explícito, sem z-index negativo.
-   A tinta ocupa a camada 0; rótulos/ícones ficam na camada 1.
-   Evita texto preto invisível no header quando a máscara não pinta. */
+
 .ruido-nav a.ruido-nav-brush {
   --ruido-ink-fill: #f8f0df;
   isolation: isolate !important;
@@ -3508,16 +3388,15 @@ footer a:focus-visible {
   --ruido-ink-fill: #d3ff20;
   color: #171512 !important;
 }
-/* Logo ganha tinta atrás do carimbo editorial, sem perder contraste. */
+
 .ruido-nav .ruido-nav-edition { color: #fff8eb !important; }
-/* MENU pertence ao mobile, nunca ao desktop. */
+
 @media (min-width: 768px) {
   .ruido-nav button.ruido-nav-toggle,
   .ruido-nav #ruido-menu-mobile { display: none !important; }
 }
 
-/* Votações: só os cards visíveis entram no layout e pintura enquanto
-   se percorre a lista; a textura de papel permanece nos cards. */
+
 .ruido-site-content .ruido-pauta-list > .ruido-paper-card {
   content-visibility: auto;
   contain-intrinsic-size: auto 540px;
@@ -3529,9 +3408,7 @@ footer a:focus-visible {
 }
 
 
-/* Performance mobile exclusiva de /pautas: os papéis continuam com
-   textura e tinta, mas removemos camadas constantemente repintadas e
-   animações fora da área de conteúdo. */
+
 @media (max-width: 900px), (pointer: coarse) {
   body:has(.ruido-pautas-page) .grain-overlay {
     display: none !important;
@@ -3553,11 +3430,7 @@ footer a:focus-visible {
   }
 }
 
-/* ================================================================
-   RUÍDO / PARIDADE VISUAL DESKTOP + MOBILE (2026-10-23)
-   A mesma paleta e o mesmo recorte de tinta são usados em todas as
-   telas. Somente a organização dos links muda com o breakpoint.
-   ================================================================ */
+
 .ruido-nav {
   --ruido-nav-paper: #f8f0df;
   --ruido-nav-ink: #191715;
@@ -3593,8 +3466,7 @@ footer a:focus-visible {
   position: relative !important;
   z-index: 1 !important;
 }
-/* Componentes de ação recebem tinta idêntica no PC e no toque;
-   texto não é mascarado (apenas o pseudo-elemento decorativo). */
+
 .ruido-site-content :is(a.ruido-action,button.ruido-action,a.btn-punk,button.btn-punk,button.ruido-press-cutout,button.ruido-flat-button) {
   -webkit-mask: none !important;
   mask: none !important;
@@ -3625,9 +3497,7 @@ footer a:focus-visible {
 }
 
 
-/* Navbar RUÍDO: tinta real de pincel, sobreposta por trás do texto.
-   PC e celular compartilham EXATAMENTE a mesma superfície visual.
-   Não usar clip-path no link: os recortes pertencem somente à tinta. */
+
 .ruido-nav a.ruido-nav-brush {
   --ruido-ink-fill: #eee8da;
   position: relative !important;
@@ -3684,8 +3554,7 @@ footer a:focus-visible {
 @media (max-width: 767px) {
   .ruido-nav nav[aria-label="Navegação principal"] { display: none !important; }
 }
-/* Espaçamento do menu: as bordas das pinceladas não devem se tocar.
-   O espaço é medido entre superfícies pintadas (pseudo-elementos), não só links. */
+
 @media (min-width: 1280px) {
   .ruido-nav nav[aria-label="Navegação principal"] {
     column-gap: 1.95rem !important;
@@ -3715,7 +3584,7 @@ footer a:focus-visible {
   right: -4px !important;
 }
 
-/* Um único papel por seção: conteúdo interno é linha editorial, não outro card. */
+
 .ruido-dossie-section {
   width: 100%;
   min-width: 0;
@@ -3781,8 +3650,7 @@ footer a:focus-visible {
 }
 
 
-/* MANIFESTO: destaque vermelho de tinta, inclusive no item ativo.
-   O mesmo link está no menu desktop e no menu móvel. */
+
 .ruido-nav a.ruido-nav-brush.ruido-nav-manifesto,
 .ruido-nav a.ruido-nav-brush.ruido-nav-manifesto:is(.is-active,[aria-current="page"]) {
   --ruido-ink-fill: #b62e27 !important;
@@ -3793,8 +3661,7 @@ footer a:focus-visible {
   color: #fff5e7 !important;
 }
 
-/* Apoio persistente: adesivo punk no canto inferior em desktop e celular.
-   Regras fora da .ruido-site-content para preservar tinta e contraste. */
+
 .ruido-support-fab {
   position: fixed;
   z-index: 45;
@@ -3840,19 +3707,14 @@ footer a:focus-visible {
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   }
 }
-/* Reserva espaço ao alcançar o rodapé para o botão não tapar links finais. */
+
 .collage-body > footer { padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important; }
 @media (prefers-reduced-motion: reduce) {
   .ruido-support-fab { transition: none; }
 }
 
 
-/* ==========================================================================
-   RUÍDO / NAVEGAÇÃO RESPONSIVA E LIMITE REAL DA VIEWPORT (2026-10-24)
-   Em tablets de 768 a 1279px, o breakpoint md disparava o menu desktop.
-   As pinceladas e o selo do manifesto então formavam uma segunda linha.
-   Esta regra final substitui os breakpoints antigos, sem mudar as máscaras.
-   ========================================================================== */
+
 html {
   max-width: 100%;
   overflow-x: clip;
@@ -3882,11 +3744,11 @@ body.collage-body {
   width: 100%;
   overflow-wrap: break-word;
 }
-/* A faixa horizontal anima seu texto dentro de uma janela, não alarga body. */
+
 .ruido-marquee-band {
   overflow: hidden;
 }
-/* O letreiro longo só aparece quando o cabeçalho tem espaço de verdade. */
+
 @media (max-width: 1535px) {
   .ruido-nav .ruido-nav-edition {
     display: none !important;
@@ -3937,7 +3799,7 @@ body.collage-body {
     font-size: clamp(1.9rem, 8vw, 2.6rem);
   }
 }
-/* Desktop recebe os links numa única linha, nunca um manifesto órfão. */
+
 @media (min-width: 1280px) {
   .ruido-nav nav[aria-label="Navegação principal"] {
     display: flex !important;
