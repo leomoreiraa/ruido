@@ -93,7 +93,6 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
   return (dados?.municipios??[]).filter(c=>c.uf===uf&&(!q||c.nome.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(q))).slice(0,120);
  },[dados,uf,busca]);
  const nomesUf=new Map(malhas.map(m=>[m.uf,m.nome]));
- const cidadesComDados=(malhasUf?.municipios??[]).filter(m=>dados?.resultadosMunicipais[m.id] && votosComparados(dados.resultadosMunicipais[m.id])!=="indisponivel");
  const stats=useMemo(()=>{
   const cityCodes=new Set((malhasUf?.municipios??[]).map(m=>m.id));
   let vermelho=0,verde=0,empate=0,indisponivel=0;
