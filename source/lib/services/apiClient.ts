@@ -1,5 +1,3 @@
-// lib/services/apiClient.ts
-
 export interface RateLimiterConfig {
   baseUrl: string;
   maxConcurrency: number;
