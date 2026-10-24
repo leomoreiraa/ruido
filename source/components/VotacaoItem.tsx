@@ -57,10 +57,10 @@ export function VotacaoItem({
 
   return (
     <article className="relative ruido-paper-card ruido-votacao-folha bg-paper-light border-2 sm:border-3 border-ink p-5 sm:p-6 my-4 shadow-[6px_6px_0_#101010] transition-all hover:shadow-[9px_9px_0_#e42232]">
-      {/* Scotch tape on top right corner */}
+      
       <div className="absolute -top-2.5 right-6 w-24 h-5 bg-[#fdf0b0]/85 border-x-2 border-dashed border-[#cbb35a] shadow-sm transform -rotate-2 pointer-events-none z-10" />
 
-      {/* Header Info Bar */}
+      
       <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b-2 border-dashed border-ink/20 font-mono text-xs">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-bold bg-ink text-punk-acid px-2 py-0.5 uppercase tracking-wider text-[10px]">
@@ -71,7 +71,7 @@ export function VotacaoItem({
           </span>
         </div>
 
-        {/* Rubber Stamp for Outcome */}
+        
         <div>
           {votacaoSecreta ? (
             <span className="rubber-stamp rubber-stamp-red text-[11px]">
@@ -93,7 +93,7 @@ export function VotacaoItem({
         </div>
       </div>
 
-      {/* Proposition Title if attached */}
+      
       {proposicao && (
         <h3 className="ruido-legible-vote-title font-heavy text-2xl sm:text-3xl tracking-tight uppercase my-2">
           <Link className="ruido-proposition-text-link" href={`/pautas/detalhe?id=${proposicao.id}`}>
@@ -102,12 +102,12 @@ export function VotacaoItem({
         </h3>
       )}
 
-      {/* Description / Summary */}
+      
       <p className="font-mono text-xs sm:text-sm text-ink/85 leading-relaxed my-3 border-l-3 border-punk-red pl-3">
         {resumo || descricao}
       </p>
 
-      {/* Placar Box */}
+      
       {totalNominal > 0 ? (
         <div className="my-4 p-3 bg-paper-card border-2 border-ink shadow-[3px_3px_0_#101010]">
           <div className="flex justify-between items-center mb-2 font-mono text-[11px] font-bold text-ink border-b border-dashed border-ink/30 pb-1">
@@ -163,7 +163,7 @@ export function VotacaoItem({
         </div>
       )}
 
-      {/* Footer links */}
+      
       <div className="mt-4 pt-3 border-t-2 border-dashed border-ink/20 flex flex-wrap justify-between items-center gap-2 font-mono text-xs font-bold">
         {proposicao ? (
           <Link

@@ -27,10 +27,10 @@ export function PerfilIADiscursos({
 
   return (
     <div className="relative ruido-paper-card bg-paper-card border-3 border-ink p-5 sm:p-6 my-6 shadow-[6px_6px_0_#101010]">
-      {/* Scotch tape */}
+      
       <div className="scotch-tape" aria-hidden="true" />
 
-      {/* Header */}
+      
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 pb-3 border-b-2 border-dashed border-ink/30">
         <div>
           <div className="inline-block bg-ink text-punk-acid font-mono text-[10px] font-bold px-2 py-0.5 uppercase mb-1">
@@ -49,7 +49,7 @@ export function PerfilIADiscursos({
         </div>
       </div>
 
-      {/* Metadata bar */}
+      
       <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-ink/70 mb-4 bg-paper-light border border-ink/30 p-2">
         <span>
           Modelo: <strong>{modeloUsado}</strong>
@@ -66,7 +66,7 @@ export function PerfilIADiscursos({
         )}
       </div>
 
-      {/* Keywords as Ransom Tags */}
+      
       <div className="my-4">
         <span className="block font-mono text-xs font-bold uppercase text-ink mb-2">
         </span>
@@ -99,7 +99,7 @@ export function PerfilIADiscursos({
         )}
       </div>
 
-      {/* Summary Box with Typewriter Look */}
+      
       <div className="mt-4 p-4 bg-white border-2 border-ink shadow-[3px_3px_0_#101010] relative">
         <div className="absolute top-2 right-3 font-mono text-[9px] text-ink/40 uppercase">
           [ TRANSCRIÇÃO SINTETIZADA ]

@@ -54,7 +54,7 @@ export function VotacaoVotosList({ votos, votacaoSecreta, cobertura }: VotacaoVo
 
   return (
     <div className="space-y-4">
-      {/* Title & Filter buttons */}
+      
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b-2 border-dashed border-ink/20">
         <h4 className="font-heavy text-lg uppercase tracking-wider text-ink">
           VOTOS POR PARLAMENTAR ({votos.length})
@@ -108,7 +108,7 @@ export function VotacaoVotosList({ votos, votacaoSecreta, cobertura }: VotacaoVo
         </div>
       </div>
 
-      {/* Votes table */}
+      
       <div className="overflow-x-auto">
         <table className="w-full text-left font-mono text-xs">
           <thead>

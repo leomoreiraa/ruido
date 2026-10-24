@@ -270,7 +270,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
 
   return (
     <div className="space-y-8">
-      {/* Back button */}
+      
       <div>
         <Link
           href="/parlamentares"
@@ -280,9 +280,9 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
         </Link>
       </div>
 
-      {/* Main Dossier File Folder */}
+      
       <div className="relative ruido-paper-card bg-paper-card border-4 border-ink p-6 sm:p-8 shadow-[12px_12px_0_#101010] transform -rotate-0.5">
-        {/* Scotch Tape & Stamp */}
+        
         <div className="scotch-tape transform -rotate-3" aria-hidden="true" />
         <img
           src="/assets/stamp-confidencial.svg"
@@ -290,7 +290,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
           className="absolute top-4 right-4 w-32 sm:w-44 pointer-events-none opacity-85 select-none transform rotate-3"
         />
         <div className="relative z-10 flex flex-col md:flex-row gap-6 items-start">
-          {/* Mugshot frame with interactive target on hover */}
+          
           <div className="relative flex-shrink-0 mx-auto md:mx-0 group/photo">
             <PoliticianPhoto
               urlFoto={parlamentar.urlFoto}
@@ -304,7 +304,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
             </div>
           </div>
 
-          {/* Dossier Metadata */}
+          
           <div className="flex-1 min-w-0 space-y-3 font-mono">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-heavy text-xs px-2.5 py-0.5 bg-ink text-punk-acid uppercase">
@@ -355,7 +355,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
               )}
             </div>
 
-            {/* Barcode bottom line */}
+            
             <div className="pt-3 border-t-2 border-dashed border-ink/20 flex justify-between items-center text-[10px] text-ink/60">
               <img
                 src="/assets/barcode.svg"
@@ -368,7 +368,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
         </div>
       </div>
 
-      {/* Resumo de Discursos por IA se houver */}
+      
       {resumoIARaw && (
         <PerfilIADiscursos
           parlamentarNome={parlamentar.nome}
@@ -380,7 +380,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
         />
       )}
 
-      {/* Fontes de gasto oficial; notícias exibem nível FONTE_UNICA ou CORROBORADA. */}
+      
       <DossieFinanceiroNoticias
         parlamentarId={parlamentar.id}
         nome={parlamentar.nome}
@@ -389,10 +389,10 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
 
       {candidatura && <CandidaturaPresidencial dados={candidatura} />}
 
-      {/* Fase 1: doações, emendas e fornecedores, com cruzamentos por CNPJ exato. */}
+      
       <DossieRedeFinanceira parlamentarId={parlamentar.id} casa={parlamentar.casa} />
 
-      {/* Votos conhecidos e registros positivos / justificados — não taxa de assiduidade */}
+      
       <GraficoVotos
         coberturaRecorte={coberturaPresenca(parlamentar.id,parlamentar.casa)}
         frequenciaAuditada={frequenciaOficial._count._all > 0 ? {
@@ -416,7 +416,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
         totalVotosAlinhados={votosAlinhados}
       />
 
-      {/* Histórico: Votos, Presenças, Emendas, Patrimônio */}
+      
       <ParlamentarHistoricoTabs
         votos={votosSerializados}
         presencas={presencasSerializadas}
@@ -429,7 +429,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
         parlamentarNome={parlamentar.nome}
       />
 
-      {/* Official Sources Notice */}
+      
       <div className="bg-paper border-2 border-dashed border-ink/40 p-4 font-mono text-xs text-ink/70">
         Os registros legislativos e financeiros vêm de fontes oficiais, quando disponíveis.
         Notícias são identificadas como fonte única ou corroboradas conforme as

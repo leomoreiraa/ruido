@@ -74,7 +74,7 @@ export function PautaDetalheClient() {
 
   return (
     <div className="space-y-8">
-      {/* Back button */}
+      
       <div>
         <Link
           href="/pautas"
@@ -84,7 +84,7 @@ export function PautaDetalheClient() {
         </Link>
       </div>
 
-      {/* Detalhes da Proposição */}
+      
       <div className="relative ruido-paper-card bg-paper-card border-4 border-ink p-6 sm:p-8 shadow-[10px_10px_0_#101010]">
         <div className="scotch-tape" aria-hidden="true" />
 
@@ -170,7 +170,7 @@ export function PautaDetalheClient() {
         As votações relacionadas podem ser de emendas, requerimentos ou pareceres, não necessariamente do texto principal da proposição.
       </p>
 
-      {/* Histórico de Votações */}
+      
       <div className="space-y-6">
         <div className="flex items-center gap-3 border-b-4 border-ink pb-2">
           <h2 className="font-heavy text-2xl sm:text-3xl uppercase tracking-wider text-white bg-punk-red px-3 py-1 shadow-[4px_4px_0_#101010] transform -rotate-1">
