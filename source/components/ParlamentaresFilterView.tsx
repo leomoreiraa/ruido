@@ -93,7 +93,7 @@ export function ParlamentaresFilterView({
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
+      
       <div className="ruido-politicos-header border-b-4 border-ink pb-6">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 transform -rotate-1">
           <span>// ARQUIVO NOMINAL DOS PARLAMENTARES</span>
@@ -118,7 +118,7 @@ export function ParlamentaresFilterView({
         </p>
       </div>
 
-      {/* Filter Box with Zine Styling */}
+      
       <div className="ruido-filter-ink-panel relative ruido-paper-card bg-paper-card border-3 border-ink p-6 shadow-[8px_8px_0_#101010]">
         <div className="scotch-tape" aria-hidden="true" />
 
@@ -246,7 +246,7 @@ export function ParlamentaresFilterView({
         </form>
       </div>
 
-      {/* Grid of Results */}
+      
       {itensPaginados.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {itensPaginados.map((p) => (
@@ -280,7 +280,7 @@ export function ParlamentaresFilterView({
         </div>
       )}
 
-      {/* Pagination Bar */}
+      
       {totalPaginas > 1 && (
         <div className="py-6 border-t-3 border-ink flex flex-wrap justify-between items-center gap-4 font-mono text-xs">
           <div className="font-bold text-ink">
