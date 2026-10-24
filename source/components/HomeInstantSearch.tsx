@@ -77,7 +77,7 @@ export function HomeInstantSearch({ parlamentares }: HomeInstantSearchProps) {
         </div>
       </form>
 
-      {/* Live Dropdown Results */}
+      
       {termo.trim().length >= 2 && (
         <div className="ruido-search-results relative z-20 mt-3 p-3 sm:p-4">
           <div className="flex justify-between items-center mb-3 pb-2 border-b-2 border-dashed border-ink/30 font-mono text-xs font-bold">
