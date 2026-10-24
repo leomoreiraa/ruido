@@ -1,3 +1,4 @@
+// scripts/build-ghpages.ts
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
@@ -34,6 +35,8 @@ function safeRestore(temp: string, original: string) {
   }
 }
 
+// Prefix /public URLs in the exported files; Next.js does not apply basePath
+// to plain <img> URLs, CSS url(), favicon URLs or string literals in JS.
 function prefixPublicAssetUrls(directory: string) {
   const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
   if (!base) return;
@@ -89,6 +92,7 @@ function createLegacyPautaRedirects(directory: string) {
 function main() {
   console.log("=== Gerando build estático para GitHub Pages (output: export) ===");
 
+  // Move temporariamente app/api para fora de app/ durante o static export do Next.js
   const movedApi = safeMove(apiDir, tempApiDir);
 
   try {
@@ -97,6 +101,7 @@ function main() {
     } catch (err) {
       console.warn("Aviso: prisma generate ignorado ou client já gerado (possível bloqueio temporário de DLL no Windows). Prosseguindo...");
     }
+    // Prepara JSON estático completo. A página HTML hidrata apenas a primeira leva.
     execSync("npx tsx scripts/build-browser-catalogs.ts", { stdio: "inherit" });
     execSync("npx next build", {
       stdio: "inherit",
@@ -109,11 +114,13 @@ function main() {
     prefixPublicAssetUrls(outDir);
     createLegacyPautaRedirects(outDir);
 
+    // Cria o arquivo .nojekyll para que o GitHub Pages não ignore a pasta _next
     if (fs.existsSync(outDir)) {
       fs.writeFileSync(path.join(outDir, ".nojekyll"), "");
       console.log("Arquivo out/.nojekyll criado com sucesso!");
     }
   } finally {
+    // Restaura app/api para manter o funcionamento normal em modo servidor/dev
     if (movedApi) {
       safeRestore(tempApiDir, apiDir);
     }

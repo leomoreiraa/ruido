@@ -53,6 +53,8 @@ async function main() {
     };
   });
   await fs.writeFile(path.join(dest, "pautas-index.json"), JSON.stringify(pautas), "utf8");
+  // Detalhe de pauta sob demanda: evita gerar 30 mil HTMLs/RSC gigantes
+  // sem descartar NENHUM voto nominal. Lotes limitam a memória do runner.
   const detailsDir = path.join(dest, "pautas-detalhe");
   await fs.rm(detailsDir, { force: true, recursive: true });
   await fs.mkdir(detailsDir, { recursive: true });
