@@ -29,8 +29,6 @@ export function candidaturaPresidencialDoPerfil(
      !tse(c.fonteRegistro)||!!c.fonteTurno&&!tse(c.fonteTurno)||
      !!c.fontePropostas&&!tse(c.fontePropostas)||
      !/^\d{1,2}$/.test(c.numero)||!/^[A-Z0-9-]{2,20}$/.test(c.partido))return null;
-  // Nome civil completo do TSE, somente quando o perfil o contém;
-  // caso contrário exige o nome de urna exato cadastrado no Parlamento.
   if(p.nomeCivil){
     if(normalizar(p.nomeCivil)!==normalizar(c.candidato))return null;
   }else if(normalizar(p.nome)!==normalizar(c.nomeUrna))return null;
