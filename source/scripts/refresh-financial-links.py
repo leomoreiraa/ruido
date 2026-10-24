@@ -49,7 +49,6 @@ def cnpj(value):
     digits=identifier(value)
     if len(digits)!=14 or len(set(digits))==1:
         return None
-    # Dígitos verificadores da Receita; impede associações por números malformados.
     for length,weights in ((12,[5,4,3,2,9,8,7,6,5,4,3,2]),
                            (13,[6,5,4,3,2,9,8,7,6,5,4,3,2])):
         rem=sum(int(a)*b for a,b in zip(digits[:length],weights))%11
@@ -99,7 +98,6 @@ def csv_in_zip(handle,filename_fragment,required):
         if len(names)!=1:raise ValueError("Tabela CSV esperada ausente ou ambígua: "+filename_fragment)
         if z.getinfo(names[0]).file_size>1_500_000_000:raise ValueError("Arquivo CSV acima do permitido")
         with z.open(names[0]) as stream:
-            # Conteúdo oficial TSE e CEAP é tipicamente ISO-8859-1.
             sample=stream.read(4096)
             stream2=io.TextIOWrapper(io.BufferedReader(_Prefix(sample,stream)),encoding="latin-1",newline="")
             try:
@@ -123,7 +121,6 @@ class _Prefix(io.RawIOBase):
         return len(part)
 
 def candidatos_verificados(rows,people):
-    # Importante: identidade por nome CIVIL completo + UF + cargo, candidato único.
     by_name=defaultdict(set)
     by_ballot=defaultdict(set)
     official_civil={}
@@ -143,20 +140,10 @@ def candidatos_verificados(rows,people):
     for p in people:
         cargo="DEPUTADO FEDERAL" if p["casa"]=="CAMARA" else "SENADOR"
         names=by_name.get((norm(p["uf"]),cargo,norm(p["nomeCivil"] or p["nome"])),set())
-        # A Câmara não disponibiliza nome civil para muitos perfis. Nesse caso,
-        # aceita-se SOMENTE nome de urna igual ao nome oficial parlamentar,
-        # mesma UF e mesmo cargo. Se duas candidaturas concorrem, recusar ambas.
-        # Se o nome civil veio abreviado/divergente entre as duas bases,
-        # permitir somente o nome de urna EXATO presente no cadastro do
-        # parlamentar, UF e cargo coincidentes e SQ candidato único.
-        # Um match civil válido nunca é substituído por outro SQ.
         if not names:
             ballot_name=norm(p["nome"])
             choices=by_ballot.get((norm(p["uf"]),cargo,ballot_name),set())
             if p["nomeCivil"]:
-                # Nome civil do cadastro parlamentar pode estar abreviado.
-                # Só aceitar a urna quando cada token do nome civil constar
-                # também no nome civil completo do TSE (não aceitar divergências).
                 tokens=norm(p["nomeCivil"]).split()
                 if len(tokens)<2 or len(ballot_name.split())<2:
                     choices=set()
@@ -237,7 +224,6 @@ def campaign_collect(year,people,presidenciais=None):
             origin=norm(row.get("DS_ORIGEM_RECEITA"))[:85]
             if not name:continue
             results[pid]["arrecadacaoCentavos"]+=val
-            # Não armazenar CPF; CNPJ só pode ser publicado para pessoa jurídica.
             company=cnpj(row.get("NR_CPF_CNPJ_DOADOR"))
             kind="PESSOA_JURIDICA_OU_PARTIDO" if company else "SEM_CNPJ_PUBLICADO"
             results[pid]["origens"][(name,origin,kind,company or "")]+=val
@@ -271,7 +257,6 @@ def gabinete_collect(year,people):
     suppliers=defaultdict(lambda:defaultdict(int))
     handle=official_download(url,90_000_000)
     try:
-        # CSV único distribuído pela Câmara; não confundir CPF com CNPJ.
         for row in csv_in_zip(handle,f"Ano-{year}",["ideCadastro","txtCNPJCPF","txtFornecedor","vlrLiquido"]):
             pid=deputy_by_id.get(str(row.get("ideCadastro") or "").strip())
             company=cnpj(row.get("txtCNPJCPF"))
@@ -326,7 +311,6 @@ def senado_ceaps(people, limit=18, cursor=0, priority_ids=()):
     chosen=(senators[start:]+senators[:start])[:min(max(1,int(limit)),len(senators))]
     prioritized=[p for p in senators if identifier(p["externalId"]) in
                  {identifier(v) for v in priority_ids}]
-    # Consultas pontuais pedidas pelo usuário não retiram senadores da fila regular.
     selected={p["id"]:p for p in prioritized+chosen}
     data=defaultdict(list)
     ok=0
@@ -388,7 +372,6 @@ def extract_senado_ceaps(raw, people, year, source_url):
         pid=senators.get(code)
         if not pid:
             continue
-        # Campo observado na API oficial e aliases antigos mantidos para compatibilidade.
         company=cnpj(row.get("cpfCnpj") or row.get("cnpjCpf") or row.get("cnpjCPF"))
         amount=cents(raw_value)
         name=" ".join(str(row.get("fornecedor") or "").split())[:120]
@@ -618,7 +601,6 @@ def emendas_api(people, key, limit=48, cursor=0, checkpoint=None,
 
 
 def crossings(campaigns,suppliers):
-    # Igualdade de CNPJ completo validado, jamais similaridade de nomes.
     ceap=defaultdict(list)
     for row in suppliers:
         company=cnpj(row.get("cnpj"))
@@ -682,8 +664,6 @@ def run():
             metrics[f"tse_{year}"]=stat
         except Exception as e:warnings.append(f"TSE {year}: {type(e).__name__}: {str(e)[:120]}")
         checkpoint("TSE_"+str(year))
-    # O TSE informa candidatura, não vitória. Segundo turno é retido apenas
-    # se já foi comprovado por fonte separada e a identidade segue idêntica.
     for key,candidate in official_president.items():
         previous=pres_data.get(key,{})
         if (previous.get("candidato")==candidate["candidato"] and
@@ -714,7 +694,6 @@ def run():
         except Exception as exc:
             warnings.append(f"CEAPS detalhada {year}: {type(exc).__name__}: {str(exc)[:100]}")
         checkpoint("CEAPS_"+str(year))
-    # CEAPS oficial: relatórios por código de senador, sem inferência nominal.
     senado,status_senado,next_senado_cursor=senado_ceaps(
         people,limit=int(os.getenv("SENADO_MAX_SENATORS","18")),
         cursor=int(old.get("senadoCursor",0)),
@@ -748,8 +727,6 @@ def run():
     for p in people:
         pid=p["id"]
         stored=data.setdefault(pid,{})
-        # Não perder emendas da CGU verificadas em rodadas anteriores.
-        # Apenas reter autoria exata do perfil atual; jamais inferir por homônimos.
         own_name=norm(p["nomeCivil"] or p["nome"])
         verified_names=[q for q in people if q["ativo"] and norm(q["nomeCivil"] or q["nome"])==own_name]
         previous=(x for x in stored.get("emendas",[])
