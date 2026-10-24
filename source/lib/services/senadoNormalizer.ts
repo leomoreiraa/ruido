@@ -12,7 +12,7 @@ export interface SenadoVotoItemContract {
 
 export interface SenadoVotacaoFlatContract {
   ano?: number | null;
-  casaSessao?: string | null; // "SF" ou "CN"
+  casaSessao?: string | null; 
   codigoMateria?: number | string | null;
   codigoSessao?: number | string | null;
   codigoSessaoVotacao: number | string;
@@ -22,12 +22,12 @@ export interface SenadoVotacaoFlatContract {
   idProcesso?: number | string | null;
   identificacao?: string | null;
   numero?: string | number | null;
-  resultadoVotacao?: string | null; // "A" | "R" | outros
+  resultadoVotacao?: string | null; 
   sigla?: string | null;
   totalVotosSim?: number | null;
   totalVotosNao?: number | null;
   totalVotosAbstencao?: number | null;
-  votacaoSecreta?: string | boolean | null; // "S" | "N"
+  votacaoSecreta?: string | boolean | null; 
   votos?: SenadoVotoItemContract[] | null;
 }
 

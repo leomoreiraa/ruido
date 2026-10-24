@@ -136,7 +136,7 @@ async function defaultDependencies(options: HistoryOptions): Promise<HistoryDepe
   };
 }
 
-/** A failed/interrupted window is replayed in full using the services' idempotent upserts. */
+
 export async function executarHistorico(options: HistoryOptions, injected?: HistoryDependencies) {
   const windows = criarJanelasHistoricas(options, injected?.now() ?? new Date());
   const deps = injected ?? await defaultDependencies(options);
@@ -157,7 +157,7 @@ export async function executarHistorico(options: HistoryOptions, injected?: Hist
       const id = options.dias ? `history:v1:${options.fonte}:daily:${window.dataInicio}:${window.dataFim}` : `history:v1:${options.fonte}:${window.mes}`;
       const previous = await deps.executions.findUnique({ where: { id } });
       let checkpoint: Partial<HistoryWindow> = {};
-      try { checkpoint = JSON.parse(previous?.parametros ?? "{}") ?? {}; } catch { /* Replay invalid checkpoints. */ }
+      try { checkpoint = JSON.parse(previous?.parametros ?? "{}") ?? {}; } catch 
       if (!options.reprocessar && window.encerrada && previous?.status === "SUCESSO" && Object.entries(window).every(([key, value]) => checkpoint[key as keyof HistoryWindow] === value)) {
         ignoradas++;
         continue;

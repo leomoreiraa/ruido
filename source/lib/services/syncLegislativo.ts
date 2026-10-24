@@ -1,4 +1,4 @@
-// lib/services/syncLegislativo.ts
+
 
 import { prisma } from "@/lib/prisma";
 import {
@@ -17,7 +17,7 @@ import {
   sincronizarVotacoesEPresencasSenado,
 } from "./syncSenadoService";
 
-// Exportações retrocompatíveis para chamadas existentes do backend
+
 export { normalizarVotoCamara } from "./camaraNormalizer";
 export { normalizarVotoSenado } from "./senadoNormalizer";
 export {
@@ -26,7 +26,7 @@ export {
   sincronizarVotacoesCamara,
 } from "./syncCamaraService";
 export { acquireSyncLease, SyncLockError } from "./syncLock";
-// Alias para manter compatibilidade com módulos anteriores
+
 export { SyncLockError as SyncEmAndamentoError } from "./syncLock";
 export {
   sincronizarSenadoresAtuais as sincronizarParlamentaresSenado,
@@ -36,9 +36,7 @@ export {
 
 export type { ParametrosSincronizacao, RelatorioSincronizacao };
 
-/**
- * Calcula intervalo padrão em timezone brasileiro (America/Sao_Paulo).
- */
+
 export function calcularPeriodoPadrao(diasRetroativos = 5): {
   dataInicio: string;
   dataFim: string;
@@ -60,20 +58,7 @@ export function calcularPeriodoPadrao(diasRetroativos = 5): {
   return { dataInicio, dataFim };
 }
 
-/**
- * Orquestrador principal de sincronização com lease lock em banco e registro de auditoria.
- *
- * Suporta assinatura polimórfica:
- * - executarSincronizacaoCompleta(dias?: number)
- * - executarSincronizacaoCompleta(parametros: ParametrosSincronizacao)
- *
- * Garante:
- * 1. Lease lock contra concorrência;
- * 2. Registro de SyncExecution com status EM_ANDAMENTO, SUCESSO ou ERRO;
- * 3. Falha explícita se APIs falharem (sem mascarar erros);
- * 4. Nenhuma mutação de ausência inventada;
- * 5. Bounded transactions sem fetch de rede interna.
- */
+
 export async function executarSincronizacaoCompleta(
   paramsOuDias?: number | ParametrosSincronizacao
 ): Promise<RelatorioSincronizacao> {
@@ -86,10 +71,10 @@ export async function executarSincronizacaoCompleta(
 
   const iniciadoEm = new Date().toISOString();
 
-  // 1. Adquire Lease Lock no Banco de Dados
+  
   const lease = await acquireSyncLease("GLOBAL_SYNC", 180_000);
 
-  // 2. Cria registro inicial de execução
+  
   const execucao = await prisma.syncExecution.create({
     data: {
       iniciadoEm: new Date(iniciadoEm),
@@ -103,7 +88,7 @@ export async function executarSincronizacaoCompleta(
       `[Sync] Iniciando sincronização (${params.dataInicio} até ${params.dataFim})...`
     );
 
-    // 1. Roster Oficial Atual (Deputados e Senadores)
+    
     console.log("-> 1. Sincronizando Parlamentares Atuais...");
     const [deputadosCount, senadoresCount] = await Promise.all([
       sincronizarDeputadosAtuaisCamara(),
@@ -113,7 +98,7 @@ export async function executarSincronizacaoCompleta(
       `   Câmara: ${deputadosCount} deputados | Senado: ${senadoresCount} senadores.`
     );
 
-    // 2. Votações da Câmara
+    
     console.log("-> 2. Sincronizando Votações da Câmara...");
     const camaraVotacoesRes = await sincronizarVotacoesCamara({
       dataInicio: params.dataInicio,
@@ -124,7 +109,7 @@ export async function executarSincronizacaoCompleta(
       `   Câmara: ${camaraVotacoesRes.votacoesSincronizadas} votações, ${camaraVotacoesRes.votosSincronizados} votos.`
     );
 
-    // 3. Presenças em Sessões Plenárias da Câmara (Positive Evidence Only)
+    
     console.log("-> 3. Sincronizando Presenças da Câmara...");
     const camaraPresencasCount = await sincronizarPresencasCamara({
       dataInicio: params.dataInicio,
@@ -133,7 +118,7 @@ export async function executarSincronizacaoCompleta(
     });
     console.log(`   Câmara: ${camaraPresencasCount} registros de presença.`);
 
-    // 4. Votações e Presenças do Senado (/votacao?dataInicio=...&dataFim=...)
+    
     console.log("-> 4. Sincronizando Votações e Presenças do Senado...");
     const senadoRes = await sincronizarVotacoesEPresencasSenado(
       params.dataInicio,
@@ -164,7 +149,7 @@ export async function executarSincronizacaoCompleta(
       },
     };
 
-    // 3. Registra sucesso na execução
+    
     await prisma.syncExecution.update({
       where: { id: execucao.id },
       data: {
@@ -179,7 +164,7 @@ export async function executarSincronizacaoCompleta(
     const mensagemErro = err instanceof Error ? err.stack || err.message : String(err);
     console.error("[Sync] Erro durante a execução da sincronização:", mensagemErro);
 
-    // Registra falha na execução
+    
     await prisma.syncExecution.update({
       where: { id: execucao.id },
       data: {

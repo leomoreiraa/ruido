@@ -22,7 +22,7 @@ function stringValue(value: unknown): string {
   return typeof value === "string" ? value.trim() : value == null ? "" : String(value).trim();
 }
 
-/** Money comes from the Portal as Brazilian-decimal strings, not JavaScript floats. */
+
 export function lerValorReais(value: unknown): number {
   if (value == null || value === "") return 0;
   if (typeof value === "number") {

@@ -46,7 +46,7 @@ export async function sincronizarPresencasMandato(_options: OpcoesSincronizacaoP
   throw new Error("Histórico integral de presença indisponível. Use os importadores oficiais por intervalo; nunca inferir faltas ou justificativas.");
 }
 
-/** Bounded speech sample, not a complete historical archive. Only actual transcripts are stored. */
+
 export async function sincronizarDiscursos(options: OpcoesSincronizacaoDiscursos = {}): Promise<{ totalColetados: number; totalParlamentares: number }> {
   const dataFim = options.dataFim || new Date().toISOString().slice(0, 10);
   const dataInicio = options.dataInicio || `${new Date().getFullYear()}-01-01`;

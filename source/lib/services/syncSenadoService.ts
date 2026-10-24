@@ -1,4 +1,4 @@
-// lib/services/syncSenadoService.ts
+
 import { prisma } from "@/lib/prisma";
 import {
   CasaLegislativa,
@@ -44,10 +44,7 @@ function toArray<T>(val: T | T[] | undefined | null): T[] {
   return Array.isArray(val) ? val : [val];
 }
 
-/**
- * Sincroniza os senadores atualmente em exercício a partir do endpoint oficial.
- * Apenas atualiza ativo=true e cadastroAtualizadoEm para quem estiver na lista atual.
- */
+
 export async function sincronizarSenadoresAtuais(): Promise<number> {
   const agora = new Date();
   const url = "/senador/lista/atual.json";
@@ -93,8 +90,8 @@ export async function sincronizarSenadoresAtuais(): Promise<number> {
       })
     );
 
-  // Conferir ANTES de qualquer upsert para não cadastrar uma lista parcial
-  // em dia de troca de legislatura ou indisponibilidade do serviço oficial.
+  
+  
   const codigos=senadores.map(s=>String(s.IdentificacaoParlamentar?.CodigoParlamentar||""));
   if (senadores.length < 70 || senadores.length > 90 ||
       new Set(codigos).size!==senadores.length ||codigos.some(code=>!/^\d+$/.test(code))) {
@@ -111,10 +108,7 @@ export async function sincronizarSenadoresAtuais(): Promise<number> {
   return operacoes.length;
 }
 
-/**
- * Garante que um senador histórico citado em votações antigas exista no banco
- * sem sobrescrever seu status de ativo ou de cadastro recente.
- */
+
 async function garantirParlamentarHistoricoSenado(
   tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
   vp: SenadoVotoItemContract
@@ -141,7 +135,7 @@ async function garantirParlamentarHistoricoSenado(
       nome: vp.nomeParlamentar || `Senador #${codigo}`,
       partido: vp.siglaPartidoParlamentar || "S/PARTIDO",
       uf: vp.siglaUFParlamentar || "BR",
-      ativo: false, // Histórico não ativo no snapshot atual
+      ativo: false, 
     },
     select: { id: true },
   });
@@ -149,16 +143,7 @@ async function garantirParlamentarHistoricoSenado(
   return criado.id;
 }
 
-/**
- * Sincroniza votações do Senado no período informado usando o endpoint oficial:
- * GET /votacao?dataInicio=YYYY-MM-DD&dataFim=YYYY-MM-DD
- * Retorna array plano validado pelo schema verificado em 2025-03-18.
- *
- * Agrega presenças com a regra:
- * - Presença vence (qualquer votação com presença no dia/sessão define PRESENTE).
- * - Evidência explicitamente rotulada (origem=VOTO_SENADO, cobertura=EVIDENCIA_PARCIAL).
- * - NUNCA infere ausência para parlamentares ausentes na lista de votação.
- */
+
 export async function sincronizarVotacoesEPresencasSenado(
   dataInicio: string,
   dataFim: string
@@ -181,8 +166,8 @@ export async function sincronizarVotacoesEPresencasSenado(
   let votacoesSincronizadas = 0;
   let votosSincronizados = 0;
 
-  // Mapa de presenças agregadas por sessão e parlamentar:
-  // chave: `${sessaoExternalId}:::${parlamentarCodigo}`
+  
+  
   const presencasPorSessao = new Map<
     string,
     {
@@ -255,7 +240,7 @@ export async function sincronizarVotacoesEPresencasSenado(
       vot.ementa ||
       `Votação Plenária do Senado #${codVotacao}`;
 
-    // Transação estritamente delimitada sem rede interna
+    
     await prisma.$transaction(
       async (tx) => {
         let proposicaoId: string | null = null;
@@ -383,7 +368,7 @@ export async function sincronizarVotacoesEPresencasSenado(
     votacoesSincronizadas++;
     votosSincronizados += votosArray.length;
 
-    // Agregar evidência de presença por sessão (apenas para quem consta com evidência)
+    
     for (const vp of votosArray) {
       if (!vp.codigoParlamentar) continue;
       const codParlamentar = String(vp.codigoParlamentar);
@@ -412,7 +397,7 @@ export async function sincronizarVotacoesEPresencasSenado(
           justificativa: evidencia.justificativa,
         });
       } else {
-        // Regra de ouro: PRESENÇA VENCE. Se esteve presente em qualquer votação da sessão, fica PRESENTE.
+        
         if (
           evidencia.status === StatusPresenca.PRESENTE &&
           presencaExistente.status !== StatusPresenca.PRESENTE
@@ -430,7 +415,7 @@ export async function sincronizarVotacoesEPresencasSenado(
     }
   }
 
-  // Persistência em lote das presenças agregadas
+  
   let presencasSincronizadas = 0;
   const listaPresencas = Array.from(presencasPorSessao.values());
   const batchSize = 50;
