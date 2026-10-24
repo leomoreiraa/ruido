@@ -47,7 +47,7 @@ test("a única publicação usa export atualizado e verifica CSS da navbar",()=>
 test("menu desktop e mobile compartilham tinta vetorial, não abas de papel",()=>{
   const css=read("app/globals.css");
   const nav=read("components/Navbar.tsx");
-  const brush=css.slice(css.lastIndexOf("/* Navbar RUÍDO: tinta real"));
+  const brush=css.slice(css.indexOf(".ruido-nav a.ruido-nav-brush::before"));
   assert.ok(brush.includes("mask: url('/assets/collage/brush-stroke.svg')"));
   assert.ok(brush.includes("background: transparent !important;"));
   assert.ok(brush.includes("display: block !important;"));

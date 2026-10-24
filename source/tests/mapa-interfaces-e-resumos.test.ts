@@ -6,7 +6,7 @@ const source=(p:string)=>readFileSync(p,"utf8");
 test("mapa do Brasil preserva fundo cinza e cores sem confundir regiões",()=>{
   const map=source("components/MapaBrasilView.tsx");
   const css=source("app/globals.css");
-  const next=css.slice(css.lastIndexOf("RUÍDO / LEITURA E TINTA — MAPA"));
+  const next=css.slice(css.indexOf(".mapa-brasil .ruido-map-frame"));
   assert.match(map,/ruido-map-frame bg-\[#424943\]/);
   assert.match(map,/ruido-map-canvas/);
   assert.match(next,/\.mapa-brasil \.ruido-map-frame\s*\{/);
@@ -17,7 +17,7 @@ test("mapa do Brasil preserva fundo cinza e cores sem confundir regiões",()=>{
 });
 test("cards textuais ganharam pequena superfície editorial de leitura",()=>{
   const css=source("app/globals.css");
-  const next=css.slice(css.lastIndexOf("RUÍDO / LEITURA E TINTA — MAPA"));
+  const next=css.slice(css.indexOf(".mapa-brasil .ruido-map-frame"));
   assert.match(next,/\.ruido-paper-card p\.font-mono/);
   assert.match(next,/background-color: rgba\(251,247,238,\.94\)/);
   assert.match(next,/\[aria-labelledby="cidadao-title"\]/);
@@ -35,7 +35,7 @@ test("rótulos públicos usam RESUMO e mantêm atribuição transparente da IA",
 });
 test("links e botões são tinta mas cards inteiros não são mascarados",()=>{
   const css=source("app/globals.css");
-  const next=css.slice(css.lastIndexOf("RUÍDO / LEITURA E TINTA — MAPA"));
+  const next=css.slice(css.indexOf(".mapa-brasil .ruido-map-frame"));
   assert.match(next,/\.ruido-site-content a:not\(:has\(img\)\)/);
   assert.match(next,/footer a:not\(:has\(img\)\)/);
   assert.match(next,/-webkit-mask: var\(--ruido-brush-mask\)/);

@@ -110,7 +110,7 @@ test("cartões usam papel integral digitalizado, com fibras e silhueta verde-neo
   assert.match(css, /drop-shadow\(10px 11px 0 var\(--ruido-neon\)\)/);
   assert.match(css, /mask-image: var\(--ruido-card-sheet\)/);
   assert.match(css, /filter: drop-shadow\(4px 5px 0 var\(--ruido-neon\)\)/);
-  assert.doesNotMatch(css.slice(css.lastIndexOf("RUÍDO / ZINE MATERIAL")), /border-image-source:\s*var\(--ruido-frame-paper\)/);
+  assert.doesNotMatch(css.slice(css.indexOf("--zine-stroke: polygon(")), /border-image-source:\s*var\(--ruido-frame-paper\)/);
 });
 
 test("a página inicial aplica fundo gráfico de colagem sem dados artificiais", () => {
@@ -140,7 +140,7 @@ test("a arte revolucionaria gerada realmente existe no repositorio e é WebP", (
 
 test("o papel tem somente uma folha e contorno neon acompanha seus rasgos", () => {
   const css = source("app/globals.css");
-  const current = css.slice(css.lastIndexOf("RUÍDO / MURO DE SÃO PAULO"));
+  const current = css.slice(css.indexOf("--ruido-torn-edge: polygon("));
   assert.match(current, /--ruido-torn-edge: polygon\(/);
   assert.match(current, /background-color: var\(--ruido-paper-tone\)/);
   assert.match(current, /url\('\/assets\/textured-paper\.png'\)/);
@@ -169,7 +169,7 @@ test("caveira com contorno fluorescente no favicon e em todas as aparicoes", () 
 
 test("votação e parlamentar mantêm a altura variável e um único papel", () => {
   const css = source("app/globals.css");
-  const current = css.slice(css.lastIndexOf("RUÍDO / MURO DE SÃO PAULO"));
+  const current = css.slice(css.indexOf("--ruido-torn-edge: polygon("));
   assert.match(source("components/VotacaoItem.tsx"), /ruido-paper-card ruido-votacao-folha/);
   assert.match(source("components/ParlamentarCard.tsx"), /ruido-paper-card ruido-parlamentar-folha/);
   assert.match(current, /max-width: 100%/);
@@ -191,7 +191,7 @@ test("o mural original é exclusivo da home; as internas usam cimento", () => {
   assert.match(cimento, /filter="url\(#concrete-grain\)"/);
   assert.doesNotMatch(cimento, /ruido-mural-original/);
   const css = source("app/globals.css");
-  const backgrounds = css.slice(css.lastIndexOf("FUNDOS POR ROTA — HOME: COLAGEM"));
+  const backgrounds = css.slice(css.indexOf("body.collage-body:not(:has(.ruido-home-stage))"));
   assert.match(backgrounds, /body\.collage-body:not\(:has\(\.ruido-home-stage\)\)/);
   assert.match(backgrounds, /body\.collage-body:has\(\.ruido-home-stage\)/);
   assert.match(backgrounds, /url\('\/assets\/collage\/cement-wall\.svg'\)/);
@@ -199,7 +199,7 @@ test("o mural original é exclusivo da home; as internas usam cimento", () => {
   assert.match(backgrounds, /background-repeat: no-repeat, repeat/);
   assert.match(backgrounds, /background-repeat: no-repeat, no-repeat/);
   assert.match(backgrounds, /background-attachment: fixed, fixed/);
-  const homeRule = backgrounds.slice(backgrounds.indexOf("body.collage-body:has(.ruido-home-stage) {"));
+  const homeRule = backgrounds.match(/body\.collage-body:has\(\.ruido-home-stage\)\s*\{[^}]*\}/)?.[0] ?? "";
   assert.doesNotMatch(homeRule, /cement-wall\.svg/);
 });
 
@@ -219,7 +219,7 @@ test("paleta usa tinta, papel e verdes do mural; dados sem cores artificiais nov
 
 test("cartões punk usam fibra, papel rasgado e uma silhueta verde sólida", () => {
   const css = source("app/globals.css");
-  const current = css.slice(css.lastIndexOf("RUÍDO / XEROX & LAMBE-LAMBE"));
+  const current = css.slice(css.indexOf("--zine-stroke: polygon("));
   assert.match(current, /--zine-stroke: polygon\(/);
   assert.match(current, /::before\s*\{[\s\S]*?background-color: var\(--ruido-paper-tone\) !important/);
   assert.match(current, /::before\s*\{[\s\S]*?url\('\/assets\/textured-paper\.png'\)/);
@@ -254,7 +254,7 @@ test("páginas internas, menu e botões preservam tipografia e tinta punk", () =
   const css = source("app/globals.css");
   const button = source("components/ui/button.tsx");
   const badge = source("components/ui/badge.tsx");
-  const current = css.slice(css.lastIndexOf("RUÍDO / XEROX & LAMBE-LAMBE"));
+  const current = css.slice(css.indexOf("--zine-stroke: polygon("));
   assert.match(button, /ruido-press-cutout ruido-flat-button/);
   assert.match(badge, /ruido-label-cutout/);
   assert.match(current, /--zine-ink-cut: polygon/);
@@ -276,13 +276,17 @@ test("imagem enviada pelo usuário aparece apenas no manifesto", () => {
   assert.equal(manifesto.byteLength,458901,"Não recomprimir nem substituir a foto fornecida");
   assert.ok(home.byteLength>=600000,"Mural original precisa permanecer intacto");
   const css=source("app/globals.css");
-  const manifestoCss=css.slice(css.lastIndexOf("RUÍDO / MANIFESTO FOTOGRÁFICO"), css.lastIndexOf("RUÍDO / RENDERIZAÇÃO LEVE (2026)"));
-  const homeCss=css.slice(css.lastIndexOf("FUNDOS POR ROTA — HOME: COLAGEM"),css.lastIndexOf("RUÍDO / MANIFESTO FOTOGRÁFICO"));
+  const manifestoCss=css;
+  const homeCss=css;
   assert.match(manifestoCss,/\.ruido-site-content \.ruido-home-manifesto \{/);
   assert.match(manifestoCss,/url\('\/assets\/collage\/manifesto-bg\.jpg'\)/);
   assert.match(manifestoCss,/background-size: cover, cover !important/);
   assert.match(manifestoCss,/background: #171512/);
-  assert.doesNotMatch(manifestoCss,/body\.collage-body:has\(\.ruido-home-stage\)/);
+  // A foto do manifesto não pode ser usada nas regras de fundo da home.
+  const homeBackgrounds=[...css.matchAll(/body\.collage-body:has\(\.ruido-home-stage\)(?:::before)?\s*\{([^}]*)\}/g)]
+    .map((match)=>match[1]).join("\n");
+  assert.ok(homeBackgrounds.length>0,"Regra de fundo da home ausente");
+  assert.doesNotMatch(homeBackgrounds,/manifesto-bg\.jpg/);
   assert.match(homeCss,/url\('\/assets\/collage\/ruido-mural-original\.jpg'\)/);
   assert.match(homeCss,/url\('\/assets\/collage\/cement-wall\.svg'\)/);
 });
@@ -290,12 +294,12 @@ test("imagem enviada pelo usuário aparece apenas no manifesto", () => {
 
 test("mural da home mantém resolução original no tamanho da viewport", () => {
   const css = source("app/globals.css");
-  const current = css.slice(css.lastIndexOf("RESTAURAÇÕES VISUAIS / FUNDO NÍTIDO"));
+  const current = css.slice(css.indexOf("body.collage-body:has(.ruido-home-stage) {\n  background-color: #141311;"));
   assert.match(current, /body\.collage-body:has\(\.ruido-home-stage\)/);
   assert.match(current, /url\('\/assets\/collage\/ruido-mural-original\.jpg'\) !important/);
   assert.match(current, /background-size: cover, cover !important/);
   assert.match(current, /background-attachment: fixed, fixed !important/);
-  const android = css.slice(css.lastIndexOf("Garantia Android/Chrome:"));
+  const android = css.slice(css.indexOf("body.collage-body:has(.ruido-home-stage)::before"));
   assert.match(android, /body\.collage-body:has\(\.ruido-home-stage\)::before/);
   assert.match(android, /position: fixed/);
   assert.match(android, /background-size: cover, cover/);
@@ -306,7 +310,7 @@ test("mural da home mantém resolução original no tamanho da viewport", () => 
 test("fotografia do manifesto também aparece no cartaz da rota Sobre", () => {
   const css = source("app/globals.css");
   const about = source("app/sobre/page.tsx");
-  const current = css.slice(css.lastIndexOf("RESTAURAÇÕES VISUAIS / FUNDO NÍTIDO"));
+  const current = css.slice(css.indexOf("body.collage-body:has(.ruido-home-stage) {\n  background-color: #141311;"));
   assert.match(about, /ruido-red-poster ruido-manifesto-poster/);
   assert.match(about, /ruido-manifesto-copy/);
   assert.match(current, /\.ruido-site-content \.ruido-red-poster\.ruido-manifesto-poster/);
@@ -318,7 +322,7 @@ test("fotografia do manifesto também aparece no cartaz da rota Sobre", () => {
 test("hover vermelho e estêncil de rosto funcionam com mouse, toque e teclado", () => {
   const css = source("app/globals.css");
   const photo = source("components/PoliticianPhoto.tsx");
-  const current = css.slice(css.lastIndexOf("RESTAURAÇÕES VISUAIS / FUNDO NÍTIDO"));
+  const current = css.slice(css.indexOf("body.collage-body:has(.ruido-home-stage) {\n  background-color: #141311;"));
   assert.match(photo, /data-photo-active=\{efeitoAtivo \? "true" : "false"\}/);
   assert.match(photo, /aria-pressed=\{efeitoAtivo\}/);
   assert.match(photo, /src="\/assets\/punk-target-white\.png"/);

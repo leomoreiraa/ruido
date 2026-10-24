@@ -39,7 +39,7 @@ test("catálogos são pré-computados antes do static export", () => {
 
 test("papéis rasgados permanecem; rolagem não re-renderiza filtros fractais", () => {
   const css = source("app/globals.css");
-  const otimizado = css.slice(css.lastIndexOf("RUÍDO / RENDERIZAÇÃO LEVE (2026)"));
+  const otimizado = css.slice(css.indexOf(".grain-overlay",css.indexOf("--zine-stroke: polygon(")));
   assert.match(css, /ruido-mural-original\.jpg/);
   assert.match(css, /manifesto-bg\.jpg/);
   assert.match(css, /--zine-stroke: polygon/);

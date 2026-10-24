@@ -53,7 +53,7 @@ test("o cliente não importa todo o catálogo na thread principal",()=>{
 test("a tinta da navbar fica ABAIXO do texto, sem menu de PC",()=>{
   assert.match(navbar,/<span className="ruido-nav-label">\{link\.label\}<\/span>/);
   assert.match(navbar,/\{ href: "\/sobre", label: "MANIFESTO" \}/);
-  const scope=css.slice(css.lastIndexOf("NAVBAR DEFINITIVA: empilhamento explícito"));
+  const scope=css.slice(css.indexOf(".ruido-nav a.ruido-nav-brush::before"));
   assert.match(scope,/\.ruido-nav a\.ruido-nav-brush::before\s*\{/);
   assert.match(scope,/z-index: 0 !important/);
   assert.match(scope,/\.ruido-nav a\.ruido-nav-brush > \.ruido-nav-label/);

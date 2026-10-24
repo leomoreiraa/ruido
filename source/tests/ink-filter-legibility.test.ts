@@ -7,7 +7,7 @@ test("títulos grandes de proposições nunca são recortados pela máscara de t
   const css = source("app/globals.css");
   const filters = source("components/PautasFilterView.tsx");
   const vote = source("components/VotacaoItem.tsx");
-  const current = css.slice(css.lastIndexOf("RUÍDO / TIPOGRAFIA SEM CORTES + FILTROS"));
+  const current = css.slice(css.indexOf(".ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {"));
   assert.match(filters, /ruido-legible-prop-title/);
   assert.match(filters, /className="ruido-proposition-text-link"/);
   assert.match(vote, /ruido-legible-vote-title/);
@@ -29,7 +29,7 @@ test("os painéis de busca e seleção recebem pincelada apenas atrás dos rótu
   const políticos = source("components/ParlamentaresFilterView.tsx");
   const emendas = source("components/EmendasTrackerView.tsx");
   const mapa = source("components/MapaBrasilView.tsx");
-  const current = css.slice(css.lastIndexOf("RUÍDO / TIPOGRAFIA SEM CORTES + FILTROS"));
+  const current = css.slice(css.indexOf(".ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {"));
   for (const page of [pautas, políticos]) {
     assert.match(page, /ruido-filter-ink-panel/);
     assert.match(page, /ruido-filter-ink-header/);
@@ -48,10 +48,10 @@ test("os painéis de busca e seleção recebem pincelada apenas atrás dos rótu
 
 test("links de títulos estão excluídos da máscara universal de links", () => {
   const css = source("app/globals.css");
-  const paintLinks = css.slice(css.lastIndexOf("RUÍDO / LEITURA E TINTA — MAPA"),css.lastIndexOf("RUÍDO / TIPOGRAFIA SEM CORTES + FILTROS"));
+  const paintLinks = css.slice(css.indexOf(".ruido-site-content a:not(:has(img))"),css.indexOf(".ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {"));
   assert.match(paintLinks, /:not\(\.ruido-proposition-text-link\)/);
   assert.match(paintLinks, /:not\(\.ruido-unmasked-text-link\)/);
-  const current = css.slice(css.lastIndexOf("RUÍDO / TIPOGRAFIA SEM CORTES + FILTROS"));
+  const current = css.slice(css.indexOf(".ruido-site-content .ruido-paper-card h3.ruido-legible-prop-title {"));
   assert.match(current, /\.ruido-paper-card :is\(h2,h3\) > a:not\(\.btn-punk\)/);
   assert.match(current, /overflow-wrap: anywhere/);
 });
