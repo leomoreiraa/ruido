@@ -1,5 +1,3 @@
-// app/parlamentares/[id]/page.tsx
-
 import React from "react";
 import fs from "node:fs";
 import path from "node:path";
@@ -152,7 +150,6 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
     mapaPresencas[c.status] = c._count._all;
   }
 
-  // Alinhamento com a maioria
   let votacoesAlinhamentoElegiveis = 0;
   let votosAlinhados = 0;
 
@@ -173,8 +170,6 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
       ? Math.round((votosAlinhados / votacoesAlinhamentoElegiveis) * 100)
       : null;
 
-  // A seção legada consulta SQLite, enquanto o coletor eleitoral publica
-  // totais de bens verificados em JSON. Unificar os dois no perfil exportado.
   let totaisTse: Array<{ano:number;totalDeclarado:number;quantidadeBens:number;fonte:string}> = [];
   try {
     const file = path.join(process.cwd(), "public/data/dossies/patrimonio.json");
@@ -189,7 +184,6 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
         v.fonte.startsWith("https://cdn.tse.jus.br/"))
       .map(([ano,v])=>({ano:Number(ano),...v}));
   } catch {
-    // Não extrapolar dados patrimoniais quando export não está disponível.
   }
 
   let candidatura=null;
@@ -198,7 +192,6 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
       "public/data/dossies/candidaturas-presidenciais.json"),"utf8"));
     candidatura=candidaturaPresidencialDoPerfil(registro,parlamentar);
   }catch{
-    // Falha fechada: sem verificação eleitoral, nenhuma candidatura é inventada.
   }
   const isCamara = parlamentar.casa === "CAMARA";
 
