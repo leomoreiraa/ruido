@@ -96,8 +96,8 @@ export function ParlamentaresFilterView({
       
       <div className="ruido-politicos-header border-b-4 border-ink pb-6">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 transform -rotate-1">
-          <span>// ARQUIVO NOMINAL DOS PARLAMENTARES</span>
-          <span className="text-punk-red">///</span>
+          <span>
+          <span className="text-punk-red">
         </div>
         <h1 className="ruido-politicos-headline font-heavy uppercase" aria-label="DOSSIÊ DOS PARLAMENTARES">
           {["DOSSIÊ", "DOS", "PARLAMENTARES"].map((palavra, indicePalavra, palavras) => {

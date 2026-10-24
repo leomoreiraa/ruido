@@ -1,4 +1,4 @@
-/** Primeira fase: evidências econômicas de fontes públicas, sem análise de culpa. */
+
 import fs from "node:fs";
 import path from "node:path";
 

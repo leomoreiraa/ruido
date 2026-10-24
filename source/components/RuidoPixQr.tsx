@@ -1,9 +1,4 @@
-/**
- * QR estático BR Code gerado localmente a partir de RUIDO_PIX_COPIA_E_COLA.
- * 41x41 módulos, correção de erros M e margem branca obrigatória de 4 módulos.
- * Gerado offline e conferido com um decodificador QR; nenhuma API externa.
- * Se a chave, o nome ou a cidade mudarem, regenere esta matriz junto com o BR Code.
- */
+
 const rows = [
   "1fd93fbf77f",
   "1058a74ca41",

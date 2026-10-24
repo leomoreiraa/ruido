@@ -1,6 +1,6 @@
 import type {CandidaturaPresidencial as Dados} from "@/lib/eleicoes/candidaturaPresidencial";
 
-/** Aviso documental, não propaganda; o cargo parlamentar é preservado. */
+
 export function CandidaturaPresidencial({dados}:{dados:Dados}){
   return <aside className="min-w-0 border-l-[7px] border-punk-acid bg-ink p-4 sm:p-5 text-paper font-mono"
     aria-label="Candidatura eleitoral registrada na Justiça Eleitoral">

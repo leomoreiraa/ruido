@@ -93,7 +93,7 @@ export function GraficoPatrimonio({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 pb-4 border-b-2 border-dashed border-ink/30">
         <div>
           <div className="inline-block bg-punk-red text-white font-mono text-[10px] font-bold px-2 py-0.5 uppercase mb-1">
-            AUDITORIA PATRIMONIAL // TSE
+            AUDITORIA PATRIMONIAL 
           </div>
           <h3 className="font-heavy text-2xl sm:text-3xl text-ink uppercase tracking-tight">
             EVOLUÇÃO PATRIMONIAL DECLARADA

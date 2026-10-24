@@ -1,4 +1,4 @@
-/** Seção estática gerada no build; o navegador nunca recebe chave de API. */
+
 import fs from "node:fs";
 import path from "node:path";
 

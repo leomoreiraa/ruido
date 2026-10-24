@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Volume2, ArrowUpRight } from "lucide-react";
 
-/** Link global, estático e acessível; não inicia cobranças. */
+
 export function RuidoSupportFloating() {
   return (
     <Link

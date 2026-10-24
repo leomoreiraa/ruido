@@ -170,8 +170,8 @@ export function EmendasTrackerView({
       
       <div className="border-b-4 border-ink pb-6">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 transform -rotate-1">
-          <span>// AUDITORIA DO ORÇAMENTO PÚBLICO</span>
-          <span className="text-punk-red">///</span>
+          <span>
+          <span className="text-punk-red">
         </div>
         <h1 className="font-heavy text-4xl sm:text-6xl uppercase tracking-tight text-ink">
           RASTREADOR DE <span className="text-punk-red">EMENDAS R$</span>
