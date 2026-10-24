@@ -1,4 +1,3 @@
-// lib/ai/resumoDiscursos.ts
 import OpenAI from "openai";
 import { prisma } from "@/lib/prisma";
 import { ResumoIAItem } from "@/lib/types";
@@ -74,12 +73,10 @@ export function extrairResumoAlgoritmico(
     }
   }
 
-  // Ordena por frequência decrescente
   const termosOrdenados = Array.from(frequenciaPalavras.entries())
     .sort((a, b) => b[1] - a[1])
     .map(([palavra]) => palavra.toUpperCase());
 
-  // Seleciona as 5 principais palavras-chave únicas
   const keywords: string[] = [];
   for (const termo of termosOrdenados) {
     if (keywords.length >= 5) break;
@@ -88,7 +85,6 @@ export function extrairResumoAlgoritmico(
     }
   }
 
-  // Completa até 5 se necessário com termos institucionais padrão
   const fallbackKeywords = ["ORÇAMENTO", "TRANSPARÊNCIA", "FISCALIZAÇÃO", "SAÚDE", "EDUCAÇÃO"];
   for (const fb of fallbackKeywords) {
     if (keywords.length >= 5) break;
@@ -97,7 +93,6 @@ export function extrairResumoAlgoritmico(
     }
   }
 
-  // Monta resumo de 3 linhas com clareza institucional
   let linha1 = "Atuação concentrada na tramitação legislativa em plenário com pronunciamentos regulares sobre políticas públicas.";
   let linha2 = "Foco temático priorizado nas pautas de " + keywords.slice(0, 3).join(", ").toLowerCase() + " e desenvolvimento regional.";
   let linha3 = "Intervenções frequentes em orientações de bancada, fiscalização de projetos e deliberações das comissões temáticas.";
@@ -127,7 +122,6 @@ export async function gerarResumoTematicoParlamentar(
   parlamentarId: string,
   options: OpcoesResumoIA = {}
 ): Promise<ResumoIAItem | null> {
-  // 1. Verifica se já existe resumo gerado e se não deve forçar regeração
   if (!options.forcar) {
     const existente = await prisma.resumoIA.findFirst({
       where: { parlamentarId },
@@ -153,7 +147,6 @@ export async function gerarResumoTematicoParlamentar(
     }
   }
 
-  // 2. Busca os últimos 20 discursos do parlamentar no banco
   const discursos = await prisma.discurso.findMany({
     where: { parlamentarId },
     orderBy: { dataHora: "desc" },
@@ -176,7 +169,6 @@ export async function gerarResumoTematicoParlamentar(
 
   let resultadoIA: ResultadoExtracaoIA;
 
-  // 3. Tenta processar via OpenAI se API Key estiver configurada
   if (apiKey) {
     try {
       const openai = new OpenAI({ apiKey });
@@ -225,7 +217,6 @@ export async function gerarResumoTematicoParlamentar(
           modeloUsado: modeloEscolhido,
         };
       } else {
-        // Formato retornado inconsistente, utiliza fallback algorítmico
         resultadoIA = extrairResumoAlgoritmico(discursos);
       }
     } catch (err) {
@@ -237,11 +228,9 @@ export async function gerarResumoTematicoParlamentar(
       resultadoIA = extrairResumoAlgoritmico(discursos);
     }
   } else {
-    // Sem API Key configurada: geração algorítmica garantida
     resultadoIA = extrairResumoAlgoritmico(discursos);
   }
 
-  // 4. Salva o resultado na tabela ResumoIA
   const novoRegistro = await prisma.resumoIA.create({
     data: {
       parlamentarId,
@@ -251,7 +240,6 @@ export async function gerarResumoTematicoParlamentar(
     },
   });
 
-  // 5. Marca os discursos processados
   const idsDiscursos = discursos.map((d) => d.id);
   await prisma.discurso.updateMany({
     where: { id: { in: idsDiscursos } },
