@@ -1,4 +1,4 @@
-/** Janela histórica e identidade documental: descoberta NÃO atesta veracidade. */
+
 export function anosDeArquivo(cursor:number|undefined,quantidade:number,anoAtual:number,
   primeiroAno=2018):{anos:number[];proximoCursor:number}{
   const final=anoAtual-1;
