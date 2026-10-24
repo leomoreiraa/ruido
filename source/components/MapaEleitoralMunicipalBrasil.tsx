@@ -135,26 +135,26 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
         />)}
       </svg>
     </div>
-    <div className="grid gap-3 sm:grid-cols-[1fr_auto] items-start">
-      <div className="min-h-[65px] bg-white/70 border-l-[3px] border-ink/70 px-3 py-2 font-mono text-xs" aria-live="polite">
+    <div className="ruido-map-readable-panel">
+      <div className="ruido-map-readable-panel__text" aria-live="polite">
         {focado ? <>
-          <strong className="block text-sm">{focado.nome} / {nomesUF.get(focado.uf) ?? focado.uf}</strong>
+          <strong>{focado.nome} / {nomesUF.get(focado.uf) ?? focado.uf}</strong>
           <p>Lula: {lula && resultadoFoco?.votosValidos ? numberFormat.format(lula.votos)+" votos ("+percentFormat.format(lula.percentual ?? 0)+"%)" : "sem dados"} · Flávio: {flavio && resultadoFoco?.votosValidos ? numberFormat.format(flavio.votos)+" votos ("+percentFormat.format(flavio.percentual ?? 0)+"%)" : "sem dados"}</p>
-          <p className="text-ink/70">Clique para abrir a cidade e os dados completos.</p>
+          <p>Selecione a cidade para consultar os dados completos.</p>
         </> : <>
-          <strong className="block text-sm">Distribuição municipal do voto</strong>
-          <p>Passe o cursor sobre um município ou toque para consultar seus resultados. As linhas estaduais servem somente como referência geográfica.</p>
+          <strong>Distribuição municipal do voto</strong>
+          <p>Passe o cursor ou toque em uma cidade para consultar seus resultados. As linhas estaduais servem somente como referência geográfica.</p>
         </>}
       </div>
-      <div className="text-[11px] font-mono grid grid-cols-2 gap-x-4 gap-y-1 text-ink">
-        <span><span style={{ color: VERMELHO }}>■</span> Lula: {numberFormat.format(estatisticas.lula)}</span>
-        <span><span style={{ color: VERDE }}>■</span> Flávio: {numberFormat.format(estatisticas.flavio)}</span>
-        <span><span style={{ color: EMPATE }}>■</span> Empates: {numberFormat.format(estatisticas.empate)}</span>
-        <span><span style={{ color: AUSENTE }}>■</span> Sem dados: {numberFormat.format(estatisticas.ausente)}</span>
+      <div className="ruido-map-readable-panel__stats" aria-label="Quantidade de municípios por resultado">
+        <span><i style={{ backgroundColor: VERMELHO }}/>Lula: <strong>{numberFormat.format(estatisticas.lula)}</strong></span>
+        <span><i style={{ backgroundColor: VERDE }}/>Flávio: <strong>{numberFormat.format(estatisticas.flavio)}</strong></span>
+        <span><i style={{ backgroundColor: EMPATE }}/>Empates: <strong>{numberFormat.format(estatisticas.empate)}</strong></span>
+        <span><i style={{ backgroundColor: AUSENTE }}/>Sem dados: <strong>{numberFormat.format(estatisticas.ausente)}</strong></span>
       </div>
     </div>
-    <p className="font-mono text-[11px] text-ink/70">
-      {numberFormat.format(malha.totalMunicipios)} contornos municipais. A cor é calculada individualmente para cada cidade, nunca pelo total do estado. Tons mais fortes representam maior diferença percentual entre Lula e Flávio. A superfície colorida representa área geográfica, não quantidade de eleitores.
+    <p className="ruido-map-readable-note">
+      {numberFormat.format(malha.totalMunicipios)} contornos municipais. Cada cidade recebe sua própria cor. Tons mais fortes representam maior diferença percentual entre Lula e Flávio; a área colorida não representa a quantidade de eleitores.
     </p>
   </div>;
 }
