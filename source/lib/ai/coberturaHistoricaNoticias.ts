@@ -25,8 +25,6 @@ export function confirmarIdentidadeArtigo(p:PessoaJornalistica,titulo:string,art
     const needle=" "+name+" ";
     if(!body.includes(needle))continue;
     const terms=name.split(" ").filter(Boolean);
-    // Nome público completo na manchete e no corpo afasta a falsa exigência
-    // de o cargo estar necessariamente a 500 caracteres da primeira menção.
     if(terms.length>=2&&name.length>=14&&headline.includes(needle))return true;
     const pos=body.indexOf(needle);
     if(pos>=0&&role.test(body.slice(Math.max(0,pos-650),Math.min(body.length,pos+650))))
