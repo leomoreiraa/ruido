@@ -1,4 +1,3 @@
-// components/ui/RansomTitle.tsx
 import React from "react";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +18,6 @@ export function RansomTitle({
 }: RansomTitleProps) {
   const words = text.split(" ");
 
-  // Alternating styles for ransom cut-out feel
   const cutStyles = [
     "cut-black",
     "cut-red",
