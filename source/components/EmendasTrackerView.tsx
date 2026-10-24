@@ -167,7 +167,7 @@ export function EmendasTrackerView({
 
   return (
     <div className="space-y-8">
-      {/* Header */}
+      
       <div className="border-b-4 border-ink pb-6">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 transform -rotate-1">
           <span>// AUDITORIA DO ORÇAMENTO PÚBLICO</span>
@@ -182,7 +182,7 @@ export function EmendasTrackerView({
         </p>
       </div>
 
-      {/* Indicadores Gerais em Cards Brutalistas */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="ruido-paper-card bg-paper-card border-3 border-ink p-5 shadow-[5px_5px_0_#101010] relative transform -rotate-1 hover:rotate-0 transition-all">
           <div className="scotch-tape-corner" aria-hidden="true" />
@@ -237,7 +237,7 @@ export function EmendasTrackerView({
         </div>
       </div>
 
-      {/* Abas de Navegação */}
+      
       <div className="flex gap-2 sm:gap-3 flex-wrap border-b-4 border-ink pb-2">
         <button
           type="button"
@@ -276,10 +276,10 @@ export function EmendasTrackerView({
         </button>
       </div>
 
-      {/* Conteúdo Aba Tabela */}
+      
       {abaVisao === "tabela" && (
         <div className="space-y-6">
-          {/* Caixa de Filtros */}
+          
           <div className="ruido-filter-ink-panel relative ruido-paper-card bg-paper-card border-3 border-ink p-5 shadow-[6px_6px_0_#101010]">
             <div className="ruido-filter-ink-form flex flex-wrap items-center gap-3 font-mono text-xs">
               <div className="flex-1 min-w-[200px]">
@@ -393,7 +393,7 @@ export function EmendasTrackerView({
               </button>
             </div>
           )}
-          {/* Tabela de Emendas */}
+          
           {emendasPaginadas.length > 0 ? (
             <div className="space-y-4">
               <div className="overflow-x-auto">
@@ -454,7 +454,7 @@ export function EmendasTrackerView({
                 </table>
               </div>
 
-              {/* Paginação */}
+              
               {totalPaginas > 1 && (
                 <div className="py-4 border-t-3 border-ink flex flex-wrap justify-between items-center gap-4 font-mono text-xs">
                   <span>
@@ -489,7 +489,7 @@ export function EmendasTrackerView({
         </div>
       )}
 
-      {/* Conteúdo Aba Ranking */}
+      
       {abaVisao === "ranking" && (
         <div className="space-y-4">
           <div className="flex justify-between items-center border-b-2 border-dashed border-ink/30 pb-2">
@@ -540,7 +540,7 @@ export function EmendasTrackerView({
         </div>
       )}
 
-      {/* Conteúdo Aba Mapa */}
+      
       {abaVisao === "mapa" && (
         <div className="space-y-4">
           <div className="flex justify-between items-center border-b-2 border-dashed border-ink/30 pb-2">
