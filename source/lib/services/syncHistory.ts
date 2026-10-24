@@ -19,7 +19,6 @@ export interface HistoryOptions {
   dias?: number;
   reprocessar?: boolean;
 }
-// Bump when collection semantics change so unsafe prior successes are replayed.
 export const CAMARA_COLLECTOR_REVISION = 3;
 
 export interface HistoryWindow {
@@ -74,7 +73,6 @@ export function criarJanelasHistoricas(options: HistoryOptions, now = new Date()
   if (options.dias !== undefined && (!Number.isSafeInteger(options.dias) || options.dias < 1 || options.dias > 366)) throw new Error("--dias deve ser inteiro entre 1 e 366");
   const inicioDiario = options.dias ? new Date(Date.parse(`${hoje}T00:00:00Z`) - (options.dias - 1) * 86400000).toISOString().slice(0, 10) : undefined;
   return meses.map(mes => {
-    // setUTCFullYear avoids Date.UTC's special interpretation of years 00–99.
     const [ano, numero] = mes.split("-").map(Number);
     const fim = new Date(0);
     fim.setUTCFullYear(ano, numero, 0);
@@ -140,7 +138,6 @@ async function defaultDependencies(options: HistoryOptions): Promise<HistoryDepe
 
 /** A failed/interrupted window is replayed in full using the services' idempotent upserts. */
 export async function executarHistorico(options: HistoryOptions, injected?: HistoryDependencies) {
-  // Validate before loading database/services or acquiring a lease.
   const windows = criarJanelasHistoricas(options, injected?.now() ?? new Date());
   const deps = injected ?? await defaultDependencies(options);
   const lease = await deps.acquireLease();
@@ -159,7 +156,6 @@ export async function executarHistorico(options: HistoryOptions, injected?: Hist
       await lease.heartbeat();
       const id = options.dias ? `history:v1:${options.fonte}:daily:${window.dataInicio}:${window.dataFim}` : `history:v1:${options.fonte}:${window.mes}`;
       const previous = await deps.executions.findUnique({ where: { id } });
-      // A snapshot taken during an open month must never finalize that month later.
       let checkpoint: Partial<HistoryWindow> = {};
       try { checkpoint = JSON.parse(previous?.parametros ?? "{}") ?? {}; } catch { /* Replay invalid checkpoints. */ }
       if (!options.reprocessar && window.encerrada && previous?.status === "SUCESSO" && Object.entries(window).every(([key, value]) => checkpoint[key as keyof HistoryWindow] === value)) {
