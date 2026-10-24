@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T11:05:34.139327+00:00",
+  "generated_at_utc": "2026-10-24T11:14:16.992016+00:00",
   "json_files": {
     "analises-oficiais.json": 42562,
     "candidaturas-presidenciais.json": 809,
@@ -100,6 +100,6 @@
     }
   ],
   "pages_files_count": 64597,
-  "pages_bytes": 714111073,
+  "pages_bytes": 714110944,
   "pages_budget_bytes": 943718400
 }
