@@ -1,5 +1,3 @@
-// app/emendas/page.tsx
-
 import React from "react";
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
@@ -33,13 +31,11 @@ export default async function EmendasPage() {
     },
   });
 
-  // Agregações de KPIs
   let totalGeralEmpenhado = 0;
   let totalGeralPago = 0;
   let totalGeralPix = 0;
   const municipiosUnicos = new Set<string>();
 
-  // Agregações por Parlamentar para o Ranking
   const mapaParlamentares = new Map<
     string,
     {
@@ -56,10 +52,8 @@ export default async function EmendasPage() {
     }
   >();
 
-  // Agregações por UF
   const mapaUfs = new Map<string, { totalPago: number; quantidadeEmendas: number }>();
 
-  // Agregações por Município
   const mapaMunicipios = new Map<string, { municipio: string; uf: string; totalPago: number }>();
 
   for (const em of emendasRaw) {
@@ -83,7 +77,6 @@ export default async function EmendasPage() {
       mapaMunicipios.set(chaveMun, regMun);
     }
 
-    // Agrega UF
     if (em.ufBeneficiada) {
       const regUf = mapaUfs.get(em.ufBeneficiada) || { totalPago: 0, quantidadeEmendas: 0 };
       regUf.totalPago += em.valorPago;
@@ -91,7 +84,6 @@ export default async function EmendasPage() {
       mapaUfs.set(em.ufBeneficiada, regUf);
     }
 
-    // Agrega Parlamentar
     if (em.parlamentar) {
       const p = em.parlamentar;
       const regP = mapaParlamentares.get(p.id) || {
@@ -117,14 +109,12 @@ export default async function EmendasPage() {
     }
   }
 
-  // Ordena ranking de parlamentares (Top 10)
   const rankingParlamentares: RankingParlamentarEmenda[] = Array.from(
     mapaParlamentares.values()
   )
     .sort((a, b) => b.totalPago - a.totalPago)
     .slice(0, 10);
 
-  // Ordena UFs
   const distribuicaoUfs: DistribuicaoUfEmenda[] = Array.from(mapaUfs.entries())
     .map(([uf, dados]) => ({
       uf,
@@ -133,7 +123,6 @@ export default async function EmendasPage() {
     }))
     .sort((a, b) => b.totalPago - a.totalPago);
 
-  // Top Municípios
   const topMunicipios = Array.from(mapaMunicipios.values())
     .sort((a, b) => b.totalPago - a.totalPago)
     .slice(0, 8);
