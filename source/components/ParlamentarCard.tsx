@@ -1,5 +1,3 @@
-// components/ParlamentarCard.tsx
-
 import React from "react";
 import Link from "next/link";
 import { PoliticianPhoto } from "@/components/PoliticianPhoto";
@@ -30,7 +28,6 @@ export function ParlamentarCard({
 }: ParlamentarCardProps) {
   const isCamara = casa === "CAMARA";
 
-  // Crooked asymmetric punk rotations
   const rotationClasses = [
     "transform -rotate-1.5 hover:rotate-0",
     "transform rotate-2 hover:rotate-0",
