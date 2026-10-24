@@ -61,10 +61,10 @@ export function PoliticianPhoto({
         </div>
       )}
 
-      {/* Red Layer on Hover */}
+      
       <div className="target-red-layer" aria-hidden="true" />
 
-      {/* Punk Stencil Smiley Stamp from user upload on Hover */}
+      
       <div className="target-stamp" aria-hidden="true">
         <img
           src="/assets/punk-target-white.png"
