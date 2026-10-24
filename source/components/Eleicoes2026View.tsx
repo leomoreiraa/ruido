@@ -217,7 +217,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <div className="ruido-map-zine__titlebar">
     <div className="min-w-0">
      <div className="ruido-map-zine__micro">VOTOS POR MUNICÍPIO · FONTE TSE</div>
-     <h2 className="ruido-map-zine__headline">MAPA DE VOTOS <em>// {uf==="BR"?"BRASIL":nomesUf.get(uf)}</em></h2>
+     <h2 className="ruido-map-zine__headline ruido-election-headline"><span className="ruido-election-headline__text">MAPA DE VOTOS</span> <em className="ruido-election-headline__place">// {uf==="BR"?"BRASIL":nomesUf.get(uf)}</em></h2>
     </div>
     {uf!=="BR"?<button type="button" onClick={()=>selecionarEstado("BR")} className="ruido-map-zine__back">← VOLTAR AO BRASIL</button>:<span className="ruido-map-zine__stamp" aria-hidden="true">MAPA<br />NACIONAL<br />///</span>}
    </div>
