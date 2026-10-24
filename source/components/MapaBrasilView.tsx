@@ -126,12 +126,23 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
         <p className="mt-4 text-xs font-mono border-t-2 border-dashed border-ink/20 pt-3">{LABELS[metric].resumo}</p>
       </section>
       <section className="grid lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,.75fr)] gap-5">
-        <div className="ruido-map-frame bg-[#424943] border-4 border-ink shadow-[9px_9px_0_#101010] relative p-3 sm:p-5 text-paper">
-          <div className="flex items-center justify-between font-mono text-[10px] text-punk-acid tracking-wider">
-            <span>/// TERRITÓRIO NACIONAL</span>
+        <div className="ruido-map-zine ruido-map-zine--atlas">
+          <span className="ruido-map-zine__tape" aria-hidden="true" />
+          <span className="ruido-map-zine__corner" aria-hidden="true">✕</span>
+          <div className="ruido-map-zine__masthead">
+            <span className="ruido-map-zine__eyebrow">RUÍDO // CARTOGRAFIA SOCIAL</span>
+            <span className="ruido-map-zine__serial">DOCUMENTO 027 / BRASIL</span>
           </div>
-          <div className="ruido-map-canvas border border-dashed border-paper/20 mt-2 relative overflow-hidden"
-            style={{backgroundImage:"radial-gradient(#747a73 1px,transparent 1px)",backgroundSize:"17px 17px"}}>
+          <div className="ruido-map-zine__titlebar">
+            <div>
+              <div className="ruido-map-zine__micro">ANÁLISE TERRITORIAL · DADOS OFICIAIS</div>
+              <h2 className="ruido-map-zine__headline">TERRITÓRIO <em>EM RAIO X</em></h2>
+            </div>
+            <span className="ruido-map-zine__stamp" aria-hidden="true">BRASIL<br />27 UFs<br />///</span>
+          </div>
+          <div className="ruido-map-zine__window">
+            <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>ESCANEAMENTO / 001</span><span>▲ NORTE</span></div>
+            <div className="ruido-map-zine__atlas-canvas">
             <svg viewBox="0 0 720 710" role="group" aria-label="Mapa interativo das unidades federativas do Brasil" className="w-full h-auto max-h-[670px]">
               {states.map(s=><path key={s.uf} d={s.svgPath}
                 fill={fill(s)}
@@ -148,13 +159,14 @@ export function MapaBrasilView({data}:{data:DadosMapa|null}){
                 onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setUf(s.uf);}}}
               />)}
             </svg>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-4 justify-between items-center mt-4 font-mono text-[10px] uppercase">
+          <div className="ruido-map-zine__footer flex flex-wrap gap-4 justify-between items-center font-mono text-[10px] uppercase">
             <div className="flex flex-wrap gap-2 items-center">
               <span>MENOR</span>{["#424b46","#657361","#949e57","#c4d74f","#d8f53e"].map(c=><span key={c} style={{background:c}} className="h-3 w-5 border border-white/20"/>)}
               <span>MAIOR</span>
             </div>
-            <span className="text-paper/60">ESCALA RELATIVA AO MAIOR VALOR • UF VERMELHA = SELECIONADA</span>
+            <span className="ruido-map-zine__note">ESCALA RELATIVA AO MAIOR VALOR • UF VERMELHA = SELECIONADA</span>
           </div>
         </div>
         <div className="flex flex-col gap-5">
