@@ -185,8 +185,6 @@ async function searchPublisherFeeds(p: Parliamentary): Promise<Art[]> {
   const news = await newsroomArticles();
   const nome = normalize(p.nome);
   const tokens = nome.split(" ").filter(t=>t.length>=4);
-  // RSS apenas descobre: os nomes exatos e a função parlamentar
-  // precisam ser confirmados no texto original das quatro fontes.
   const last = tokens[tokens.length-1] || nome;
   return news.filter(a=> {
     const title = normalize(a.title);
@@ -194,8 +192,6 @@ async function searchPublisherFeeds(p: Parliamentary): Promise<Art[]> {
   }).slice(0,35);
 }
 async function searchBingRss(p: Parliamentary): Promise<Art[]> {
-  // RSS é apenas descoberta: consulta ampla, enquanto o texto original
-  // e as quatro fontes independentes continuam obrigatórios para publicação.
   const query = '"' + p.nome.replace(/"/g, "") + '" política';
   const u = new URL("https://www.bing.com/news/search");
   u.searchParams.set("q", query);
@@ -234,7 +230,6 @@ async function searchGoogleNewsRss(p: Parliamentary, deep = false, archiveYear?:
       if(url.hostname==="news.google.com") redirects.push({url:url.href,title});
     } catch {/* Feed do agregador não constitui prova. */}
   }
-  // Limite rigoroso de custo: o agregador nem sempre oferece redirecionamentos.
   const outcomes = await Promise.allSettled(redirects.slice(0,archiveYear ? (deep ? 12 : 8) : (deep ? 16 : 10)).map(async art=>{
     const url=await resolverUrlGoogleNews(art.url);
     return url && originGroup(url) ? {url,title:art.title,anoArquivo:archiveYear} : null;
@@ -315,14 +310,10 @@ async function search(p: Parliamentary, deep = false, archiveYears:number[]=[]):
     const group=originGroup(item.url)!;
     byGroup.set(group,[...(byGroup.get(group)||[]),item]);
   }
-  // Evita que um portal sozinho ocupe as primeiras vagas de triagem.
   const balanced:Art[] = [];
   for (let i=0;i<(deep?12:8);i++)
     for (const groupItems of byGroup.values())
       if (groupItems[i]) balanced.push(groupItems[i]);
-  // Priorizar assuntos com manchetes convergentes de redações distintas.
-  // Isso poupa leitura de artigos dispersos e AUMENTA a chance de 4 fontes
-  // falarem do MESMO acontecimento. A seleção NÃO constitui prova.
   const terms=balanced.map(item=>termosDeEvento(item.title,p.nome));
   const relevance=balanced.map((a,i)=>{
     const related=new Set<string>();
@@ -342,8 +333,6 @@ async function search(p: Parliamentary, deep = false, archiveYears:number[]=[]):
   return [...recent.slice(0,max-quota),...archive.slice(0,quota)].slice(0,max);
 }
 function officialArticleDate(html: string): string | null {
-  // Only the publisher's own metadata is a publication date. GDELT's
-  // seendate records discovery and must NEVER masquerade as publication.
   const metadata = [...html.matchAll(/<meta\b[^>]*>/gi)].slice(0, 80);
   for (const [tag] of metadata) {
     const name = /(?:property|name)\s*=\s*["']([^"']+)["']/i.exec(tag)?.[1]?.toLowerCase();
@@ -355,7 +344,6 @@ function officialArticleDate(html: string): string | null {
   }
   const time = /<time\b[^>]*datetime\s*=\s*["']([^"']+)["']/i.exec(html)?.[1];
   if (time && Number.isFinite(Date.parse(time))) return new Date(time).toISOString();
-  // JSON-LD publicado no domínio da redação; descoberta GDELT não fornece a data.
   for (const match of [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].slice(0,12)) {
     try {
       const stack: unknown[] = [JSON.parse(match[1])];
@@ -379,9 +367,6 @@ function officialArticleDate(html: string): string | null {
 async function readSources(p: Parliamentary, articles: Art[], deep = false): Promise<Article[]> {
   const sources: Article[] = [];
   const counts = new Map<string,number>(), seenUrls = new Set<string>();
-  // Anteriormente a PRIMEIRA reportagem lida de cada redação bloqueava
-  // todas as demais, mesmo quando tratavam de acontecimentos distintos.
-  // Ler até três por grupo, preservando matérias originais de vários fatos.
   for (let index=0;index<Math.min(articles.length,deep ? 60 : 38);index+=7) {
     const batch=articles.slice(index,index+7);
     const results=await Promise.allSettled(batch.map(async a=>{
@@ -465,7 +450,6 @@ function validate(p: Parliamentary, articles: Article[], ai: AiResponse): NewsEn
       if (!proof || typeof proof.url!=="string" || typeof proof.excerto!=="string")continue;
       const item = articles.find(a => a.url === proof.url);
       if (!item || proof.excerto.length<30) continue;
-      // O validador puro confere o trecho contra o texto original após NFKC e normalização de espaços.
       evidencias.push({
         url: item.url, titulo: item.title, publicadoEm: item.published,
         textoAcessado: item.original, excertoDaAfirmacao: proof.excerto,
@@ -478,8 +462,6 @@ function validate(p: Parliamentary, articles: Article[], ai: AiResponse): NewsEn
       resumo: ev.resumo, situacao: ev.tipo as "NOTICIA"|"CITADO", evidencias,
     });
     if (!decision.publicavel || !decision.nivel || !decision.fontesAprovadas.length) continue;
-    // Atribuição programática: não permitir que um resumo IA pareça comprovação.
-    // Não classificar como réu, condenado ou investigado com base em imprensa.
     if (/\\b(culpado|culpada|corrupto|corrupta|crime comprovado|foi condenado|é réu|foi condenado)\\b/i.test(normalize(ev.resumo))) continue;
     const source = decision.fontesAprovadas[0];
     const atribuido = `Segundo ${new URL(source.url).hostname}, ${ev.resumo.trim().replace(/^segundo\\s+[^,]+,?\\s*/i, "")}`;
@@ -510,10 +492,6 @@ async function main() {
     "; sigla="+(FOCUS_PARTY||"TODOS")+"; prioridades confirmadas="+selector.ids.size+
     "; janela="+LOOKBACK_DAYS+" dias; Gemini="+MAX_AI+" análises.");
   const comecou = Date.now();
-  // Tempo por lote limitado: fontes jornalísticas lentas não devem ocupar
-  // indefinidamente o runner ou impedir exportação financeira.
-  // Orçamento exclusivo da pesquisa: reservar minutos do runner para
-  // validar, guardar artefatos e publicar antes do timeout do job.
   const minutosPadrao=DEEP_MODE ? 152 : (selector.focado ? 21 : 18);
   const pedido=Number(process.env.NEWS_BUDGET_MINUTES||minutosPadrao);
   const orcamentoMs=Math.max(1,Math.min(DEEP_MODE?155:21,
@@ -561,8 +539,6 @@ async function main() {
       const clusters = agruparReportagens(elegiveis,p.nome,2);
       candidateEvents += clusters.length;
       if (clusters.length) candidatesWithFourSources++;
-      // Mesmo uma só matéria original entra na triagem. A função de validação
-      // distingue fonte única de cobertura corroborada pelo mesmo evento.
       const grupos=deep ? 7 : 3;
       const candidateGroups = clusters.length ? clusters.slice(0,grupos) :
         elegiveis.slice(0,grupos).map(article=>[article]);
@@ -572,8 +548,6 @@ async function main() {
         const candidate=await propose(p,group);
         const verified=validate(p,group,candidate);
         for (const item of verified) {
-          // Checagens externas são links relacionados, nunca prova automática.
-          // A integração é opcional e a chave fica exclusivamente no Actions.
           if (process.env.FACTCHECK_API_KEY && factCheckQueries < 2) {
             factCheckQueries++;
             item.checagens = await buscarChecagensExternas(
@@ -613,8 +587,6 @@ async function main() {
       sucessos,falhas:errors,pendentes:Object.keys(store.pendentes).length,
       concluidoEm:new Date().toISOString()};
     persistir(); // checkpoint por parlamentar, sem republicar texto integral
-    // Uma cota Gemini indisponível impede a próxima análise; não gastar horas
-    // repetindo a mesma falha para centenas de parlamentares.
     if (errors && /Gemini HTTP (401|403|404|429|5\d\d)/.test(
       store.pendentes[p.id]?.ultimoErro||"")) {
       console.warn("[notícias] IA indisponível/cota esgotada; checkpoint salvo; encerrar rodada.");
