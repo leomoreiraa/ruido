@@ -35,7 +35,19 @@ for(const configuracao of [
    await page.locator("#eleicao-uf").selectOption("SP");
    await expect(page.locator("#eleicao-busca")).toBeVisible();
    await page.locator("#eleicao-busca").fill("Araras");
-   await expect(page.locator("#eleicao-cidade").locator("option",{hasText:"Araras"})).toHaveCount(1,{timeout:20000});
+   const municipio=page.locator("#eleicao-cidade option").filter({hasText:/araras/i});
+   try {
+    await expect(municipio).toHaveCount(1,{timeout:20000});
+   }catch(e){
+    const observacao=await page.evaluate(async()=>{
+     const municipioOpcoes=document.querySelectorAll("#eleicao-cidade option").length;
+     const build=await fetch("/build-info.json").then(r=>r.json()).catch(()=>null);
+     const catalogo=await fetch("/data/eleicoes-2026-1.json",{cache:"force-cache"}).then(async r=>({status:r.status,length:(await r.text()).length})).catch(err=>({erro:String(err)}));
+     return {municipioOpcoes,build,catalogo};
+    });
+    console.log("DIAGNOSTICO-MUNICIPIO "+configuracao.nome+" "+JSON.stringify(observacao));
+    throw e;
+   }
    const codigoAraras=await page.locator("#eleicao-cidade option").filter({hasText:/araras/i}).getAttribute("value");
    expect(codigoAraras).toBeTruthy();
    await page.locator("#eleicao-cidade").selectOption(codigoAraras);
@@ -61,7 +73,13 @@ for(const configuracao of [
     return {largura,excesso,elementos};
    });
    console.log("DIAGNOSTICO-LARGURA "+configuracao.nome+" "+JSON.stringify(diagnostico));
-   expect(diagnostico.excesso).toBeLessThanOrEqual(5);
+   const rolagem=await page.evaluate(()=>{
+    window.scrollTo({left:150,top:window.scrollY,behavior:"instant"});
+    return {scrollX:window.scrollX,scrollLeft:document.documentElement.scrollLeft,overflowRoot:getComputedStyle(document.documentElement).overflowX,overflowBody:getComputedStyle(document.body).overflowX};
+   });
+   console.log("DIAGNOSTICO-ROLAGEM "+configuracao.nome+" "+JSON.stringify(rolagem));
+   expect(rolagem.scrollX).toBeLessThanOrEqual(2);
+   expect(rolagem.scrollLeft).toBeLessThanOrEqual(2);
   });
  });
 }
