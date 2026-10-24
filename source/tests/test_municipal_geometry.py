@@ -16,6 +16,19 @@ class GeometryTests(unittest.TestCase):
         self.assertEqual(item["municipios"][0]["id"],"1200013")
         self.assertTrue(item["municipios"][0]["d"].startswith("M"))
         self.assertEqual(item["viewBox"],"0 0 800 610")
+    def test_national_geometry_uses_same_projected_grid_as_state_paths(self):
+        item=geom.exportar_nacional(fake(),"AC",["1200013"],fonte="https://geodata.example/acre.json")
+        self.assertEqual(item["uf"],"AC")
+        self.assertEqual(item["municipios"][0]["id"],"1200013")
+        self.assertTrue(item["municipios"][0]["d"].startswith("M"))
+        self.assertNotEqual(item["municipios"][0]["d"],geom.exportar(fake(),"AC",["1200013"])["municipios"][0]["d"])
+        self.assertIn("fonte",item)
+    def test_national_geometry_rejects_wrong_state(self):
+        with self.assertRaises(ValueError):
+            geom.exportar_nacional(fake(),"SP")
+    def test_national_geometry_rejects_insufficient_coverage(self):
+        with self.assertRaises(ValueError):
+            geom.exportar_nacional(fake(),"AC",["1200013","1200054"])
     def test_rejects_cross_state_code(self):
         with self.assertRaises(ValueError):
             geom.exportar(fake(),"SP")

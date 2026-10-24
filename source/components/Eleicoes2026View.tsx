@@ -1,6 +1,7 @@
 "use client";
 
-import React,{useEffect,useMemo,useState} from "react";
+import React,{useCallback,useEffect,useMemo,useState} from "react";
+import {MapaEleitoralMunicipalBrasil} from "@/components/MapaEleitoralMunicipalBrasil";
 
 type Candidato={numero:string;nome:string;partido:string;votos:number;percentual:number|null};
 type Resultado={situacao:"aguardando"|"parcial"|"concluida";apuradoEm:string|null;secoesTotalizadas:number;secoesPrevistas:number;percentualSecoes:number|null;votosValidos:number|null;votosTotais:number|null;brancos:number|null;nulos:number|null;candidatos:Candidato[]};
@@ -90,7 +91,8 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
  const iniciado=!!resultado&&resultado.situacao!=="aguardando"&&resultado.votosValidos!==null;
  const municipios=useMemo(()=>{
   const q=busca.trim().toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  return (dados?.municipios??[]).filter(c=>c.uf===uf&&(!q||c.nome.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(q))).slice(0,120);
+  if(uf==="BR" && q.length<2)return [];
+  return (dados?.municipios??[]).filter(c=>(uf==="BR"||c.uf===uf)&&(!q||c.nome.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(q))).slice(0,120);
  },[dados,uf,busca]);
  const nomesUf=new Map(malhas.map(m=>[m.uf,m.nome]));
  const stats=useMemo(()=>{
@@ -105,6 +107,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
 
  function selecionarEstado(next:string){setUf(next);setCidade("");setBusca("");}
  function selecionarMunicipio(codigo:string){setCidade(codigo);setBusca("");}
+ const selecionarCidadeBrasil=useCallback((nextUf:string,codigoIBGE:string)=>{setUf(nextUf);setCidade(codigoIBGE);setBusca("");},[]);
  const legendas=[{nome:"Lula > Flávio",cor:VERMELHO},{nome:"Flávio > Lula",cor:VERDE},{nome:"Empate",cor:EMPATE},{nome:"Sem dados",cor:SEM_DADOS}];
 
  return <div className="collage-page pb-12 space-y-7">
@@ -137,33 +140,29 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] mb-4">
     {legendas.map(l=><span className="inline-flex gap-1.5 items-center" key={l.nome}><span style={{backgroundColor:l.cor}} className="h-3 w-4 border border-ink/30"/>{l.nome}</span>)}
    </div>
-   <div className="grid lg:grid-cols-[1.35fr_.65fr] gap-5">
-    <div className="bg-[#424943] border-2 border-ink p-2 sm:p-4 overflow-hidden">
-     {uf==="BR"?<>
-      <svg viewBox="0 0 720 710" className="w-full h-auto max-h-[550px]" aria-label={"Brasil: selecione uma UF para visualizar os municípios no "+turno+"º turno"}>
-       {malhas.map(s=><path key={s.uf} d={s.svgPath} fill={cor(dados?.estados[s.uf])} stroke="#101010" strokeWidth="1.4" role="button" tabIndex={0} aria-label={s.nome+": "+titulos(dados?.estados[s.uf])} style={{cursor:"pointer"}} onClick={()=>selecionarEstado(s.uf)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selecionarEstado(s.uf);}}}/>)}
-      </svg>
-      <p className="text-paper/80 font-mono text-[11px] mt-2">Clique em um estado para visualizar seus municípios individualmente.</p>
-     </>:malhasUf?<div>
+   <div className={uf==="BR"?"space-y-4":"grid lg:grid-cols-[1.35fr_.65fr] gap-5"}>
+    <div className={uf==="BR"?"p-0 overflow-hidden":"bg-[#e8e4db] border border-ink/30 p-2 sm:p-4 overflow-hidden"}>
+     {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={dados?.resultadosMunicipais} municipios={dados?.municipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">
        {malhasUf.municipios.map(m=>{
         const registro=dados?.resultadosMunicipais[m.id];
         const nome=mapaMunicipios.get(m.id)?.nome??m.id;
         const selecionado=cidade===m.id;
-        return <path key={m.id} d={m.d} fill={cor(registro)} fillRule="evenodd" stroke={selecionado?"#ffffff":"#141a17"} strokeWidth={selecionado?2.6:.7} style={{cursor:"pointer",outline:"none"}} role="button" tabIndex={0} aria-pressed={selecionado} aria-label={nome+": "+titulos(registro)} onClick={()=>selecionarMunicipio(m.id)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selecionarMunicipio(m.id);}}}/>;
+        return <path key={m.id} d={m.d} fill={cor(registro)} fillRule="evenodd" stroke={selecionado?"#101010":"#f5f1e8"} strokeOpacity={selecionado?1:.32} strokeWidth={selecionado?1.35:.23} style={{cursor:"pointer",outline:"none"}} role="button" tabIndex={0} aria-pressed={selecionado} aria-label={nome+": "+titulos(registro)} onClick={()=>selecionarMunicipio(m.id)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selecionarMunicipio(m.id);}}}/>;
        })}
       </svg>
-      <p className="text-paper font-mono text-[11px] mt-2">Clique em uma cidade para consultar seus números. Malhas geográficas aproximadas, derivadas do IBGE, com possíveis diferenças históricas.</p>
-     </div>:<div className="min-h-[280px] flex items-center justify-center text-paper font-mono text-sm p-6 text-center">
+      <p className="text-ink font-mono text-[11px] mt-2">Clique em uma cidade para consultar seus números. Malhas geográficas aproximadas, derivadas do IBGE, com possíveis diferenças históricas.</p>
+     </div>:<div className="min-h-[280px] flex items-center justify-center text-ink font-mono text-sm p-6 text-center">
       {erroMalha?"A malha municipal desta UF não está disponível neste deploy. Use o seletor municipal para consultar os votos.":"Carregando os limites municipais..."}
      </div>}
     </div>
-    <div className="space-y-3">
-     <label htmlFor="eleicao-uf" className="block font-mono text-xs font-bold">BRASIL / ESTADO</label>
+    <div className={uf==="BR"?"grid sm:grid-cols-2 gap-3 items-end":"space-y-3"}>
+     <div><label htmlFor="eleicao-uf" className="block font-mono text-xs font-bold">BRASIL / ESTADO</label>
      <select id="eleicao-uf" value={uf} onChange={e=>selecionarEstado(e.target.value)} className="w-full bg-white border-2 border-ink p-3 font-heavy text-base text-ink">
       <option value="BR">BRASIL — TODAS AS UFs</option>
       {malhas.map(s=><option key={s.uf} value={s.uf}>{s.nome} ({s.uf})</option>)}
-     </select>
+     </select></div>
+     {uf==="BR"&&<div className="space-y-2"><label htmlFor="eleicao-busca-br" className="block font-mono text-xs font-bold">BUSCAR CIDADE NO BRASIL</label><input id="eleicao-busca-br" value={busca} onChange={e=>setBusca(e.target.value)} placeholder="Digite ao menos 2 letras" className="w-full bg-white border-2 border-ink p-3 text-ink"/>{municipios.length>0&&<select aria-label="Selecionar município do Brasil" value="" onChange={e=>{const c=mapaMunicipios.get(e.target.value);if(c)selecionarCidadeBrasil(c.uf,c.codigoIBGE);}} className="w-full border-2 border-ink bg-white p-2 text-ink"><option value="">Selecione uma cidade encontrada</option>{municipios.map(c=><option key={c.codigoIBGE} value={c.codigoIBGE}>{c.nome} / {c.uf}</option>)}</select>}</div>}
      {uf!=="BR"&&<>
       <label htmlFor="eleicao-busca" className="block font-mono text-xs font-bold">LOCALIZAR MUNICÍPIO</label>
       <input id="eleicao-busca" value={busca} onChange={e=>{setBusca(e.target.value);setCidade("");}} placeholder="Pesquisar por nome" className="w-full bg-white border-2 border-ink p-3 text-ink" />

@@ -12,6 +12,7 @@ UF_IDS = {"RO":"11","AC":"12","AM":"13","RR":"14","PA":"15","AP":"16","TO":"17",
 BASE="https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-{}-mun.json"
 OFICIAL="https://servicodados.ibge.gov.br/api/v3/malhas/estados/{}?formato=application%2Fvnd.geo%2Bjson&intrarregiao=municipio&qualidade=minima"
 OUTPUT=Path("public/data/municipios-malhas")
+NATIONAL=Path("public/data/municipios-brasil-malhas.json")
 
 def baixar(url,retries=3,timeout=55):
     for i in range(retries):
@@ -111,15 +112,41 @@ def exportar(raw,uf,esperados=None,fonte=None):
         raise ValueError("Renderizacao omitiu municipios")
     return {"versao":1,"uf":uf,"fonte":fonte or BASE.format(UF_IDS[uf]),"origem":"IBGE API" if fonte and fonte.startswith("https://servicodados.ibge.gov.br/") else "Geodata BR, geometria derivada IBGE (CC0)","viewBox":"0 0 800 610","municipios":features}
 
+
+def exportar_nacional(raw,uf,esperados=None,fonte=None):
+    municipios=extrair(raw)
+    if any(not codigo.startswith(UF_IDS[uf]) for codigo in municipios):
+        raise ValueError("Geometria municipal fora da UF "+uf)
+    if esperados is not None and len(set(municipios)&set(esperados)) < len(esperados)*.96:
+        raise ValueError("Cobertura municipal nacional insuficiente para "+uf)
+    features=[]
+    for codigo,rings in sorted(municipios.items()):
+        caminhos=[]
+        for ring in rings:
+            projected=[(48+(lon+74.2)*620/41.4,37+(5.5-lat)*636/39.8) for lon,lat in ring]
+            reduced=simplificar(projected,tol=0.32)
+            if len(reduced)<3:
+                continue
+            caminhos.append("".join(("M" if i==0 else "L")+format(x,".1f")+","+format(y,".1f") for i,(x,y) in enumerate(reduced))+"Z")
+        if caminhos:
+            features.append({"id":codigo,"d":"".join(caminhos)})
+    if esperados is not None and len({f["id"] for f in features}&set(esperados))<len(esperados)*.96:
+        raise ValueError("Geometria simplificada perdeu municipios de "+uf)
+    return {"uf":uf,"fonte":fonte or BASE.format(UF_IDS[uf]),"municipios":features}
+
 def coletar(catalogo,uf):
-    oficial=OFICIAL.format(UF_IDS[uf])
+    url=BASE.format(UF_IDS[uf])
     try:
-        result=exportar(baixar(oficial,retries=1,timeout=13),uf,catalogo[uf],fonte=oficial)
-        return uf,result
+        raw=baixar(url,retries=2,timeout=25)
+        local=exportar(raw,uf,catalogo[uf],fonte=url)
+        nacional=exportar_nacional(raw,uf,catalogo[uf],fonte=url)
+        return uf,local,nacional
     except Exception:
-        url=BASE.format(UF_IDS[uf])
-        result=exportar(baixar(url),uf,catalogo[uf],fonte=url)
-        return uf,result
+        oficial=OFICIAL.format(UF_IDS[uf])
+        raw=baixar(oficial,retries=1,timeout=20)
+        local=exportar(raw,uf,catalogo[uf],fonte=oficial)
+        nacional=exportar_nacional(raw,uf,catalogo[uf],fonte=oficial)
+        return uf,local,nacional
 
 def main():
     try:
@@ -132,18 +159,28 @@ def main():
     if any(not catalogo[uf] for uf in catalogo):
         raise ValueError("Catalogo sem cobertura de 27 UFs")
     updates={}
+    nacionais={}
     with ThreadPoolExecutor(max_workers=4) as pool:
         tasks={pool.submit(coletar,catalogo,uf):uf for uf in UF_IDS}
         for done in as_completed(tasks):
-            uf,info=done.result()
+            uf,info,br=done.result()
             updates[uf]=info
-            print(uf,len(info["municipios"]))
-    if len(updates)!=27:raise ValueError("Coleta incompleta")
+            nacionais[uf]=br
+            print(uf,len(info["municipios"]),"mapa Brasil:",len(br["municipios"]))
+    if len(updates)!=27 or len(nacionais)!=27:raise ValueError("Coleta incompleta")
+    total=sum(len(p["municipios"]) for p in nacionais.values())
+    if total<5400:raise ValueError("Mapa nacional municipal sem cobertura suficiente: "+str(total))
     OUTPUT.mkdir(parents=True,exist_ok=True)
     for uf,item in updates.items():
         temp=OUTPUT/(uf+".json.tmp")
         temp.write_text(json.dumps(item,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
         temp.replace(OUTPUT/(uf+".json"))
-    print("Malhas municipais geradas: 27 UFs")
+    snapshot={"versao":1,"viewBox":"0 0 720 710","totalMunicipios":total,
+              "fonteGeometria":"Fontes publicadas por UF nos objetos correspondentes",
+              "ufs":[nacionais[uf] for uf in UF_IDS]}
+    tmp=NATIONAL.with_suffix(".tmp")
+    tmp.write_text(json.dumps(snapshot,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
+    tmp.replace(NATIONAL)
+    print("Malhas municipais geradas: 27 UFs, mapa nacional:",total)
 
 if __name__=="__main__":main()
