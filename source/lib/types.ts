@@ -1,5 +1,3 @@
-// lib/types.ts
-
 export const CasaLegislativa = {
   CAMARA: "CAMARA",
   SENADO: "SENADO",
@@ -17,7 +15,6 @@ export const OpcaoVoto = {
   ARTIGO_17: "ARTIGO_17",
 } as const;
 
-// Códigos não reconhecidos são preservados literalmente, nunca convertidos em ausência.
 export type OpcaoVoto = (typeof OpcaoVoto)[keyof typeof OpcaoVoto] | (string & {});
 
 export const StatusPresenca = {
