@@ -26,8 +26,6 @@ export type DadosMapa = {
   avisos: string[];
 };
 
-// BCB SGS: quarterly credit outstanding to MEI businesses by state, R$ millions.
-// Series are not a measure of government investment and their observations may be old.
 export const SERIES_MEI: Record<string,number> = {
   AC:27327, AL:27328, AM:27329, AP:27330, BA:27331, CE:27332, DF:27333,
   ES:27334, GO:27335, MA:27336, MG:27337, MS:27338, MT:27339, PA:27340,
