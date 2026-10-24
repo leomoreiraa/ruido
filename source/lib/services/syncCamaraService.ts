@@ -1,4 +1,4 @@
-// lib/services/syncCamaraService.ts
+
 import { prisma } from "@/lib/prisma";
 import {
   CasaLegislativa,
@@ -23,7 +23,7 @@ import {
 
 const BASE_URL = "https://dadosabertos.camara.leg.br/api/v2";
 
-/** Follow the official next links; never silently truncate a detail collection. */
+
 async function coletarPaginas<T>(initialUrl: string, tolerar404Inicial = false, onNotFound: () => void = () => {}): Promise<T[]> {
   const result: T[] = [];
   const visited = new Set<string>();
@@ -47,10 +47,7 @@ async function coletarPaginas<T>(initialUrl: string, tolerar404Inicial = false, 
   return result;
 }
 
-/**
- * Sincroniza a lista de deputados em exercício.
- * Atualiza ativo=true e cadastroAtualizadoEm apenas para os parlamentares do roster oficial retornado.
- */
+
 export async function sincronizarDeputadosAtuaisCamara(): Promise<number> {
   const agora = new Date();
   let totalProcessados = 0;
@@ -84,13 +81,13 @@ export async function sincronizarDeputadosAtuaisCamara(): Promise<number> {
     }
   }
 
-  // Do not mark former officeholders as current. Only reconcile after every
-  // official page has been fetched and the roster size is plausible.
+  
+  
   if (idsEmExercicio.length < 400 || idsEmExercicio.length > 700 ||
       new Set(idsEmExercicio).size!==idsEmExercicio.length) {
     throw new Error('Cadastro da Câmara incompleto ou com duplicatas; nenhum mandato foi alterado');
   }
-  // Só modificar a base após receber e validar todas as páginas do roster.
+  
   for (let i=0;i<cadastroCompleto.length;i+=50){
     const lote=cadastroCompleto.slice(i,i+50);
     await prisma.$transaction(lote.map(dep=>prisma.parlamentar.upsert({
@@ -112,9 +109,7 @@ export async function sincronizarDeputadosAtuaisCamara(): Promise<number> {
   return totalProcessados;
 }
 
-/**
- * Garante que um parlamentar histórico citado em voto exista no banco sem sobrescrever seu status ativo.
- */
+
 async function garantirParlamentarHistoricoCamara(
   tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
   dep: { id: number; nome: string; siglaPartido?: string; siglaUf?: string; urlFoto?: string; email?: string }
@@ -142,7 +137,7 @@ async function garantirParlamentarHistoricoCamara(
       uf: dep.siglaUf || "BR",
       urlFoto: dep.urlFoto ?? null,
       email: dep.email ?? null,
-      ativo: false, // Histórico não ativo no snapshot atual
+      ativo: false, 
     },
     select: { id: true },
   });
@@ -150,10 +145,7 @@ async function garantirParlamentarHistoricoCamara(
   return criado.id;
 }
 
-/**
- * Sincroniza votações da Câmara com paginação e suporte a intervalo de datas ou contagem recente.
- * Garante que nenhuma chamada de rede ocorra dentro de transação do Prisma.
- */
+
 export async function sincronizarVotacoesCamara(opcoes: {
   dataInicio?: string;
   dataFim?: string;
@@ -202,8 +194,8 @@ export async function sincronizarVotacoesCamara(opcoes: {
 
   for (const item of votacoesColetadas) {
     const detalheUrl = `${BASE_URL}/votacoes/${item.id}`;
-    // Fazer chamadas de rede fora de transações do banco
-    // 404 in an official detail does not invalidate the published list row.
+    
+    
     const detalheRaw = await camaraApiClient.fetchJson<unknown>(
       `/votacoes/${item.id}`, { acceptStatuses: [404] }
     );
@@ -220,9 +212,9 @@ export async function sincronizarVotacoesCamara(opcoes: {
     const propRef: CamaraProposicaoRefContract | undefined =
       detalhe?.proposicoesAfetadas?.[0] ?? detalhe?.objetosPossiveis?.[0];
 
-    // As votações da Câmara frequentemente fornecem apenas a URI oficial
-    // da proposição (sem objeto completo). Aproveitar o cadastro já importado
-    // antes de classificar erroneamente uma votação como desvinculada.
+    
+    
+    
     const uriProposicao = (valor: unknown): string | null => {
       if (typeof valor === "string") return valor;
       if (valor && typeof valor === "object" && "uri" in valor &&
@@ -251,11 +243,11 @@ export async function sincronizarVotacoesCamara(opcoes: {
     const placarAbstencao = contagens.abstencao;
     const placarObstrucao = contagens.obstrucao;
     const placarOutros = contagens.outros;
-    // An unavailable current response cannot invalidate a previously verified tally.
+    
     const placarNaoAtualizavel = votosLista.length === 0 && !contagens.agregado;
 
-    // dataHoraRegistro is the time the vote was ENTERED, potentially days after
-    // the official date of the vote; don't present it as voting time.
+    
+    
     const dataHora = item.dataHoraRegistro?.slice(0, 10) === item.data
       ? new Date(item.dataHoraRegistro)
       : new Date(`${item.data}T12:00:00Z`);
@@ -269,7 +261,7 @@ export async function sincronizarVotacoesCamara(opcoes: {
       : contagens.agregado ? CoberturaVotacao.PLACAR_AGREGADO
       : CoberturaVotacao.SEM_VOTOS_NOMINAIS;
 
-    // Transação estritamente delimitada sem rede interna
+    
     await prisma.$transaction(
       async (tx) => {
         let proposicaoId: string | null = null;
@@ -412,11 +404,7 @@ export async function sincronizarVotacoesCamara(opcoes: {
   return { votacoesSincronizadas, votosSincronizados };
 }
 
-/**
- * Sincroniza presenças de eventos plenários da Câmara (codTipoEvento=110).
- * REGRA CRÍTICA: /eventos/{id}/deputados fornece evidência positiva de comparecimento.
- * NUNCA infere ausência para deputados que não constam na lista (positive evidence only).
- */
+
 export async function sincronizarPresencasCamara(opcoes: {
   dataInicio?: string;
   dataFim?: string;
@@ -449,7 +437,7 @@ export async function sincronizarPresencasCamara(opcoes: {
     const tituloSessao =
       evento.descricao || evento.descricaoTipo || `Sessão Plenária #${evento.id}`;
 
-    // Executa em lote transacional bounded
+    
     await prisma.$transaction(
       async (tx) => {
         for (const dep of presentesLista) {

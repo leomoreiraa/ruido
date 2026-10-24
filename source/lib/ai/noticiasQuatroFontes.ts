@@ -45,10 +45,10 @@ export interface EvidenciaJornalistica {
   titulo: string;
   publicadoEm: string;
   textoAcessado: string;
-  excertoDaAfirmacao: string; // cópia fiel de trecho que sustenta a afirmação
+  excertoDaAfirmacao: string; 
   parlamentarIdConfirmado: string;
-  identidadeConfirmadaPorContexto: boolean; // não basta homônimo
-  idReportagemOriginal: string; // id/URL da matéria originária
+  identidadeConfirmadaPorContexto: boolean; 
+  idReportagemOriginal: string; 
   republicacaoOuAgencia: boolean;
 }
 export interface DocumentoPrimario {

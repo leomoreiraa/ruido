@@ -1,9 +1,4 @@
-/**
- * Descoberta automática via GDELT -> artigos originais -> Gemini -> gate de
- * evidências graduadas. Só publica NOTICIA/CITADO, jamais status judicial
- * deduzido de imprensa. Execute apenas no runner confiável do GitHub Actions.
- * NUNCA incluir textos integrais de terceiros nos arquivos públicos.
- */
+
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -111,8 +106,7 @@ function normalizeDate(value: string | undefined): string | null {
     : value;
   return Number.isFinite(Date.parse(candidate)) ? new Date(candidate).toISOString() : null;
 }
-/** Descoberta, nunca prova. GDELT 429 nao avanca o cursor; Bing News
- * RSS serve apenas para localizar URLs originais das fontes. */
+
 let gdelt: EstadoGdelt = {tentativas:0,ultimaTentativa:0,pausadoAte:0};
 let gdelt429 = false;
 function decodeXml(value: string): string {
@@ -134,15 +128,11 @@ function parseRss(xml: string): Art[] {
         if (original) u = new URL(original);
       }
       if (title && originGroup(u.href)) out.push({title, url:u.href});
-    } catch { /* notícia sem URL original verificada não é fonte */ }
+    } catch 
   }
   return out;
 }
-/** RSS editoriais diretos (sem agregador): se os mecanismos globais
- * bloquearem o runner, a pesquisa continua com URL original do veículo.
- * Busca em feeds recentes NÃO atesta cobertura completa do noticiário.
- * Requisições são feitas uma vez por lote, não a cada parlamentar.
- */
+
 const publisherFeeds = [
   "https://g1.globo.com/rss/g1/politica/",
   "https://www.cnnbrasil.com.br/feed/",
@@ -204,9 +194,7 @@ async function searchBingRss(p: Parliamentary): Promise<Art[]> {
   if (!body.includes("<rss") && !body.includes("<item")) throw new Error("Bing RSS indisponível");
   return parseRss(body);
 }
-/** Google Notícias é só um índice de descoberta. Links do Google só são
- * aceitos após redirecionar ao domínio da reportagem editorial original.
- * Nunca contabilizar URLs do agregador como uma das quatro fontes. */
+
 async function searchGoogleNewsRss(p: Parliamentary, deep = false, archiveYear?:number): Promise<Art[]> {
   const u = new URL("https://news.google.com/rss/search");
   u.searchParams.set("q",archiveYear ? consultaGoogleArquivo(p.nome,archiveYear) : '"' + p.nome.replace(/"/g,"") + '" when:' + LOOKBACK_DAYS + 'd');
@@ -228,7 +216,7 @@ async function searchGoogleNewsRss(p: Parliamentary, deep = false, archiveYear?:
       if(url.protocol!=="https:"||!title)continue;
       if(originGroup(url.href)){direct.push({url:url.href,title,anoArquivo:archiveYear});continue}
       if(url.hostname==="news.google.com") redirects.push({url:url.href,title});
-    } catch {/* Feed do agregador não constitui prova. */}
+    } catch 
   }
   const outcomes = await Promise.allSettled(redirects.slice(0,archiveYear ? (deep ? 12 : 8) : (deep ? 16 : 10)).map(async art=>{
     const url=await resolverUrlGoogleNews(art.url);
@@ -240,8 +228,7 @@ async function searchGoogleNewsRss(p: Parliamentary, deep = false, archiveYear?:
   return direct.slice(0,deep ? 30 : 20);
 }
 
-/** Descoberta nunca é prova. Mescla os indexadores com feeds diretos,
- * para não depender de um único GDELT/Bing ou uma matéria isolada. */
+
 async function search(p: Parliamentary, deep = false, archiveYears:number[]=[]): Promise<Art[]> {
   const candidates: Art[] = [];
   const plano=planejarConsultaGdelt(gdelt, Date.now());
@@ -360,7 +347,7 @@ function officialArticleDate(html: string): string | null {
           if (obj["@graph"]) stack.push(obj["@graph"]);
         }
       }
-    } catch { /* metadados inválidos: não contar como fonte comprovada */ }
+    } catch 
   }
   return null;
 }
@@ -586,7 +573,7 @@ async function main() {
     store.coberturaLote={estado:errors?"PARCIAL":"CONCLUIDA",
       sucessos,falhas:errors,pendentes:Object.keys(store.pendentes).length,
       concluidoEm:new Date().toISOString()};
-    persistir(); // checkpoint por parlamentar, sem republicar texto integral
+    persistir(); 
     if (errors && /Gemini HTTP (401|403|404|429|5\d\d)/.test(
       store.pendentes[p.id]?.ultimoErro||"")) {
       console.warn("[notícias] IA indisponível/cota esgotada; checkpoint salvo; encerrar rodada.");
