@@ -31,9 +31,6 @@ select{font:700 18px ui-monospace,monospace;width:100%;padding:13px;border:3px s
 .panel{background:#fff;border:4px solid var(--ink);box-shadow:7px 7px 0 var(--ink);padding:23px;margin-bottom:22px}
 .dark{background:#171b19;color:#fff}
 .map-wrap{max-width:800px;margin:auto}
-#map{width:100%;height:auto}
-#map path{cursor:pointer;stroke:#121612;stroke-width:1.05px;transition:fill .15s}
-#map path:hover,#map path:focus{stroke:#fff;stroke-width:3px;outline:none}
 .meta{font-size:11px;letter-spacing:.1em;font-weight:800;color:var(--acid)}
 .summary{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .uf{background:var(--ink);color:var(--acid);padding:8px 12px;font-size:26px;font-weight:900}
@@ -41,9 +38,6 @@ select{font:700 18px ui-monospace,monospace;width:100%;padding:13px;border:3px s
 .delta{font-size:25px;font-weight:900}
 .good{color:#286b40}.bad{color:#c32132}
 .hint{font-size:12px;color:#777;line-height:1.5}
-#chart .track{height:12px;background:#ddd;border:1px solid #111;margin:6px 0 12px}
-#chart .bar{background:var(--red);height:100%}
-#chart .line{display:flex;justify-content:space-between;font-size:12px;font-weight:700}
 ol{list-style:none;padding:0;margin:0}
 li button{width:100%;border:0;background:none;text-align:left;padding:11px 0;border-bottom:1px dashed #999;display:flex;justify-content:space-between;cursor:pointer;font:700 13px ui-monospace,monospace}
 li button:hover{color:var(--red)}
@@ -151,8 +145,6 @@ def patch(root):
     for uf,series in i["porUF"].items():
         if "2023" not in series or "2024" not in series:
             raise ValueError("Missing year-over-year observation: "+uf)
-    # standalone page inherits its original static Next CSS files but no React
-    # bootstrap (hydration would otherwise restore the stale PIB component).
     original=old.read_text()
     styles=re.findall(r'<link\b[^>]*rel="stylesheet"[^>]*>',original)
     for tag in styles:
