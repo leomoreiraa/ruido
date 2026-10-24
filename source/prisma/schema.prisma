@@ -1,5 +1,3 @@
-// prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,8 +9,8 @@ datasource db {
 
 model Parlamentar {
   id                   String    @id @default(cuid())
-  externalId           String // ID na API da Câmara (ex: "204554") ou CodigoParlamentar no Senado (ex: "5672")
-  casa                 String // "CAMARA" | "SENADO"
+  externalId           String
+  casa                 String
   nome                 String
   nomeCivil            String?
   partido              String
@@ -20,7 +18,7 @@ model Parlamentar {
   urlFoto              String?
   email                String?
   ativo                Boolean   @default(false)
-  cadastroAtualizadoEm DateTime? // Apenas o cadastro atual atualiza filiação e situação
+  cadastroAtualizadoEm DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,9 +39,9 @@ model Parlamentar {
 
 model Proposicao {
   id               String    @id @default(cuid())
-  externalId       String // ID da proposição na Câmara ou CodigoMateria no Senado
-  casa             String // "CAMARA" | "SENADO"
-  siglaTipo        String // Ex: PL, PEC, MPV, PLP
+  externalId       String
+  casa             String
+  siglaTipo        String
   numero           Int
   ano              Int
   ementa           String
@@ -51,8 +49,8 @@ model Proposicao {
   urlInteiroTeor   String?
   dataApresentacao DateTime?
 
-  // Leitura cidadã gerada a partir da ementa OFICIAL; cache só vale
-  // enquanto resumoFonteHash corresponde à ementa e à versão do prompt.
+
+
   tituloSimples     String?
   resumoSimples     String?
   explicacaoSimples String?
@@ -72,24 +70,24 @@ model Proposicao {
 
 model Votacao {
   id              String   @id @default(cuid())
-  externalId      String // ID da votação na Câmara (ex: "2192459-43") ou CodigoSessaoVotacao no Senado
-  casa            String // "CAMARA" | "SENADO"
+  externalId      String
+  casa            String
   dataHora        DateTime
-  orgao           String? // Ex: "PLEN" (Plenário)
+  orgao           String?
   descricao       String
   resumo          String?
-  aprovada        Boolean? // true = Aprovada, false = Rejeitada, null = Indefinida/Simbólica
+  aprovada        Boolean?
   placarSim       Int      @default(0)
   placarNao       Int      @default(0)
   placarAbstencao Int      @default(0)
   placarObstrucao Int      @default(0)
-  placarOutros    Int      @default(0) // Outros do agregado oficial; não equivalem a abstenção
+  placarOutros    Int      @default(0)
 
   fonteUrl         String?
-  cobertura        String  @default("NAO_VERIFICADA") // NOMINAL_PUBLICA | SECRETA_AGREGADA | SEM_VOTOS_NOMINAIS | EM_IMPORTACAO
+  cobertura        String  @default("NAO_VERIFICADA")
   votacaoSecreta   Boolean @default(false)
   sessaoExternalId String?
-  casaSessao       String? // SF ou CN no Senado; não confundir Congresso com Senado
+  casaSessao       String?
 
   proposicaoId String?
   proposicao   Proposicao? @relation(fields: [proposicaoId], references: [id], onDelete: SetNull)
@@ -108,7 +106,7 @@ model Voto {
   id                String    @id @default(cuid())
   votacaoId         String
   parlamentarId     String
-  opcao             String // "SIM" | "NAO" | "ABSTENCAO" | "OBSTRUCAO" | "AUSENTE" | "ARTIGO_17" | "PRESENTE_SEM_VOTO" | "LICENCA_OU_MISSAO" | sigla original
+  opcao             String
   opcaoOriginal     String?
   descricaoOriginal String?
   registradoEm      DateTime?
@@ -129,16 +127,16 @@ model Voto {
 
 model Presenca {
   id               String   @id @default(cuid())
-  sessaoExternalId String // ID do evento/sessão plenária na API
-  casa             String // "CAMARA" | "SENADO"
+  sessaoExternalId String
+  casa             String
   parlamentarId    String
   dataSessao       DateTime
   tituloSessao     String
-  status           String // "PRESENTE" | "AUSENTE" | "JUSTIFICADO"
+  status           String
   justificativa    String?
   fonteUrl         String?
-  origem           String   @default("NAO_ESPECIFICADA") // EVENTO_CAMARA | VOTO_SENADO
-  cobertura        String   @default("EVIDENCIA_PARCIAL") // EVIDENCIA_PARCIAL | CHAMADA_OFICIAL
+  origem           String   @default("NAO_ESPECIFICADA")
+  cobertura        String   @default("EVIDENCIA_PARCIAL")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -150,12 +148,12 @@ model Presenca {
   @@index([casa, dataSessao(sort: Desc)])
 }
 
-// Contagens apenas de sessões plenárias cujos status individuais foram
-// publicados pela Câmara. Não equivale a todas as reuniões de comissões.
+
+
 model FrequenciaPlenario {
   id                  String      @id
   parlamentarId       String
-  dia                 String      // YYYY-MM-DD, UTC (dia civil de Brasília)
+  dia                 String
   casa                String      @default("CAMARA")
   sessoesAuditadas    Int
   presentes           Int
@@ -171,19 +169,19 @@ model FrequenciaPlenario {
 model EmendaParlamentar {
   id                   String   @id @default(cuid())
   parlamentarId        String?
-  codigoEmenda         String?  // Identificador oficial; NULL somente para dados legados
+  codigoEmenda         String?
   numeroEmenda         String?
-  autorOriginal        String?  // Exatamente o nome público na fonte, inclusive autoria coletiva
-  localidadeOriginal   String?  // Localidade oficial sem inferência obrigatória de UF
+  autorOriginal        String?
+  localidadeOriginal   String?
   ano                  Int
-  tipo                 String   // "INDIVIDUAL" | "BANCADA" | "RELATOR" | "TRANSFERENCIA_ESPECIAL"
+  tipo                 String
   descricao            String?
   valorEmpenhado       Float    @default(0)
   valorPago            Float    @default(0)
   municipioBeneficiado String?
   ufBeneficiada        String?
-  funcao               String?  // "Saúde", "Infraestrutura", "Educação", "Segurança", etc.
-  status               String   // "PAGO" | "EMPENHADO" | "LIQUIDADO" | "CANCELADO"
+  funcao               String?
+  status               String
   fonte                String   @default("PORTAL_TRANSPARENCIA")
 
   createdAt DateTime @default(now())
@@ -200,8 +198,8 @@ model EmendaParlamentar {
 model BemDeclarado {
   id                 String   @id @default(cuid())
   parlamentarId      String
-  anoEleicao         Int      // Ex: 2018, 2022
-  tipoBem            String   // "Imóvel", "Veículo", "Ações/Quotas", "Depósito", "Outros"
+  anoEleicao         Int
+  tipoBem            String
   descricao          String?
   valorDeclarado     Float
   totalPatrimonioAno Float?
@@ -219,7 +217,7 @@ model Discurso {
   parlamentarId  String
   externalId     String?
   dataHora       DateTime
-  faseEvento     String?  // Ex: "Pequeno Expediente", "Breves Comunicações"
+  faseEvento     String?
   sumario        String?
   transcricao    String
   analisadoPorIA Boolean  @default(false)
@@ -238,8 +236,8 @@ model Discurso {
 model ResumoIA {
   id            String   @id @default(cuid())
   parlamentarId String
-  keywords      String   // JSON array de strings ou lista separada por vírgula
-  resumo        String   // Parágrafo sintético (3 linhas) do perfil ideológico/temático
+  keywords      String
+  resumo        String
   modeloUsado   String   @default("gpt-4o-mini")
   geradoEm      DateTime @default(now())
 
@@ -252,7 +250,7 @@ model ResumoIA {
 }
 
 model SyncLease {
-  id         String   @id // Ex: "GLOBAL_SYNC"
+  id         String   @id
   holder     String
   acquiredAt DateTime @default(now())
   expiresAt  DateTime
@@ -264,8 +262,8 @@ model SyncExecution {
   id           String    @id @default(cuid())
   iniciadoEm   DateTime  @default(now())
   finalizadoEm DateTime?
-  status       String // "EM_ANDAMENTO" | "SUCESSO" | "ERRO"
+  status       String
   erro         String?
-  parametros   String? // JSON stringificado dos argumentos
-  resumo       String? // JSON stringificado do relatório
+  parametros   String?
+  resumo       String?
 }
