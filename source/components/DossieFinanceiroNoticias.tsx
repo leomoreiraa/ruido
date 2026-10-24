@@ -32,7 +32,6 @@ function load<T>(file: string, fallback: T): T {
     return JSON.parse(source) as T;
   } catch { return fallback; }
 }
-// Cache por processo durante o export; 1.000 páginas não releem arquivos.
 const expenses = load<FinancialStore>("financeiro.json", {version:1,atualizadoEm:null,dados:{}});
 const patrimony = load<PatrimonyStore>("patrimonio.json", {version:1,atualizadoEm:null,dados:{}});
 const articles = load<NewsStore>("noticias.json", {version:1,atualizadoEm:null,dados:{}});
@@ -68,10 +67,6 @@ export function DossieFinanceiroNoticias({
     .filter(([,v])=>Number.isFinite(v.totalDeclarado) && v.totalDeclarado >= 0 &&
       v.quantidadeBens > 0 && v.fonte.startsWith("https://cdn.tse.jus.br/"))
     .sort(([a],[b])=>Number(b)-Number(a));
-  // Caso não seja novamente verificado por 45 dias, sai da vitrine:
-  // notícias antigas podem ter correções, sentenças ou arquivamentos posteriores.
-  // Exibir histórico com aviso de reconferência vencida, sem apresentar
-  // os registros antigos como notícias ou situação jurídica atual.
   const validade = 180 * 24 * 60 * 60 * 1000;
   const avisoReconferencia = 45 * 24 * 60 * 60 * 1000;
   const noticias = (articles.dados[parlamentarId] || []).filter(x =>
