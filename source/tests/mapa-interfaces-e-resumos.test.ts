@@ -64,3 +64,19 @@ test("links e botões são tinta mas cards inteiros não são mascarados",()=>{
   assert.match(next,/a\.ruido-search-result/);
   assert.match(next,/focus-visible/);
 });
+
+test("cabecalho eleitoral nao usa letras brancas sobre verde fluorescente",()=>{
+ const election=source("components/Eleicoes2026View.tsx");
+ const css=source("app/globals.css");
+ assert.match(election,/ruido-election-headline__text/);
+ assert.match(election,/ruido-election-headline__place/);
+ const scoped=css.slice(css.lastIndexOf("Apuração: o cabeçalho é cartaz em papel"));
+ assert.ok(scoped.length>500,"regras de contraste eleitoral presentes");
+ assert.match(scoped,/ruido-map-zine--electoral \.ruido-map-zine__titlebar/);
+ assert.match(scoped,/background: #f2e6ce/);
+ assert.match(scoped,/ruido-election-headline__text \{/);
+ assert.match(scoped,/color: #151512 !important/);
+ assert.match(scoped,/ruido-election-headline__place \{/);
+ assert.match(scoped,/color: #a5221b !important/);
+ assert.match(scoped,/background: transparent !important/);
+});

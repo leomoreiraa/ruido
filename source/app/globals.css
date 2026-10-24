@@ -4813,3 +4813,94 @@ body.collage-body {
   .ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__headline {font-size:clamp(1.35rem,6.7vw,2.4rem);}
   .ruido-site-content .ruido-map-zine .ruido-map-zine__titlebar .ruido-map-zine__micro {font-size:11px;}
 }
+
+
+/* Apuração: o cabeçalho é cartaz em papel e tinta, não letra branca em fundo ácido. */
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__masthead {
+  background: #151512 !important;
+  color: #f6ecd6 !important;
+  border-bottom: 3px dashed #d3ff20 !important;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__masthead .ruido-map-zine__eyebrow {
+  color: #141410 !important;
+  background: #d3ff20 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__masthead .ruido-map-zine__serial {
+  color: #f6ecd6 !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar {
+  background: #f2e6ce url('/assets/papel-fibra.jpg') center / 430px auto !important;
+  color: #161512 !important;
+  border-left: 8px solid #b72723;
+  border-bottom: 4px solid #151512;
+  margin: 10px 0 18px !important;
+  padding: clamp(13px, 2vw, 23px) clamp(13px, 2vw, 25px) !important;
+  min-width: 0;
+  overflow: visible;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar .ruido-map-zine__micro {
+  color: #20201c !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+  font-size: clamp(11px, 1.05vw, 13px);
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar h2.ruido-election-headline,
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar .ruido-election-headline__text,
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar .ruido-election-headline__place {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar h2.ruido-election-headline {
+  display: block;
+  position: relative;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100%;
+  color: #151512 !important;
+  font-family: var(--heavy), Impact, sans-serif;
+  font-size: clamp(1.75rem, 3vw, 3.3rem);
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  overflow-wrap: break-word;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar .ruido-election-headline__text {
+  color: #151512 !important;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar .ruido-election-headline__place {
+  color: #a5221b !important;
+  font-style: normal !important;
+  display: inline;
+}
+.ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar .ruido-map-zine__stamp {
+  background: transparent !important;
+  color: #8e201b !important;
+  border-color: #8e201b !important;
+  outline-color: #8e201b !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+@media (max-width: 640px) {
+  .ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar {
+    border-left-width: 5px;
+    gap: 9px;
+    padding: 12px 10px !important;
+  }
+  .ruido-site-content .ruido-eleicoes-page .ruido-map-zine--electoral .ruido-map-zine__titlebar h2.ruido-election-headline {
+    font-size: clamp(1.55rem, 6.3vw, 2.5rem);
+  }
+}
