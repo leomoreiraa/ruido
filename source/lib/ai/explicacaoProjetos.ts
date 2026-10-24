@@ -30,9 +30,7 @@ export function validarExplicacao(valor: unknown): ExplicacaoCidada {
 }
 
 
-/** Segunda barreira, também aplicada aos resumos históricos antes do export.
- * Um andamento/voto sobre a proposta não é a ementa do projeto.
- * Heurística conservadora: na dúvida preserva-se o texto oficial. */
+
 export function explicacaoFielAoObjeto(ementa: string, valor: ExplicacaoCidada | null | undefined): boolean {
   if (!valor || !ementa || valor.titulo.length > 110 ||
       valor.resumo.length > 350 || valor.explicacao.length > 1200) return false;
