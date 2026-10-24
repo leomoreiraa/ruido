@@ -10,17 +10,18 @@ from urllib.request import Request, urlopen
 
 UF_IDS = {"RO":"11","AC":"12","AM":"13","RR":"14","PA":"15","AP":"16","TO":"17","MA":"21","PI":"22","CE":"23","RN":"24","PB":"25","PE":"26","AL":"27","SE":"28","BA":"29","MG":"31","ES":"32","RJ":"33","SP":"35","PR":"41","SC":"42","RS":"43","MS":"50","MT":"51","GO":"52","DF":"53"}
 BASE="https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-{}-mun.json"
+OFICIAL="https://servicodados.ibge.gov.br/api/v3/malhas/estados/{}?formato=application%2Fvnd.geo%2Bjson&intrarregiao=municipio&qualidade=minima"
 OUTPUT=Path("public/data/municipios-malhas")
 
-def baixar(url):
-    for i in range(3):
+def baixar(url,retries=3,timeout=55):
+    for i in range(retries):
         try:
             req=Request(url,headers={"User-Agent":"RUÍDO atlas municipal (contornos derivados do IBGE)","Accept":"application/json"})
-            with urlopen(req,timeout=55) as r:
+            with urlopen(req,timeout=timeout) as r:
                 raw=r.read(18_000_000)
             return json.loads(raw)
         except Exception:
-            if i==2:raise
+            if i==retries-1:raise
             time.sleep((i+1)*2)
 
 def anel_em_pontos(coords):
@@ -44,7 +45,7 @@ def extrair(raw):
     for ft in raw["features"]:
         if not isinstance(ft,dict):continue
         props=ft.get("properties") or {}
-        codigo=str(props.get("id") or ft.get("id") or "")
+        codigo=str(props.get("id") or props.get("codarea") or props.get("CD_MUN") or props.get("codigo") or ft.get("id") or "")
         if not re.fullmatch(r"\d{7}",codigo) or codigo in municipios:
             raise ValueError("Codigo IBGE ausente/duplicado: "+codigo)
         geom=ft.get("geometry") or {}
@@ -83,7 +84,7 @@ def simplificar(pontos,tol=0.55):
             keep.add(indice);stack.extend([(a,indice),(indice,b)])
     return [pontos[i] for i in sorted(keep)]
 
-def exportar(raw,uf,esperados=None):
+def exportar(raw,uf,esperados=None,fonte=None):
     municipios=extrair(raw)
     if any(not c.startswith(UF_IDS[uf]) for c in municipios):
         raise ValueError("Codigo IBGE nao corresponde a UF: "+uf)
@@ -108,12 +109,17 @@ def exportar(raw,uf,esperados=None):
         if paths:features.append({"id":code,"d":"".join(paths)})
     if esperados is not None and len({f["id"] for f in features}&set(esperados))<len(esperados)*.96:
         raise ValueError("Renderizacao omitiu municipios")
-    return {"versao":1,"uf":uf,"fonte":BASE.format(UF_IDS[uf]),"origem":"Geodata BR, geometria derivada IBGE (CC0)","viewBox":"0 0 800 610","municipios":features}
+    return {"versao":1,"uf":uf,"fonte":fonte or BASE.format(UF_IDS[uf]),"origem":"IBGE API" if fonte and fonte.startswith("https://servicodados.ibge.gov.br/") else "Geodata BR, geometria derivada IBGE (CC0)","viewBox":"0 0 800 610","municipios":features}
 
 def coletar(catalogo,uf):
-    url=BASE.format(UF_IDS[uf])
-    result=exportar(baixar(url),uf,catalogo[uf])
-    return uf,result
+    oficial=OFICIAL.format(UF_IDS[uf])
+    try:
+        result=exportar(baixar(oficial,retries=1,timeout=13),uf,catalogo[uf],fonte=oficial)
+        return uf,result
+    except Exception:
+        url=BASE.format(UF_IDS[uf])
+        result=exportar(baixar(url),uf,catalogo[uf],fonte=url)
+        return uf,result
 
 def main():
     try:
