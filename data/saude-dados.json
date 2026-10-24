@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T13:01:25.837866+00:00",
+  "generated_at_utc": "2026-10-24T13:10:36.626092+00:00",
   "json_files": {
     "analises-oficiais.json": 43689,
     "candidaturas-presidenciais.json": 809,
@@ -15,7 +15,7 @@
   "warnings": [],
   "pages_directory_mib": {
     "parlamentares": 445.3,
-    "data": 205.0,
+    "data": 212.1,
     "assets": 18.0,
     "pautas": 11.4,
     "_next": 1.0,
@@ -39,7 +39,7 @@
     ".html": 274.4,
     ".txt": 183.6,
     ".gz": 154.5,
-    ".json": 50.5,
+    ".json": 57.6,
     ".png": 15.2,
     ".jpg": 2.4,
     ".js": 0.8,
@@ -61,6 +61,10 @@
     {
       "path": "data/dossies/redes-financeiras.json",
       "mib": 10.5
+    },
+    {
+      "path": "data/eleicoes-2026-1.json",
+      "mib": 7.1
     },
     {
       "path": "assets/ripped-paper-white-05.png",
@@ -93,13 +97,9 @@
     {
       "path": "assets/ripped-paper-strip-white-07.png",
       "mib": 0.6
-    },
-    {
-      "path": "assets/collage/ruido-mural-original.jpg",
-      "mib": 0.6
     }
   ],
-  "pages_files_count": 64601,
-  "pages_bytes": 715158059,
+  "pages_files_count": 64602,
+  "pages_bytes": 722635081,
   "pages_budget_bytes": 943718400
 }
