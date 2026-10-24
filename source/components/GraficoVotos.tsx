@@ -61,10 +61,10 @@ export function GraficoVotos({
 
   return (
     <div className="relative ruido-paper-card bg-paper-card border-3 border-ink p-5 sm:p-6 my-6 shadow-[6px_6px_0_#101010]">
-      {/* Scotch tape */}
+      
       <div className="scotch-tape-corner" aria-hidden="true" />
 
-      {/* Header & Mode Switcher */}
+      
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 pb-4 border-b-2 border-dashed border-ink/30">
         <div>
           <div className="inline-block bg-ink text-punk-acid font-mono text-[10px] font-bold px-2 py-0.5 uppercase mb-1">
@@ -104,7 +104,7 @@ export function GraficoVotos({
         </div>
       </div>
 
-      {/* Alignment with Majority callout */}
+      
       {alinhamentoMaioriaPct !== null && alinhamentoMaioriaPct !== undefined && (
         <div className="bg-paper-light border-2 border-ink p-3 mb-6 shadow-[3px_3px_0_#101010] flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
           <div>
@@ -126,7 +126,7 @@ export function GraficoVotos({
 
       {modoExibicao === "grafico" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Votos */}
+          
           <div className="ruido-paper-card bg-paper-light border-2 border-ink p-4 shadow-[4px_4px_0_#101010]">
             <div className="flex justify-between items-center mb-3 pb-2 border-b border-dashed border-ink/30">
               <h4 className="font-heavy text-lg tracking-wide uppercase text-ink">
@@ -192,9 +192,7 @@ export function GraficoVotos({
             </div>
           </div>
 
-          {/* Evidências de presença — sem percentual enganoso. A Câmara traz
-              somente os PRESENTES dos eventos consultados; não podemos assumir
-              que os outros parlamentares estavam obrigados a comparecer. */}
+          
           <div className="ruido-paper-card bg-paper-light border-2 border-ink p-4 shadow-[4px_4px_0_#101010]">
             <div className="flex justify-between items-center mb-3 pb-2 border-b border-dashed border-ink/30">
               <h4 className="font-heavy text-lg tracking-wide uppercase text-ink">
