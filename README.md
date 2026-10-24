@@ -1,6 +1,8 @@
 <div align="center">
 
-<img src="./assets/readme-hero.svg" alt="RUÍDO — Transparência não deveria exigir conhecimento técnico" width="100%" />
+<img src="./assets/skull-xerox.svg" alt="Símbolo do RUÍDO: caveira em estilo xerox" width="145" />
+
+# RUÍDO
 
 <br />
 
