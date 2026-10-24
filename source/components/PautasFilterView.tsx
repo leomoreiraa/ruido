@@ -144,7 +144,7 @@ export function PautasFilterView({
 
   return (
     <div className="collage-page ruido-pautas-page space-y-8">
-      {/* Header */}
+      
       <div className="collage-paper collage-rail border-b-4 border-ink pb-6 px-4 py-5">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold tracking-widest bg-ink text-punk-acid px-3 py-1 mb-3 transform -rotate-1">
           <span>// MATÉRIAS LEGISLATIVAS &amp; DELIBERAÇÕES</span>
@@ -158,7 +158,7 @@ export function PautasFilterView({
         </p>
       </div>
 
-      {/* Filter Box with Zine Styling */}
+      
       <div className="ruido-filter-ink-panel relative ruido-paper-card bg-paper-card border-3 border-ink p-6 shadow-[8px_8px_0_#101010]">
         <div className="scotch-tape" aria-hidden="true" />
         <div className="ruido-filter-ink-header flex flex-wrap justify-between items-center gap-2 mb-4 pb-3 border-b-2 border-dashed border-ink/30 font-mono text-xs font-bold">
@@ -256,7 +256,7 @@ export function PautasFilterView({
           O catálogo completo não carregou. <button type="button" onClick={() => void carregarCatalogo()} className="btn-punk px-3 py-1">TENTAR NOVAMENTE</button>
         </div>
       )}
-      {/* Cards List */}
+      
       {(pautasPaginadas.length > 0 || esperando || carregandoCatalogo) ? (
         <>
         <div className="ruido-pauta-list space-y-4">
@@ -270,7 +270,7 @@ export function PautasFilterView({
                 key={p.id}
                 className="relative ruido-paper-card bg-paper-light border-3 border-ink p-5 sm:p-6 shadow-[5px_5px_0_#101010] transition-all hover:shadow-[8px_8px_0_#e42232]"
               >
-                {/* Header line */}
+                
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b-2 border-dashed border-ink/20 font-mono text-xs">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold bg-ink text-paper px-2 py-0.5 text-[10px]">
@@ -307,7 +307,7 @@ export function PautasFilterView({
                   )}
                 </div>
 
-                {/* Ementa title */}
+                
                 <h3 className="ruido-legible-prop-title font-heavy text-xl sm:text-2xl uppercase tracking-tight my-2">
                   <Link className="ruido-proposition-text-link" href={`/pautas/detalhe?id=${p.id}`}>{p.tituloSimples || (p.ementa.length > 340 ? p.ementa.slice(0, 340).trimEnd() + "…" : p.ementa)}</Link>
                 </h3>
@@ -331,7 +331,7 @@ export function PautasFilterView({
                   </p>
                 )}
 
-                {/* Placar box */}
+                
                 {uv && (uv.placarSim > 0 || uv.placarNao > 0) && (
                   <div className="my-3 p-2.5 bg-paper-card border border-ink font-mono text-xs flex justify-between items-center gap-3">
                     <span className="text-ink/80 truncate">
@@ -343,7 +343,7 @@ export function PautasFilterView({
                   </div>
                 )}
 
-                {/* Actions */}
+                
                 <div className="mt-4 pt-3 border-t border-dashed border-ink/20 flex justify-between items-center font-mono text-xs">
                   <span className="text-ink/60 font-bold">
                     {p.totalVotacoes} {p.totalVotacoes === 1 ? "votação registrada" : "votações registradas"}
