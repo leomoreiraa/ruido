@@ -60,6 +60,9 @@ test("pipeline deixa margem para checkpoints antes do limite de 3 horas", () => 
   assert.match(deploy, /--stage final --baseline-tag/);
   assert.match(deploy, /--stage camara --baseline-tag/);
   assert.match(deploy, /--stage senado --baseline-tag/);
+  assert.match(deploy, /historical-baseline\.sqlite/);
+  assert.match(deploy, /--previous "\$RUNNER_TEMP\/checkpoint-camara\/public\.sqlite"/);
+  assert.match(deploy, /--previous "\$RUNNER_TEMP\/checkpoint-senado\/public\.sqlite"/);
   assert.doesNotMatch(deploy, /actions\/upload-artifact@/);
   assert.match(deploy, /scripts\/sqlite-snapshot\.py restore/);
   assert.match(deploy, /if: \$\{\{ success\(\) \|\| failure\(\) \}\}/);
