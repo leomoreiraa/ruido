@@ -57,7 +57,10 @@ test("pipeline deixa margem para checkpoints antes do limite de 3 horas", () => 
   assert.match(deploy, /timeout-minutes:\s*95/);
   assert.match(deploy, /timeout-minutes:\s*23/);
   assert.match(deploy, /timeout-minutes:\s*18/);
-  assert.match(deploy, /rebuilt-v2-fallback-\$\{\{ github\.run_id \}\}-final/);
+  assert.match(deploy, /--stage final --baseline-tag/);
+  assert.match(deploy, /--stage camara --baseline-tag/);
+  assert.match(deploy, /--stage senado --baseline-tag/);
+  assert.doesNotMatch(deploy, /actions\/upload-artifact@/);
   assert.match(deploy, /scripts\/sqlite-snapshot\.py restore/);
   assert.match(deploy, /if: \$\{\{ success\(\) \|\| failure\(\) \}\}/);
 });
@@ -112,4 +115,24 @@ test("IA mantém checkpoint recuperável em Release sem consumir quota de artifa
     ai.indexOf("Salvar contingência de IA em Release"));
   assert.ok(ai.indexOf("Retomar checkpoint parcial de Release") <
     ai.indexOf("Gerar explicações com Gemini"));
+});
+
+test("coleta semanal usa Releases preliminares verificadas e recupera progresso sem promover dados incompletos", () => {
+  const deploy = source(".github/workflows/deploy-gh-pages.yml");
+  const progress = source("scripts/historical-checkpoint.py");
+  const canonical = source("scripts/release-snapshot.py");
+  assert.match(deploy, /scripts\/historical-checkpoint\.py restore/);
+  assert.match(deploy, /scripts\/historical-checkpoint\.py publish/);
+  assert.match(deploy, /scripts\/historical-checkpoint\.py cleanup/);
+  assert.match(deploy, /ARTIFACT_CREATED_AT:/);
+  assert.match(deploy, /checkpoint_created_at=\$artifact_created_at/);
+  assert.match(deploy, /--since "\$since"/);
+  assert.doesNotMatch(deploy, /actions\/upload-artifact@/);
+  assert.match(progress, /--checkpoint-only/);
+  assert.match(progress, /preserve_history\(verified, args\.destination\)/);
+  assert.match(progress, /--draft=false", "--prerelease"/);
+  assert.match(progress, /module\.assert_baseline\(args\.repository, args\.baseline_tag\)/);
+  assert.match(progress, /if not canonical:/);
+  assert.match(canonical, /CLEAN_TAG\.fullmatch\(r\['tag_name'\]\)/);
+  assert.doesNotMatch(canonical, /rebuilt-v2-progress/);
 });
