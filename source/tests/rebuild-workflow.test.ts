@@ -96,3 +96,20 @@ test("deploy visual só recupera Release íntegra e impede publicar commit obsol
   assert.match(fast, /npm run build:regional/);
   assert.match(fast, /if grep -q 'ruido-hero\.webp'/);
 });
+
+test("IA mantém checkpoint recuperável em Release sem consumir quota de artifacts", () => {
+  const ai = source(".github/workflows/ai-enrichment.yml");
+  assert.doesNotMatch(ai, /actions\/(?:upload|download)-artifact@/);
+  assert.match(ai, /ruido-ai-projects-partial-\$GITHUB_RUN_ID-\$GITHUB_RUN_ATTEMPT/);
+  assert.match(ai, /gh release create "\$tag"/);
+  assert.match(ai, /--prerelease --title/);
+  assert.match(ai, /sqlite-snapshot\.py restore/);
+  assert.match(ai, /\.base_sha256/);
+  assert.match(ai, /\.base_schema_sha256/);
+  assert.match(ai, /steps\.recovery_release\.outputs\.recovered/);
+  assert.match(ai, /if: failure\(\) && \(steps\.generation\.outcome == 'failure' \|\| steps\.publish\.outcome == 'failure'\)/);
+  assert.ok(ai.indexOf("Persistir o snapshot antes de republicar o site") <
+    ai.indexOf("Salvar contingência de IA em Release"));
+  assert.ok(ai.indexOf("Retomar checkpoint parcial de Release") <
+    ai.indexOf("Gerar explicações com Gemini"));
+});
