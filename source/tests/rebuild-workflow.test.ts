@@ -136,6 +136,8 @@ test("coleta semanal usa Releases preliminares verificadas e recupera progresso 
   assert.match(progress, /--draft=false", "--prerelease"/);
   assert.match(progress, /module\.assert_baseline\(args\.repository, args\.baseline_tag\)/);
   assert.match(progress, /if not canonical:/);
+  assert.match(progress, /latest\["tag_name"\] != expected_canonical/);
+  assert.match(deploy, /--run-id "\$GITHUB_RUN_ID" --attempt "\$GITHUB_RUN_ATTEMPT" --max-delete 20/);
   assert.match(canonical, /CLEAN_TAG\.fullmatch\(r\['tag_name'\]\)/);
   assert.doesNotMatch(canonical, /rebuilt-v2-progress/);
 });

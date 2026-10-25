@@ -42,7 +42,8 @@ class HistoricalCheckpointTests(unittest.TestCase):
     def test_cleanup_only_when_canonical_is_newer(self):
         rows = [
             release("rebuilt-v2-70-1", "2026-10-25T11:00:00Z", prerelease=False, id=10),
-            release("rebuilt-v2-progress-68-1-camara", "2026-10-25T10:00:00Z", id=11),
+            release("rebuilt-v2-progress-70-1-camara", "2026-10-25T10:00:00Z", id=11),
+            release("rebuilt-v2-progress-68-1-camara", "2026-10-25T10:15:00Z", id=14),
             release("rebuilt-v2-progress-72-1-senado", "2026-10-25T12:00:00Z", id=12),
             release("rebuilt-v2-progress-68-1-final", "2026-10-25T10:30:00Z", draft=True, id=13),
         ]
@@ -50,14 +51,14 @@ class HistoricalCheckpointTests(unittest.TestCase):
         with patch.object(checkpoint, "releases", return_value=rows), patch.object(
             checkpoint, "gh", side_effect=lambda *args: deleted.append(args)
         ):
-            checkpoint.cleanup(SimpleNamespace(repository="owner/repo", max_delete=20))
+            checkpoint.cleanup(SimpleNamespace(repository="owner/repo", run_id="70", attempt="1", max_delete=20))
         self.assertEqual(len(deleted), 1)
-        self.assertEqual(deleted[0][2], "rebuilt-v2-progress-68-1-camara")
+        self.assertEqual(deleted[0][2], "rebuilt-v2-progress-70-1-camara")
 
     def test_cleanup_refuses_missing_canonical(self):
         with patch.object(checkpoint, "releases", return_value=[]):
             with self.assertRaisesRegex(ValueError, "No canonical Release"):
-                checkpoint.cleanup(SimpleNamespace(repository="owner/repo", max_delete=20))
+                checkpoint.cleanup(SimpleNamespace(repository="owner/repo", run_id="70", attempt="1", max_delete=20))
 
     def test_restoration_validates_and_never_shrinks_history(self):
         with tempfile.TemporaryDirectory() as tmp:

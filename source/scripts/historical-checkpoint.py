@@ -117,8 +117,14 @@ def cleanup(args):
         raise ValueError("No canonical Release: refusing progress cleanup")
     latest = max(canonical, key=lambda item: (timestamp(item["published_at"]),
                                                int(item.get("id", 0))))
+    expected_canonical = f"rebuilt-v2-{args.run_id}-{args.attempt}"
+    if latest["tag_name"] != expected_canonical:
+        print("Canonical Release is not from this run; retaining progress for safety")
+        return
+    expected_progress = f"rebuilt-v2-progress-{args.run_id}-{args.attempt}-"
     eligible = [item for item in candidates(items)
-                if timestamp(item["published_at"]) <= timestamp(latest["published_at"])]
+                if item["tag_name"].startswith(expected_progress)
+                and timestamp(item["published_at"]) <= timestamp(latest["published_at"])]
     for item in eligible[:args.max_delete]:
         gh("release", "delete", item["tag_name"], "--repo", args.repository,
            "--yes", "--cleanup-tag")
@@ -143,6 +149,8 @@ def main():
     rec.add_argument("--since", default="")
     clean = sub.add_parser("cleanup")
     clean.add_argument("--repository", required=True)
+    clean.add_argument("--run-id", required=True)
+    clean.add_argument("--attempt", required=True)
     clean.add_argument("--max-delete", type=int, default=20)
     args = parser.parse_args()
     if not REPOSITORY.fullmatch(args.repository):
@@ -154,6 +162,8 @@ def main():
     elif args.command == "restore":
         restore(args)
     else:
+        if not args.run_id.isdecimal() or not args.attempt.isdecimal():
+            raise ValueError("Invalid run identifier")
         if not 1 <= args.max_delete <= 30:
             raise ValueError("Invalid cleanup limit")
         cleanup(args)
