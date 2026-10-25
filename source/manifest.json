@@ -195,7 +195,7 @@
     "tests/test_publish_dossiers_safe.py": "984ef9f1e9aa75275874412ca5b1d00ab3bb3a7da775b93942134c3fc5485e32",
     "tests/test_sqlite_maintenance.py": "d43580c364c652e1fdb84381344c4f407b0afce61965138b3d75df44f0fdd5ec",
     "tests/test_sqlite_publish_guard.py": "759bd05185dc7323c52df9ecf5e4717fb97b0745e4089f14cfc4fb2e97cebd60",
-    "tests/test_workflow_json_checkpoint.py": "9ac11fdee4a494b7c1ec8015668f40175462f597dab8beafcaeb0a429f5dc1d8",
+    "tests/test_workflow_json_checkpoint.py": "c2c106c74a2fda32fc44f0740b97129ddc96c959c82e76f23529cd6865ee1d60",
     "tests/tripleDailySchedule.test.ts": "1fc8b6f3f0a0d90f53df83ba35958a7d45c834caf9a1a27ae842b4ea94cb34e7",
     "tests/ui-record-availability.test.ts": "061a6fee7a700fb017b08fac3cd4fed9524c6ed29e36344efc92a462cf99817b",
     "tests/urban-punk-ui.test.ts": "ca31b3c114e726260ec3211de38581a9b4f9b2ac721650dc0522ac90a2b15a0e",
