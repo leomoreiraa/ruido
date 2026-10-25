@@ -4,13 +4,13 @@ export type PaisExterior={
  iso:string;nome:string;
  localidadesPrevistas:number;localidadesComResultado:number;
  secoesTotalizadas:number;secoesPrevistasConhecidas:number;
- lula:number;flavio:number;votosValidos:number;apuradoEm:number|null;
+ lula:number;flavio:number;votosValidos:number;apuradoEm:number|null;boletinsRecebidos?:number;
 };
 export type ExteriorAoVivo={
  versao:1;fonte:"https://resultados.tse.jus.br/oficial";turno:2;
  estado:"aguardando_inicio"|"aguardando_resultados"|"parcial"|"completo";
  localidadesPrevistas:number;localidadesComResultado:number;
- atualizadoEm:number|null;paises:PaisExterior[];
+ atualizadoEm:number|null;ultimaConsultaEm?:number|null;boletinsRecebidos?:number;paises:PaisExterior[];
 };
 export type MalhaMundi={
  versao:1;viewBox:string;fonteGeografica:string;fonteUrl:string;
@@ -27,7 +27,9 @@ export function validarExteriorAoVivo(raw:unknown):ExteriorAoVivo{
     !inteiro(item.localidadesPrevistas)||!inteiro(item.localidadesComResultado)||
     item.localidadesPrevistas!==186||item.localidadesComResultado!>item.localidadesPrevistas||
     !Array.isArray(item.paises)||item.paises.length>200||
-    (item.atualizadoEm!==null&&!inteiro(item.atualizadoEm)))
+    (item.atualizadoEm!==null&&!inteiro(item.atualizadoEm))||
+    (item.ultimaConsultaEm!==undefined&&item.ultimaConsultaEm!==null&&!inteiro(item.ultimaConsultaEm))||
+    (item.boletinsRecebidos!==undefined&&!inteiro(item.boletinsRecebidos)))
   throw new Error("Apuração no exterior: metadados inconsistentes");
  const seen=new Set<string>();
  let contagem=0;

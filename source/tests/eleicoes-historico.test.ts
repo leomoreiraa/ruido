@@ -47,11 +47,12 @@ test("cenários calculam votos adicionais necessários, sem projetar resultado e
  assert.throws(()=>calcularCenarioMatematico(-1,10,100));
 });
 
-test("painel permanece abaixo do mapa e o indicador fica no canto esquerdo sobre o SVG",()=>{
+test("painel permanece abaixo do mapa e o indicador em faixa separada sem cobrir municípios",()=>{
  const codigo=readFileSync("components/Eleicoes2026View.tsx","utf8");
  const radar=readFileSync("components/RadarApuracaoEleitoral.tsx","utf8");
- assert.match(codigo,/ruido-map-zine__canvas--national relative/);
- assert.match(codigo,/absolute left-2 top-2/);
+ assert.match(codigo,/ruido-map-zine__canvas--national/);
+ assert.doesNotMatch(codigo,/absolute left-2 top-2/);
+ assert.match(codigo,/flex flex-wrap items-center justify-between gap-2 border-b-2 border-punk-red/);
  assert.match(codigo,/SEÇÕES TOTALIZADAS/);
  assert.ok(codigo.indexOf("<RadarApuracaoEleitoral")>codigo.indexOf('ruido-map-zine__tagline'));
  assert.match(radar,/buscarHistoricoCentral/);

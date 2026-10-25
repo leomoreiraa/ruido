@@ -258,26 +258,26 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      <strong>INTENSIDADE DA COR = DIFERENÇA DE VOTOS</strong>
      <div className="ruido-map-zine__guide-range"><span>Menos de 5 p.p.</span><span>5 a menos de 15 p.p.</span><span>15 a menos de 30 p.p.</span><span>30 p.p. ou mais</span></div>
      <p>Em cada município, comparamos somente os votos de Lula e Flávio. O tom representa a diferença entre seus percentuais de votos válidos. No 1º turno, outros candidatos também participaram.</p>
-     {turno===2&&<p><strong>ATUALIZAÇÃO AUTOMÁTICA:</strong> A votação é acompanhada conforme o TSE publica novas parciais. Os detalhes de municípios podem aparecer depois da atualização nacional.</p>}
+     
      {turno===2&&erroLive&&<p role="status">{erroLive}</p>}
     </div>
    </aside>
    <div className={uf==="BR"?"space-y-4":"grid lg:grid-cols-[1.35fr_.65fr] gap-5"}>
     <div className="ruido-map-zine__window">
      <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>LEITURA / {turno}º TURNO</span><span>ESTADO / MUNICÍPIO</span></div>
-     <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national relative":"ruido-map-zine__canvas ruido-map-zine__canvas--state relative"}>
-      <div className="pointer-events-none absolute left-2 top-2 sm:left-4 sm:top-4 z-20 w-[178px] sm:w-[220px] max-w-[60%] border-2 border-white bg-ink px-3 py-2 text-white shadow-[3px_3px_0_#e42232]"
-       role="status" aria-live="polite">
-       <p className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider leading-tight text-white">BRASIL // SEÇÕES TOTALIZADAS</p>
-       <strong className="block font-heavy text-xl sm:text-3xl leading-tight mt-1 text-white">{pct(progressoNacional?.percentualSecoes)}</strong>
-       <div className="mt-2 h-2 border border-white bg-[#292929] overflow-hidden" role="progressbar"
+     <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-punk-red bg-ink px-3 py-2 text-white" role="status" aria-live="polite">
+      <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wide text-white">BRASIL // SEÇÕES TOTALIZADAS</span>
+      <div className="flex items-center gap-3">
+       <strong className="font-heavy text-lg sm:text-xl leading-none text-white">{pct(progressoNacional?.percentualSecoes)}</strong>
+       <div className="h-2 w-14 sm:w-24 overflow-hidden border border-white bg-[#333333]" role="progressbar"
         aria-label="Percentual de seções eleitorais totalizadas no Brasil" aria-valuemin={0} aria-valuemax={100}
         aria-valuenow={progressoNacional?.percentualSecoes??undefined}>
         <div className="h-full bg-punk-red transition-[width] duration-500"
          style={{width:Math.min(100,Math.max(0,progressoNacional?.percentualSecoes??0))+"%"}} />
        </div>
-       <p className="font-mono text-[9px] mt-1 text-white/90">Fonte: TSE • {turno}º turno</p>
       </div>
+     </div>
+     <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national":"ruido-map-zine__canvas ruido-map-zine__canvas--state"}>
      {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={resultadosMunicipais} municipios={catalogoMunicipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
       <MapaZoomArea key={uf} rotulo={"Mapa dos municípios de "+nomesUf.get(uf)}>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">

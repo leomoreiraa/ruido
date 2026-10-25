@@ -2,7 +2,7 @@
 
 import React,{useEffect,useMemo,useState,useCallback} from "react";
 import {MapaZoomArea} from "@/components/MapaZoomArea";
-import {backendEleitoralConfigurado,INTERVALO_LIVE_MS,consultaAoVivoDisponivel} from "@/lib/eleicoesTseAoVivo";
+import {backendEleitoralConfigurado,INTERVALO_LIVE_MS} from "@/lib/eleicoesTseAoVivo";
 import {buscarExteriorAoVivo,validarMalhaMundi,type ExteriorAoVivo,type MalhaMundi,type PaisExterior} from "@/lib/eleicoesExterior";
 
 const formatoNumero=new Intl.NumberFormat("pt-BR");
@@ -43,7 +43,7 @@ export function MapaMundiApuracao(){
   let ativo=true,rodando=false;
   const abort=new AbortController();
   async function atualizar(){
-   if(!ativo||rodando||!consultaAoVivoDisponivel()||document.visibilityState==="hidden")return;
+   if(!ativo||rodando||document.visibilityState==="hidden")return;
    rodando=true;
    try{
     const resultado=await buscarExteriorAoVivo(abort.signal);
@@ -168,11 +168,11 @@ export function MapaMundiApuracao(){
      {opcoes.map(p=><option key={p.iso} value={p.iso}>{p.nome} · {p.localidadesComResultado?p.lula+p.flavio+" votos dos dois candidatos":"sem resultado"}</option>)}
     </select>
     <p className="mt-3 font-mono text-xs text-ink/80">
-     {comVotos?"O mapa reúne os dados de cada localidade eleitoral do exterior consultada pelo RUÍDO.":"As cores serão atualizadas conforme as localidades do exterior tiverem resultados oficiais disponíveis."}
+     {comVotos?"O mapa reúne votos oficiais por localidade do exterior, incluindo boletins de urna publicados antes da totalização nacional.":"As cores serão atualizadas conforme o TSE liberar os boletins de urna e os resultados oficiais de cada localidade."}
     </p>
     <p className="mt-2 font-mono text-xs text-ink/80">
      {atualizadoEm?"Última coleta validada: "+atualizadoEm.toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}):
-      consultaAoVivoDisponivel()?"Aguardando dados oficiais para o exterior.":"Resultados do segundo turno disponibilizados após o início da apuração."}
+      dados?.ultimaConsultaEm?"Última verificação oficial: "+new Date(dados.ultimaConsultaEm).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"})+". Aguardando a liberação dos resultados pelo TSE.":"Aguardando o início da coleta oficial do exterior."}
      {desatualizado?" Dados podem estar desatualizados.":""}
      {erroDados?" Atualização temporariamente indisponível.":""}
     </p>
@@ -196,6 +196,7 @@ export function MapaMundiApuracao(){
      <p className="col-span-2 font-mono text-xs text-ink/80">
       Localidades com resultado: <strong>{paisSelecionado.localidadesComResultado}/{paisSelecionado.localidadesPrevistas}</strong>.
       Seções totalizadas nos locais consultados: <strong>{formatoNumero.format(paisSelecionado.secoesTotalizadas)} / {formatoNumero.format(paisSelecionado.secoesPrevistasConhecidas)}</strong>.
+      {paisSelecionado.boletinsRecebidos?" Contagem inclui "+paisSelecionado.boletinsRecebidos+" boletins de urna antecipados, sem duplicidade com a totalização.":""}
       {paisSelecionado.localidadesComResultado<paisSelecionado.localidadesPrevistas?" Apuração deste país ainda com cobertura parcial.":""}
      </p>
     </div>:<p className="font-mono text-xs mt-4 text-ink/80">
@@ -220,9 +221,9 @@ export function MapaMundiApuracao(){
   </details>:null}
 
   <p className="mt-4 font-mono text-[11px] text-ink/75 leading-relaxed">
-   Fonte eleitoral: TSE, arquivos oficiais EA20 de localidades da Zona Eleitoral do Exterior (ZZ).
+   Fonte eleitoral: TSE, Boletins de Urna (BUs) oficiais do pleito 3221 e arquivos EA20 da Zona Eleitoral do Exterior (ZZ).
    As contagens nacionais do Brasil já incluem votos no exterior: não some os números deste mapa à apuração nacional.
-   Valores por país são somatórios das localidades consultadas, eventualmente em instantes diferentes, e não substituem o total oficial ZZ.
+   Cada localidade usa o registro mais completo entre os boletins de urna e a totalização, sem somar os mesmos votos duas vezes. Os resultados por país podem ser parciais até a liberação oficial completa.
    Limites geográficos: Natural Earth 110m (domínio público); países pequenos são representados por marcadores.
   </p>
   <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener noreferrer" className="inline-block mt-3 font-mono text-xs font-bold underline text-ink">
