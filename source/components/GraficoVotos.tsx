@@ -202,12 +202,17 @@ export function GraficoVotos({
                 {totalSessoesAuditadas} REGISTROS
               </span>
             </div>
-            <div className="bg-punk-acid border-l-4 border-ink p-3 font-mono text-xs mb-4">
-              <strong>{frequenciaAuditada?.sessoes ? "COBERTURA DAS SESSÕES AUDITADAS" : "FREQUÊNCIA TOTAL: NÃO CALCULÁVEL"}</strong>
-              <p className="mt-2">
-                {frequenciaAuditada?.sessoes ? `Nas ${frequenciaAuditada.sessoes} sessões com frequência auditada oficialmente: ${frequenciaAuditada.presentes} presenças, ${frequenciaAuditada.ausentes} ausências e ${frequenciaAuditada.justificadas} justificativas. Isto não é taxa de assiduidade do mandato inteiro.` : "Para calcular presença total precisamos de todas as sessões exigíveis no período de exercício, incluindo dispensas e justificativas. A base atual registra somente evidências disponíveis."}
+            {percentualAuditoria!==null && frequenciaAuditada && (
+              <p className="font-mono text-xs text-ink/75 mb-3">
+                {frequenciaAuditada.presentes} presenças em {frequenciaAuditada.sessoes} sessões com frequência oficial auditada.
+                O indicador não inclui sessões ainda não auditadas.
               </p>
-            </div>
+            )}
+            {!indicador && (
+              <p className="font-mono text-xs text-ink/75 mb-3">
+                Presenças registradas até a última sincronização. Percentual disponível após a conferência das sessões oficiais exigíveis.
+              </p>
+            )}
             {indicador && <div className="border-2 border-ink bg-paper p-3 mb-4 font-mono text-xs">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <strong>{indicador.metodo==="SESSÕES AUDITADAS"?

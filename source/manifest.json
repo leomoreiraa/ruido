@@ -29,7 +29,7 @@
     "components/Eleicoes2026View.tsx": "7fd30dedcc511882116cffe62322e18ff8a38c687dfa3513ba3e74fe7b3f8b3b",
     "components/EmendasTrackerView.tsx": "6ab719a817c5d9f2ed4dccb4005d0c06aa662b795fc03d0728eeb59dd37df3c3",
     "components/GraficoPatrimonio.tsx": "ad2bb9e229b6ba1ade16bcf544a5adc66d58ea3ee97ddff39c9b4f58138862f4",
-    "components/GraficoVotos.tsx": "501c7cb948e7a4d974ba9eb6789dc0fe9d3020e88c53d0f1f3695ce9a9d1272b",
+    "components/GraficoVotos.tsx": "c6aa43df7f018c7e0d155852a686a419bc0cc9f577bd3a71fd49cb29c8f938db",
     "components/HomeInstantSearch.tsx": "3054b7496f57bf60b04302f751ae2725f3e113238293bbf42cb9ed652427fb9e",
     "components/MapaBrasilView.tsx": "a8632cadde127cf99c9bb36eb4b8cb438700c283de4529e5479c0b0965c06c85",
     "components/MapaEleitoralMunicipalBrasil.tsx": "1af808be9b04b161a99215bd714f61326c1ba169256bd22533c7526d2640c00d",
