@@ -185,6 +185,7 @@
     "tests/test_datajud_checkpoint.py": "a38d2d04a4a58e48408e7888a9a66141ba684b153651742d80a782a42e39c115",
     "tests/test_election_2026.py": "966f792ad16b9ba9b57e7b62b40498c674e284079bf8e09647a5079b67a1ba5e",
     "tests/test_financial_links.py": "2fd8be1786bafe33f9989f90abfbb9d5e4fd6bf897a89e3502d6468d3d863662",
+    "tests/test_historical_checkpoint.py": "784997e2460d12f21c405cc717679ae587d99dda32ead41bd499a3cc8d0fce0d",
     "tests/test_monitor_data_growth.py": "ddddc98c5222336b4338de7b577d9c725d4feff4eb5b4fbaebddbe912047487b",
     "tests/test_municipal_catalog.py": "60c4840d0499b1974ee437e2fd1f0baf5823363cbe7033e20b43b3e01b6db8f6",
     "tests/test_municipal_geometry.py": "8f79759d3c9ea234f9bfdc0d465d7ae2d00b1bddd66242493d976505407ff612",
