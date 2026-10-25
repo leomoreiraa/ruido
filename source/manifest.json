@@ -42,6 +42,7 @@
     "components/PautasFilterView.tsx": "a3bb93a238202aa8f2c49297547b8a043ca8d7ca64d0f1d94415fda6713cd1ff",
     "components/PerfilIADiscursos.tsx": "8f30cc10d2135ec7b5faccd602640fc65b1cc6fee03218e4005cad4329492ff4",
     "components/PoliticianPhoto.tsx": "aea1b480a05e5235b2054c5a5772bceaaf85138d9c548c5f924c49765f1b001d",
+    "components/RadarApuracaoEleitoral.tsx": "734ad06195912b79ddfd3aa0a0daa4f4989f77e24334529b90f21fc92f51b88c",
     "components/RuidoPixQr.tsx": "c0dd725f4d75e481de8859b7fb4af39b0a33ea1f50fcefa9036177cc30a5dbca",
     "components/RuidoSupportFloating.tsx": "33e12bd3d42800cdc61dfb54f8768f9499d6834e89d2c4bb71f948cdd76e561d",
     "components/VotacaoItem.tsx": "152ccf7ecbbdbf668ce47476c8f21db44aeec2cb33442c5dc8c242a8ede55b30",
