@@ -6,6 +6,7 @@ import {buscarResultadoCentral,backendEleitoralConfigurado,consultaAoVivoDisponi
 import {MapaEleitoralMunicipalBrasil} from "@/components/MapaEleitoralMunicipalBrasil";
 import {RadarApuracaoEleitoral} from "@/components/RadarApuracaoEleitoral";
 import {MapaMundiApuracao} from "@/components/MapaMundiApuracao";
+import {buscarMapaMunicipalCentral,type MapaMunicipalAoVivo} from "@/lib/eleicoesMapaMunicipalAoVivo";
 
 type Candidato={numero:string;nome:string;partido:string;votos:number;percentual:number|null};
 type Resultado={situacao:"aguardando"|"parcial"|"concluida";apuradoEm:string|null;secoesTotalizadas:number;secoesPrevistas:number;percentualSecoes:number|null;votosValidos:number|null;votosTotais:number|null;brancos:number|null;nulos:number|null;candidatos:Candidato[]};
@@ -58,6 +59,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
  const [lidoEm,setLidoEm]=useState<string>("");
  const [dadosLive,setDadosLive]=useState<Record<string,{resultado:Resultado;consultadoEm:number;estado:"atual"|"desatualizado"}>>({});
  const [erroLive,setErroLive]=useState<string|null>(null);
+ const [mapaMunicipalLive,setMapaMunicipalLive]=useState<MapaMunicipalAoVivo|null>(null);
  
 
  useEffect(()=>{
@@ -163,16 +165,55 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
   document.addEventListener("visibilitychange",visibility);
   return ()=>{ativo=false;abort.abort();clearInterval(timer);document.removeEventListener("visibilitychange",visibility);};
  },[turno,uf,cidade,codigoTSE,filtroComparar]);
+ useEffect(()=>{
+  if(turno!==2||!backendEleitoralConfigurado())return;
+  let ativo=true;
+  let rodando=false;
+  const controller=new AbortController();
+  async function atualizarMunicipios(){
+   if(!ativo||rodando||document.visibilityState==="hidden")return;
+   rodando=true;
+   try{
+    const parcial=await buscarMapaMunicipalCentral(controller.signal);
+    if(ativo)setMapaMunicipalLive(anterior=>
+     !anterior||(parcial.atualizadoEm??0)>=(anterior.atualizadoEm??0)?parcial:anterior);
+   }catch{}
+   finally{rodando=false;}
+  }
+  void atualizarMunicipios();
+  const timer=setInterval(()=>void atualizarMunicipios(),45_000);
+  const visibilidade=()=>{if(document.visibilityState==="visible")void atualizarMunicipios();};
+  document.addEventListener("visibilitychange",visibilidade);
+  return ()=>{ativo=false;controller.abort();clearInterval(timer);
+   document.removeEventListener("visibilitychange",visibilidade);};
+ },[turno]);
  const resultadosMunicipais=useMemo(()=>{
   const base=dados?.resultadosMunicipais??{};
   if(turno!==2)return base;
   const atualizado={...base};
+  for(const [ibge,valores] of Object.entries(mapaMunicipalLive?.municipios??{})){
+   const [lula,flavio,validos,secoes,previstas]=valores;
+   const antiga=atualizado[ibge];
+   if(antiga&&antiga.secoesTotalizadas>secoes)continue;
+   atualizado[ibge]={
+    situacao:secoes>=previstas?"concluida":"parcial",
+    apuradoEm:null,secoesTotalizadas:secoes,secoesPrevistas:previstas,
+    percentualSecoes:100*secoes/previstas,
+    votosValidos:validos,votosTotais:null,brancos:null,nulos:null,
+    candidatos:[
+     {numero:"13",nome:"Lula",partido:"PT",votos:lula,percentual:100*lula/validos},
+     {numero:"22",nome:"Flávio Bolsonaro",partido:"PL",votos:flavio,percentual:100*flavio/validos}
+    ]
+   };
+  }
   for(const m of catalogoMunicipios){
    const parcial=dadosLive[m.uf+":"+m.codigoTSE];
-   if(parcial)atualizado[m.codigoIBGE]=parcial.resultado;
+   if(parcial&&(!atualizado[m.codigoIBGE]||
+     parcial.resultado.secoesTotalizadas>=atualizado[m.codigoIBGE].secoesTotalizadas))
+    atualizado[m.codigoIBGE]=parcial.resultado;
   }
   return atualizado;
- },[dados,turno,catalogoMunicipios,dadosLive]);
+ },[dados,turno,catalogoMunicipios,dadosLive,mapaMunicipalLive]);
  const selecionada=cidade?mapaMunicipios.get(cidade):undefined;
  const resultado:Resultado|null|undefined=resultadoLive??(uf==="BR"?dados?.brasil:cidade?resultadosMunicipais[cidade]??null:dados?.estados[uf]);
  const progressoNacional=(turno===2?dadosLive.BR?.resultado:undefined)??dados?.brasil;
@@ -278,7 +319,15 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
       </div>
      </div>
      <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national":"ruido-map-zine__canvas ruido-map-zine__canvas--state"}>
-     {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={resultadosMunicipais} municipios={catalogoMunicipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
+     {uf==="BR"?<div>
+       {turno===2&&<p className="bg-white border-2 border-ink px-3 py-2 font-mono text-[11px] font-bold text-ink" role="status">
+        {mapaMunicipalLive?.municipiosComResultado?
+         nf.format(mapaMunicipalLive.municipiosComResultado)+" municípios já receberam parciais oficiais. O mapa recebe novas cores automaticamente.":
+         "COLETA MUNICIPAL AO VIVO • aguardando as primeiras cidades."}
+        {mapaMunicipalLive?.ultimaConsultaEm?" Última varredura: "+new Date(mapaMunicipalLive.ultimaConsultaEm).toLocaleTimeString("pt-BR")+".":""}
+       </p>}
+       <MapaEleitoralMunicipalBrasil resultados={resultadosMunicipais} municipios={catalogoMunicipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>
+      </div>:malhasUf?<div>
       <MapaZoomArea key={uf} rotulo={"Mapa dos municípios de "+nomesUf.get(uf)}>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">
        {malhasUf.municipios.map(m=>{
