@@ -155,6 +155,7 @@
     "tests/dossies-integration.test.ts": "d2e748124f08fecc164971cf22e4cd614d59f1d0d9e733fb6bc5c68fd4693095",
     "tests/election-e2e.spec.mjs": "2dc68d3a684cbd57b63032f39541614c04a22be2d8f8b1c154777d322fcb6a01",
     "tests/election-smoke-2026.mjs": "bef869784cfb0f3c7a2488174096814fd264d3a93c587b8df1c5f98843f86b5a",
+    "tests/eleicoes-exterior.test.ts": "b21e314ef879a562de684a9db267fb1e1018687cae2fa7ed2dee4a66a2f91e7b",
     "tests/eleicoes-historico.test.ts": "ff8a07dd40069a7467d6018b2bb330d2d3e293fe218d9ee5c533fe2b3ad3522c",
     "tests/eleicoes-tse-ao-vivo.test.ts": "302271be6ff95191deeb816f0f5abfe253bf02965c0cbe0f8e0196639189a465",
     "tests/emendasPortal.test.ts": "e804aeecc2a6a43df9e7a07de9dbbef047030efdda8bc9bfa8d2d64da5090caa",
