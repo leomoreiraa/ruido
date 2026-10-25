@@ -109,6 +109,7 @@
     "scripts/fix-pages-basepath.py": "dda024bf135f9e1f55366a66f43e7802474a104c1db1cdcd4947887754d77201",
     "scripts/generate-project-explanations.ts": "f0cbf29a16a527388133bff324cacd25b18e7f93b826c5fa06834ea8e6edec1f",
     "scripts/gerar-indicadores-presenca.py": "1508b36b0e0734c0b5cac7cfc51a7b93d059511e067f311f49770ca836b455ea",
+    "scripts/historical-checkpoint.py": "29023a7db6cecc15b580d286e0f423a945d9c2378f85db636117b5113702eede",
     "scripts/monitor-data-growth.py": "f51e6b40bf583004931904347f4865478016490f0d269dfe788c6d688055dd1b",
     "scripts/publish-collector-safe.py": "343fdb6211f40c0aa95a5f24ed41dcd95d5d621b13b489d4b6ad12d41ad398c3",
     "scripts/publish-dossiers-safe.py": "4d74e5d1e8695134d4ea47733b8006fbe96afef183b54154c1382eb9c1c5a928",
