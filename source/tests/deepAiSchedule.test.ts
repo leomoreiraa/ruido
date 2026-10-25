@@ -28,8 +28,25 @@ test("jobs de IA profunda: timeout de 180 minutos com margem para publicar",()=>
     assert.match(text,/options: \[normal, deep\]/);
     assert.match(text,/timeout-minutes: \$\{\{ inputs.mode == 'deep' && 180 \|\|/);
     assert.match(text,/AI_RUN_MODE: \$\{\{ inputs.mode == 'deep'/);
-    assert.match(text,/if: always\(\)/);
+    // JSONs só viram checkpoints persistentes após validação e conciliação segura.
+    if(p.endsWith("news-enrichment.yml") || p.endsWith("atualizar-dossies.yml")){
+      assert.match(text,/workflow-json-checkpoint.py verify (news|official-ai)/);
+      assert.match(text,/publish-(collector|dossiers)-safe.py/);
+      assert.doesNotMatch(text,/actions\\/upload-artifact@/);
+    }else{
+      // O SQLite da IA ainda usa snapshot parcial verificado como contingência.
+      assert.match(text,/if: always\\(\\)/);
+    }
   }
+});
+
+test("checkpoint SQLite usa Release no sucesso e artefato somente como contingência",()=>{
+  const workflow=read(".github/workflows/ai-enrichment.yml");
+  const publish=workflow.indexOf("Persistir o snapshot antes de republicar o site");
+  const fallback=workflow.indexOf("Guardar snapshot parcial entre execuções");
+  assert.ok(publish>=0 && fallback>publish);
+  assert.match(workflow.slice(fallback),/if: failure\\(\\)\\s*\\n\\s*uses: actions\\/upload-artifact@v4/);
+  assert.match(workflow,/scripts\\/release-snapshot.py publish/);
 });
 
 test("modo profundo eleva limites internos e encerra ao atingir orçamento",()=>{
