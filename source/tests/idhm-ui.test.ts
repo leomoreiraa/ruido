@@ -6,7 +6,9 @@ const map=readFileSync("components/MapaBrasilView.tsx","utf8");
 const pipeline=readFileSync(".github/workflows/deploy-gh-pages.yml","utf8");
 test("presenças incompletas não geram taxa falsa de 100%",()=>{
   assert.doesNotMatch(graph,/pctPresente|pctJustificado|pctAusente/);
-  assert.match(graph,/FREQUÊNCIA TOTAL: NÃO CALCULÁVEL/);
+  assert.doesNotMatch(graph,/FREQUÊNCIA TOTAL: NÃO CALCULÁVEL/);
+  assert.match(graph,/Percentual disponível após a conferência das sessões oficiais exigíveis/);
+  assert.match(graph,/frequenciaAuditadaPercentual\(frequenciaAuditada\)/);
   assert.match(graph,/Não registrados ≠ ausentes/);
 });
 test("mapa prioriza IDHM, mantém evolução anual e indicadores oficiais",()=>{

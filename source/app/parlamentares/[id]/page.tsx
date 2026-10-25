@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { GraficoVotos } from "@/components/GraficoVotos";
 import { coberturaPresenca } from "@/lib/presencaCoverage";
+import { frequenciaPlenarioOficial } from "@/lib/frequenciaOficial";
 import { formatarDataBR } from "@/lib/utils";
 import {
   ParlamentarHistoricoTabs,
@@ -194,6 +195,7 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
   }catch{
   }
   const isCamara = parlamentar.casa === "CAMARA";
+  const presencaOficial = frequenciaPlenarioOficial(parlamentar.id, parlamentar.casa);
 
   const votosSerializados: VotoHistoricoItem[] = votosRaw.map((v: any) => ({
     id: v.id,
@@ -395,12 +397,12 @@ export default async function PerfilParlamentarPage({ params }: PerfilParlamenta
       
       <GraficoVotos
         coberturaRecorte={coberturaPresenca(parlamentar.id,parlamentar.casa)}
-        frequenciaAuditada={frequenciaOficial._count._all > 0 ? {
+        frequenciaAuditada={presencaOficial ?? (frequenciaOficial._count._all > 0 ? {
           sessoes: frequenciaOficial._sum.sessoesAuditadas || 0,
           presentes: frequenciaOficial._sum.presentes || 0,
           ausentes: frequenciaOficial._sum.ausentes || 0,
           justificadas: frequenciaOficial._sum.justificadas || 0,
-        } : undefined}
+        } : undefined)}
         presencasPresente={mapaPresencas["PRESENTE"] || 0}
         presencasAusente={mapaPresencas["AUSENTE"] || 0}
         presencasJustificado={mapaPresencas["JUSTIFICADO"] || 0}

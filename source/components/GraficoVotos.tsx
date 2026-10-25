@@ -11,7 +11,7 @@ export interface GraficoVotosProps {
   votosArtigo17?: number;
   votosOutros?: number;
   outrosVotosDetalhados?: Array<{ opcao: string; total?: number; count?: number }>;
-  frequenciaAuditada?: { sessoes: number; presentes: number; ausentes: number; justificadas: number };
+  frequenciaAuditada?: { sessoes: number; presentes: number; ausentes: number; justificadas: number; inicio?: string; fim?: string; fonte?: string };
   coberturaRecorte?: CoberturaPresenca;
   presencasPresente: number;
   presencasJustificado: number;
@@ -48,9 +48,6 @@ export function GraficoVotos({
   const indicador=percentualAuditoria!==null?{
     percentual:percentualAuditoria,amostra:frequenciaAuditada!.sessoes,
     registros:frequenciaAuditada!.presentes,metodo:"SESSÕES AUDITADAS" as const,
-  }:coberturaRecorte?{
-    percentual:coberturaRecorte.percentual,amostra:coberturaRecorte.eventosMonitorados,
-    registros:coberturaRecorte.eventosComRegistro,metodo:"EVENTOS COM REGISTRO" as const,
   }:null;
 
   const pctSim = totalVotos > 0 ? Math.round((votosSim / totalVotos) * 100) : 0;
@@ -205,6 +202,8 @@ export function GraficoVotos({
             {percentualAuditoria!==null && frequenciaAuditada && (
               <p className="font-mono text-xs text-ink/75 mb-3">
                 {frequenciaAuditada.presentes} presenças em {frequenciaAuditada.sessoes} sessões com frequência oficial auditada.
+                {frequenciaAuditada.inicio && frequenciaAuditada.fim ?
+                  " Período: "+frequenciaAuditada.inicio+" a "+frequenciaAuditada.fim+"." : ""}
                 O indicador não inclui sessões ainda não auditadas.
               </p>
             )}
@@ -216,13 +215,13 @@ export function GraficoVotos({
             {indicador && <div className="border-2 border-ink bg-paper p-3 mb-4 font-mono text-xs">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <strong>{indicador.metodo==="SESSÕES AUDITADAS"?
-                  "PRESENÇA NAS SESSÕES AUDITADAS":"EVENTOS DO RECORTE COM PRESENÇA REGISTRADA"}</strong>
+                  "PRESENÇA NO PLENÁRIO (DIAS COM SESSÃO)":"EVENTOS DO RECORTE COM PRESENÇA REGISTRADA"}</strong>
                 <strong className="font-heavy text-3xl">{indicador.percentual.toLocaleString("pt-BR")}%</strong>
               </div>
               <p className="mt-1">{indicador.registros} registros em {indicador.amostra} eventos/sessões no recorte.</p>
               <p className="mt-2 text-ink/75">
                 {indicador.metodo==="SESSÕES AUDITADAS"?
-                  "Percentual calculado apenas sobre sessões com contagem oficial fechada; não é taxa de assiduidade do mandato inteiro.":
+                  "Percentual calculado apenas sobre dias de sessão com frequência individual oficial disponível no período indicado; não representa reuniões de comissões ou a totalidade do mandato.":
                   "Percentual descritivo de eventos presentes no arquivo durante o intervalo observado. Ausência de registro NÃO significa falta. Não é taxa de assiduidade."}
               </p>
               {coberturaRecorte&&indicador.metodo==="EVENTOS COM REGISTRO"&&
@@ -230,6 +229,7 @@ export function GraficoVotos({
                   <a className="underline ml-2" href={coberturaRecorte.fonte}
                     target="_blank" rel="noopener noreferrer">FONTE OFICIAL ↗</a>
                 </p>}
+              {frequenciaAuditada?.fonte && <p className="mt-2"><a className="underline" href={frequenciaAuditada.fonte} target="_blank" rel="noopener noreferrer">Consultar serviço oficial da Câmara ↗</a></p>}
             </div>}
             <div className="space-y-3 text-xs font-mono">
               <div className="flex justify-between border-b border-dashed border-ink/30 pb-2">
