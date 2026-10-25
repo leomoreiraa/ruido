@@ -61,8 +61,10 @@ function grafico(serie:ParcialHistorica[]){
  return {largura,altura,esquerda,direita,topo,base,minimo,maximo,y,pontos,curva};
 }
 
-export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observacaoAtual}:{
+export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observacaoAtual,estados,estadoDestaque}:{
  observacaoAtual?:Observacao;
+ estados?:Record<string,{percentualSecoes:number|null;situacao:string}|null>;
+ estadoDestaque?:{uf:string;percentualSecoes:number|null};
 }){
  const [historico,setHistorico]=useState<ParcialHistorica[]>([]);
  const [falhaHistorico,setFalhaHistorico]=useState(false);
@@ -103,6 +105,16 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
   return ()=>{ativo=false;abort.abort();clearInterval(timer);document.removeEventListener("visibilitychange",visibilidade);};
  },[]);
 
+ const progressoEstados=useMemo(()=>{
+  const ufs="AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(" ");
+  return ufs.map(uf=>{
+   const registro=estados?.[uf];
+   const aoVivo=estadoDestaque?.uf===uf?estadoDestaque.percentualSecoes:null;
+   const parcial=aoVivo??registro?.percentualSecoes??null;
+   return {uf,parcial};
+  });
+ },[estados,estadoDestaque?.uf,estadoDestaque?.percentualSecoes]);
+ const estadosComRegistro=progressoEstados.filter(item=>item.parcial!==null&&item.parcial>0).length;
  const desenho=useMemo(()=>historico.length?grafico(historico):null,[historico]);
  const ultimo=historico[historico.length-1];
  const lula=ultimo?.candidatos.find(c=>c.numero==="13");
@@ -200,6 +212,27 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
    </div>
    <p className="mt-3 font-mono text-[11px] text-ink/70">Simulação aritmética de dois candidatos; não considera padrões geográficos, abstenções, distribuição futura de votos ou previsão estatística.</p>
   </div>
+  <details className="mt-5 border-2 border-ink bg-white">
+   <summary className="cursor-pointer px-3 py-3 sm:px-4 font-heavy text-base uppercase text-ink select-none">
+    APURAÇÃO POR ESTADO // {estadosComRegistro} DE 27 UFs COM SEÇÕES TOTALIZADAS
+   </summary>
+   <div className="border-t-2 border-ink p-3 sm:p-4">
+    <p className="font-mono text-xs text-ink/80 mb-4">
+     Progresso percentual por UF no último snapshot oficial publicado. A UF selecionada na comparação territorial pode receber uma parcial mais recente pelo serviço central. Valores ausentes não representam 0% de apuração.
+    </p>
+    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
+     {progressoEstados.map(item=><div key={item.uf} className="border border-ink/30 bg-paper-card p-2">
+      <div className="flex items-center justify-between font-mono text-xs font-bold text-ink">
+       <strong>{item.uf}</strong>
+       <span>{item.parcial===null?"N/D":formatarPct.format(item.parcial)+"%"}</span>
+      </div>
+      <div className="mt-2 h-2 border border-ink/40 bg-gray-200">
+       <div className="h-full bg-punk-red" style={{width:Math.min(100,Math.max(0,item.parcial??0))+"%"}}/>
+      </div>
+     </div>)}
+    </div>
+   </div>
+  </details>
   <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noreferrer" className="font-mono text-xs font-bold underline inline-block mt-4 text-ink">CONFERIR PARCIAIS OFICIAIS NO TSE ↗</a>
  </section>;
 });
