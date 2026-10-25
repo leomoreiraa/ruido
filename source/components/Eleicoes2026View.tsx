@@ -229,6 +229,20 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
     <span className="ruido-map-zine__eyebrow">RUÍDO // ATLAS ELEITORAL</span>
     <span className="ruido-map-zine__serial">ARQUIVO 2026 / TURNO {String(turno).padStart(2,"0")}</span>
    </div>
+   <div className="mx-3 mt-3 border-2 border-ink bg-paper-card px-4 py-3" role="status" aria-live="polite">
+    <div className="flex flex-wrap items-center justify-between gap-2">
+     <span className="font-mono text-xs font-bold uppercase">Seções eleitorais totalizadas · Brasil · {turno}º turno</span>
+     <strong className="font-heavy text-2xl text-ink">{pct((turno===2?dadosLive.BR?.resultado:undefined)?.percentualSecoes ?? dados?.brasil?.percentualSecoes)}</strong>
+    </div>
+    <div className="mt-2 h-3 overflow-hidden border border-ink bg-gray-200" role="progressbar"
+     aria-label="Percentual de seções eleitorais totalizadas no Brasil"
+     aria-valuemin={0} aria-valuemax={100}
+     aria-valuenow={(turno===2?dadosLive.BR?.resultado:undefined)?.percentualSecoes ?? dados?.brasil?.percentualSecoes ?? undefined}>
+     <div className="h-full bg-punk-red transition-[width] duration-500"
+      style={{width:Math.min(100,Math.max(0,(turno===2?dadosLive.BR?.resultado:undefined)?.percentualSecoes ?? dados?.brasil?.percentualSecoes ?? 0))+"%"}} />
+    </div>
+    <p className="mt-1 font-mono text-[11px]">Indicador oficial do TSE: seções totalizadas, não percentual de urnas físicas verificadas.</p>
+   </div>
    <div className="ruido-map-zine__titlebar">
     <div className="min-w-0">
      <div className="ruido-map-zine__micro">VOTOS POR MUNICÍPIO · FONTE TSE</div>
