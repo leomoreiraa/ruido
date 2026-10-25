@@ -72,7 +72,10 @@ test("dossiês têm agendamento central e solicitam deploy único após dados va
   assert.match(job, /python scripts\/refresh-dossiers-patrimony\.py/);
   assert.match(job, /python -I scripts\/publish-dossiers-safe\.py/);
   assert.doesNotMatch(job, /git rebase origin\/main/);
-  assert.match(job, /ruido-dossies-verificados/);
+  assert.match(job, /workflow-json-checkpoint.py verify official-ai/);
+  assert.doesNotMatch(job, /actions\/upload-artifact@/);
+  assert.ok(job.indexOf("Validar regras editoriais, conteúdo e tipagem") <
+    job.indexOf("Publicar sem rebase e sem perder registros simultâneos"));
   assert.match(job, /gh workflow run deploy-visual-fast\.yml/);
   const datajud = read(".github/workflows/enriquecer-datajud.yml");
   
