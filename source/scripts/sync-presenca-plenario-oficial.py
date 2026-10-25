@@ -13,6 +13,7 @@ from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 import csv
+from concurrent.futures import ThreadPoolExecutor
 
 BASE = "https://www.camara.leg.br/SitCamaraWS"
 EVENTOS = "https://dadosabertos.camara.leg.br/arquivos/eventos/csv/eventos-{}.csv"
@@ -157,36 +158,44 @@ def executar(db, inicio, fim, max_dias, output):
     gravados = 0
     falhas = []
     nao_relacionados = 0
-    for dia in pendentes:
+    def consultar(dia):
         try:
-            registros = registros_dia(dia)
-            itens = []
-            for matricula, nome, uf, status in registros:
-                parlamentar_id = por_id.get(matriculas.get(matricula, ""))
-                if not parlamentar_id:
-                    encontrados = por_nome.get((nome_chave(nome), uf.upper()), set())
-                    if len(encontrados) == 1:
-                        parlamentar_id = next(iter(encontrados))
-                if not parlamentar_id:
-                    nao_relacionados += 1
-                    continue
-                itens.append((f"camara-dia-{parlamentar_id}-{dia.isoformat()}", parlamentar_id,
-                    dia.isoformat(), "CAMARA", 1, int(status == "P"), int(status == "A"),
-                    int(status == "J"), SERVICO + "?" + urlencode({"data": dia.strftime("%d/%m/%Y")})))
-            if len(itens) < 200:
-                raise ValueError("Numero insuficiente de deputados associados ao cadastro local")
-            with db:
-                db.executemany('''INSERT INTO FrequenciaPlenario
-                    (id, parlamentarId, dia, casa, sessoesAuditadas, presentes, ausentes, justificadas, fonteUrl)
-                    VALUES (?,?,?,?,?,?,?,?,?)
-                    ON CONFLICT(parlamentarId, dia) DO UPDATE SET
-                    sessoesAuditadas=excluded.sessoesAuditadas,
-                    presentes=excluded.presentes, ausentes=excluded.ausentes,
-                    justificadas=excluded.justificadas, fonteUrl=excluded.fonteUrl''', itens)
-            gravados += 1
-            time.sleep(0.15)
+            return registros_dia(dia), None
         except Exception as error:
-            falhas.append(f"{dia.isoformat()}: {type(error).__name__}: {error}")
+            return None, error
+
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        for dia, (registros, erro) in zip(pendentes, pool.map(consultar, pendentes)):
+            if erro is not None:
+                falhas.append(f"{dia.isoformat()}: {type(erro).__name__}: {erro}")
+                continue
+            try:
+                itens = []
+                for matricula, nome, uf, status in registros:
+                    parlamentar_id = por_id.get(matriculas.get(matricula, ""))
+                    if not parlamentar_id:
+                        encontrados = por_nome.get((nome_chave(nome), uf.upper()), set())
+                        if len(encontrados) == 1:
+                            parlamentar_id = next(iter(encontrados))
+                    if not parlamentar_id:
+                        nao_relacionados += 1
+                        continue
+                    itens.append((f"camara-dia-{parlamentar_id}-{dia.isoformat()}", parlamentar_id,
+                        dia.isoformat(), "CAMARA", 1, int(status == "P"), int(status == "A"),
+                        int(status == "J"), SERVICO + "?" + urlencode({"data": dia.strftime("%d/%m/%Y")})))
+                if len(itens) < 200:
+                    raise ValueError("Numero insuficiente de deputados associados ao cadastro local")
+                with db:
+                    db.executemany('''INSERT INTO FrequenciaPlenario
+                        (id, parlamentarId, dia, casa, sessoesAuditadas, presentes, ausentes, justificadas, fonteUrl)
+                        VALUES (?,?,?,?,?,?,?,?,?)
+                        ON CONFLICT(parlamentarId, dia) DO UPDATE SET
+                        sessoesAuditadas=excluded.sessoesAuditadas,
+                        presentes=excluded.presentes, ausentes=excluded.ausentes,
+                        justificadas=excluded.justificadas, fonteUrl=excluded.fonteUrl''', itens)
+                gravados += 1
+            except Exception as error:
+                falhas.append(f"{dia.isoformat()}: {type(error).__name__}: {error}")
     perfis = exportar(db, output)
     print(json.dumps({"dias_oficiais_no_periodo": len(dias), "dias_consultados": len(pendentes),
         "dias_gravados": gravados, "perfis_exportados": perfis,
@@ -200,6 +209,7 @@ def main():
     parser.add_argument("--output", default="public/data/dossies/frequencia-plenario-oficial.json")
     parser.add_argument("--since", default="2026-01-01")
     parser.add_argument("--max-days", type=int, default=90)
+    parser.add_argument("--export-only", action="store_true")
     args = parser.parse_args()
     inicio = date.fromisoformat(args.since)
     fim = date.today() - timedelta(days=1)
@@ -210,7 +220,10 @@ def main():
         raise FileNotFoundError(dbpath)
     db = sqlite3.connect(dbpath)
     try:
-        executar(db, inicio, fim, args.max_days, Path(args.output))
+        if args.export_only:
+            print(json.dumps({"perfis_exportados": exportar(db, Path(args.output)), "modo": "export-only"}))
+        else:
+            executar(db, inicio, fim, args.max_days, Path(args.output))
     finally:
         db.close()
 

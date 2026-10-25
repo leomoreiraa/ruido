@@ -22,7 +22,8 @@ test("frequência usa base oficial por sessões auditadas, não infere faltas", 
   assert.match(graph, /frequenciaAuditada!\.sessoes/);
   assert.match(graph, /frequenciaAuditada\.presentes/);
   assert.match(graph, /O indicador não inclui sessões ainda não auditadas/);
-  assert.match(graph, /não é taxa de assiduidade do mandato inteiro/);
+  assert.match(graph, /não representa reuniões de comissões ou a totalidade do mandato/);
+  assert.match(graph, /Consultar serviço oficial da Câmara/);
   assert.match(graph, /coberturaRecorte/);
   assert.match(graph, /frequenciaAuditadaPercentual/);
 });

@@ -224,11 +224,6 @@ export function GraficoVotos({
                   "Percentual calculado apenas sobre dias de sessão com frequência individual oficial disponível no período indicado; não representa reuniões de comissões ou a totalidade do mandato.":
                   "Percentual descritivo de eventos presentes no arquivo durante o intervalo observado. Ausência de registro NÃO significa falta. Não é taxa de assiduidade."}
               </p>
-              {coberturaRecorte&&indicador.metodo==="EVENTOS COM REGISTRO"&&
-                <p className="mt-2">Período observado: {coberturaRecorte.inicioRecorte} a {coberturaRecorte.fimRecorte}.
-                  <a className="underline ml-2" href={coberturaRecorte.fonte}
-                    target="_blank" rel="noopener noreferrer">FONTE OFICIAL ↗</a>
-                </p>}
               {frequenciaAuditada?.fonte && <p className="mt-2"><a className="underline" href={frequenciaAuditada.fonte} target="_blank" rel="noopener noreferrer">Consultar serviço oficial da Câmara ↗</a></p>}
             </div>}
             <div className="space-y-3 text-xs font-mono">
