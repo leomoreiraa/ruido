@@ -326,7 +326,15 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <div className="ruido-map-zine__tagline" aria-hidden="true"><span>OBSERVE // COMPARE // INVESTIGUE</span><span>RUÍDO — INFORMAÇÃO É TERRITÓRIO</span></div>
   </section>
 
-  {turno===2&&<RadarApuracaoEleitoral observacaoAtual={dadosLive.BR} />}
+  {turno===2&&<RadarApuracaoEleitoral
+   observacaoAtual={dadosLive.BR}
+   estados={dados?.estados}
+   estadoDestaque={(dadosLive[uf==="BR"?filtroComparar:uf]?.estado==="atual"&&
+     dadosLive[uf==="BR"?filtroComparar:uf]?.resultado)
+    ?{uf:uf==="BR"?filtroComparar:uf,
+      percentualSecoes:dadosLive[uf==="BR"?filtroComparar:uf].resultado.percentualSecoes}
+    :undefined}
+  />}
 
   <section className="bg-white border-4 border-ink p-4 sm:p-6 shadow-[6px_6px_0_#e42232]">
    <h2 className="font-heavy text-2xl sm:text-4xl uppercase">{selecionada?.nome??(uf==="BR"?"BRASIL":nomesUf.get(uf))} <span className="text-punk-red">/// RESULTADOS</span></h2>
