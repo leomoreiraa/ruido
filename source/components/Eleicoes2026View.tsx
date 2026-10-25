@@ -4,6 +4,7 @@ import React,{useCallback,useEffect,useMemo,useState} from "react";
 import {MapaZoomArea} from "@/components/MapaZoomArea";
 import {buscarResultadoCentral,backendEleitoralConfigurado,consultaAoVivoDisponivel,INTERVALO_LIVE_MS} from "@/lib/eleicoesTseAoVivo";
 import {MapaEleitoralMunicipalBrasil} from "@/components/MapaEleitoralMunicipalBrasil";
+import {RadarApuracaoEleitoral} from "@/components/RadarApuracaoEleitoral";
 
 type Candidato={numero:string;nome:string;partido:string;votos:number;percentual:number|null};
 type Resultado={situacao:"aguardando"|"parcial"|"concluida";apuradoEm:string|null;secoesTotalizadas:number;secoesPrevistas:number;percentualSecoes:number|null;votosValidos:number|null;votosTotais:number|null;brancos:number|null;nulos:number|null;candidatos:Candidato[]};
@@ -173,6 +174,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
  },[dados,turno,catalogoMunicipios,dadosLive]);
  const selecionada=cidade?mapaMunicipios.get(cidade):undefined;
  const resultado:Resultado|null|undefined=resultadoLive??(uf==="BR"?dados?.brasil:cidade?resultadosMunicipais[cidade]??null:dados?.estados[uf]);
+ const progressoNacional=(turno===2?dadosLive.BR?.resultado:undefined)??dados?.brasil;
  const comparado=uf==="BR"?(turno===2?dadosLive[filtroComparar]?.resultado??dados?.estados[filtroComparar]:dados?.estados[filtroComparar]):(turno===2?dadosLive.BR?.resultado??dados?.brasil:dados?.brasil);
  const iniciado=!!resultado&&resultado.situacao!=="aguardando"&&resultado.votosValidos!==null;
  const municipios=useMemo(()=>{
@@ -229,20 +231,6 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
     <span className="ruido-map-zine__eyebrow">RUÍDO // ATLAS ELEITORAL</span>
     <span className="ruido-map-zine__serial">ARQUIVO 2026 / TURNO {String(turno).padStart(2,"0")}</span>
    </div>
-   <div className="mx-3 mt-3 border-2 border-ink bg-paper-card px-4 py-3" role="status" aria-live="polite">
-    <div className="flex flex-wrap items-center justify-between gap-2">
-     <span className="font-mono text-xs font-bold uppercase">Seções eleitorais totalizadas · Brasil · {turno}º turno</span>
-     <strong className="font-heavy text-2xl text-ink">{pct((turno===2?dadosLive.BR?.resultado:undefined)?.percentualSecoes ?? dados?.brasil?.percentualSecoes)}</strong>
-    </div>
-    <div className="mt-2 h-3 overflow-hidden border border-ink bg-gray-200" role="progressbar"
-     aria-label="Percentual de seções eleitorais totalizadas no Brasil"
-     aria-valuemin={0} aria-valuemax={100}
-     aria-valuenow={(turno===2?dadosLive.BR?.resultado:undefined)?.percentualSecoes ?? dados?.brasil?.percentualSecoes ?? undefined}>
-     <div className="h-full bg-punk-red transition-[width] duration-500"
-      style={{width:Math.min(100,Math.max(0,(turno===2?dadosLive.BR?.resultado:undefined)?.percentualSecoes ?? dados?.brasil?.percentualSecoes ?? 0))+"%"}} />
-    </div>
-    <p className="mt-1 font-mono text-[11px]">Indicador oficial do TSE: seções totalizadas, não percentual de urnas físicas verificadas.</p>
-   </div>
    <div className="ruido-map-zine__titlebar">
     <div className="min-w-0">
      <div className="ruido-map-zine__micro">VOTOS POR MUNICÍPIO · FONTE TSE</div>
@@ -276,7 +264,19 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <div className={uf==="BR"?"space-y-4":"grid lg:grid-cols-[1.35fr_.65fr] gap-5"}>
     <div className="ruido-map-zine__window">
      <div className="ruido-map-zine__window-bar" aria-hidden="true"><span>LEITURA / {turno}º TURNO</span><span>ESTADO / MUNICÍPIO</span></div>
-     <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national":"ruido-map-zine__canvas ruido-map-zine__canvas--state"}>
+     <div className={uf==="BR"?"ruido-map-zine__canvas ruido-map-zine__canvas--national relative":"ruido-map-zine__canvas ruido-map-zine__canvas--state relative"}>
+      <div className="pointer-events-none absolute left-2 top-2 sm:left-4 sm:top-4 z-20 w-[178px] sm:w-[220px] max-w-[60%] border-2 border-white bg-ink px-3 py-2 text-white shadow-[3px_3px_0_#e42232]"
+       role="status" aria-live="polite">
+       <p className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider leading-tight text-white">BRASIL // SEÇÕES TOTALIZADAS</p>
+       <strong className="block font-heavy text-xl sm:text-3xl leading-tight mt-1 text-white">{pct(progressoNacional?.percentualSecoes)}</strong>
+       <div className="mt-2 h-2 border border-white bg-[#292929] overflow-hidden" role="progressbar"
+        aria-label="Percentual de seções eleitorais totalizadas no Brasil" aria-valuemin={0} aria-valuemax={100}
+        aria-valuenow={progressoNacional?.percentualSecoes??undefined}>
+        <div className="h-full bg-punk-red transition-[width] duration-500"
+         style={{width:Math.min(100,Math.max(0,progressoNacional?.percentualSecoes??0))+"%"}} />
+       </div>
+       <p className="font-mono text-[9px] mt-1 text-white/90">Fonte: TSE • {turno}º turno</p>
+      </div>
      {uf==="BR"?<MapaEleitoralMunicipalBrasil resultados={resultadosMunicipais} municipios={catalogoMunicipios} estados={malhas} onSelectCidade={selecionarCidadeBrasil}/>:malhasUf?<div>
       <MapaZoomArea key={uf} rotulo={"Mapa dos municípios de "+nomesUf.get(uf)}>
       <svg viewBox={malhasUf.viewBox} className="w-full h-auto max-h-[580px]" aria-label={"Mapa municipal de "+nomesUf.get(uf)+" com comparativo de votos"} role="group">
@@ -325,6 +325,8 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    </div>
    <div className="ruido-map-zine__tagline" aria-hidden="true"><span>OBSERVE // COMPARE // INVESTIGUE</span><span>RUÍDO — INFORMAÇÃO É TERRITÓRIO</span></div>
   </section>
+
+  {turno===2&&<RadarApuracaoEleitoral observacaoAtual={dadosLive.BR} />}
 
   <section className="bg-white border-4 border-ink p-4 sm:p-6 shadow-[6px_6px_0_#e42232]">
    <h2 className="font-heavy text-2xl sm:text-4xl uppercase">{selecionada?.nome??(uf==="BR"?"BRASIL":nomesUf.get(uf))} <span className="text-punk-red">/// RESULTADOS</span></h2>
