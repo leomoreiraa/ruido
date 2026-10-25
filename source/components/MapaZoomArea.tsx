@@ -40,11 +40,19 @@ export function MapaZoomArea({children,rotulo,className=""}:{
  const arrastou=useRef(false);
  const [vista,setVista]=useState<Vista>(base);
  const vistaRef=useRef(vista);
+ const frameRef=useRef<number|null>(null);
  vistaRef.current=vista;
+ useEffect(()=>()=>{if(frameRef.current!==null)cancelAnimationFrame(frameRef.current);},[]);
 
  const alterar=useCallback((proxima:Vista)=>{
   const nova=limitarVista(proxima,baseRef.current);
-  vistaRef.current=nova;setVista(nova);
+  vistaRef.current=nova;
+  if(frameRef.current===null){
+   frameRef.current=requestAnimationFrame(()=>{
+    frameRef.current=null;
+    setVista(vistaRef.current);
+   });
+  }
  },[]);
 
  useEffect(()=>{

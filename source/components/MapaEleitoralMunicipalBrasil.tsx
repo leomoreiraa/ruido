@@ -87,6 +87,7 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
   const nomesUF = useMemo(() => new Map(estados.map(e => [e.uf, e.nome])), [estados]);
 
   const aoMover = useCallback((event: React.PointerEvent<SVGSVGElement>) => {
+    if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
     const codigo = (event.target as Element).getAttribute("data-city");
     setDestacado(old => old === codigo ? old : codigo);
   }, []);
