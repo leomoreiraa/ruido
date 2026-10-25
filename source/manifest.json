@@ -82,7 +82,7 @@
     "lib/presencaCoverage.ts": "b9188299c4e229890d52bad92cdc086bfeb6f0d6888bc04e5e30246228d85607",
     "lib/presencaMetric.ts": "8faa8b609a3c9d2b609978e5b09db44216a3626eafac0ddde92df3a7b4ae7f42",
     "lib/prisma.ts": "8a1e76a45035c60b54f48ba31d3401b42154f35b2b82657794bdfd602b73173b",
-    "lib/projecaoRegionalEleitoral.ts": "502fc94e502224a3f39c31365439f062c56e558d30078774463dd1500c622bbb",
+    "lib/projecaoRegionalEleitoral.ts": "5eedf99672d957afa66fab2a36fa416600f44fa660c3f1c2a61e70d3ae8d2633",
     "lib/services/apiClient.ts": "fd7e3b4ea7d3be8a787cbb7e4cd8d1655b5356fd88c73eeac3e79db78c414e1c",
     "lib/services/camaraNormalizer.ts": "8528cecab5508c037a565274efb90c8de31e9a91a090463f9a83152c6d57388b",
     "lib/services/emendasPortal.ts": "fe19b6a0e43708ebcca57fd1e6d5ee261125e7eb66d1f847897e0b4a8b14a850",

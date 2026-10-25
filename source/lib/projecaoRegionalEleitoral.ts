@@ -52,8 +52,8 @@ export function validarProjecaoRegional(raw:unknown):ProjecaoRegional{
  if(r.versao!==1||r.metodo!=="regressao-estratificada-uf-primeiro-turno-2026"||
   !["insuficiente","projecao"].includes(r.estado??"")||
   !pct(r.coberturaPercentual)||!int(r.ufsComResultado)||!int(r.ufsComBase)||
-  !int(r.regioesComAmostra)||r.ufsComBase!>27||r.ufsComResultado!>27||
-  r.regioesComAmostra!>5||
+  !int(r.regioesComAmostra)||r.ufsComBase! > 27||r.ufsComResultado! > 27||
+  r.regioesComAmostra! > 5||
   (r.observadoEm!==null&&!int(r.observadoEm))||
   (r.atualizadoEm!==null&&!int(r.atualizadoEm))||
   !Array.isArray(r.fontes)||!r.fontes.includes("https://resultados.tse.jus.br/oficial/ele2026/6257")||
@@ -74,8 +74,8 @@ export function validarProjecaoRegional(raw:unknown):ProjecaoRegional{
   Math.abs(e.lulaPercentual+e.flavioPercentual-100)>.021||
   e.lula+e.flavio>e.votosValidos+2||
   e.votosLulaJaContabilizados+e.votosFlavioJaContabilizados>e.votosJaContabilizados||
-  !Array.isArray(e.macrorregioes)||e.macrorregioes.length!==5||
-  !Array.isArray(e.estados)||e.estados.length!==27)
+  !Array.isArray(e.macrorregioes)||(e.macrorregioes.length!==5&&e.macrorregioes.length!==6)||
+  !Array.isArray(e.estados)||(e.estados.length!==27&&e.estados.length!==28))
   throw new Error("Estimativa regional inconsistente");
  const regioes=new Set<string>();
  for(const reg of e.macrorregioes){
