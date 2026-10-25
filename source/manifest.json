@@ -26,7 +26,7 @@
     "components/CandidaturaPresidencial.tsx": "ac6e8cbd6f40c3e10144d43a97e2dd90c430b7021518edc6a13f8ffa66987895",
     "components/DossieFinanceiroNoticias.tsx": "a38b6ee790b18de768110fa7b1b5eb741c4273672482e10921446f41186177e1",
     "components/DossieRedeFinanceira.tsx": "e44a5e8358deda079c4d8e2be491a17fa472a2d820216187f7e63bb96238152d",
-    "components/Eleicoes2026View.tsx": "d595612f207a274c08622a8b3ad0977923c9558681d84193b1877e0a55a12e52",
+    "components/Eleicoes2026View.tsx": "d07ad9c0f6b1d66a18ff115b08835f477957d127336e65748250fca9468ad7fc",
     "components/EmendasTrackerView.tsx": "6ab719a817c5d9f2ed4dccb4005d0c06aa662b795fc03d0728eeb59dd37df3c3",
     "components/GraficoPatrimonio.tsx": "4ca1db6595676cc637cd14c92e086713c3ff8f2b359b1752763c539a9abd3be4",
     "components/GraficoVotos.tsx": "764e6207045cb6f976e048f11c494e43f8ab790397f12d6cc0d7cec98eededed",

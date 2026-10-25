@@ -46,7 +46,7 @@ function titulos(rec:Resultado|null|undefined):string{
 }
 
 export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
- const [turno,setTurno]=useState<1|2>(1);
+ const [turno,setTurno]=useState<1|2>(2);
  const [dadosPorTurno,setDadosPorTurno]=useState<Partial<Record<1|2,Snapshot>>>({});
  const [erroPorTurno,setErroPorTurno]=useState<Partial<Record<1|2,boolean>>>({});
  const [malhasUf,setMalhasUf]=useState<MalhaMunicipal|null>(null);
