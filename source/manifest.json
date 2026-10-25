@@ -3,7 +3,7 @@
   "files": {
     "app/api/cron/sync/route.ts": "6d87e51ce5f416a637dc6d8a0116028ed8c1ce62421fc3720f77ffe04a864f62",
     "app/apoie/page.tsx": "cb2de3a1ac9f5d3dba6109cda5ed42a7a019939ce22ce1d047675a9e5de84284",
-    "app/cobertura/page.tsx": "3d997a07fbb7b60092915b0a78909e4100de12de0c5556a5b77fe2959323a4f8",
+    "app/cobertura/page.tsx": "65b51f49b621a88941168401fe73b931f19ac39b35f8f4fd2725d4a3c122cd5d",
     "app/eleicoes/page.tsx": "44eb0945f04ae470a2625a9823fb1b16db5ee36017b9f93afa780ebe2d6ea612",
     "app/emendas/page.tsx": "3f1aa5d90953f5df28380c8134c64813ccb44b225cacb7bac728b7fa7aca888c",
     "app/error.tsx": "0e2f81b29cbce1a2ff7b3d98f08b5922ad4a42244bf411c69efcca97d1260d51",
@@ -22,7 +22,7 @@
     "app/pautas/page.tsx": "4396093abe89eb51c3c3eabcf94e8cfc402a0f8da1d1c06bef66c8a445d9adfc",
     "app/sobre/page.tsx": "e56a8e2dc3a4cd680061cd1ff5d5e7edba5b359f9d7811df9ed6cf68f2800b04",
     "components/ApoiePixCopiar.tsx": "78e8860ef8255642a666d19d12418f7bf79f7e2ac5d01019ba6e7b5af631fcc8",
-    "components/AtlasTerritorialView.tsx": "8672dedb14236230fe9d2aed8eab9d08e590ad61afcd561ee0f12c12a9800676",
+    "components/AtlasTerritorialView.tsx": "4fca3109576a0b3019c0a1dc8b4b34d4a55b88f32f168a0a5672a976b156ea66",
     "components/CandidaturaPresidencial.tsx": "ac6e8cbd6f40c3e10144d43a97e2dd90c430b7021518edc6a13f8ffa66987895",
     "components/DossieFinanceiroNoticias.tsx": "a38b6ee790b18de768110fa7b1b5eb741c4273672482e10921446f41186177e1",
     "components/DossieRedeFinanceira.tsx": "a614aed73c559897dcb99b99c539d51057381469b249bd5ae0e4750c02d23f84",

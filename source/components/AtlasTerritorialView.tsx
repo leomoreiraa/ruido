@@ -32,7 +32,7 @@ export function AtlasTerritorialView({uf}:{uf:string}){
    <h2 className="font-heavy text-3xl sm:text-4xl uppercase">RAIO X <span className="text-punk-red">TERRITORIAL</span></h2>
    <p className="font-mono text-xs mt-2">Municípios reconhecidos pelo IBGE, valores oficiais identificáveis de emendas e representação parlamentar da UF selecionada.</p>
   </div>
-  {!atlas||!atlas.municipios.length?<div className="border-2 border-dashed border-ink/40 p-4 font-mono text-sm">Catálogo municipal ainda não disponível neste build. A coleta ocorre fora do navegador, no GitHub Actions, sem inventar dados.</div>:<>
+  {!atlas||!atlas.municipios.length?<div className="border-2 border-dashed border-ink/40 p-4 font-mono text-sm">Dados municipais ainda indisponíveis. Consulte novamente mais tarde.</div>:<>
    <div className="grid lg:grid-cols-2 gap-3">
     <div>
      <label htmlFor="atlas-busca" className="block font-mono font-bold text-xs mb-2">PESQUISAR CIDADE DE {uf}</label>
@@ -64,13 +64,13 @@ export function AtlasTerritorialView({uf}:{uf:string}){
    <h3 className="font-heavy text-2xl uppercase">QUEM REPRESENTA {uf}?</h3>
    <p className="font-mono text-[11px] mb-3">Parlamentares ativos da UF cadastrados no RUÍDO. Não são vereadores nem representantes municipais; deputados e senadores têm atuação no Congresso Nacional.</p>
    {!atlas?<p className="font-mono text-xs">Dados em preparação.</p>:
-    rep.length===0?<p className="font-mono text-xs">Sem parlamentares ativos associados à UF no snapshot.</p>:
+    rep.length===0?<p className="font-mono text-xs">Não há parlamentares ativos associados a esta UF nos dados disponíveis.</p>:
     <><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
       {rep.slice(0,18).map(p=><a href={"/parlamentares/"+encodeURIComponent(p.id)+"/"} key={p.id} className="block bg-white border-2 border-ink p-3 hover:bg-punk-acid">
        <p className="font-heavy text-base">{p.nome}</p>
        <p className="font-mono text-xs">{p.partido} • {p.casa==="CAMARA"?"CÂMARA":"SENADO"}</p>
       </a>)}
-    </div><p className="font-mono text-[11px] mt-2">Mostrando {Math.min(18,rep.length)} de {rep.length} representantes da UF no snapshot. Consulte todos em Políticos.</p></>}
+    </div><p className="font-mono text-[11px] mt-2">Mostrando {Math.min(18,rep.length)} de {rep.length} representantes da UF. Consulte todos em Políticos.</p></>}
   </div>
   <div className="grid md:grid-cols-2 gap-3 border-t-2 border-dashed border-ink/30 pt-4">
    <div className="border-2 border-ink p-3 bg-white"><strong className="font-heavy text-xl">EDUCAÇÃO / IDEB 2025</strong><p className="font-mono text-xs my-2">Fonte INEP, por município e rede de ensino. A série municipal será exibida somente após sua importação validada.</p><a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/pesquisas-estatisticas-e-indicadores/ideb/resultados/2005-2025" target="_blank" rel="noreferrer" className="font-mono text-xs underline text-punk-red">CONSULTAR RESULTADOS OFICIAIS ↗</a></div>

@@ -48,10 +48,10 @@ export default async function CoberturaPage() {
     <header className="ruido-ink-poster bg-ink text-paper border-4 border-ink shadow-[10px_10px_0_#e42232] p-6 sm:p-10">
       <span className="text-xs text-punk-acid tracking-widest">/// AUDITORIA DO ACERVO</span>
       <h1 className="font-heavy text-5xl sm:text-7xl mt-3">SEM DADOS <span className="text-punk-red">FALSOS.</span></h1>
-      <p className="max-w-3xl mt-4 text-sm text-paper/80">Relatório do SQLite utilizado para publicar este site.
+      <p className="max-w-3xl mt-4 text-sm text-paper/80">Panorama dos registros públicos disponíveis no RUÍDO.
         Os números medem o que foi coletado, não tudo o que ocorreu no Congresso.
         Sem registro não equivale a ausência de voto, emenda, presença ou patrimônio.</p>
-      <p className="mt-4 text-xs text-punk-acid">Snapshot consultado na compilação: {now.toLocaleDateString("pt-BR",{timeZone:"UTC"})}</p>
+      <p className="mt-4 text-xs text-punk-acid">Atualização de referência: {now.toLocaleDateString("pt-BR",{timeZone:"UTC"})}</p>
     </header>
     
     <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -72,7 +72,7 @@ export default async function CoberturaPage() {
           <span className="block text-xs font-bold">MESES HISTÓRICOS ENCERRADOS</span>
           <strong className="font-heavy text-3xl">{closed(house)} / {elapsed}</strong>
           <p className="mt-2 text-xs">Janeiro de 2022 até o mês atual. Meses em aberto são reconsultados.
-            Um checkpoint de sucesso significa que a consulta terminou, não que a fonte tem todo o histórico.</p>
+            Uma consulta concluída não garante que a fonte tenha disponibilizado todos os registros do período.</p>
         </div>
         <div className="mt-4 space-y-2">
           {votos.filter(r=>r.casa===house.toUpperCase()).map(row=><div key={row.cobertura}
@@ -89,7 +89,7 @@ export default async function CoberturaPage() {
           ["Votações sem contagem numérica",semPlacar,"Pode incluir decisões simbólicas e votações sem placar na fonte oficial."],
           ["Proposições sem votação relacionada nesta base",pautasSemVotacoes,"Não comprova que essas proposições nunca foram votadas."],
           ["Emendas sem associação nominal segura",semVinculo,"Inclui emendas coletivas, autorias não identificadas e ainda não conciliadas."],
-          ["Declarações patrimoniais importadas do TSE",bens,"Importador TSE ainda indisponível. Zero linhas não significa patrimônio zero."],
+          ["Declarações patrimoniais importadas do TSE",bens,"Dados de patrimônio ainda indisponíveis. Zero registros não significa patrimônio zero."],
         ].map(([label,n,description])=><article key={String(label)} className="ruido-paper-card p-4 bg-paper-card border-2 border-ink">
           <b className="font-heavy block text-punk-red text-3xl">{Number(n).toLocaleString("pt-BR")}</b>
           <h3 className="text-sm font-bold">{label}</h3>
