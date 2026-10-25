@@ -5,6 +5,7 @@ import {MapaZoomArea} from "@/components/MapaZoomArea";
 import {buscarResultadoCentral,backendEleitoralConfigurado,consultaAoVivoDisponivel,INTERVALO_LIVE_MS} from "@/lib/eleicoesTseAoVivo";
 import {MapaEleitoralMunicipalBrasil} from "@/components/MapaEleitoralMunicipalBrasil";
 import {RadarApuracaoEleitoral} from "@/components/RadarApuracaoEleitoral";
+import {MapaMundiApuracao} from "@/components/MapaMundiApuracao";
 
 type Candidato={numero:string;nome:string;partido:string;votos:number;percentual:number|null};
 type Resultado={situacao:"aguardando"|"parcial"|"concluida";apuradoEm:string|null;secoesTotalizadas:number;secoesPrevistas:number;percentualSecoes:number|null;votosValidos:number|null;votosTotais:number|null;brancos:number|null;nulos:number|null;candidatos:Candidato[]};
@@ -208,8 +209,8 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <p className="font-mono text-sm mt-4 max-w-3xl">Votos para Presidente no Brasil, nos estados e nos municípios. Alterne entre os resultados de 4 de outubro e a apuração de 25 de outubro.</p>
    <div className="flex flex-wrap gap-2 mt-5 font-mono text-xs">
     <span className="bg-punk-acid text-ink px-2 py-1 font-bold">{turno}º TURNO — {turno===1?"04/10/2026":"25/10/2026"}</span>
-    <span className="border border-paper/50 px-2 py-1">{!dados?"SEM SNAPSHOT PUBLICADO":!iniciado?"AGUARDANDO RESULTADOS":resultado?.situacao==="concluida"?"TOTALIZAÇÃO CONCLUÍDA":"RESULTADOS PARCIAIS / NÃO FINALIZADOS"}</span>
-    <span className="border border-paper/50 px-2 py-1">Consulta: {lidoEm||"—"}</span>
+    <span className="border border-paper/50 px-2 py-1">{!dados?"RESULTADOS AINDA NÃO DISPONÍVEIS":!iniciado?"AGUARDANDO RESULTADOS":resultado?.situacao==="concluida"?"TOTALIZAÇÃO CONCLUÍDA":"RESULTADOS PARCIAIS / NÃO FINALIZADOS"}</span>
+    <span className="border border-paper/50 px-2 py-1">Atualização da página: {lidoEm||"—"}</span>
     {turno===2&&<span className="border border-punk-acid px-2 py-1 text-punk-acid">{!consultaAoVivoDisponivel()?"APURAÇÃO A PARTIR DAS 17H":!backendEleitoralConfigurado()?"SERVIÇO AO VIVO AINDA NÃO ATIVADO":consultadoEmLive?(Date.now()-consultadoEmLive>90_000||dadosLive[chaveLive]?.estado==="desatualizado"?"ÚLTIMA OBSERVAÇÃO • ":"RUÍDO AO VIVO • ")+new Date(consultadoEmLive).toLocaleTimeString("pt-BR"):"RUÍDO AO VIVO • CONECTANDO"}</span>}
    </div>
   </header>
@@ -257,7 +258,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
      <strong>INTENSIDADE DA COR = DIFERENÇA DE VOTOS</strong>
      <div className="ruido-map-zine__guide-range"><span>Menos de 5 p.p.</span><span>5 a menos de 15 p.p.</span><span>15 a menos de 30 p.p.</span><span>30 p.p. ou mais</span></div>
      <p>Em cada município, comparamos somente os votos de Lula e Flávio. O tom representa a diferença entre seus percentuais de votos válidos. No 1º turno, outros candidatos também participaram.</p>
-     {turno===2&&<p><strong>APURAÇÃO DINÂMICA:</strong> A página consulta o serviço central do RUÍDO a cada 30 segundos, sem atualizar a página nem refazer o deploy. O cache coletivo limita as consultas ao TSE. O mosaico municipal recarrega o snapshot publicado periodicamente e não equivale à consulta instantânea de todas as cidades.</p>}
+     {turno===2&&<p><strong>ATUALIZAÇÃO AUTOMÁTICA:</strong> A votação é acompanhada conforme o TSE publica novas parciais. Os detalhes de municípios podem aparecer depois da atualização nacional.</p>}
      {turno===2&&erroLive&&<p role="status">{erroLive}</p>}
     </div>
    </aside>
@@ -374,11 +375,13 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    </div>
   </section>
 
+  {turno===2&&<MapaMundiApuracao />}
+
   <footer className="bg-ink text-paper p-5 border-l-8 border-punk-red font-mono text-xs space-y-2">
    <strong className="text-punk-acid">FONTE, CRITÉRIOS E LIMITAÇÕES</strong>
    <p>Resultados: arquivos EA12/EA20 do TSE. Votos dos candidatos divididos por votos válidos; não use o percentual de seções totalizadas como percentual de votos. As cores representam uma comparação específica entre Lula (13) e Flávio (22). Empates aparecem em amarelo; áreas indisponíveis em cinza.</p>
    <p>Malhas: Geodata BR, reprodução de contornos do IBGE sob CC0. Podem diferir das divisões atuais e algumas cidades podem não ter geometria; a ausência de dados nunca recebe cor de candidato. Resultado parcial está sujeito a mudanças.</p>
-   <p>Snapshot do {turno}º turno: {dados?.coletadoEm?new Date(dados.coletadoEm).toLocaleString("pt-BR"):"não publicado"} • Municípios com observações: {dados?nf.format(dados.municipiosConsultados):"—"} de {dados?nf.format(dados.municipiosPrevistos):"—"} • Tentativas sem resposta nesta rodada: {dados?nf.format(dados.falhasNaRodada):"—"}.</p>
+   <p>Última atualização dos resultados municipais: {dados?.coletadoEm?new Date(dados.coletadoEm).toLocaleString("pt-BR"):"ainda não disponível"}. Nem todas as cidades têm resultados publicados ao mesmo tempo.</p>
    <a className="underline text-punk-acid" href="https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados" target="_blank" rel="noreferrer">DOCUMENTAÇÃO DO TSE ↗</a>
   </footer>
  </div>;
