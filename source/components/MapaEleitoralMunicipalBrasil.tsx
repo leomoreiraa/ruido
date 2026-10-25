@@ -110,7 +110,7 @@ export function MapaEleitoralMunicipalBrasil({ resultados, municipios, estados, 
   }, [malha, resultados]);
 
   if (!malha) return <div className="ruido-map-zine__viewport min-h-[360px] flex items-center justify-center px-5 text-center font-mono text-sm text-ink" aria-live="polite">
-    {falhou ? "A malha municipal nacional não está disponível nesta publicação. Os números oficiais seguem acessíveis na pesquisa por cidade." : "Carregando mosaico dos municípios brasileiros..."}
+    {falhou ? "Não foi possível exibir o mapa agora. Consulte os resultados pela pesquisa de cidades." : "Carregando mosaico dos municípios brasileiros..."}
   </div>;
 
   return <div className="space-y-3">

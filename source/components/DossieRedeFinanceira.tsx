@@ -220,7 +220,7 @@ export function DossieRedeFinanceira({parlamentarId,casa}:{parlamentarId:string;
       Dados provenientes do TSE, Câmara, Senado e registros de emendas. Cobertura parcial e sujeita
       a atualizações, retificações e limites de acesso. A coincidência de fornecedores
       não demonstra irregularidade, benefício pessoal nem crime.
-      {data.atualizadoEm ? " Última coleta: "+data.atualizadoEm.slice(0,10)+"." : " A coleta inicial ainda não foi publicada."}
+      {data.atualizadoEm ? " Atualizado em "+data.atualizadoEm.slice(0,10)+"." : " Novas informações serão exibidas quando estiverem disponíveis."}
     </p>
   </section>
 }

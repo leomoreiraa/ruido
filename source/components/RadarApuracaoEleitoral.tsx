@@ -187,7 +187,7 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
     <strong>{consultaAoVivoDisponivel()?"Aguardando novas parciais distintas":"A apuração do 2º turno começa a partir das 17h de Brasília"}</strong>
     <p className="mt-2 max-w-md">O histórico é montado exclusivamente a partir das atualizações oficiais recebidas; o gráfico aparece quando houver pelo menos duas observações distintas.</p>
    </div>}
-   <p className="font-mono text-xs text-ink/75 mt-3">{legenda}{falhaHistorico?" · Histórico compartilhado indisponível; exibindo observações desta sessão.":""}</p>
+   <p className="font-mono text-xs text-ink/75 mt-3">{legenda}{falhaHistorico?" · Nem todas as parciais anteriores estão disponíveis.":""}</p>
   </div>
 
   <div className="mt-5 border-l-4 border-ink bg-white p-3 sm:p-5">
@@ -218,7 +218,7 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
    </summary>
    <div className="border-t-2 border-ink p-3 sm:p-4">
     <p className="font-mono text-xs text-ink/80 mb-4">
-     Progresso percentual por UF no último snapshot oficial publicado. A UF selecionada na comparação territorial pode receber uma parcial mais recente pelo serviço central. Valores ausentes não representam 0% de apuração.
+     Progresso de cada estado com base nos dados oficiais mais recentes disponíveis. Algumas parciais podem ter horários diferentes. A ausência de resultado não representa 0% de apuração.
     </p>
     <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
      {progressoEstados.map(item=><div key={item.uf} className="border border-ink/30 bg-paper-card p-2">

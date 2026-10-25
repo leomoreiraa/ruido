@@ -43,7 +43,7 @@ export function GraficoPatrimonio({
           DADOS NÃO ENCONTRADOS
         </div>
         <h4 className="font-heavy text-xl uppercase text-ink">
-          Integração Patrimonial Não Concluída
+          Dados patrimoniais ainda indisponíveis
         </h4>
         <p className="text-xs text-ink/75 max-w-md mx-auto">
           Não foi encontrada uma declaração com vínculo de identidade confirmado nos dados publicados. Isso não significa patrimônio zero nem ausência de declaração.
