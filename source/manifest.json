@@ -74,6 +74,7 @@
     "lib/eleicoes/candidaturaPresidencial.ts": "9c1f15cbc4a9835509f5bf7c8128365be456bfc9586383cc2a9085f45e0a8673",
     "lib/eleicoesExterior.ts": "02a3ec5d443261e978b6338e4af98b99bbc8dd9438c7b1a8bb951748c6c90abd",
     "lib/eleicoesHistorico.ts": "c6a70c97adacaf15d217dbb8c4f23202eb37641974e183e70846624e1de6b7f6",
+    "lib/eleicoesMapaMunicipalAoVivo.ts": "73b2e691c05ec29fd2f06a4ab0ffa4c5ef3f668b21f1a3ea1ad5233a6e56c3df",
     "lib/eleicoesTseAoVivo.ts": "3ca8c0674141e2f7be2492b6158026f235d60955f16026a95975d65f0cf9f225",
     "lib/frequenciaOficial.ts": "5525b77191b6c71f700526f97070d20878f7252fb49c8122d1e1666f324f1f22",
     "lib/malhasBrasil.ts": "1a855e7507facde62fa3a04197c2ca6b200f8a93e1267625df500f13d3d415de",
