@@ -40,12 +40,19 @@ test("jobs de IA profunda: timeout de 180 minutos com margem para publicar",()=>
   }
 });
 
-test("checkpoint SQLite usa Release no sucesso e artefato somente como contingência",()=>{
+test("checkpoint SQLite usa Release oficial e contingência verificável sem artifacts",()=>{
   const workflow=read(".github/workflows/ai-enrichment.yml");
   const publish=workflow.indexOf("Persistir o snapshot antes de republicar o site");
-  const fallback=workflow.indexOf("Guardar snapshot parcial entre execuções");
+  const fallback=workflow.indexOf("Salvar contingência de IA em Release");
+  const restore=workflow.indexOf("Retomar checkpoint parcial de Release");
+  const generate=workflow.indexOf("Gerar explicações com Gemini");
   assert.ok(publish>=0 && fallback>publish);
-  assert.match(workflow.slice(fallback),/if: failure\(\)\s*\n\s*uses: actions\/upload-artifact@v4/);
+  assert.ok(restore>=0 && restore<generate);
+  assert.doesNotMatch(workflow,/actions\/(?:upload|download)-artifact@/);
+  assert.match(workflow,/if: failure\(\) && \(steps\.generation\.outcome == 'failure' \|\| steps\.publish\.outcome == 'failure'\)/);
+  assert.match(workflow,/gh release create "\$tag"/);
+  assert.match(workflow,/base_sha256/);
+  assert.match(workflow,/base_schema_sha256/);
   assert.match(workflow,/scripts\/release-snapshot.py publish/);
 });
 

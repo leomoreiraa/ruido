@@ -143,7 +143,7 @@
     "tests/commentStripSafety.test.ts": "94ae03cf3efc22555f94bafe74da1759972d5fdb777a012709e8a0a51d7f393f",
     "tests/cron-auth.test.ts": "8a62becc406efa2112c2bf4d8f388ba8ea1ba7ca20b2949664cc659dcf74336d",
     "tests/datajud-routing.test.py": "892c727cd215372e3c7ddd8de1bb76fc0e75b6a0f1de28e3260f30305f588f2a",
-    "tests/deepAiSchedule.test.ts": "53aa6032af37d212ead59e05a000c4f75a721e29ed3a9c3d34c02e8b55b9d164",
+    "tests/deepAiSchedule.test.ts": "32e1d768947804892aafcb2fa4e66c51531bbd80dbf913abd211d56d8af8e337",
     "tests/dossie-processual.test.py": "4f251e97254689781673c5a54bd8ec1b49e594ea76bbbb1c3c0cb2cf7700a362",
     "tests/dossies-integration.test.ts": "d2e748124f08fecc164971cf22e4cd614d59f1d0d9e733fb6bc5c68fd4693095",
     "tests/election-e2e.spec.mjs": "2dc68d3a684cbd57b63032f39541614c04a22be2d8f8b1c154777d322fcb6a01",
