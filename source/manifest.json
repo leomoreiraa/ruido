@@ -156,7 +156,7 @@
     "tests/deepAiSchedule.test.ts": "32e1d768947804892aafcb2fa4e66c51531bbd80dbf913abd211d56d8af8e337",
     "tests/dossie-processual.test.py": "4f251e97254689781673c5a54bd8ec1b49e594ea76bbbb1c3c0cb2cf7700a362",
     "tests/dossies-integration.test.ts": "1e023670645995b8c29b867aae7a16076e63f9b4169e641b1c839ca693ff27dd",
-    "tests/election-e2e.spec.mjs": "2dc68d3a684cbd57b63032f39541614c04a22be2d8f8b1c154777d322fcb6a01",
+    "tests/election-e2e.spec.mjs": "43cebcfc50e876fca7dc0ffb2ee358700a1dd8b82f7b4e7e641d78ee32faee5e",
     "tests/election-smoke-2026.mjs": "bef869784cfb0f3c7a2488174096814fd264d3a93c587b8df1c5f98843f86b5a",
     "tests/eleicoes-exterior.test.ts": "b21e314ef879a562de684a9db267fb1e1018687cae2fa7ed2dee4a66a2f91e7b",
     "tests/eleicoes-historico.test.ts": "defd2357d612dec7447f2c324d4e38e2f2042e66f27e50d5ed8aba8110bd41f6",

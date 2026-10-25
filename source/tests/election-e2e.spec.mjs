@@ -10,10 +10,10 @@ for(const configuracao of [
   test.use({viewport:configuracao.viewport,isMobile:configuracao.isMobile,hasTouch:configuracao.hasTouch});
   test.setTimeout(90000);
 
-  test("primeiro turno, SVG real, zoom e enquadramento",async({page})=>{
+  test("mapa municipal SVG, zoom e enquadramento no turno padrão",async({page})=>{
    await page.goto(url,{waitUntil:"domcontentloaded"});
    await expect(page.getByRole("heading",{name:/ELEIÇÕES 2026/})).toBeVisible();
-   await expect(page.locator(".ruido-map-zoom svg")).toBeVisible({timeout:45000});
+   await expect(page.locator(".ruido-map-zoom svg").first()).toBeVisible({timeout:45000});
    const mapa=page.locator(".ruido-map-zoom").first();
    const imagem=mapa.locator("svg");
    const original=await imagem.getAttribute("viewBox");
