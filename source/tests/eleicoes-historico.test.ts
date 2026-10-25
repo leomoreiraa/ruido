@@ -58,4 +58,9 @@ test("painel permanece abaixo do mapa e o indicador em faixa separada sem cobrir
  assert.match(radar,/buscarHistoricoCentral/);
  assert.match(radar,/TENDÊNCIA DA APURAÇÃO/);
  assert.match(radar,/não projeções de resultado/);
+ assert.match(radar,/<ProjecaoRegionalEleitoral/);
+ assert.doesNotMatch(radar,/Cenário matemático hipotético/);
+ const projecao=readFileSync("components/ProjecaoRegionalEleitoral.tsx","utf8");
+ assert.match(projecao,/sensibilidade conservadora/);
+ assert.match(projecao,/Composição regional da estimativa/);
 });

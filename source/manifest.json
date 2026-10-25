@@ -158,7 +158,7 @@
     "tests/election-e2e.spec.mjs": "2dc68d3a684cbd57b63032f39541614c04a22be2d8f8b1c154777d322fcb6a01",
     "tests/election-smoke-2026.mjs": "bef869784cfb0f3c7a2488174096814fd264d3a93c587b8df1c5f98843f86b5a",
     "tests/eleicoes-exterior.test.ts": "b21e314ef879a562de684a9db267fb1e1018687cae2fa7ed2dee4a66a2f91e7b",
-    "tests/eleicoes-historico.test.ts": "4a2ef7d397a64ca8c99985194bb9b8063319db741c07111ab61aeac0a6cb44e7",
+    "tests/eleicoes-historico.test.ts": "defd2357d612dec7447f2c324d4e38e2f2042e66f27e50d5ed8aba8110bd41f6",
     "tests/eleicoes-tse-ao-vivo.test.ts": "302271be6ff95191deeb816f0f5abfe253bf02965c0cbe0f8e0196639189a465",
     "tests/emendasPortal.test.ts": "e804aeecc2a6a43df9e7a07de9dbbef047030efdda8bc9bfa8d2d64da5090caa",
     "tests/explicacaoProjetos.test.ts": "4921b62ba3b6c9511902b0b602062f7fffc8df59a50e6f1fc707887626a4870d",
