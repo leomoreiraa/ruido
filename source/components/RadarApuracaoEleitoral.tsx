@@ -1,8 +1,9 @@
 "use client";
 
 import React,{memo,useEffect,useMemo,useState} from "react";
+import {ProjecaoRegionalEleitoral} from "@/components/ProjecaoRegionalEleitoral";
 import {
- buscarHistoricoCentral,calcularCenarioMatematico,mesclarHistorico,
+ buscarHistoricoCentral,mesclarHistorico,
  type ParcialHistorica
 } from "@/lib/eleicoesHistorico";
 import {
@@ -68,7 +69,6 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
 }){
  const [historico,setHistorico]=useState<ParcialHistorica[]>([]);
  const [falhaHistorico,setFalhaHistorico]=useState(false);
- const [novosVotos,setNovosVotos]=useState(1_000_000);
 
  useEffect(()=>{
   if(!observacaoAtual)return;
@@ -120,7 +120,6 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
  const lula=ultimo?.candidatos.find(c=>c.numero==="13");
  const flavio=ultimo?.candidatos.find(c=>c.numero==="22");
  const diferenca=lula&&flavio?Math.abs(lula.votos-flavio.votos):null;
- const cenario=lula&&flavio?calcularCenarioMatematico(lula.votos,flavio.votos,novosVotos):null;
  const observado=historico.length>=2;
  const legenda=ultimo?"Última parcial recebida às "+formatarHora.format(new Date(ultimo.consultadoEm)):
   "Sem parciais oficiais recebidas";
@@ -190,28 +189,7 @@ export const RadarApuracaoEleitoral=memo(function RadarApuracaoEleitoral({observ
    <p className="font-mono text-xs text-ink/75 mt-3">{legenda}{falhaHistorico?" · Nem todas as parciais anteriores estão disponíveis.":""}</p>
   </div>
 
-  <div className="mt-5 border-l-4 border-ink bg-white p-3 sm:p-5">
-   <h3 className="font-heavy text-xl uppercase">Cenário matemático hipotético //</h3>
-   <p className="font-mono text-xs mt-2 text-ink/80">
-    Escolha quantos <strong>novos votos válidos hipotéticos</strong> seriam contabilizados. O cálculo mostra a parcela necessária ao candidato atualmente atrás para superar a diferença já observada. Não estima votos restantes nem prevê vencedor.
-   </p>
-   <div className="grid gap-4 md:grid-cols-2 mt-4 items-center">
-    <label className="block font-mono text-xs font-bold text-ink" htmlFor="radar-novos-votos">
-     NOVOS VOTOS VÁLIDOS (HIPÓTESE): <strong className="block font-heavy text-xl mt-1">{formatarNumero.format(novosVotos)}</strong>
-     <input id="radar-novos-votos" type="range" min={100_000} max={20_000_000} step={100_000}
-      value={novosVotos} onChange={event=>setNovosVotos(Number(event.target.value))}
-      className="mt-3 w-full accent-[#e42232]" />
-     <span className="flex justify-between font-normal text-[10px]"><span>100 mil</span><span>20 milhões</span></span>
-    </label>
-    <div className="bg-paper-card border-2 border-ink p-3 font-mono text-xs">
-     {!cenario?<span>O cálculo ficará disponível quando o TSE divulgar uma parcial com votos válidos.</span>:
-      cenario.empateAtual?<span>A diferença observada é zero. Num cenário com {formatarNumero.format(novosVotos)} novos votos válidos, seriam necessários {formatarNumero.format(cenario.necessarios)} votos para um dos candidatos passar à frente.</span>:
-      cenario.viavel?<span>Quem está atrás precisaria de <strong className="font-heavy text-lg">{formatarPct.format(cenario.percentual)}%</strong> desses novos votos ({formatarNumero.format(cenario.necessarios)} de {formatarNumero.format(novosVotos)}), mantendo o total hipotético de dois candidatos.</span>:
-      <span>Com apenas {formatarNumero.format(novosVotos)} votos adicionais, <strong>não seria matematicamente possível inverter</strong> a diferença atual de {formatarNumero.format(cenario.diferenca)} votos, mesmo que todos fossem para quem está atrás.</span>}
-    </div>
-   </div>
-   <p className="mt-3 font-mono text-[11px] text-ink/70">Simulação aritmética de dois candidatos; não considera padrões geográficos, abstenções, distribuição futura de votos ou previsão estatística.</p>
-  </div>
+  <ProjecaoRegionalEleitoral />
   <details className="mt-5 border-2 border-ink bg-white">
    <summary className="cursor-pointer px-3 py-3 sm:px-4 font-heavy text-base uppercase text-ink select-none">
     APURAÇÃO POR ESTADO // {estadosComRegistro} DE 27 UFs COM SEÇÕES TOTALIZADAS
