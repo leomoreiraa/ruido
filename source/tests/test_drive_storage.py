@@ -212,6 +212,48 @@ class StoragePolicyTests(unittest.TestCase):
                 drive_storage.bundle(folder / "data.db", folder / "manifest.json",
                                      folder / "bad.zip")
 
+    def test_delete_rechecks_drive_ownership_and_pin(self):
+        item = entry(20, 300_000_000)
+        drive = drive_storage.Drive("fake-access-token", "folder12345678")
+        called = []
+        drive.request = lambda *a, **k: called.append(a)
+        drive.metadata = lambda file_id: {
+            "id": file_id, "size": str(item["size"]), "parents": ["otherfolder987"],
+            "appProperties": dict(item["appProperties"]),
+        }
+        with self.assertRaisesRegex(drive_storage.StorageError, "outside managed folder"):
+            drive.delete_checked(item)
+        self.assertEqual(called, [])
+        drive.metadata = lambda file_id: {
+            "id": file_id, "size": str(item["size"]), "parents": ["folder12345678"],
+            "appProperties": {**item["appProperties"], "ruido_critical": "true"},
+        }
+        with self.assertRaisesRegex(drive_storage.StorageError, "pinned"):
+            drive.delete_checked(item)
+        self.assertEqual(called, [])
+
+    def test_delete_rechecks_sha_and_size(self):
+        item = entry(21, 300_000_000)
+        drive = drive_storage.Drive("fake-access-token", "folder12345678")
+        drive.metadata = lambda file_id: {
+            "id": file_id, "size": str(item["size"]), "parents": ["folder12345678"],
+            "appProperties": {**item["appProperties"], "ruido_sha256": "f" * 64},
+        }
+        with self.assertRaisesRegex(drive_storage.StorageError, "changed"):
+            drive.delete_checked(item)
+
+    def test_duplicate_file_outside_managed_scope_is_never_reused(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "file.json"
+            path.write_bytes(b"data")
+            foreign = entry(15, 4, kind="news", digest=drive_storage.sha256(path))
+            foreign["appProperties"].pop("ruido_storage")
+            mock = FakeDrive([foreign])
+            result = drive_storage.upload_managed(mock, path, "news")
+            self.assertEqual(result["action"], "uploaded")
+            self.assertEqual(len(mock.uploaded), 1)
+            self.assertEqual(len(mock.files), 2)
+
     def test_no_credential_required_for_offline_policy(self):
         with patch.dict("os.environ", {}, clear=True):
             result = drive_storage.cleanup_plan([])
