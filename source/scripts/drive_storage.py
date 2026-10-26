@@ -217,7 +217,7 @@ class Drive:
         while True:
             params = {
                 "q": "'" + self.folder + "' in parents and trashed = false",
-                "fields": "nextPageToken,files(id,name,size,createdTime,appProperties,mimeType,parents)",
+                "fields": "nextPageToken,files(id,name,size,sha256Checksum,createdTime,appProperties,mimeType,parents)",
                 "pageSize": 1000,
                 "spaces": "drive",
             }
@@ -230,7 +230,7 @@ class Drive:
                 return normalized(found)
 
     def metadata(self, file_id):
-        fields = "id,size,appProperties,parents,trashed"
+        fields = "id,size,sha256Checksum,appProperties,parents,trashed"
         return self.json("GET", DRIVE_URL + "/files/" + quote(file_id, safe="") + "?fields=" + fields)
 
     def patch(self, file_id, props):
@@ -244,7 +244,8 @@ class Drive:
             raise StorageError("Refusing to delete file outside managed folder")
         if current.get("trashed") or current.get("appProperties", {}).get("ruido_critical") != "false":
             raise StorageError("Refusing to delete pinned/trashed file")
-        if (int(current.get("size", -1)) != record["size"] or
+        if (current.get("sha256Checksum") not in (None, record.get("appProperties", {}).get("ruido_sha256")) or
+                int(current.get("size", -1)) != record["size"] or
                 current["appProperties"].get("ruido_sha256") !=
                 record.get("appProperties", {}).get("ruido_sha256")):
             raise StorageError("Drive file changed since retention planning")
@@ -257,7 +258,7 @@ class Drive:
         body = {"name": name, "mimeType": "application/octet-stream",
                 "parents": [self.folder], "appProperties": props}
         status, headers, _ = self.request(
-            "POST", UPLOAD_URL + "/files?uploadType=resumable&fields=id,name,size,appProperties",
+            "POST", UPLOAD_URL + "/files?uploadType=resumable&fields=id,name,size,sha256Checksum,appProperties",
             json.dumps(body).encode("utf-8"),
             {"Content-Type": "application/json; charset=UTF-8",
              "X-Upload-Content-Type": "application/octet-stream",
@@ -364,7 +365,7 @@ def upload_managed(drive, path, kind, critical=False):
     # Listing again also catches concurrent/previous uploads after cleanup.
     current = drive.list_all()
     if any(e["size"] == size and e.get("appProperties", {}).get("ruido_sha256") == digest
-           for e in current):
+           and e.get("sha256Checksum") in (None, digest) for e in current):
         return upload_managed(drive, path, kind, critical=critical)
     if sum(e["size"] for e in current) + size > LIMIT:
         raise StorageError("5 GB cap would be exceeded; refusing upload")
@@ -374,6 +375,8 @@ def upload_managed(drive, path, kind, critical=False):
              "ruido_seen": now}
     file_name = f"ruido-{kind}-{digest[:20]}{path.suffix}"
     result = drive.upload(path, file_name, props)
+    if result.get("sha256Checksum") not in (None, digest):
+        raise StorageError("Drive returned a different SHA-256; refusing backup")
     if result.get("size") is not None and int(result["size"]) != size:
         raise StorageError("Drive confirmed wrong upload size")
     if not result.get("id"):

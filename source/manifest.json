@@ -113,7 +113,7 @@
     "scripts/collect-idhm.py": "6fe18f653e2c444ac1ca545bcecd94b4c3760dbd1a4c59fe33bbc7997b310ee8",
     "scripts/collect-municipios-ibge.py": "84deef94609d46d2cab957c48feba456daed2d913487cd9827f4101b61767d0c",
     "scripts/delete-legacy-releases.py": "e1fd60cfe420c8fdf9f582a4808ca669203ba37c926a280504646ea510880fe4",
-    "scripts/drive_storage.py": "f5939c4c35694456a0fbf80e29123468149a66a57f4219b23582c52313374214",
+    "scripts/drive_storage.py": "fb63461e38c11736b42b42f847eecf1d588689afb62294f08143c4229cb10dca",
     "scripts/export-history-archives.ts": "4db77c777ecfe25f578b0a0826977fc07c8c554862846b881ede78c24d0f2815",
     "scripts/fix-pages-basepath.py": "dda024bf135f9e1f55366a66f43e7802474a104c1db1cdcd4947887754d77201",
     "scripts/generate-project-explanations.ts": "f0cbf29a16a527388133bff324cacd25b18e7f93b826c5fa06834ea8e6edec1f",
