@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """RUÍDO: storage management for app-owned files in a private Google Drive folder.
 
 This transport is OPTIONAL. Existing GitHub Releases/Actions persistence is unchanged.
@@ -89,10 +88,10 @@ def locked_ids(records):
     """Explicit pins and essential latest verified backups cannot be purged."""
     keep = {r["id"] for r in records
             if r.get("appProperties", {}).get("ruido_critical", "") != "false"
-            or not HEX.fullmatch(r.get("appProperties", {}).get("ruido_sha256", ""))
+            or not HEX.fullmatch(str(r.get("appProperties", {}).get("ruido_sha256") or ""))
+            or not kinds(r)
             or r.get("sha256Checksum") not in (
                 None, r.get("appProperties", {}).get("ruido_sha256"))}
-    # Legacy managed objects without explicit critical=false are conservatively pinned.
     by_kind = {kind: sorted((r for r in records if kind in kinds(r)),
                             key=lambda r: (timestamp(r), r["id"]), reverse=True)
                for kind in KINDS}
@@ -142,7 +141,6 @@ def cleanup_plan(records, incoming=0, now=None):
     locked = locked_ids(records)
     preferred = preference(records, now)
     disposable = [r for r in records if r["id"] not in locked]
-    # Delete duplicates/obsolete versions first, retained daily/weekly/monthly last.
     disposable.sort(key=lambda r: (r["id"] in preferred, timestamp(r), r["id"]))
     deletions = []
     remaining = usage
@@ -241,7 +239,6 @@ class Drive:
                          {"appProperties": props})
 
     def delete_checked(self, record):
-        # A second read protects against changed pin/ownership/parents/bytes.
         current = self.metadata(record["id"])
         if not managed(current) or self.folder not in current.get("parents", []):
             raise StorageError("Refusing to delete file outside managed folder")
@@ -327,7 +324,6 @@ def housekeeping(drive, incoming=0, apply=False):
     if apply:
         for record in plan["deletions"]:
             drive.delete_checked(record)
-        # Verify post-delete usage; do not assume all API mutations succeeded.
         remaining = sum(r["size"] for r in drive.list_all())
         if remaining + incoming > LIMIT:
             raise StorageError("Concurrent Drive changes exhausted the storage budget")
@@ -360,13 +356,14 @@ def upload_managed(drive, path, kind, critical=False):
         if critical:
             patch["ruido_critical"] = "true"
         drive.patch(entry["id"], patch)
+        if sum(e["size"] for e in entries) >= TRIGGER:
+            housekeeping(drive, apply=True)
         return {"action": "deduplicated", "id": entry["id"], "sha256": digest,
                 "bytes": size}
     if sum(e["size"] for e in entries) + size >= TRIGGER:
         housekeeping(drive, incoming=size, apply=True)
     elif sum(e["size"] for e in entries) + size > LIMIT:
         raise StorageError("5 GB budget reached")
-    # Listing again also catches concurrent/previous uploads after cleanup.
     current = drive.list_all()
     if any(e["size"] == size and e.get("appProperties", {}).get("ruido_sha256") == digest
            and e.get("sha256Checksum") in (None, digest) for e in current):
@@ -411,7 +408,6 @@ def bundle(database, manifest, output):
         with database.open("rb") as source, archive.open(
                 zipfile.ZipInfo("public.sqlite.gz", (2020, 1, 1, 0, 0, 0)), "w",
                 force_zip64=True) as dst:
-            # ZipInfo opened for writing defaults to STORE.
             with gzip.GzipFile(fileobj=dst, mode="wb", filename="", mtime=0, compresslevel=3) as gz:
                 for block in iter(lambda: source.read(1024 * 1024), b""):
                     gz.write(block)
