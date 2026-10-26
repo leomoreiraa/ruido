@@ -195,6 +195,7 @@
     "tests/syncPeriodo.test.ts": "9feb0d301291b49deb998bf25367e1922c2026dcba5e6606739ff2065422d6de",
     "tests/synthetic-integrations.test.ts": "65b38e413adf2d24fdcfc406010c447eb05e47188682686b425bac4d74575775",
     "tests/test_datajud_checkpoint.py": "a38d2d04a4a58e48408e7888a9a66141ba684b153651742d80a782a42e39c115",
+    "tests/test_drive_storage.py": "2416cbfbe7e8a45fc8bd0750ed74ee7bbf9863160c9972f0fbafb2f3987d6f5e",
     "tests/test_election_2026.py": "966f792ad16b9ba9b57e7b62b40498c674e284079bf8e09647a5079b67a1ba5e",
     "tests/test_financial_links.py": "2fd8be1786bafe33f9989f90abfbb9d5e4fd6bf897a89e3502d6468d3d863662",
     "tests/test_historical_checkpoint.py": "39dd1955cd3a0d2c7f60a78658d4a1b1d69cdee94a86fc4f6ba222f3e23c9200",
