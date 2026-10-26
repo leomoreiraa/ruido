@@ -122,6 +122,7 @@ def preparar_mapeamento(db):
     return por_id, por_nome
 
 def exportar(db, output):
+    db.row_factory = sqlite3.Row
     rows = db.execute('''SELECT parlamentarId,dia,presentes,ausentes,justificadas,sessoesAuditadas
         FROM FrequenciaPlenario WHERE casa = 'CAMARA' AND fonteUrl LIKE ?
         AND sessoesAuditadas = 1 AND presentes + ausentes + justificadas = 1''',
