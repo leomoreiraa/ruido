@@ -152,6 +152,24 @@ class StoragePolicyTests(unittest.TestCase):
             self.assertEqual(current["appProperties"]["ruido_critical"], "true")
             self.assertEqual(current["appProperties"]["ruido_kinds"], "news,official-ai")
 
+    def test_server_sha_mismatch_does_not_deduplicate(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "checkpoint.json"
+            path.write_bytes(b"verified")
+            suspect = entry(30, path.stat().st_size, kind="news",
+                            digest=drive_storage.sha256(path))
+            suspect["sha256Checksum"] = "f" * 64
+            mock = FakeDrive([suspect])
+            result = drive_storage.upload_managed(mock, path, "news")
+            self.assertEqual(result["action"], "uploaded")
+            self.assertEqual(len(mock.uploaded), 1)
+
+    def test_unknown_kind_metadata_is_critical_by_default(self):
+        rows = [entry(i, 800_000_000, ago=i) for i in range(6)]
+        rows[-1]["appProperties"]["ruido_kinds"] = "unrecognized"
+        planned = drive_storage.cleanup_plan(rows, now=NOW)
+        self.assertNotIn(rows[-1]["id"], {r["id"] for r in planned["deletions"]})
+
     def test_upload_creates_metadata_and_sha(self):
         with tempfile.TemporaryDirectory() as folder:
             file = Path(folder) / "good.json"
@@ -171,7 +189,6 @@ class StoragePolicyTests(unittest.TestCase):
             result = drive_storage.upload_managed(mock, file, "canonical")
             self.assertEqual(result["action"], "uploaded")
             self.assertEqual(len(mock.deleted), 0)
-            # 4.8 GB still fits a small backup; no critical file may be removed.
             self.assertLess(sum(x["size"] for x in mock.files), drive_storage.LIMIT)
 
     def test_housekeeping_dry_run_has_no_deletions(self):
