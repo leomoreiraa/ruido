@@ -88,7 +88,10 @@ def normalized(records):
 def locked_ids(records):
     """Explicit pins and essential latest verified backups cannot be purged."""
     keep = {r["id"] for r in records
-            if r.get("appProperties", {}).get("ruido_critical", "") != "false"}
+            if r.get("appProperties", {}).get("ruido_critical", "") != "false"
+            or not HEX.fullmatch(r.get("appProperties", {}).get("ruido_sha256", ""))
+            or r.get("sha256Checksum") not in (
+                None, r.get("appProperties", {}).get("ruido_sha256"))}
     # Legacy managed objects without explicit critical=false are conservatively pinned.
     by_kind = {kind: sorted((r for r in records if kind in kinds(r)),
                             key=lambda r: (timestamp(r), r["id"]), reverse=True)
@@ -346,7 +349,8 @@ def upload_managed(drive, path, kind, critical=False):
     digest = sha256(path)
     entries = drive.list_all()
     same = [f for f in entries if f["size"] == size and
-            f.get("appProperties", {}).get("ruido_sha256") == digest]
+            f.get("appProperties", {}).get("ruido_sha256") == digest and
+            f.get("sha256Checksum") in (None, digest)]
     if same:
         entry = sorted(same, key=timestamp, reverse=True)[0]
         props = entry["appProperties"]

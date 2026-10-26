@@ -106,6 +106,15 @@ class StoragePolicyTests(unittest.TestCase):
         self.assertNotIn("drivefile1", deleted)
         self.assertNotIn("drivefile8", deleted)
 
+    def test_malformed_or_changed_checksums_are_never_deleted(self):
+        rows = [entry(i, 800_000_000, ago=i) for i in range(6)]
+        rows[4]["appProperties"]["ruido_sha256"] = "invalid"
+        rows[5]["sha256Checksum"] = "f" * 64
+        result = drive_storage.cleanup_plan(rows, now=NOW)
+        ids = {item["id"] for item in result["deletions"]}
+        self.assertNotIn(rows[4]["id"], ids)
+        self.assertNotIn(rows[5]["id"], ids)
+
     def test_latest_per_collector_is_protected(self):
         rows = [entry(i, 490_000_000, kind=("news" if i % 2 else "finance"), ago=i)
                 for i in range(9)]
