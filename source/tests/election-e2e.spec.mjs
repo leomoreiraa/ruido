@@ -16,10 +16,9 @@ for(const configuracao of [
    await expect(page.locator(".ruido-map-zoom svg").first()).toBeVisible({timeout:45000});
    const mapa=page.locator(".ruido-map-zoom").first();
    const imagem=mapa.locator("svg");
+   await expect.poll(()=>imagem.locator("path[data-city]").count(),{timeout:45000}).toBeGreaterThan(5400);
    const original=await imagem.getAttribute("viewBox");
    expect(original).toBeTruthy();
-   const municipios=await imagem.locator("path[data-city]").count();
-   expect(municipios).toBeGreaterThan(5400);
    await mapa.getByRole("button",{name:"Ampliar mapa"}).click();
    await expect.poll(()=>imagem.getAttribute("viewBox")).not.toBe(original);
    await expect(mapa).toHaveAttribute("data-zoom",/^(?!1\.00)/);

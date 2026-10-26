@@ -250,6 +250,7 @@ export function Eleicoes2026View({malhas}:{malhas:Estado[]}){
    <p className="font-mono text-sm mt-4 max-w-3xl">Votos para Presidente no Brasil, nos estados e nos municípios. Alterne entre os resultados de 4 de outubro e a apuração de 25 de outubro.</p>
    <div className="flex flex-wrap gap-2 mt-5 font-mono text-xs">
     <span className="bg-punk-acid text-ink px-2 py-1 font-bold">{turno}º TURNO — {turno===1?"04/10/2026":"25/10/2026"}</span>
+    {turno===2&&<span className="border border-paper/70 px-2 py-1 text-paper">VOTAÇÃO PRORROGADA ATÉ 19H (25/10, BRASÍLIA) · APURAÇÃO OFICIAL EM ANDAMENTO</span>}
     <span className="border border-paper/50 px-2 py-1">{!dados?"RESULTADOS AINDA NÃO DISPONÍVEIS":!iniciado?"AGUARDANDO RESULTADOS":resultado?.situacao==="concluida"?"TOTALIZAÇÃO CONCLUÍDA":"RESULTADOS PARCIAIS / NÃO FINALIZADOS"}</span>
     <span className="border border-paper/50 px-2 py-1">Atualização da página: {lidoEm||"—"}</span>
     {turno===2&&<span className="border border-punk-acid px-2 py-1 text-punk-acid">{!consultaAoVivoDisponivel()?"APURAÇÃO A PARTIR DAS 17H":!backendEleitoralConfigurado()?"SERVIÇO AO VIVO AINDA NÃO ATIVADO":consultadoEmLive?(Date.now()-consultadoEmLive>90_000||dadosLive[chaveLive]?.estado==="desatualizado"?"ÚLTIMA OBSERVAÇÃO • ":"RUÍDO AO VIVO • ")+new Date(consultadoEmLive).toLocaleTimeString("pt-BR"):"RUÍDO AO VIVO • CONECTANDO"}</span>}
