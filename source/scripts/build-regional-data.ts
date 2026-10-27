@@ -1,6 +1,7 @@
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import { mesclarHistoricoCreditoMei } from "../lib/regionalCreditHistory";
 import { prisma } from "../lib/prisma";
 import { UFS, SERIES_MEI, lerSidra, extrairPoligonos, coordenadasParaSVG,
   numeroOficial, type DadosMapa, type EstadoMapa, type AnoUF } from "../lib/mapaBrasil";
@@ -49,15 +50,17 @@ function parseBCB(raw: unknown,serie: number) {
   }
   return history;
 }
-async function previous():Promise<DadosMapa|null>{
+async function previous(filePath=DEST):Promise<DadosMapa|null>{
   try {
-    const obj=JSON.parse(await fs.readFile(DEST,"utf8")) as DadosMapa;
+    const obj=JSON.parse(await fs.readFile(filePath,"utf8")) as DadosMapa;
     if(Array.isArray(obj.estados)&&obj.estados.length===27)return obj;
   }catch{}
   return null;
 }
 async function main(){
   const old=await previous();
+  const historical=process.env.RUIDO_BCB_HISTORY_PATH
+    ? await previous(process.env.RUIDO_BCB_HISTORY_PATH) : null;
   const cachePath=path.join(process.cwd(),"data","ibge-ufs-geometry.json");
   const cachedShapes=validarCacheMalhasIBGE(JSON.parse(await fs.readFile(cachePath,"utf8")));
   const notices:string[]=[];
@@ -152,24 +155,36 @@ async function main(){
     record.emendasCount+=item._count._all;
   }
   let bcok=0;
+  let bcPreserved=0;
+  let bcCoverage=0;
   await pool(UFS,5,async ([,uf])=>{
     const serie=SERIES_MEI[uf];
     if(!serie)return;
+    const state=map.get(uf)!;
+    const historicState=historical?.estados.find(s=>s.uf===uf);
+    const previousState=old?.estados.find(s=>s.uf===uf);
+    const historico=(s:EstadoMapa|undefined)=>s?.creditoMeiPorAno ??
+      (s?.creditoMei?{[s.creditoMei.data.slice(-4)]:s.creditoMei}:null);
+    let novo:ReturnType<typeof parseBCB>={};
     try{
       const url="https://api.bcb.gov.br/dados/serie/bcdata.sgs."+serie+
         "/dados?formato=json&dataInicial=01%2F01%2F2022&dataFinal="+
         encodeURIComponent(new Date().toLocaleDateString("pt-BR",{timeZone:"UTC"}));
-      const result=parseBCB(await obterJSON(url,22000,1),serie);
-      const years=Object.keys(result).sort();
-      if(years.length) {
-        const state=map.get(uf)!;
-        state.creditoMeiPorAno=result;
-        state.creditoMei=result[years.at(-1)!];
-        bcok++;
-      }
+      novo=parseBCB(await obterJSON(url,22000,1),serie);
+      if(Object.keys(novo).length)bcok++;
     }catch(error){console.warn("BCB "+uf+": "+String(error));}
+    const mesclado=mesclarHistoricoCreditoMei(serie,historico(historicState),historico(previousState),novo);
+    const years=Object.keys(mesclado).sort();
+    if(years.length){
+      state.creditoMeiPorAno=mesclado;
+      state.creditoMei=mesclado[years.at(-1)!];
+      bcCoverage++;
+      if(!Object.keys(novo).length)bcPreserved++;
+    }
   });
-  if(!bcok)notices.push("BCB/SGS indisponível ou sem observações estaduais recentes; não foram estimados valores.");
+  if(bcPreserved)notices.push("BCB/SGS: "+bcPreserved+
+    " UFs mantidas de snapshots públicos anteriores validados; valores históricos sem estimativa.");
+  if(!bcCoverage)notices.push("BCB/SGS indisponível ou sem observações estaduais recentes; não foram estimados valores.");
   const results:DadosMapa={
     atualizadoEm:new Date().toISOString(),anos,estados:[...map.values()],
     fontes:{
@@ -186,7 +201,8 @@ async function main(){
   await fs.writeFile(temp,JSON.stringify(results),{encoding:"utf8"});
   await fs.rename(temp,DEST);
   console.log("Dados regionais: "+results.estados.length+" estados, "+emendas.length+
-    " agregações de emendas/ano, "+bcok+" séries BCB disponíveis.");
+    " agregações de emendas/ano, "+bcCoverage+" séries BCB disponíveis ("+bcok+
+    " consultadas nesta execução, "+bcPreserved+" preservadas).");
   for(const year of anos) {
     console.log("Cobertura regional "+year+": "+
       ["pibMilReais","populacao","emendasPagas"].map(metric =>
