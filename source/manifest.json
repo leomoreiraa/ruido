@@ -182,7 +182,7 @@
     "tests/presencaCoverage.test.ts": "389783580346dc6070a017fdf27f9d335b0bf9c9658c2b5bc22d0bc76b7f7c5d",
     "tests/profile-data-integration.test.ts": "88fe9a596e3b6f92bf243b023bcc6d5d035c2ed4da369d0558d683bcb5f7ba47",
     "tests/publication-ui.test.ts": "5b8c0ea5cd2ab8bc941950c41c0092905997427669a00075d5fe288bfce399f5",
-    "tests/rebuild-workflow.test.ts": "dfd2a619aa30300e41c13211919113cad870b79979400b39231144b6801aad2c",
+    "tests/rebuild-workflow.test.ts": "d23b412b2985243cc0df23cb5d850e48fdf86dde07b2d533c7ee45732d654039",
     "tests/refresh-map-official.test.py": "8aee58b7aed31328dad71eee02fa598ce4de290e9517263de0bae52adca03ed6",
     "tests/regionalCreditHistory.test.ts": "0b2d0702e362766fae1c83bd00f1e18c91442048b06ee005e6edfa32f6e50d01",
     "tests/release-retention.test.py": "6267612927df8db6f311b14021f87d1ff5c9d9c151e710bd8878461d7a88a114",
