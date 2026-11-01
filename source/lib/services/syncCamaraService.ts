@@ -8,7 +8,7 @@ import {
   OrigemPresenca,
   StatusPresenca,
 } from "@/lib/types";
-import { camaraApiClient } from "./apiClient";
+import { camaraApiClient, FatalHttpError } from "./apiClient";
 import {
   CamaraDeputadoContract,
   CamaraEventoContract,
@@ -48,41 +48,47 @@ async function coletarPaginas<T>(initialUrl: string, tolerar404Inicial = false, 
 }
 
 
-export async function sincronizarDeputadosAtuaisCamara(): Promise<number> {
-  const agora = new Date();
-  let totalProcessados = 0;
-  const idsEmExercicio: string[] = [];
+async function coletarCadastroDeputadosPorPagina(itensPorPagina: number): Promise<CamaraDeputadoContract[]> {
   const cadastroCompleto: CamaraDeputadoContract[] = [];
   let pagina = 1;
-  const itensPorPagina = 100;
-  let temMaisPaginas = true;
 
-  while (temMaisPaginas) {
+  while (true) {
     const url = `/deputados?pagina=${pagina}&itens=${itensPorPagina}&ordem=ASC&ordenarPor=nome`;
     const respostaRaw = await camaraApiClient.fetchJson<unknown>(url);
     const envelope = validarRespostaEnvelopeCamara<CamaraDeputadoContract[]>(
       respostaRaw,
       `deputados pagina=${pagina}`
     );
-
     const deputados = envelope.dados ?? [];
-    idsEmExercicio.push(...deputados.map(dep => String(dep.id)));
-    if (deputados.length === 0) {
-      break;
-    }
+    if (deputados.length === 0) break;
 
     cadastroCompleto.push(...deputados);
-
-    const nextLink = envelope.links?.find((l) => l.rel === "next");
-    if (!nextLink || deputados.length < itensPorPagina) {
-      temMaisPaginas = false;
-    } else {
-      pagina++;
-    }
+    const nextLink = envelope.links?.find((link) => link.rel === "next");
+    if (!nextLink || deputados.length < itensPorPagina) break;
+    pagina++;
   }
 
-  
-  
+  return cadastroCompleto;
+}
+
+export async function coletarCadastroDeputadosCamara(): Promise<CamaraDeputadoContract[]> {
+  try {
+    return await coletarCadastroDeputadosPorPagina(100);
+  } catch (error) {
+    if (!(error instanceof FatalHttpError) || ![502, 503, 504].includes(error.status ?? 0)) {
+      throw error;
+    }
+    console.warn("[Câmara] Paginação de 100 deputados indisponível; tentando novamente com 50 por página.");
+    return coletarCadastroDeputadosPorPagina(50);
+  }
+}
+
+export async function sincronizarDeputadosAtuaisCamara(): Promise<number> {
+  const agora = new Date();
+  let totalProcessados = 0;
+  const cadastroCompleto = await coletarCadastroDeputadosCamara();
+  const idsEmExercicio = cadastroCompleto.map((dep) => String(dep.id));
+
   if (idsEmExercicio.length < 400 || idsEmExercicio.length > 700 ||
       new Set(idsEmExercicio).size!==idsEmExercicio.length) {
     throw new Error('Cadastro da Câmara incompleto ou com duplicatas; nenhum mandato foi alterado');

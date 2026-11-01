@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { prisma } from "../lib/prisma";
 import { camaraApiClient, FatalHttpError } from "../lib/services/apiClient";
-import { sincronizarPresencasCamara, sincronizarVotacoesCamara } from "../lib/services/syncCamaraService";
+import { coletarCadastroDeputadosCamara, sincronizarPresencasCamara, sincronizarVotacoesCamara } from "../lib/services/syncCamaraService";
 
 const base = "https://dadosabertos.camara.leg.br/api/v2";
 const votacao = { id: "1-1", data: "2026-01-01", descricao: "Teste" };
@@ -66,4 +66,54 @@ test("official aggregate tallies are used without fabricating nominal voter list
       null, [{ tipoVoto:"Abstenção", deputado_:{id:1,nome:"Deputado"} }]),
     { sim:40, nao:10, abstencao:1, obstrucao:0, outros:1, agregado:true }
   );
+});
+
+test("cadastro de deputados: tenta páginas menores após HTTP 504 sem misturar páginas", async t => {
+  const requested: string[] = [];
+  t.mock.method(camaraApiClient, "fetchJson", async (path: string) => {
+    const url = new URL(path.startsWith("http") ? path : `${base}${path}`);
+    const pagina = Number(url.searchParams.get("pagina"));
+    const itens = Number(url.searchParams.get("itens"));
+    requested.push(`${itens}:${pagina}`);
+    if (itens === 100 && pagina === 4) {
+      throw new FatalHttpError("upstream request timeout", 504);
+    }
+    const inicio = (pagina - 1) * itens;
+    const quantidade = Math.max(0, Math.min(itens, 513 - inicio));
+    return {
+      dados: Array.from({ length: quantidade }, (_, i) => ({
+        id: inicio + i + 1,
+        nome: `Deputado ${inicio + i + 1}`,
+      })),
+      links: inicio + quantidade < 513
+        ? [{ rel: "next", href: `${base}/deputados?pagina=${pagina + 1}&itens=${itens}` }]
+        : [],
+    };
+  });
+
+  const cadastro = await coletarCadastroDeputadosCamara();
+  assert.equal(cadastro.length, 513);
+  assert.equal(new Set(cadastro.map(dep => dep.id)).size, 513);
+  assert.ok(requested.includes("100:4"));
+  assert.ok(requested.includes("50:1"));
+  assert.ok(requested.includes("50:11"));
+});
+
+test("cadastro de deputados: erro HTTP 404 não é tratado como indisponibilidade transitória", async t => {
+  const fetchMock = t.mock.method(camaraApiClient, "fetchJson", async () => {
+    throw new FatalHttpError("HTTP 404", 404);
+  });
+  await assert.rejects(coletarCadastroDeputadosCamara(), /HTTP 404/);
+  assert.equal(fetchMock.mock.callCount(), 1);
+});
+
+test("cadastro de deputados: falha também na paginação menor continua bloqueando a coleta", async t => {
+  const requested: string[] = [];
+  t.mock.method(camaraApiClient, "fetchJson", async (path: string) => {
+    const url = new URL(path.startsWith("http") ? path : `${base}${path}`);
+    requested.push(url.searchParams.get("itens") ?? "");
+    throw new FatalHttpError("upstream request timeout", 504);
+  });
+  await assert.rejects(coletarCadastroDeputadosCamara(), /upstream request timeout/);
+  assert.deepEqual(requested, ["100", "50"]);
 });
