@@ -21,6 +21,15 @@ test("sincronização legislativa semanal mantém lock de escrita e não publica
   assert.match(pages, /git -C "\$dest" push origin HEAD:main/);
 });
 
+test("coleta semanal não depende da API do Pages privado para exportar dados auditados", () => {
+  const collector = source(".github/workflows/deploy-gh-pages.yml");
+  assert.doesNotMatch(collector, /actions\\/configure-pages@/);
+  assert.doesNotMatch(collector, /actions\\/deploy-pages@/);
+  assert.match(collector, /scripts\\/verify-rebuilt\\.py/);
+  assert.match(collector, /scripts\\/sqlite-snapshot\\.py verify/);
+  assert.ok(collector.indexOf("Bloquear base reconstruída") < collector.indexOf("Gerar export a partir do candidato"));
+});
+
 test("checkpoint verificável precede auditoria e export; publicação só no workflow visual", () => {
   const collector = source(".github/workflows/deploy-gh-pages.yml");
   const pages = source(".github/workflows/deploy-visual-fast.yml");
