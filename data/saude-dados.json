@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-11-02T11:56:21.093162+00:00",
+  "generated_at_utc": "2026-11-02T12:04:29.225365+00:00",
   "json_files": {
-    "analises-oficiais.json": 72163,
+    "analises-oficiais.json": 74242,
     "candidaturas-presidenciais.json": 809,
     "datajud.json": 121351,
-    "financeiro.json": 241280,
+    "financeiro.json": 241306,
     "frequencia-plenario-oficial.json": 85147,
     "noticias.json": 190795,
     "patrimonio.json": 60742,
@@ -12,7 +12,7 @@
     "processos-eleitorais.json": 468321,
     "redes-financeiras.json": 11210599
   },
-  "json_bytes_total": 12727766,
+  "json_bytes_total": 12729871,
   "warnings": [],
   "pages_directory_mib": {
     "parlamentares": 446.7,
@@ -101,6 +101,6 @@
     }
   ],
   "pages_files_count": 64839,
-  "pages_bytes": 730121496,
+  "pages_bytes": 730138113,
   "pages_budget_bytes": 943718400
 }
