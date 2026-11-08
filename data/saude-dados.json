@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-08T11:07:07.053124+00:00",
+  "generated_at_utc": "2026-11-08T11:15:42.399736+00:00",
   "json_files": {
     "analises-oficiais.json": 104028,
     "candidaturas-presidenciais.json": 809,
@@ -39,7 +39,7 @@
   "pages_file_types_mib": {
     ".html": 276.3,
     ".txt": 184.8,
-    ".gz": 154.8,
+    ".gz": 154.9,
     ".json": 63.6,
     ".png": 15.2,
     ".jpg": 2.4,
@@ -101,6 +101,6 @@
     }
   ],
   "pages_files_count": 65349,
-  "pages_bytes": 732650043,
+  "pages_bytes": 732650871,
   "pages_budget_bytes": 943718400
 }
